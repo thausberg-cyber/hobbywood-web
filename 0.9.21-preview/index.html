@@ -767,9 +767,11 @@ if(refreshBtn){
     r.steps?.length ||
     r.tools?.length
   );
-  refreshBtn.textContent=hasFullProject
-    ? 'Mein Projekt neu erstellen'
-    : 'Mein Projekt erstellen';
+  refreshBtn.textContent=!hasFullProject
+  ? 'Mein Projekt erstellen'
+  : current.projectDirty
+    ? 'Es wurden Änderungen vorgenommen – Projekt neu erstellen'
+    : 'Mein Projekt neu erstellen';
 }
   const generatedTitle=r.title||current.analysis?.object||current.title||'Projekt';
   const generatedSummary=r.summary||current.analysis?.summary||'';
