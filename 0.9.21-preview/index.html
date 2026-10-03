@@ -45,10 +45,11 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 
 #secureGate{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;background:#ecf2f6}#secureGate.hidden{display:none}#secureGate .cardGate{background:white;padding:32px;border-radius:22px;width:min(100%,520px);box-shadow:0 18px 60px #21354420}#secureGate h1{color:#293f50}#secureGate p{color:#4b626e}#secureGate label{display:block;font-weight:bold;margin-top:20px}#secureGate input{margin:8px 0}#secureGate .gateStatus{font-weight:650}#secureGate .gateError{color:#a43624}
 .projectPhotoCard{min-width:0}.projectPhotoCard img{display:block}.projectPhotoCard button{font-size:12px;min-height:44px;padding:8px;margin-top:6px}.projectPhotoCard.selected{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}.projectPhotoCard .photoBadge{font-size:12px;font-weight:700;margin-top:5px;color:var(--accent)}
+.cpFields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cpFields label{font-size:13px;font-weight:700}.cpFields input{margin-top:5px}.cpTable{overflow:auto}.cpTable table{min-width:610px}.cpTable input{min-width:65px;padding:8px}.cpTable td:first-child{min-width:150px}.cpActions{display:flex;gap:8px;flex-wrap:wrap}.cpActions button{width:auto;min-height:44px}.cpConfirm{display:flex;gap:10px;align-items:center;margin:16px 0}.cpConfirm input{width:24px;height:24px;flex:none}.cpDrawing svg{width:100%;height:auto;background:white;border:1px solid var(--line)}.cpRemove{min-height:44px;padding:8px!important}#cpMessage{font-weight:700}@media(max-width:460px){.cpFields{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Tester-Anmeldung"><div class="cardGate"><div class="eyebrow">Geschützter Testzugang · 0.9.21-dev1</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Tester-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Tester-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Tester-Anmeldung"><div class="cardGate"><div class="eyebrow">Geschützter Testzugang · 0.9.21-dev2</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Tester-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Tester-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen. <span class="by">· by HOBBYWOOD</span></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -170,10 +171,10 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       </div>
       <div id="overview" class="pane"><div class="card" id="overviewBox"></div><button class="secondary" id="refreshProject">Mein Projekt erstellen</button></div>
       <div id="photosPane" class="pane"><div class="card"><h3 style="margin-top:0">Projektfotos</h3><div id="recordPhotos" class="photos"></div><label class="button secondary" for="recordPhotoInput">Weitere Fotos hinzufügen</label><input class="hidden" id="recordPhotoInput" type="file" accept="image/*" multiple></div></div><div id="sketchPane" class="pane"><div class="card"><h3 style="margin-top:0">Werkstattskizzen</h3><p class="hint">Eine schnelle Handskizze kann Maße und Aufbau oft besser klären als ein weiteres Foto.</p><div id="sketchList"></div><div class="composerActions"><label class="button secondary small" for="recordSketchCamera">Skizze fotografieren</label><input class="hidden" id="recordSketchCamera" type="file" accept="image/*" capture="environment"><label class="button secondary small" for="recordSketchLibrary">Skizze auswählen</label><input class="hidden" id="recordSketchLibrary" type="file" accept="image/*"></div></div></div>
-      <div id="material" class="pane"><div class="card" id="materialBox"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Fertige Produkte, die Bestandteil des Projekts werden – z. B. Schüssel, Pflanztopf, Flasche oder Mühle. Sie bleiben getrennt von Holz, Beschlägen und Zuschnittteilen.</p><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
+      <div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Fertige Produkte, die Bestandteil des Projekts werden – z. B. Schüssel, Pflanztopf, Flasche oder Mühle. Sie bleiben getrennt von Holz, Beschlägen und Zuschnittteilen.</p><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev1 · Projektbild-Auswahl & faserorientierte Zuschnittliste</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev2 · Zuschnittplan, Projektbild-Auswahl & faserorientierte Zuschnittliste</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -205,7 +206,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev1';
+const APP_VERSION='0.9.21-dev2';
 let projectFilter='all';
 const LEGACY_STORAGE='look_talk_n_build_projects_0_8', PROFILE='look_talk_n_build_profile_0_8', TESTER_ID='look_talk_n_build_tester_id';
 const DB_NAME='look_talk_n_build_db', DB_VERSION=2, PROJECT_STORE='projects', SETTINGS_STORE='settings';
@@ -758,6 +759,99 @@ function renderCutlist(items=[]){
   const hasUnknown=items.some(x=>(x?.direction_basis||'unknown')==='unknown');
   return `<div class="notice ok"><strong>Zuschnittliste · L × B × D</strong><br><span class="hint">Das erste Maß L bezeichnet bei Massivholz die Faserrichtung, bei mehrlagigen Holzwerkstoffen die maßgebende Mittellagenrichtung.</span></div>${hasUnknown?'<div class="notice"><strong>Vor dem Zuschnitt prüfen:</strong> Bei mindestens einem Bauteil ist die Faser-/Mittellagenrichtung noch nicht eindeutig geklärt.</div>':''}<div style="overflow-x:auto"><table><thead><tr><th>Bauteil</th><th>Anz.</th><th>L</th><th>B</th><th>D</th><th>Richtung</th><th>Material</th><th>Bemerkung</th></tr></thead><tbody>${items.map(x=>`<tr><td>${esc(x.part||'')}</td><td>${esc(x.qty??'')}</td><td>${cutDim(x.length_mm)}</td><td>${cutDim(x.width_mm)}</td><td>${cutDim(x.thickness_mm)}</td><td>${esc(cutDirectionLabel(x.direction_basis))}</td><td>${esc(x.material||'')}</td><td>${esc(x.note||'')}</td></tr>`).join('')}</tbody></table></div>`;
 }
+// Rectangular guillotine layouts. Every first dimension stays on the board's L axis.
+function cpNumber(v){const text=String(v??'').trim();return text?Number(text.replace(',','.')):NaN}
+function cpValidate(input){
+ const s={...input,length:cpNumber(input.length),width:cpNumber(input.width),thickness:cpNumber(input.thickness),kerf:cpNumber(input.kerf),boards:cpNumber(input.boards),sets:cpNumber(input.sets)};
+ const pos=v=>Number.isFinite(v)&&v>0&&v<=100000;
+ if(![s.length,s.width,s.thickness].every(pos))throw Error('Bitte gültige Brettmaße L × B × D in mm eingeben.');
+ if(!Number.isFinite(s.kerf)||s.kerf<0||s.kerf>20)throw Error('Schnittfuge bitte zwischen 0 und 20 mm angeben.');
+ if(!Number.isInteger(s.boards)||s.boards<1||s.boards>100||!Number.isInteger(s.sets)||s.sets<1||s.sets>100)throw Error('Brettanzahl und Anzahl der Projekte müssen ganze Zahlen zwischen 1 und 100 sein.');
+ if(!String(s.material||'').trim())throw Error('Bitte das Material des Ausgangsbretts angeben.');
+ if(!s.confirmed)throw Error('Bitte Maße, Material und Faserrichtung prüfen und bestätigen.');
+ const rows=(s.parts||[]).map((p,i)=>({...p,length:cpNumber(p.length),width:cpNumber(p.width),thickness:cpNumber(p.thickness),qty:cpNumber(p.qty),number:i+1}));
+ if(!rows.length)throw Error('Bitte mindestens ein Bauteil eintragen.');
+ const pieces=[];
+ for(const p of rows){
+  if(!p.name.trim()||![p.length,p.width,p.thickness].every(pos)||!Number.isInteger(p.qty)||p.qty<1)throw Error('Bitte Bezeichnung, Maße und ganze Stückzahl für jedes Bauteil ergänzen.');
+  if(p.material&&String(p.material).toLowerCase().replace(/[^a-zäöüß0-9]/g,'')!==String(s.material).toLowerCase().replace(/[^a-zäöüß0-9]/g,''))throw Error('Material bei Teil '+p.number+' stimmt nicht mit dem Ausgangsbrett überein. Für andere Materialien einen eigenen Plan erstellen.');
+  if(Math.abs(p.thickness-s.thickness)>0.001)throw Error('Die Dicke aller Bauteile muss der Brettdicke entsprechen.');
+  if(p.length>s.length||p.width>s.width)throw Error('Bauteil '+p.number+' passt bei erhaltener Faserrichtung nicht auf das Brett.');
+  if(p.qty*s.sets>500||pieces.length+p.qty*s.sets>500)throw Error('Bitte höchstens 500 Einzelteile pro Plan eintragen.');
+  for(let j=0;j<p.qty*s.sets;j++)pieces.push({...p,copy:j+1});
+ }
+ return {...s,parts:rows,pieces};
+}
+function cpSplit(rect,piece,kerf,horizontal){
+ const dx=rect.w-piece.length,dy=rect.h-piece.width,kx=Math.min(kerf,dx),ky=Math.min(kerf,dy),free=[],cuts=[];
+ const add=(x,y,w,h)=>{if(w>0.000001&&h>0.000001)free.push({x,y,w,h})};
+ const cut=(x,y,w,h)=>{if(w>0&&h>0)cuts.push({x,y,w,h})};
+ if(horizontal){
+  cut(rect.x,rect.y+piece.width,rect.w,ky);cut(rect.x+piece.length,rect.y,kx,piece.width);
+  add(rect.x,rect.y+piece.width+ky,rect.w,dy-ky);add(rect.x+piece.length+kx,rect.y,dx-kx,piece.width);
+ }else{
+  cut(rect.x+piece.length,rect.y,kx,rect.h);cut(rect.x,rect.y+piece.width,piece.length,ky);
+  add(rect.x+piece.length+kx,rect.y,dx-kx,rect.h);add(rect.x,rect.y+piece.width+ky,piece.length,dy-ky);
+ }
+ return {free,cuts};
+}
+function cpPack(s,order,horizontal){
+ const boards=[],unplaced=[];
+ for(const p of order){
+  let best=null;
+  for(let b=0;b<boards.length;b++)for(let f=0;f<boards[b].free.length;f++){
+   const r=boards[b].free[f];if(p.length>r.w+1e-7||p.width>r.h+1e-7)continue;
+   const score=r.w*r.h-p.length*p.width;if(!best||score<best.score)best={b,f,r,score};
+  }
+  if(!best&&boards.length<s.boards){const b=boards.length,r={x:0,y:0,w:s.length,h:s.width};boards.push({free:[r],parts:[],cuts:[]});best={b,f:0,r};}
+  if(!best){unplaced.push(p);continue;}
+  const board=boards[best.b],split=cpSplit(best.r,p,s.kerf,horizontal);
+  board.free.splice(best.f,1,...split.free);board.cuts.push(...split.cuts);board.parts.push({...p,x:best.r.x,y:best.r.y});
+ }
+ return {boards,unplaced};
+}
+function cpCompute(input){
+ const s=cpValidate(input),comparators=[(a,b)=>b.length*b.width-a.length*a.width,(a,b)=>b.width-a.width||b.length-a.length,(a,b)=>b.length-a.length||b.width-a.width];
+ let best=null;
+ for(const cmp of comparators)for(const horizontal of [false,true]){
+  const plan=cpPack(s,[...s.pieces].sort(cmp),horizontal);
+  const loss=plan.unplaced.reduce((n,p)=>n+p.length*p.width,0),largest=Math.max(0,...plan.boards.flatMap(b=>b.free.map(r=>r.w*r.h)));
+  const rank=[plan.unplaced.length,loss,plan.boards.length,-largest];
+  if(!best||rank.some((v,i)=>v<best.rank[i]&&rank.slice(0,i).every((x,j)=>x===best.rank[j])))best={...plan,rank};
+ }
+ return {...best,input:s};
+}
+function cpSvg(board,s,index){
+ const width=840,height=Math.max(220,Math.min(580,720*s.width/s.length+100)),scale=Math.min(720/s.length,(height-100)/s.width),w=s.length*scale,h=s.width*scale;
+ const colors=['#b9d8c0','#c6d9ef','#eed0a8','#dec6e9','#d5dfac','#adcfd1'];
+ const rect=(r,fill)=>`<rect x="${60+r.x*scale}" y="${50+r.y*scale}" width="${(r.w??r.length)*scale}" height="${(r.h??r.width)*scale}" fill="${fill}" stroke="#34463b" stroke-width="0.6"/>`;
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="Zuschnittplan Brett ${index+1}, Faserrichtung waagerecht"><rect width="100%" height="100%" fill="white"/><text x="60" y="22" font-size="15" fill="#183327">L ${s.length} mm · Faserrichtung →</text><text x="60" y="${70+h}" font-size="14">B ${s.width} mm · D ${s.thickness} mm</text>${rect({x:0,y:0,w:s.length,h:s.width},'#f5f1e7')}${board.free.map(r=>rect(r,'#f5f1e7')).join('')}${board.cuts.map(r=>rect(r,'#888')).join('')}${board.parts.map(p=>rect(p,colors[(p.number-1)%colors.length])+((p.length*scale>22&&p.width*scale>19)?`<text x="${60+(p.x+p.length/2)*scale}" y="${55+(p.y+p.width/2)*scale}" text-anchor="middle" font-size="14" font-weight="bold">${p.number}</text>`:'')).join('')}</svg>`;
+}
+function cpOutput(plan){
+ const s=plan.input,placed=plan.boards.reduce((n,b)=>n+b.parts.length,0),area=plan.boards.length*s.length*s.width,partArea=plan.boards.reduce((n,b)=>n+b.parts.reduce((m,p)=>m+p.length*p.width,0),0);
+ const missing=new Map();plan.unplaced.forEach(p=>missing.set(p.number,(missing.get(p.number)||0)+1));
+ return `<div class="notice ${plan.unplaced.length?'':'ok'}"><strong>${placed} von ${s.pieces.length} Teilen platziert · ${plan.boards.length} von ${s.boards} Brettern verwendet</strong><br>${area?Math.round(partArea/area*100):0} % der verwendeten Brettfläche sind Bauteile. ${plan.unplaced.length?'Für die vorhandenen Bretter wurde kein vollständiger Plan gefunden. Brettanzahl erhöhen oder Maße prüfen.':'Alle Teile passen in diesen Plan.'}</div>${missing.size?'<p><strong>Noch ohne Platz:</strong> '+[...missing].map(([n,q])=>q+' × Teil '+n).join(', ')+'</p>':''}<p class="hint">Vorschlag mit geraden Trennschnitten; eine optimale Ausnutzung ist nicht garantiert. Grau: Schnittfugen. Beige: Reststücke. L bleibt waagerecht in Faserrichtung. Vorhandene Kanten gelten als verwendbar; erforderliches Besäumen vorher von den Brettmaßen abziehen.</p>${plan.boards.map((b,i)=>`<h4>Brett ${i+1}</h4><div class="cpDrawing">${cpSvg(b,s,i)}</div><div style="overflow-x:auto"><table><thead><tr><th>Teil</th><th>Bezeichnung</th><th>L × B × D (mm)</th><th>Position L / B (mm)</th></tr></thead><tbody>${b.parts.map(p=>`<tr><td>${p.number}</td><td>${esc(p.name)}</td><td>${p.length} × ${p.width} × ${p.thickness}</td><td>${Math.round(p.x*100)/100} / ${Math.round(p.y*100)/100}</td></tr>`).join('')}</tbody></table></div><p><strong>Reststücke L × B (mm):</strong> ${b.free.length?b.free.map(r=>`${Math.round(r.w*100)/100} × ${Math.round(r.h*100)/100}`).join(' · '):'keine'}</p>`).join('')}`;
+}
+function renderCutPlanner(){
+ const box=$('#cutPlanner');if(!box)return;
+ const saved=current.cutPlan||{},parts=saved.parts?.length?saved.parts:(current.reconstruction?.cutlist||[]).map(p=>({name:p.part||'',qty:p.qty??'',length:p.length_mm??'',width:p.width_mm??'',thickness:p.thickness_mm??'',material:p.material||''}));
+ const field=(key,label,value)=>`<label>${label}<input data-cp="${key}" type="number" step="any" min="0" value="${esc(value??'')}" inputmode="decimal"></label>`;
+ box.innerHTML=`<h3>Grafischer Zuschnittplan</h3><p>Für rechteckige Teile aus gleichartigen Fachböden oder Brettern. Alle Maße in mm; erstes Maß = Faserrichtung.</p><div class="cpFields"><label>Material<input data-cp="material" value="${esc(saved.material||'')}" placeholder="z. B. Kieferleimholz"></label>${field('length','Brett L · Faserrichtung',saved.length)}${field('width','Brett B',saved.width)}${field('thickness','Brett D',saved.thickness)}${field('kerf','Schnittfuge',saved.kerf??3)}${field('boards','Vorhandene gleiche Bretter',saved.boards??1)}${field('sets','Anzahl gleicher Projekte',saved.sets??1)}</div><h4>Bauteile je Projekt</h4><p class="hint">Übernommene Maße sind Vorschläge. Prüfe sie anhand deiner Planung. Alle Teile müssen aus dem oben genannten Material bestehen.</p><div class="cpTable"><table><thead><tr><th>Bezeichnung</th><th>Anzahl</th><th>L · Faser</th><th>B</th><th>D</th><th>Material</th><th></th></tr></thead><tbody id="cpRows"></tbody></table></div><div class="cpActions"><button type="button" class="ghost" id="cpAdd">Bauteil ergänzen</button><button type="button" class="ghost" id="cpImport">Aktuelle Stückliste übernehmen</button></div><label class="cpConfirm"><input type="checkbox" id="cpConfirmed" ${saved.confirmed?'checked':''}> Maße, Material und Faserrichtung aller Teile sind geprüft.</label><button type="button" id="cpGenerate">Zuschnittplan erstellen und speichern</button><p id="cpMessage" role="status" aria-live="polite"></p><div id="cpResult"></div><button type="button" class="ghost hidden" id="cpPrint">Plan drucken / als PDF speichern</button>`;
+ const append=p=>{const tr=document.createElement('tr');tr.innerHTML=['name','qty','length','width','thickness','material'].map(k=>`<td><input data-part="${k}" aria-label="${({name:'Bezeichnung',qty:'Anzahl',length:'Länge in Faserrichtung',width:'Breite',thickness:'Dicke',material:'Material (leer = wie Brett)'})[k]}" ${(k==='name'||k==='material')?'':'type="number" min="0" step="any" inputmode="decimal"'} value="${esc(p[k]??'')}"></td>`).join('')+'<td><button type="button" class="ghost cpRemove" aria-label="Bauteil entfernen">×</button></td>';tr.querySelector('button').onclick=()=>{tr.remove();invalidate()};$('#cpRows').appendChild(tr)};
+ const invalidate=()=>{$('#cpConfirmed').checked=false;$('#cpResult').innerHTML='';$('#cpPrint').classList.add('hidden');$('#cpMessage').textContent='Eingaben geändert – bitte erneut prüfen und Plan erstellen.'};
+ parts.forEach(append);if(!parts.length)append({});
+ box.querySelectorAll('[data-cp]').forEach(el=>el.oninput=invalidate);$('#cpRows').addEventListener('input',invalidate);
+ $('#cpAdd').onclick=()=>{append({qty:1});invalidate()};
+ $('#cpImport').onclick=()=>{if(!confirm('Die Bauteile im Plan durch die aktuelle Stückliste ersetzen?'))return;$('#cpRows').innerHTML='';(current.reconstruction?.cutlist||[]).forEach(p=>append({name:p.part,qty:p.qty,length:p.length_mm,width:p.width_mm,thickness:p.thickness_mm,material:p.material}));invalidate()};
+ let displayedPlan=null;
+ $('#cpGenerate').onclick=async()=>{
+  const project=current,input={};box.querySelectorAll('[data-cp]').forEach(el=>input[el.dataset.cp]=el.value);input.confirmed=$('#cpConfirmed').checked;input.parts=[...$('#cpRows').children].map(tr=>Object.fromEntries([...tr.querySelectorAll('input')].map(el=>[el.dataset.part,el.value])));
+  try{const plan=cpCompute(input),prior=project.cutPlan;project.cutPlan={...input,version:1};try{await dbPutProject(project)}catch(e){project.cutPlan=prior;throw Error('Plan konnte nicht gespeichert werden. Bitte freien Gerätespeicher prüfen.')}if(current!==project)return;displayedPlan=plan;$('#cpResult').innerHTML=cpOutput(plan);$('#cpPrint').classList.remove('hidden');$('#cpMessage').textContent='Plan gespeichert.';await updateSaved()}catch(e){$('#cpMessage').textContent=e.message;$('#cpResult').innerHTML='';$('#cpPrint').classList.add('hidden')}
+ };
+ if(saved.confirmed){try{displayedPlan=cpCompute(saved);$('#cpResult').innerHTML=cpOutput(displayedPlan);$('#cpPrint').classList.remove('hidden')}catch(e){$('#cpMessage').textContent='Gespeicherte Eingaben bitte prüfen: '+e.message}}
+ $('#cpPrint').onclick=()=>{if(!displayedPlan)return;const win=window.open('','_blank');if(!win)return alert('Bitte das Öffnen des Druckfensters erlauben.');win.document.write(`<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Zuschnittplan</title><style>body{font:14px Arial;color:#182019;margin:25px}svg{width:100%;max-height:450px}table{width:100%;border-collapse:collapse}td,th{padding:6px;border-bottom:1px solid #bbb;text-align:left}h4{break-before:auto}svg,tr{break-inside:avoid}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Drucken / PDF</button><h1>${esc(current.customTitle||current.title||'Projekt')} · Zuschnittplan</h1><p>${esc(displayedPlan.input.material)} · ${displayedPlan.input.sets} Projekt(e) · Schnittfuge ${displayedPlan.input.kerf} mm</p>${cpOutput(displayedPlan)}</body></html>`);win.document.close()};
+}
+
 function normalizePurchasedPart(x={}){return {id:x.id||newId(),item:String(x.item||x.name||'').trim(),supplier:String(x.supplier||x.vendor||x.brand||'').trim(),product:String(x.product||x.article||'').trim(),quantity:String(x.quantity||x.qty||'').trim(),dimensions:String(x.dimensions||x.size||'').trim(),use:String(x.use||x.purpose||x.note||'').trim(),link:String(x.link||x.url||'').trim(),source:String(x.source||'manual').trim()}}
 function purchaseToken(v=''){return String(v||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim()}
 function purchasedKey(x={}){return [x.item,x.supplier,x.product,x.dimensions].map(purchaseToken).join('|')}
@@ -814,7 +908,7 @@ if(refreshBtn){
   renderAllPhotos();renderSketches();renderTalk();
   const cutlistHtml=renderCutlist(r.cutlist||[]);
   const materialHtml=renderTable(r.materials||[]);
-  $('#materialBox').innerHTML=(cutlistHtml?`${cutlistHtml}<h3>Material / Einkauf</h3>`:'')+materialHtml;renderPurchasedParts();
+  $('#materialBox').innerHTML=(cutlistHtml?`${cutlistHtml}<h3>Material / Einkauf</h3>`:'')+materialHtml;renderPurchasedParts();renderCutPlanner();
   $('#toolsBox').innerHTML=(r.tools||[]).map(x=>`<p>• ${esc(x)}</p>`).join('')||'<p>Noch keine Angaben.</p>';
   $('#stepsBox').innerHTML=(r.steps||[]).map((s,i)=>`<div class="step"><div class="stepnum">${i+1}</div><p>${esc(s)}</p></div>`).join('')||'<p>Noch keine Bauanleitung erstellt.</p>';
   $('#safetyBox').innerHTML=(r.safety_notes||[]).map(x=>`<div class="notice">${esc(x)}</div>`).join('')||'<div class="ok notice">Keine besonderen Hinweise ermittelt.</div>';
