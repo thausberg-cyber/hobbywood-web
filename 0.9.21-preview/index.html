@@ -49,7 +49,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev13</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev14</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen. <span class="by">· by HOBBYWOOD</span></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -106,6 +106,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
   <div class="eyebrow">Projektablage</div><h1>Meine Projekte</h1>
   <div class="filterRow" aria-label="Projektfilter"><button class="filterBtn on" data-project-filter="all">Alle</button><button class="filterBtn" data-project-filter="own">Eigene</button><button class="filterBtn" data-project-filter="imported">Importierte</button></div>
   <div id="projectList"></div>
+  <h2>Tester-Projekte</h2><p class="hint">Originale ansehen und auswerten. Zum Weiterarbeiten eine eigene Kopie übernehmen.</p><label class="button secondary small" for="testerProjectInput">Tester-Projekt übertragen</label><input class="hidden" id="testerProjectInput" type="file" accept=".ltnb,application/json,application/octet-stream"><div id="testerProjectList"></div>
   <div class="card">
     <h3 style="margin-top:0">Projekt übertragen</h3>
     <p>Projekte lassen sich als einzelne <strong>.ltnb-Datei</strong> zwischen Mac, iPad, iPhone, Windows und Android übertragen oder zur Testauswertung weitergeben.</p>
@@ -174,7 +175,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev13 · Eigene Projektablage · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev14 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -206,10 +207,10 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev13';
+const APP_VERSION='0.9.21-dev14';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
-const DB_NAME='ltnb_developer_db', DB_VERSION=2, PROJECT_STORE='projects', SETTINGS_STORE='settings';
+const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
 let current={id:null,title:'',mode:'copy',photos:[],sketches:[],purchasedParts:[],knowledge:'',analysis:null,reconstruction:null,chat:[],round:0,createdAt:null,updatedAt:null};
 let pendingTalkPhotos=[];
 let pendingSketch=null, sketchReturnScreen='record';
@@ -273,7 +274,7 @@ function renderProjectPhotos(){
 }
 function renderAllPhotos(){gallery($('#photoGrid'),current.photos);gallery($('#developPhotos'),current.photos);renderProjectPhotos();gallery($('#sidePhotos'),current.photos);$('#photoCount').textContent=current.photos.length}
 function openPhoto(src){$('#dialogImg').src=src;$('#photoDialog').showModal()} $('#closeDialog').onclick=()=>$('#photoDialog').close();$('#photoDialog').onclick=e=>{if(e.target===$('#photoDialog'))$('#photoDialog').close()}
-function openDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,DB_VERSION);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(PROJECT_STORE))db.createObjectStore(PROJECT_STORE,{keyPath:'id'});if(!db.objectStoreNames.contains(SETTINGS_STORE))db.createObjectStore(SETTINGS_STORE,{keyPath:'key'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error||new Error('IndexedDB konnte nicht geöffnet werden.'))})}
+function openDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,DB_VERSION);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(TESTER_STORE))db.createObjectStore(TESTER_STORE,{keyPath:'id'});if(!db.objectStoreNames.contains(PROJECT_STORE))db.createObjectStore(PROJECT_STORE,{keyPath:'id'});if(!db.objectStoreNames.contains(SETTINGS_STORE))db.createObjectStore(SETTINGS_STORE,{keyPath:'key'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error||new Error('IndexedDB konnte nicht geöffnet werden.'))})}
 function dataUrlToBlob(dataUrl){const [meta,b64]=String(dataUrl||'').split(',');const mime=(meta.match(/^data:([^;]+)/)||[])[1]||'image/jpeg';const bin=atob(b64||''),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return new Blob([bytes],{type:mime})}
 function blobToDataUrl(blob){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(r.error||new Error('Foto konnte nicht geladen werden.'));r.readAsDataURL(blob)})}
 async function projectForStorage(project){
@@ -394,7 +395,7 @@ async function exportProject(project){
   const portable=await projectToPortable(project);
   const testerId=getTesterId();rememberTesterId(testerId);
   const payload={
-    format:'look-talk-n-build-project',schemaVersion:1,appVersion:APP_VERSION,exportedAt:new Date().toISOString(),testerId,workshopProfile:JSON.parse(JSON.stringify(profilePayload()||{})),project:portable
+    format:'look-talk-n-build-project',schemaVersion:1,appVersion:APP_VERSION,exportedAt:new Date().toISOString(),testerId,workshopProfile:JSON.parse(JSON.stringify(project.transferMeta?.sourceProfile||profilePayload()||{})),project:portable
   };
   const json=JSON.stringify(payload);
   const filename=safeProjectFilename(portable.title||portable.analysis?.object||'Projekt');
@@ -426,11 +427,12 @@ function showImportPreview(payload,file){
   const exported=payload.exportedAt?new Date(payload.exportedAt).toLocaleString('de-DE'):'nicht angegeben';
   const tester=payload.testerId?esc(payload.testerId):'nicht angegeben';
   const skill=payload.workshopProfile?.skill?esc(payload.workshopProfile.skill):'nicht angegeben';
-  box.innerHTML=`<div class="notice ok"><strong>${esc(p.title||p.analysis?.object||'Unbenanntes Projekt')}</strong><br><span class="hint">Datei: ${esc(file.name)} · Export: ${esc(exported)} · App ${esc(payload.appVersion||'?')}</span><br><span class="hint">Tester-ID: ${tester} · Werkstattprofil: ${skill}</span><br><span class="hint">${(p.photos||[]).length} Fotos · ${(p.sketches||[]).length} Skizzen · ${(p.chat||[]).length} Talk-Beiträge</span></div><div class="composerActions"><button class="primary small" id="confirmImportProject">Als neues Projekt importieren</button><button class="ghost small" id="cancelImportProject">Abbrechen</button></div>`;
+  box.innerHTML=`<div class="notice ok"><strong>${esc(p.title||p.analysis?.object||'Unbenanntes Projekt')}</strong><br><span class="hint">Datei: ${esc(file.name)} · Export: ${esc(exported)} · App ${esc(payload.appVersion||'?')}</span><br><span class="hint">Tester-ID: ${tester} · Werkstattprofil: ${skill}</span><br><span class="hint">${(p.photos||[]).length} Fotos · ${(p.sketches||[]).length} Skizzen · ${(p.chat||[]).length} Talk-Beiträge</span></div><div class="composerActions"><button class="primary small" id="confirmImportProject">${pendingImport?.tester?'In Tester-Projekte übertragen':'Als neues Projekt importieren'}</button><button class="ghost small" id="cancelImportProject">Abbrechen</button></div>`;
   box.classList.remove('hidden');
 }
 async function importPendingProject(){
   if(!pendingImport)return;
+  if(pendingImport.tester)return importTesterProject();
   const {payload,file}=pendingImport,p=JSON.parse(JSON.stringify(payload.project)),now=new Date().toISOString();
   p.id=newId();p.createdAt=p.createdAt||now;p.updatedAt=now;p.round=Number(p.round)||0;p.photos=p.photos||[];p.sketches=p.sketches||[];p.purchasedParts=p.purchasedParts||[];p.chat=p.chat||[];
   p.transferMeta={...(p.transferMeta||{}),imported:true,testerId:payload.testerId||p.transferMeta?.testerId||'',sourceAppVersion:payload.appVersion||p.transferMeta?.sourceAppVersion||'',exportedAt:payload.exportedAt||'',importedAt:now,sourceProjectId:payload.project.id||'',sourceFile:file?.name||'',sourceProfile:payload.workshopProfile||p.transferMeta?.sourceProfile||{},previousTransferMeta:p.transferMeta||null};
@@ -438,6 +440,59 @@ async function importPendingProject(){
     await dbPutProject(p);pendingImport=null;$('#importPreview').classList.add('hidden');$('#importProjectInput').value='';await updateSaved();await renderProjects();alert('Projekt wurde als neues Projekt importiert.');
   }catch(e){console.error(e);alert('Projekt konnte nicht importiert werden: '+e.message)}
 }
+
+// Tester originals live in their own store and never enter the editable project flow.
+function testerRequest(mode,operation){return openDb().then(db=>new Promise((resolve,reject)=>{
+  const tx=db.transaction(TESTER_STORE,mode);let req;
+  try{req=operation(tx.objectStore(TESTER_STORE))}catch(e){db.close();reject(e);return}
+  tx.oncomplete=()=>{const result=req.result;db.close();resolve(result)};
+  tx.onerror=tx.onabort=()=>{const error=tx.error||new Error('Tester-Ablage konnte nicht gespeichert werden.');db.close();reject(error)};
+}))}
+async function renderTesterProjects(){
+  const box=$('#testerProjectList');
+  try{const entries=await testerRequest('readonly',store=>store.getAll());entries.sort((a,b)=>b.importedAt.localeCompare(a.importedAt));
+    box.innerHTML=entries.map(entry=>{const payload=parseImportPayload(entry.originalText),p=payload.project;
+      return `<div class="card"><strong>${esc(p.customTitle||p.title||p.analysis?.object||'Unbenanntes Projekt')}</strong><p class="hint">Tester: ${esc(payload.testerId||p.transferMeta?.testerId||'nicht angegeben')} · Importiert: ${esc(new Date(entry.importedAt).toLocaleString('de-DE'))}</p><button class="secondary small" data-tester-action="view" data-id="${entry.id}">Ansehen / A4-Ausdruck mit Testerprofil</button><button class="ghost small" data-tester-action="copy" data-id="${entry.id}">Als eigenes Projekt übernehmen</button><button class="ghost small" data-tester-action="export" data-id="${entry.id}">Originaldatei herunterladen</button><button class="ghost small" data-tester-action="delete" data-id="${entry.id}">Löschen</button></div>`;
+    }).join('')||'<div class="card"><p>Noch keine Tester-Projekte übertragen.</p></div>';
+  }catch(e){box.textContent='Tester-Projektablage konnte nicht geöffnet werden.';console.error(e)}
+}
+async function importTesterProject(){
+  const entry=pendingImport,button=$('#confirmImportProject');button.disabled=true;
+  try{await testerRequest('readwrite',store=>store.add({id:newId(),originalText:entry.originalText,filename:entry.file.name,importedAt:new Date().toISOString()}));
+    pendingImport=null;$('#importPreview').classList.add('hidden');$('#testerProjectInput').value='';await renderTesterProjects();alert('Tester-Projekt wurde mit der Originaldatei separat gespeichert.');
+  }catch(e){button.disabled=false;alert('Tester-Projekt konnte nicht gespeichert werden: '+e.message)}
+}
+$('#testerProjectInput').onchange=async e=>{
+  const file=e.target.files?.[0];if(!file)return;
+  try{const originalText=await file.text(),payload=parseImportPayload(originalText);pendingImport={payload,file,originalText,tester:true};showImportPreview(payload,file)}
+  catch(error){pendingImport=null;$('#importPreview').classList.add('hidden');e.target.value='';alert(error.message)}
+};
+function testerProfileHtml(source){
+  if(!source||!Object.keys(source).length)return '<p>In dieser Datei fehlt das Testerprofil. Bitte den Tester um einen neuen Export einschließlich Werkstattprofil bitten.</p>';
+  const labels={have:'Habe ich',want:'Will ich anschaffen',none:'Habe ich nicht',removed:'Entfernt'};
+  return `<p><strong>Selbsteinschätzung:</strong> ${esc(source.skill||'nicht angegeben')}</p><table><thead><tr><th>Werkstattausstattung</th><th>Status</th></tr></thead><tbody>${Object.entries(source.tools||{}).map(([name,status])=>`<tr><td>${esc(name)}</td><td>${esc(labels[status]||status)}</td></tr>`).join('')}</tbody></table>${Object.keys(source.tools||{}).length?'':'<p>Keine Werkstatt-Einträge mitgeliefert.</p>'}`;
+}
+function testerSheetHtml(payload){
+  const project=payload.project,source=payload.workshopProfile||project.transferMeta?.sourceProfile;
+  const html=workshopSheetHtml(project);
+  const talk=(project.chat||[]).map(item=>`<p><strong>${item.role==='user'?'Tester':'Werkstatt-Talk'}:</strong><br>${esc(item.text||'').replace(/\n/g,'<br>')}</p>${item.calculation?`<pre>${esc(JSON.stringify(item.calculation,null,2))}</pre>`:''}`).join('');
+  const sketches=(project.sketches||[]).map(item=>`<h3>${esc(item.name||'Skizze')}</h3><img style="width:100%;height:auto" src="${esc(item.dataUrl)}" alt="Testerskizze">`).join('');
+  const photos=(project.photos||[]).map(item=>`<img style="max-width:100%;max-height:180mm;object-fit:contain" src="${esc(item.dataUrl)}" alt="Testerfoto">`).join('');
+  const extra=`<section><h2>Testerprofil</h2><p>Tester: ${esc(payload.testerId||project.transferMeta?.testerId||'nicht angegeben')} · Quellversion: ${esc(payload.appVersion||'nicht angegeben')}</p>${testerProfileHtml(source)}</section><section><h2>Projektbeschreibung</h2><p>${esc(project.knowledge||project.customDescription||'nicht angegeben').replace(/\n/g,'<br>')}</p></section><section><h2>Werkstatt-Talk</h2>${talk||'<p>Keine Beiträge mitgeliefert.</p>'}</section><section><h2>Skizzen</h2>${sketches||'<p>Keine Skizzen mitgeliefert.</p>'}</section><section><h2>Projektfotos</h2>${photos||'<p>Keine Fotos mitgeliefert.</p>'}</section>`;
+  return html.replace('</style>','pre{white-space:pre-wrap;overflow-wrap:anywhere}p{overflow-wrap:anywhere}</style>').replace('</body>',extra+'</body>');
+}
+document.addEventListener('click',async e=>{
+  const button=e.target.closest?.('[data-tester-action]');if(!button)return;button.disabled=true;
+  try{const entry=await testerRequest('readonly',store=>store.get(button.dataset.id));if(!entry)return;const payload=parseImportPayload(entry.originalText);
+    switch(button.dataset.testerAction){
+      case 'view':openPrintableHtml(testerSheetHtml(payload));break;
+      case 'export':{const url=URL.createObjectURL(new Blob([entry.originalText],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=entry.filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);break}
+      case 'copy':{const p=JSON.parse(JSON.stringify(payload.project)),now=new Date().toISOString();p.id=newId();p.createdAt=now;p.updatedAt=now;p.transferMeta={imported:true,testerId:payload.testerId||p.transferMeta?.testerId||'',sourceProfile:payload.workshopProfile||p.transferMeta?.sourceProfile||{},sourceAppVersion:payload.appVersion||'',sourceTesterArchiveId:entry.id,importedAt:now};await dbPutProject(p);await updateSaved();await renderProjects();alert('Eigene bearbeitbare Kopie angelegt. Das Tester-Original bleibt erhalten.');break}
+      case 'delete':if(confirm('Dieses Tester-Original aus der Ablage löschen?')){await testerRequest('readwrite',store=>store.delete(entry.id));await renderTesterProjects()}break;
+    }
+  }catch(error){alert('Tester-Projekt konnte nicht verarbeitet werden: '+error.message)}finally{button.disabled=false}
+});
+
 async function loadProfile(){
   let saved=null;
   try{saved=await dbGetSetting('workshopProfile')}catch(e){console.warn('Werkstattprofil aus IndexedDB konnte nicht geladen werden',e)}
@@ -459,7 +514,7 @@ async function goStart(){
   show('start');
 }
 async function goProfile(){await loadProfile();show('profile')}
-async function goProjects(){const ti=$('#testerId');if(ti)ti.value=localStorage.getItem(TESTER_ID)||'';await renderProjects();show('projects')}
+async function goProjects(){const ti=$('#testerId');if(ti)ti.value=localStorage.getItem(TESTER_ID)||'';await renderProjects();await renderTesterProjects();show('projects')}
 function goTalk(){if(!current?.id)return;renderRecord();show('record');switchTab('talkPane')}
 $('#navStart').onclick=()=>{viewHistory=[];goStart()};
 $('#navProjects').onclick=goProjects;
@@ -471,7 +526,7 @@ document.addEventListener('click',async e=>{const b=e.target.closest?.('[data-pr
 if($('#importProjectInput'))$('#importProjectInput').onchange=async e=>{
   const file=e.target.files?.[0];if(!file)return;
   if(file.size>120*1024*1024&&!confirm('Die Projektdatei ist größer als 120 MB. Trotzdem versuchen?')){e.target.value='';return}
-  try{const payload=parseImportPayload(await file.text());pendingImport={payload,file};showImportPreview(payload,file)}catch(err){pendingImport=null;$('#importPreview').classList.add('hidden');e.target.value='';alert(err.message)}
+  try{const originalText=await file.text(),payload=parseImportPayload(originalText);pendingImport={payload,file,originalText};showImportPreview(payload,file)}catch(err){pendingImport=null;$('#importPreview').classList.add('hidden');e.target.value='';alert(err.message)}
 };
 $('#cameraInput').onchange=$('#libraryInput').onchange=async e=>{await addFiles(e.target.files);renderAllPhotos()};$('#developInput').onchange=async e=>{await addFiles(e.target.files);renderAllPhotos()};
 ['detailCameraInput','detailLibraryInput'].forEach(id=>$('#'+id).onchange=async e=>{await addFiles(e.target.files);renderAllPhotos();await analyze(true)});
@@ -1160,19 +1215,19 @@ document.addEventListener('change',e=>{if(e.target?.classList.contains('toolStat
 $('#addTool').onclick=()=>{const n=$('#customTool').value.trim();if(!n)return;profile.tools=profile.tools||{};profile.tools[n]='want';$('#customTool').value='';renderToolsProfile();persistProfile()};
 
 $('#saveProfile').onclick=async()=>{if(await persistProfile()){alert('Werkstattprofil gespeichert.');show('start')}else{alert('Werkstattprofil konnte nicht gespeichert werden. Bitte erneut versuchen.')}};
-function workshopSheetHtml(){
-  const r=current.reconstruction||{},a=current.analysis||{};
-  const title=esc(current.customTitle||r.title||a.object||current.title||'Projekt');
-  const desc=escGerman(current.customDescription||r.summary||a.summary||current.knowledge||'');
-  const image=selectedProjectPhoto(current)?.dataUrl||'';
+function workshopSheetHtml(project=current){
+  const r=project.reconstruction||{},a=project.analysis||{};
+  const title=esc(project.customTitle||r.title||a.object||project.title||'Projekt');
+  const desc=escGerman(project.customDescription||r.summary||a.summary||project.knowledge||'');
+  const image=selectedProjectPhoto(project)?.dataUrl||'';
   const dimLines=[];
-  for(const sk of (current.sketches||[]))for(const d of (sk.analysis?.dimensions||[]))dimLines.push(`${esc(d.role_label||d.label||d.role||'Maß')}: ${esc(d.value)} ${esc(d.unit||'')}`);
+  for(const sk of (project.sketches||[]))for(const d of (sk.analysis?.dimensions||[]))dimLines.push(`${esc(d.role_label||d.label||d.role||'Maß')}: ${esc(d.value)} ${esc(d.unit||'')}`);
   for(const x of (a.recognized||[]))if(/\d/.test(String(x))&&/(mm|cm|m\b|ø|durchmesser|breite|höhe|tiefe|stärke)/i.test(String(x)))dimLines.push(escGerman(x));
   const dims=[...new Set(dimLines)].slice(0,12);
   let cut='';
   if(Array.isArray(r.cutlist)&&r.cutlist.length){cut=`<p><strong>Maßfolge L × B × D.</strong> L ist bei Massivholz die Faserrichtung, bei mehrlagigen Holzwerkstoffen die maßgebende Mittellagenrichtung.</p><table><thead><tr><th>Bauteil</th><th>Anz.</th><th>L</th><th>B</th><th>D</th><th>Richtung</th><th>Material</th><th>Bemerkung</th></tr></thead><tbody>${r.cutlist.map(x=>`<tr><td>${esc(x.part||'')}</td><td>${esc(x.qty||'')}</td><td>${esc(x.length_mm??'')}</td><td>${esc(x.width_mm??'')}</td><td>${esc(x.thickness_mm??'')}</td><td>${esc(cutDirectionLabel(x.direction_basis))}</td><td>${escGerman(x.material||'')}</td><td>${escGerman(x.note||'')}</td></tr>`).join('')}</tbody></table>`}
   else cut=`<table><thead><tr><th>Bauteil / Material</th><th>Menge</th><th>Angabe</th></tr></thead><tbody>${(r.materials||[]).map(x=>`<tr><td>${esc(x.item||x.name||'')}</td><td>${esc(x.quantity||'')}</td><td>${escGerman(x.spec||x.details||'')}</td></tr>`).join('')}</tbody></table>`;
-  const purchased=inventoryEntries().length?inventoryShoppingHtml():'';
+  const purchased=inventoryEntries(project).length?inventoryShoppingHtml(project):'';
   const applicationPattern=/(servieren|anrichten|verzehr|essen|trinken|befüllen und nutzen|in betrieb nehmen|aufstellen und verwenden|spätere anwendung|pflege im gebrauch|nach dem gebrauch|geschenk übergeben|verschenken|dekorieren vor dem servieren)/i;
   const workshopSteps=(r.steps||[]).filter(x=>!applicationPattern.test(String(x)));
   const steps=workshopSteps.map((x,i)=>`<li><span>${i+1}</span><div>${escGerman(x)}</div></li>`).join('')||'<li><div>Noch keine reinen Werkstattschritte vorhanden.</div></li>';
@@ -1211,7 +1266,7 @@ document.addEventListener('click',async e=>{
   if(e.target?.classList.contains('openP'))await loadProject(e.target.dataset.id);
   if(e.target?.classList.contains('exportP')){const p=await dbGetProject(e.target.dataset.id);if(p)await exportProject(p)}
   if(e.target?.id==='confirmImportProject')await importPendingProject();
-  if(e.target?.id==='cancelImportProject'){pendingImport=null;$('#importPreview').classList.add('hidden');$('#importProjectInput').value=''}
+  if(e.target?.id==='cancelImportProject'){pendingImport=null;$('#importPreview').classList.add('hidden');$('#importProjectInput').value='';$('#testerProjectInput').value=''}
   if(e.target?.classList.contains('delP')){if(confirm('Projekt wirklich löschen?')){const id=e.target.dataset.id;try{await cpFlushDraft(current);await projectWriteQueue.catch(()=>{});await dbDeleteProject(id);for(const [project,record] of cpDraftPending){if(project.id===id){clearTimeout(record.timer);cpDraftPending.delete(project)}}if(current.id===id)resetProject();await updateSaved();await renderProjects()}catch(error){alert('Projekt konnte nicht gelöscht werden. Bitte erneut versuchen.')}}}
 });
 (async()=>{await loadProfile();await migrateLegacyProjects();await updateSaved()})();updateSpeechFloatVisibility();autoGrowChatInput();
