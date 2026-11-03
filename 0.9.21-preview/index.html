@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev20.1</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev20.2</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev20.1 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev20.2 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev20.1';
+const APP_VERSION='0.9.21-dev20.2';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1416,22 +1416,53 @@ function frameDrawingPages(m,{title='Backrahmen',status='Entwurf - Maße noch be
  const {p,scale:s}=m,{f,e,n,line,text,rect,circle,cross,dh,dv}=svgTools(),ratio='1:'+f(1/s);
  const frame=(page,name,b)=>`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="${e(name)}"><style>text{font-family:Arial,sans-serif;font-size:2.6px;fill:#111;stroke:none}line,path,rect,circle{stroke:#111;stroke-width:.25;fill:none}.body{stroke-width:.5}.hidden{stroke-dasharray:2 1}.axis{stroke-width:.15;stroke-dasharray:5 1 1 1}.bold{font-weight:700}.small{font-size:2.1px}.measure{paint-order:stroke;stroke:white;stroke-width:1;fill:#111}.hatch{fill:url(#frameHatch)}</style><defs><pattern id="frameHatch" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M -1 1 L 1 -1 M 0 4 L 4 0 M 3 5 L 5 3"/></pattern></defs>${rect(6,5,285,200)}${text(11,12,"look, talk 'n build",'bold')}${text(286,12,'A4 quer · Blatt '+page+'/2','small','end')}${text(11,20,name,'bold')}${line(6,24,291,24)}${text(11,30,title,'small')}${text(286,30,status,'small','end')}${b}${line(6,200,291,200)}${text(11,204,'Alle Maße in mm · Druck: 100 % / Originalgröße','small')}${text(286,204,'Entwurf · DIN-919-Abgleich offen','small','end')}</svg>`;
  const x=25,y=50,W=p.depth*s,H=p.height*s,T=p.thickness*s,z=190,Y=118,D=p.width*s;
- let b=text(x,46,'VORDERANSICHT (LÄNGSSEITE) · M '+ratio,'bold')+rect(x,y,W,H,'body')+line(x+T,y,x+T,y+H,'body')+line(x+W-T,y,x+W-T,y+H,'body');
+ // All offsets below are real model dimensions multiplied by the sheet scale.
+ const C=p.chamfer*s,J=p.jointChamfer*s;
+ const path=(pts,cls='body')=>`<path class="${cls}" d="${pts.map(([u,v],i)=>(i?'L ':'M ')+n(u)+' '+n(v)).join(' ')} Z"/>`;
+ const outer=(u,v,w,h,c)=>c?path([[u+c,v],[u+w-c,v],[u+w,v+c],[u+w,v+h-c],[u+w-c,v+h],[u+c,v+h],[u,v+h-c],[u,v+c]]):rect(u,v,w,h,'body');
+ // Elevation: only the outward face is bevelled. These solid lines are the
+ // boundaries of the horizontal and vertical exterior chamfer faces.
+ const elevationChamfers=(u,v,w,h)=>C?`<g data-edges="exterior-chamfers">${rect(u+C,v+C,w-2*C,h-2*C)}</g>`:'';
+ let b=text(x,46,'VORDERANSICHT (LÄNGSSEITE) · M '+ratio,'bold')+outer(x,y,W,H,C)+elevationChamfers(x,y,W,H);
+ // Each outer butt joint has a V groove: two face boundaries and the valley.
+ b+='<g data-edges="front-joints">';
+ for(const seam of [x+T,x+W-T]){
+  b+=line(seam,y+C,seam,y+H-C);
+  if(J)b+=line(seam-J,y+C,seam-J,y+H-C)+line(seam+J,y+C,seam+J,y+H-C);
+ }
+ b+='</g>';
  for(const pos of m.positions)for(const [a,end]of [[x,x+p.screwLength*s],[x+W,x+W-p.screwLength*s]]){
   const yy=y+pos*s,r=p.screwDiameter*s/2;
   b+=line(a,yy-r,end,yy-r,'hidden')+line(a,yy+r,end,yy+r,'hidden')+line(end,yy-r,end,yy+r,'hidden')+line(Math.min(a,end)-2,yy,Math.max(a,end)+2,yy,'axis');
  }
  b+=dh(x,x+W,y,38,f(p.depth))+dv(y,y+H,x,16,f(p.height));
- b+=text(z,46,'ANSICHT VON LINKS · M '+ratio,'bold')+rect(z,y,D,H,'body');
+ b+=text(z,46,'ANSICHT VON LINKS · M '+ratio,'bold')+outer(z,y,D,H,C)+elevationChamfers(z,y,D,H);
  for(const xx of [z+T/2,z+D-T/2])for(const pos of m.positions)b+=circle(xx,y+pos*s,p.headDiameter*s/2)+cross(xx,y+pos*s,p.headDiameter*s/2);
  b+=dh(z,z+D,y,38,f(p.width))+dh(z,z+T/2,y+H,104,f(p.thickness/2))+dh(z+D-T/2,z+D,y+H,104,f(p.thickness/2));
  const levels=[0,...m.positions,p.height];for(let i=0;i<4;i++)b+=dv(y+levels[i]*s,y+levels[i+1]*s,z+D,z+D+10,f(levels[i+1]-levels[i]));
- b+=text(x,106,'DRAUFSICHT · M '+ratio,'bold')+rect(x,Y,W,D,'body')+line(x+T,Y,x+T,Y+D,'body')+line(x+W-T,Y,x+W-T,Y+D,'body')+rect(x+T,Y+T,W-2*T,D-2*T,'body');
+ b+=text(x,106,'DRAUFSICHT · M '+ratio,'bold');
+ // Four parts in plan. V grooves are real notches in the outside silhouette;
+ // shared joints close below each notch and the inside opening has sharp edges.
+ const A=x+T,B=x+W-T;
+ b+='<g data-edges="plan-outline">';
+ b+=path([[x+C,Y],[A-J,Y],[A,Y+J],[A,Y+D-J],[A-J,Y+D],[x+C,Y+D],[x,Y+D-C],[x,Y+C]]);
+ b+=path([[B+J,Y],[x+W-C,Y],[x+W,Y+C],[x+W,Y+D-C],[x+W-C,Y+D],[B+J,Y+D],[B,Y+D-J],[B,Y+J]]);
+ b+=path([[A+J,Y],[B-J,Y],[B,Y+J],[B,Y+T],[A,Y+T],[A,Y+J]]);
+ b+=path([[A,Y+D-T],[B,Y+D-T],[B,Y+D-J],[B-J,Y+D],[A+J,Y+D],[A,Y+D-J]]);
+ b+='</g>';
+ if(C){
+  // Top outer bevel boundary. Do not add an inset around the inner opening.
+  const gap=Math.max(J-C,0);
+  b+='<g data-edges="plan-chamfers">';
+  b+=line(x+C,Y+C,x+C,Y+D-C)+line(x+W-C,Y+C,x+W-C,Y+D-C);
+  for(const yy of [Y+C,Y+D-C])b+=line(x+C,yy,A-gap,yy)+line(A+gap,yy,B-gap,yy)+line(B+gap,yy,x+W-C,yy);
+  b+='</g>';
+ }
  for(const yy of [Y+T/2,Y+D-T/2])for(const [a,end] of [[x,x+p.screwLength*s],[x+W,x+W-p.screwLength*s]]){const r=p.screwDiameter*s/2;b+=line(a,yy-r,end,yy-r,'hidden')+line(a,yy+r,end,yy+r,'hidden')+line(Math.min(a,end)-2,yy,Math.max(a,end)+2,yy,'axis');}
  b+=dh(x+T,x+W-T,Y+T,111,f(m.clear)+' licht')+dv(Y,Y+D,x,16,f(p.width))+dv(Y+T,Y+D-T,x+W,x+W+10,f(m.insideWidth)+' licht');
  b+=text(181,116,'STÜCKLISTE · FERTIGMASSE','bold');m.parts.forEach((v,i)=>{b+=text(181,123+i*7,`${v.quantity} ${v.name}: ${f(v.length)} × ${f(v.width)} × ${f(v.thickness)}`,'small');});
- const notes=['Massive Buche, unbehandelt; L in Faserrichtung.','12 Konfirmatschrauben: Gewinde außen Ø '+f(p.screwDiameter),`Länge ${f(p.screwLength)}; Kopf Ø ${f(p.headDiameter)}.`, 'Schrauben schematisch. Rahmen ohne Boden.',`Fasen ${f(p.chamfer)} × 45° und Ausnahmen siehe Blatt 2.`,'Stufenbohrer mit Senker passend zur Schraube.', 'Herstellerangaben beachten; Reststück prüfen.'];
- notes.forEach((v,i)=>b+=text(181,141+i*6,v,'small'));
+ const notes=['Massive Buche, unbehandelt; L in Faserrichtung.','12 Konfirmatschrauben: Gewinde außen Ø '+f(p.screwDiameter),`Länge ${f(p.screwLength)}; Kopf Ø ${f(p.headDiameter)}.`, 'Schrauben schematisch. Rahmen ohne Boden.',`Außenfase ${f(p.chamfer)} × 45°; Details siehe Blatt 2.`, `Äußere V-Fugen: ${f(2*p.jointChamfer)} breit, ${f(p.jointChamfer)} tief.`,'Stufenbohrer mit Senker passend zur Schraube.', 'Herstellerangaben beachten; Reststück prüfen.'];
+ notes.forEach((v,i)=>b+=text(181,141+i*5.5,v,'small'));
  b+=line(181,190,206,190)+line(181,189,181,191)+line(206,189,206,191)+text(210,191,'Kontrolle: 25 mm auf Papier','small');
  const first=frame(1,'Backrahmen · Gesamtansichten · M '+ratio,b);
  // Plan detail of a representative outside corner at actual paper scale.
