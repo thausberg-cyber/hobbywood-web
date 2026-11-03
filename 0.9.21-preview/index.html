@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev20</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev20.1</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev20 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev20.1 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev20';
+const APP_VERSION='0.9.21-dev20.1';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1494,8 +1494,23 @@ function drawingImport(project={},kind){
    const screw=s.match(new RegExp('Konfirmatschrauben?\\s*:?\\s*(?:Ø\\s*)?'+number+'\\s*[×x]\\s*'+number+unit,'i'));if(screw)add('screwLength',drawingNumber(screw[2])*(screw[3].toLowerCase()==='cm'?10:1),s);
    const positions=s.match(/(?:Schraubenpositionen|Schraubenhöhen|Höhen ab Oberkante)\s*:?\s*(\d+(?:[.,]\d+)?)\s*(?:\/|,\s+)(\d+(?:[.,]\d+)?)\s*(?:\/|,\s+|und)\s*(\d+(?:[.,]\d+)?)\s*(mm|cm)\s*(?:von|ab)?\s*(?:der\s*)?Oberkante/i)||s.match(/Schraubenpositionen\s*:?\s*(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+)\s*mm\s*ab\s*Oberkante/i);
    if(positions){const u=positions[4]?.toLowerCase()==='cm'?10:1;['screwTop','screwMiddle','screwBottom'].forEach((k,i)=>add(k,drawingNumber(positions[i+1])*u,s));}
-   const phase=s.match(/(?:Außenfase|Fase)\s*:\s*(\d+(?:[.,]\d+)?)\s*mm\s*(?:bei|×|x)\s*45\s*°/i);if(phase)add('chamfer',drawingNumber(phase[1]),s);
+   const phase=s.match(/^\s*(?:Außenfase|Fase)\s*:\s*(\d+(?:[.,]\d+)?)\s*mm\s*(?:bei|×|x)\s*45\s*°/i);if(phase)add('chamfer',drawingNumber(phase[1]),s);
    const joint=s.match(/äußere[n]? Stoßkanten\s*(?::|erhalten)?\s*(?:je(?:weils)?\s*)?(\d+(?:[.,]\d+)?)\s*mm\s*(?:Fase\s*)?(?:bei|×|x)\s*45\s*°/i);if(joint)add('jointChamfer',drawingNumber(joint[1]),s);
+   // Natural edge rule: preserve the explicitly named exceptions.
+   const angles=[...new Set([...s.matchAll(/(\d+(?:[.,]\d+)?)\s*°/g)].map(x=>drawingNumber(x[1])))];
+   const sizes=[...s.matchAll(/\bFase(?:n)?\s*(?:von\s*)?(\d+(?:[.,]\d+)?)\s*(mm|cm)\b/ig),...s.matchAll(/(\d+(?:[.,]\d+)?)\s*[-‑–]?\s*(mm|cm)\s*[-‑–]\s*Fase(?:n)?\b/ig)].map(x=>drawingNumber(x[1])*(x[2].toLowerCase()==='cm'?10:1));
+   const distinctSizes=[...new Set(sizes)];
+   if(angles.length===1&&angles[0]===45&&distinctSizes.length===1){
+    const value=distinctSizes[0],all=/\balle(?:n)?\s+Kanten\b/i.test(s);
+    const exception=s.match(/(?:außer|ausgenommen|mit Ausnahme)[^.]*?(?=erhalten|bekommen|werden|$)/i)?.[0]||'';
+    const innerException=/Innenkanten|Innenfugen/i.test(exception);
+    const jointException=/Stoß|Anschluss|Verbindungs/i.test(exception);
+    if(/Außenkanten|Außenfase/i.test(s)||all&&innerException)add('chamfer',value,s);
+    if(/äußeren?\s+Stoßkanten/i.test(s)&&!jointException||all&&innerException&&!jointException)add('jointChamfer',value,s);
+    if(all&&innerException&&jointException)add('jointChamfer',0,s);
+   }
+   if(/(?:Stoß|Anschluss)kanten[^.]{0,45}bleiben ungefast/i.test(s)&&!/äußeren?[^.]{0,30}(?:Fase|gefast)/i.test(s))add('jointChamfer',0,s);
+
   }else{
    const count=s.match(/(?:Anzahl Gläser\s*\/\s*Sacklöcher|Anzahl Sacklöcher)\s*:\s*(\d+)\s*(?:Stück)?/i);if(count)add('count',Number(count[1]),s);
   }
