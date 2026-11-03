@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev18.2</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev18.3</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev18.2 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev18.3 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev18.2';
+const APP_VERSION='0.9.21-dev18.3';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1315,7 +1315,7 @@ function drawingPages(model,{title='Werkzeichnung',status='Entwurf - Maße noch 
  const {p,clear:L,shelfDepth:D,railBottom,positions,parts,margin,edgeDepth,edgeInsertion,scale:s}=model;
  const {f,e,n,line,text,rect,circle,cross,dh,dv,warn}=svgTools();
  const ratio=s===1?'1:1':`1:${f(1/s)}`;
- const frame=(page,name,body)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 297 210" role="img" aria-label="${e(name)}"><style>text{font-family:Arial,sans-serif;font-size:2.6px;fill:#111;stroke:none}line,path,rect,circle{stroke:#111;stroke-width:.25;fill:none}.body{stroke-width:.5}.hidden{stroke-dasharray:2 1}.axis{stroke-dasharray:5 1 1 1;stroke-width:.18}.bold{font-weight:700}.small{font-size:2.1px}.measure{paint-order:stroke;stroke:white;stroke-width:1.2px;stroke-linejoin:round;fill:#111}.white{fill:white}.hatch{fill:url(#hatch)}.warning{fill:#fff}</style><defs><pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M -1 1 L 1 -1 M 0 4 L 4 0 M 3 5 L 5 3"/></pattern></defs>${rect(6,5,285,200)}${text(11,12,'look, talk ’n build','bold')}${text(286,12,`A4 quer · Blatt ${page}/2`,'small','end')}${text(11,20,name,'bold')}${line(6,24,291,24)}${body}${line(6,200,291,200)}${text(11,204,'Alle Maße in mm · Druck: 100 % / Originalgröße','small')}${text(286,204,'Entwurf · DIN-919-Abgleich offen','small','end')}</svg>`;
+ const frame=(page,name,body)=>`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="${e(name)}"><style>text{font-family:Arial,sans-serif;font-size:2.6px;fill:#111;stroke:none}line,path,rect,circle{stroke:#111;stroke-width:.25;fill:none}.body{stroke-width:.5}.hidden{stroke-dasharray:2 1}.axis{stroke-dasharray:5 1 1 1;stroke-width:.18}.bold{font-weight:700}.small{font-size:2.1px}.measure{paint-order:stroke;stroke:white;stroke-width:1.2px;stroke-linejoin:round;fill:#111}.white{fill:white}.hatch{fill:url(#hatch)}.warning{fill:#fff}</style><defs><pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M -1 1 L 1 -1 M 0 4 L 4 0 M 3 5 L 5 3"/></pattern></defs>${rect(6,5,285,200)}${text(11,12,'look, talk ’n build','bold')}${text(286,12,`A4 quer · Blatt ${page}/2`,'small','end')}${text(11,20,name,'bold')}${line(6,24,291,24)}${body}${line(6,200,291,200)}${text(11,204,'Alle Maße in mm · Druck: 100 % / Originalgröße','small')}${text(286,204,'Entwurf · DIN-919-Abgleich offen','small','end')}</svg>`;
  const fx=20,by=123,top=by-p.height*s,side=239,ty=147,t=p.thickness*s;
  const joint=(x,y,dir)=>{
   const a=x-dir*p.faceDepth*s,b=x+dir*edgeInsertion*s,end=x+dir*edgeDepth*s,r=p.dowelDiameter*s/2;
@@ -1373,14 +1373,54 @@ function drawingPages(model,{title='Werkzeichnung',status='Entwurf - Maße noch 
  [`${p.count} × Ø ${f(p.pocketDiameter)}; Tiefe ${f(p.pocketDepth)}`,`Freier Abstand: ${f(p.gap)}`,`Achse mittig: ${f(D/2)}`].forEach((v,i)=>b+=text(220,51+i*5,v,'small'));
  b+=text(220,80,'STÜCKLISTE · FERTIGMASSE','bold');
  parts.forEach((part,i)=>{b+=text(220,88+i*13,`${part.quantity} ${part.name}`,'bold')+text(220,93+i*13,`${f(part.length)} × ${f(part.width)} × ${f(part.thickness)}`,'small');});
- b+=text(220,133,`8 Dübel Ø ${f(p.dowelDiameter)} × ${f(p.dowelLength)}`,`Dübelachsen mittig: ${f(p.thickness/2)}`,'small');
+ b+=text(220,133,`8 Dübel Ø ${f(p.dowelDiameter)} × ${f(p.dowelLength)}`,'small');
+ b+=text(220,138,`Dübelachsen mittig: ${f(p.thickness/2)}`,'small');
  if(model.risk.length){b+=rect(151,140,57,45)+warn(156,146)+text(161,147,'ACHTUNG - BOHRBEREICH','small bold');
  ['Dübelbohrung und äußeres Sackloch', 'liegen eng beieinander.', 'Positionen und Bohrtiefen einhalten.', 'Verlaufen / zu tiefes Bohren kann', 'zum Durchbruch führen.', 'Tiefenanschlag verwenden.'].forEach((v,i)=>b+=text(154,154+i*4.5,v,'small'));}
  return [first,frame(2,'Ablageboden · Bohrbild, Schnitt und Stückliste',b)];
 }
 function drawingPrintHtml(model,options={}){
  const pages=drawingPages(model,options);const warnings=model.warnings.map(drawingEscape).join(' · ');
- return `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Werkzeichnung</title><style>@page{size:A4 landscape;margin:0}*{box-sizing:border-box}body{margin:0;background:#ddd;font-family:Arial,sans-serif}.actions{padding:16px;background:#fff}button{padding:10px;margin:4px}.page{width:297mm;height:210mm;margin:12px auto;background:#fff}.page img{display:block;width:297mm;height:210mm}@media print{body{background:white}.actions{display:none}.page{margin:0;break-after:page;page-break-after:always}.page:last-child{break-after:auto;page-break-after:auto}}</style><\/head><body><div class="actions"><button onclick="(async()=>{this.disabled=true;try{await Promise.all(Array.from(document.images,i=>i.decode?i.decode().catch(()=>{}):Promise.resolve()));if(document.fonts)await document.fonts.ready;window.print()}finally{this.disabled=false}})()">Drucken / als PDF speichern</button><button onclick="window.close()">Schließen</button><p>A4 quer · Originalgröße / 100 % · Browser-Kopf- und Fußzeilen ausschalten.</p><p>${warnings}</p></div>${pages.map((svg,i)=>`<section class="page"><img alt="Werkzeichnung Blatt ${i+1}" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}"></section>`).join('')}<\/body><\/html>`;
+ return `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Werkzeichnung</title><style>@page{size:A4 landscape;margin:0}*{box-sizing:border-box}body{margin:0;background:#ddd;font-family:Arial,sans-serif}.actions{padding:16px;background:#fff}button{padding:10px;margin:4px}.page{width:297mm;height:210mm;margin:12px auto;background:#fff}.page img{display:block;width:297mm;height:210mm}@media print{body{background:white}.actions{display:none}.page{margin:0;break-after:page;page-break-after:always}.page:last-child{break-after:auto;page-break-after:auto}}</style><\/head><body><div class="actions"><button onclick="window.close()">Schließen</button><p>Bildschirmvorschau. Zum Drucken in der App „A4-PDF herunterladen“ wählen und die PDF-Datei öffnen. Originalgröße / 100 %.</p><p>${warnings}</p></div>${pages.map((svg,i)=>`<section class="page"><img alt="Werkzeichnung Blatt ${i+1}" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}"></section>`).join('')}<\/body><\/html>`;
+}
+
+// Offline PDF packaging. Each A4 page contains one 300-dpi drawing image.
+function drawingPdfBytes(images){
+ if(!Array.isArray(images)||!images.length||images.length>2)throw Error('Eine oder zwei Zeichnungsseiten erforderlich.');
+ const encoder=new TextEncoder(),chunks=[],offsets=[0];let length=0;
+ const add=value=>{const bytes=typeof value==='string'?encoder.encode(value):value;chunks.push(bytes);length+=bytes.length;};
+ const object=(id,value)=>{offsets[id]=length;add(`${id} 0 obj\n`);add(value);add('\nendobj\n');};
+ const stream=(id,dict,data)=>{offsets[id]=length;add(`${id} 0 obj\n<< ${dict} /Length ${data.length} >>\nstream\n`);add(data);add('\nendstream\nendobj\n');};
+ const width=297*72/25.4,height=210*72/25.4,total=2+images.length*3;
+ add('%PDF-1.4\n');add(new Uint8Array([37,226,227,207,211,10]));
+ object(1,'<< /Type /Catalog /Pages 2 0 R >>');
+ object(2,`<< /Type /Pages /Count ${images.length} /Kids [${images.map((_,i)=>`${4+i*3} 0 R`).join(' ')}] >>`);
+ images.forEach((im,i)=>{
+  if(!(im.bytes instanceof Uint8Array)||im.bytes.length<4||im.bytes[0]!==255||im.bytes[1]!==216||!Number.isSafeInteger(im.width)||!Number.isSafeInteger(im.height)||im.width<1||im.height<1)throw Error('Zeichnungsbild konnte nicht als JPEG erstellt werden.');
+  const image=3+i*3,page=image+1,content=image+2;
+  stream(image,`/Type /XObject /Subtype /Image /Width ${im.width} /Height ${im.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode`,im.bytes);
+  object(page,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${width.toFixed(6)} ${height.toFixed(6)}] /Resources << /XObject << /Drawing ${image} 0 R >> >> /Contents ${content} 0 R >>`);
+  stream(content,'',encoder.encode(`q\n${width.toFixed(6)} 0 0 ${height.toFixed(6)} 0 0 cm\n/Drawing Do\nQ\n`));
+ });
+ const xref=length;add(`xref\n0 ${total+1}\n0000000000 65535 f \n`);for(let i=1;i<=total;i++)add(`${String(offsets[i]).padStart(10,'0')} 00000 n \n`);
+ add(`trailer\n<< /Size ${total+1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+ const result=new Uint8Array(length);let cursor=0;for(const chunk of chunks){result.set(chunk,cursor);cursor+=chunk.length;}return result;
+}
+async function drawingPdfBlob(model,options={}){
+ const images=[];
+ for(const svg of drawingPages(model,options)){
+  const img=new Image();
+  await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Zeichnung konnte nicht rechtzeitig geladen werden.')),20000);img.onload=()=>{clearTimeout(timer);resolve()};img.onerror=()=>{clearTimeout(timer);reject(Error('Zeichnung konnte nicht geladen werden.'))};img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);});
+  const canvas=document.createElement('canvas');canvas.width=3508;canvas.height=2480;
+  try{
+   const ctx=canvas.getContext('2d');if(!ctx)throw Error('PDF-Bild konnte nicht vorbereitet werden.');
+   ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+   const uri=canvas.toDataURL('image/jpeg',.98);if(!uri.startsWith('data:image/jpeg'))throw Error('JPEG-Ausgabe für PDF nicht verfügbar.');
+   const raw=atob(uri.slice(uri.indexOf(',')+1)),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+   images.push({bytes,width:canvas.width,height:canvas.height});
+  }finally{canvas.width=0;canvas.height=0;img.src='';}
+ }
+ return new Blob([drawingPdfBytes(images)],{type:'application/pdf'});
 }
 
 // Per-project drafts retain typed values even while other panes refresh.
@@ -1420,16 +1460,25 @@ function wdRender(){
  const params=wdParams();
  if(!params){box.innerHTML='<h3>Werkzeichnung</h3><p>Die erste Zeichenvorlage ist das gemeinsam erarbeitete Gewürzbord mit rechteckigen Holzbauteilen. Sie wird mit eigenen Maßen an dieses Projekt angepasst.</p><p class="hint">Die Ausgangswerte stammen aus unserem Muster. Sie sind keine aus dem Projektfoto ermittelten Maße. Weitere Konstruktionen folgen später.</p><button class="secondary" id="wdStart">Gewürzbord als Ausgangsmodell</button>';$('#wdStart').onclick=()=>{current.woodDrawingDraft={...DRAWING_DEFAULTS};wdRender()};return;}
  const input=([key,label])=>`<label class="wdField" for="wd-${key}"><span>${esc(label)}${key==='count'?'':' (mm)'}</span><input id="wd-${key}" data-wd="${key}" inputmode="decimal" value="${esc(params[key]??'')}" autocomplete="off"></label>`;
- box.innerHTML=`<h3>Werkzeichnung · Gewürzbord</h3><p>Gesamtmaß ändern: Ablageboden und Rücksteg erhalten automatisch dieselbe lichte Länge. Materialdicke, Rücksprünge und Verbindungsmaße werden gesondert geführt.</p><div class="wdFields">${DRAWING_FIELDS.slice(0,8).map(input).join('')}</div><details><summary>Bohrungen, Dübel und Stropp bearbeiten</summary><div class="wdFields">${DRAWING_FIELDS.slice(8).map(input).join('')}</div></details><p class="hint">Rücksteg hinten bündig. Lochabstand und Anzahl bleiben fest; zusätzliche Breite verteilt sich auf beide Endränder. Holzart, Wandbefestigung und Tragfähigkeit sind separat zu klären.</p><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input type="checkbox" id="wdConfirmed"> Ich habe Maße, Bezüge und Bohrungen für dieses Projekt geprüft.</label><div class="composerActions"><button id="wdSave" class="primary">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-Werkzeichnung öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>`;
+ box.innerHTML=`<h3>Werkzeichnung · Gewürzbord</h3><p>Gesamtmaß ändern: Ablageboden und Rücksteg erhalten automatisch dieselbe lichte Länge. Materialdicke, Rücksprünge und Verbindungsmaße werden gesondert geführt.</p><div class="wdFields">${DRAWING_FIELDS.slice(0,8).map(input).join('')}</div><details><summary>Bohrungen, Dübel und Stropp bearbeiten</summary><div class="wdFields">${DRAWING_FIELDS.slice(8).map(input).join('')}</div></details><p class="hint">Rücksteg hinten bündig. Lochabstand und Anzahl bleiben fest; zusätzliche Breite verteilt sich auf beide Endränder. Holzart, Wandbefestigung und Tragfähigkeit sind separat zu klären.</p><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input type="checkbox" id="wdConfirmed"> Ich habe Maße, Bezüge und Bohrungen für dieses Projekt geprüft.</label><div class="composerActions"><button id="wdSave" class="primary">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="wdOpenPreview" class="ghost">Große Vorschau öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>`;
  $('#wdConfirmed').checked=!!current.woodDrawing?.confirmed&&drawingStatus(current)==='checked'&&wdSame(params,current.woodDrawing.params);
- box.querySelectorAll('[data-wd]').forEach(el=>el.addEventListener('input',()=>{current.woodDrawingDraft={...wdParams(),[el.dataset.wd]:el.value};$('#wdConfirmed').checked=false;wdPreview();}));
+ box.querySelectorAll('[data-wd]').forEach(el=>el.addEventListener('input',()=>{current.woodDrawingDraft={...wdParams(),[el.dataset.wd]:el.value};$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';wdPreview();}));
  $('#wdConfirmed').onchange=()=>wdPreview();
  $('#wdSave').onclick=wdSave;
- $('#wdPrint').onclick=()=>{
-  const m=buildDrawing(wdParams()),saved=current.woodDrawing;
-  if(!m.ok||!saved||!wdSame(wdParams(),saved.params)||drawingStatus(current)==='stale'||$('#wdConfirmed').checked!==!!saved.confirmed)return alert('Bitte die Maße zuerst übernehmen und speichern.');
-  openPrintableHtml(drawingPrintHtml(m,{title:wdTitle(),status:wdStateText()}));
+ $('#wdOpenPreview').onclick=()=>{const m=buildDrawing(wdParams());if(m.ok)openPrintableHtml(drawingPrintHtml(m,{title:wdTitle(),status:wdStateText()}));};
+ $('#wdPrint').onclick=async()=>{
+  const project=current,m=buildDrawing(wdParams()),saved=project.woodDrawing;
+  if(!m.ok||!saved||!wdSame(wdParams(),saved.params)||drawingStatus(project)==='stale'||$('#wdConfirmed').checked!==!!saved.confirmed)return alert('Bitte die Maße zuerst übernehmen und speichern.');
+  const button=$('#wdPrint'),status=$('#wdSaveStatus'),source=drawingSource(project);button.disabled=true;status.textContent='A4-PDF wird erstellt …';
+  try{
+   const blob=await drawingPdfBlob(m,{title:wdTitle(),status:wdStateText(project)});
+   if(current!==project||!wdSame(wdParams(project),m.p)||drawingSource(project)!==source)throw Error('Projekt oder Maße wurden geändert. Bitte erneut übernehmen und PDF erstellen.');
+   const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=safeProjectFilename(wdTitle())+'-Werkzeichnung-A4.pdf';link.textContent='PDF herunterladen';
+   status.textContent='PDF bereit. In Vorschau oder Acrobat öffnen und mit Originalgröße / 100 % drucken. ';status.appendChild(link);link.click();setTimeout(()=>URL.revokeObjectURL(url),300000);
+  }catch(e){if(current===project)status.textContent='PDF konnte nicht erstellt werden: '+e.message;}
+  finally{if(button.isConnected){button.disabled=false;if(current===project)wdPreview();}}
  };
+
  wdPreview();
 }
 function wdPreview(){
