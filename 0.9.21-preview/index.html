@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev18.1</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev18.2</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev18.1 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev18.2 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev18.1';
+const APP_VERSION='0.9.21-dev18.2';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1000,8 +1000,9 @@ async function reconstruct(){
 $('#reconstructBtn').onclick=reconstruct;$('#refreshProject').onclick=reconstruct;
 // Translate technical values only for display; saved data and API enums remain intact.
 function germanDisplayText(value){
- const words={direction_basis:'Richtungsbezug',direction:'Richtung',unknown:'noch zu klären',middle_layer:'Mittellagenrichtung',surface:'Decklagenrichtung',fiber:'Faserrichtung',neutral:'richtungsneutral'};
- return String(value??'').split(/(https?:\/\/[^\s<>]+)/g).map(part=>/^https?:\/\//.test(part)?part:part.replace(/\b(direction_basis|middle_layer|direction|unknown|surface|fiber|neutral)\b/gi,word=>words[word.toLowerCase()])).join('');
+ const words={direction_basis:'Richtungsbezug',direction:'Richtung',unknown:'noch zu klären',middle_layer:'Mittellagenrichtung',surface:'Decklagenrichtung',fiber:'Faserrichtung',neutral:'richtungsneutral',frontsetback:'Rücksprung der Boden-Vorderkante gegenüber den Seiten-Vorderkanten',bottomoffset:'Abstand der Boden-Unterseite über den Seiten-Unterkanten',railheight:'Höhe des Rückstegs',railtopoffset:'Abstand der Rücksteg-Oberkante unter den Seiten-Oberkanten',pocketdiameter:'Sacklochdurchmesser',pocketdepth:'Sacklochtiefe',minendmargin:'Mindestabstand zwischen Brettende und Sacklochkante',doweldiameter:'Dübeldurchmesser',dowellength:'Dübellänge',doweledge:'Dübelachsabstand von der Bauteilkante',facedepth:'Tiefe der Flächenbohrung',glueallowance:'Leimzugabe der Kantenbohrung',corddiameter:'Stroppdurchmesser',cordheight:'Höhe der Stroppachse über der Seiten-Unterkante',cordfront:'Abstand der Stroppachse hinter der Seiten-Vorderkante',dowelfacedepth:'Tiefe der Flächenbohrung',doweledgedepth:'Tiefe der Kantenbohrung'};
+ const terms=new RegExp('\\b('+Object.keys(words).join('|')+')\\b','gi');
+ return String(value??'').split(/(https?:\/\/[^\s<>]+)/g).map(part=>/^https?:\/\//.test(part)?part:part.replace(terms,word=>words[word.toLowerCase()])).join('');
 }
 function escGerman(value){return esc(germanDisplayText(value))}
 function renderTable(items){if(!items?.length)return '<p>Keine Angaben.</p>';return `<table><tr><th>Bauteil / Material</th><th>Menge</th><th>Angabe</th></tr>${items.map(x=>`<tr><td>${esc(x.item||x.name||'')}</td><td>${esc(x.quantity||'')}</td><td>${escGerman(x.spec||x.details||'')}</td></tr>`).join('')}</table>`}
@@ -1394,7 +1395,22 @@ function wdKnowledge(project){
  if(!project.woodDrawing)return project.knowledge||'';
  const m=buildDrawing(project.woodDrawing.params);
  if(!m.ok)return project.knowledge||'';
- return (project.knowledge||'')+'\n\nSeparat eingegebene Werkzeichnungsmaße (keine Foto-Schätzung): '+JSON.stringify({type:'Gewürzbord mit hinten bündigem Rücksteg',confirmed:project.woodDrawing.confirmed,params:m.p,parts:m.parts,dowelFaceDepth:m.p.faceDepth,dowelEdgeDepth:m.edgeDepth,warnings:m.warnings})+'\nDiese Maße haben für das geometrische Modell Vorrang. Widersprüche zum Gespräch ausdrücklich nennen, nicht stillschweigend überschreiben. Befestigung, Holzart und Tragfähigkeit sind damit nicht geklärt.';
+ const p=m.p,f=drawingFormat;
+ const dimensions=DRAWING_FIELDS.map(([k,label])=>label+': '+f(p[k])+(k==='count'?' Stück':' mm')+'.');
+ const references=[
+  'Vorder- und Unterkanten beider Seitenteile sind die Bezugskanten.',
+  'Die Vorderkante des Ablagebodens liegt '+f(p.frontSetback)+' mm hinter den Vorderkanten der Seitenteile.',
+  'Die Unterseite des Ablagebodens liegt '+f(p.bottomOffset)+' mm über den Unterkanten der Seitenteile.',
+  'Die Hinterkante des Ablagebodens und die Rückseite des Rückstegs sind bündig mit den Hinterkanten der Seitenteile.',
+  'Die Oberkante des Rückstegs liegt '+f(p.railTopOffset)+' mm unter den Oberkanten der Seitenteile; seine Unterkante liegt '+f(m.railBottom)+' mm über deren Unterkanten.',
+  'Ablageboden und Rücksteg liegen zwischen den Seitenteilen. Ihre lichte Länge ist Gesamtbreite minus zweimal Materialdicke: '+f(m.clear)+' mm.',
+  'Sacklochachsen liegen mittig in der Bodentiefe: '+f(m.shelfDepth/2)+' mm ab Boden-Vorderkante. Beide freien Endränder: '+f(m.margin)+' mm.',
+  'Dübelachsen liegen mittig in der Materialdicke: '+f(p.thickness/2)+' mm. Der Kantenabstand '+f(p.dowelEdge)+' mm bezieht sich auf die beiden äußeren Kanten der jeweiligen Stirnfläche von Boden bzw. Rücksteg.',
+  'Dübel: '+f(p.faceDepth)+' mm in der Fläche, '+f(m.edgeInsertion)+' mm in der Kante; Kantenbohrung '+f(m.edgeDepth)+' mm tief einschließlich '+f(p.glueAllowance)+' mm Leimzugabe.',
+  'Stroppachse: '+f(p.cordHeight)+' mm über der Seiten-Unterkante und '+f(p.cordFront)+' mm hinter der Seiten-Vorderkante.'
+ ];
+ const parts=m.parts.map(v=>v.quantity+' '+v.name+': '+[v.length,v.width,v.thickness].map(f).join(' × ')+' mm (L × B × D).');
+ return (project.knowledge||'')+'\n\nGespeichertes Werkzeichnungsmodell: Gewürzbord. '+(project.woodDrawing.confirmed?'Maße wurden vom Benutzer bestätigt.':'Maßentwurf, noch nicht vom Benutzer bestätigt.')+'\n'+dimensions.concat(references,parts,m.warnings).join('\n')+'\nDie oben erläuterten Bezugskanten sind in dieser Vorlage eindeutig festgelegt. Dazu keine erneute Klärungsfrage stellen, sofern der Benutzer keinen Widerspruch oder eine Änderung nennt. Nur verständliche deutsche Bezeichnungen verwenden. Bei Widersprüchen zum Gespräch gezielt nachfragen. Gespeicherte Zeichnungsmaße nicht stillschweigend überschreiben. Holzart, Wandbefestigung und Tragfähigkeit sind damit nicht geklärt.';
 }
 function wdSame(a,b){return DRAWING_FIELDS.every(([k])=>drawingNumber(a?.[k])===drawingNumber(b?.[k]))}
 function wdTitle(){return current.customTitle||current.title||'Gewürzbord'}
