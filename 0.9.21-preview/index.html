@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev22</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev23</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev22 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev23 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev22';
+const APP_VERSION='0.9.21-dev23';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1501,7 +1501,7 @@ function frameDrawingPages(m,{title='Backrahmen',status='Entwurf - Maße noch be
 
 // Rectangular sheet-material carcass. Constraints are Tom's rules; sample choices
 // (40 mm front/rear margin, 1 mm panel clearance, 2 mm collision clearance) stay explicit.
-const CORPUS_OPTIONS=Object.freeze({boardMaterial:['Holzwerkstoffplatte','Spanplatte','Sperrholz','MDF'],backMaterial:['Sperrholz','Holzfaserplatte','Holzwerkstoffplatte'],backFastening:['offen','genagelt','geschraubt'],referenceEdge:['hinten','vorne']});
+const CORPUS_OPTIONS=Object.freeze({boardMaterial:['Holzwerkstoffplatte','Spanplatte','Sperrholz','MDF'],backMaterial:['Sperrholz','Holzfaserplatte','Holzwerkstoffplatte'],backFastening:['offen','genagelt','geschraubt'],referenceEdge:['hinten','vorne'],jointType:['Runddübel','Flachdübel'],biscuitSize:['0','10','20']});
 const CORPUS_FIELDS=[['width','Außenbreite'],['height','Außenhöhe'],['depth','Außentiefe'],['thickness','Korpus: Plattendicke'],['boardMaterial','Korpus: Werkstoff'],['backMaterial','Rückwand: Werkstoff'],['backThickness','Rückwand: Dicke'],['liningThickness','Kork innen: Dicke (0 = ohne)'],['backClearance','Rückwand: Einbauluft je Rand'],['backFastening','Rückwand: Befestigung'],['dowelDiameter','Dübel: Durchmesser'],['dowelLength','Dübel: Länge'],['faceDepth','Flächenbohrung: Tiefe'],['glueAllowance','Kantenbohrung: Leimzugabe'],['frontDowelMargin','Dübel: Randabstand vorn'],['rearDowelMargin','Dübel: Mindest-Randabstand hinten'],['fastenerDiameter','Rückwandbefestigung: Durchmesser (0 = offen)'],['fastenerLength','Rückwandbefestigung: Länge (0 = offen)']];
 const CORPUS_DEFAULTS=Object.freeze({kind:'carcass-v1',width:600,height:720,depth:350,thickness:18,boardMaterial:'Spanplatte',backMaterial:'Sperrholz',backThickness:6,liningThickness:0,backClearance:1,backFastening:'genagelt',dowelDiameter:8,dowelLength:30,faceDepth:12,glueAllowance:2,frontDowelMargin:40,rearDowelMargin:40,fastenerDiameter:0,fastenerLength:0});
 const CORPUS_K02=Object.freeze({...CORPUS_DEFAULTS,width:900,height:600,depth:420,backThickness:18,liningThickness:2,backFastening:'geschraubt',fastenerDiameter:3,fastenerLength:40});
@@ -1512,24 +1512,29 @@ function corpusEvenPositions(start,end,maxGap){
 }
 function buildCorpusDrawing(input){
  const p={kind:'carcass-v1'},errors=[],warnings=[],pending=[],adjustments=[];
- for(const [k,label]of CORPUS_FIELDS){
+ const flat=input?.jointType==='Flachdübel';if(flat)p.jointType='Flachdübel';
+ if(input?.jointType&&!CORPUS_OPTIONS.jointType.includes(input.jointType))errors.push('Eckverbindung: Auswahl festlegen.');
+ for(const [k,label]of corpusFields({...input,kind:'carcass-v1'})){
   if(CORPUS_OPTIONS[k]){p[k]=input?.[k];if(!CORPUS_OPTIONS[k].includes(p[k]))errors.push(label+': Auswahl festlegen.');}
   else{p[k]=drawingNumber(input?.[k]);if(!Number.isFinite(p[k])||p[k]<0||p[k]>10000)errors.push(label+': gültigen Wert eingeben.');}
  }
  if(errors.length)return{ok:false,errors,warnings,pending,adjustments};
- for(const k of ['width','height','depth','thickness','backThickness','dowelDiameter','dowelLength','faceDepth'])if(p[k]<=0)errors.push(CORPUS_FIELDS.find(v=>v[0]===k)[1]+': muss größer als null sein.');
- if(p.thickness<12||p.thickness>40)errors.push('Korpusmodell unterstützt Plattendicken von 12 bis 40 mm.');
+ for(const k of ['width','height','depth','thickness','backThickness',...(flat?[]:['dowelDiameter','dowelLength','faceDepth'])])if(p[k]<=0)errors.push(CORPUS_FIELDS.find(v=>v[0]===k)[1]+': muss größer als null sein.');
+ if(p.thickness<(flat?9:12)||p.thickness>40)errors.push('Korpusmodell unterstützt hier Plattendicken von '+(flat?9:12)+' bis 40 mm.');
  if(p.backThickness>40||p.liningThickness>20)errors.push('Rückwand bis 40 mm und Kork bis 20 mm werden unterstützt.');
  const t=p.thickness,clear=p.width-2*t,insideHeight=p.height-2*t,rebateWidth=2*t/3,rebateDepth=p.backThickness+3,backFront=p.depth-rebateDepth,backOutside=p.depth-3,usableDepth=backFront-p.liningThickness;
  const backWidth=clear+2*rebateWidth-2*p.backClearance,backHeight=insideHeight+2*rebateWidth-2*p.backClearance,backOrigin=t-rebateWidth+p.backClearance;
- const edgeInsertion=p.dowelLength-p.faceDepth,edgeDepth=edgeInsertion+p.glueAllowance,fastenerEdge=rebateWidth/2;
+ const biscuit=flat?BISCUIT_PROFILES[p.biscuitSize]:null,edgeInsertion=flat?biscuit.width/2:p.dowelLength-p.faceDepth,edgeDepth=flat?biscuit.cutDepth:edgeInsertion+p.glueAllowance,fastenerEdge=rebateWidth/2;
+ if(flat){if(p.biscuitMargin<40||p.biscuitMargin>50)errors.push('Flachdübel: gewünschter Endabstand zur Mitte muss 40 bis 50 mm betragen.');if(t<biscuit.minFaceThickness)errors.push('Größe '+p.biscuitSize+': Hersteller-Mindestdicke für Flächenfräsung '+biscuit.minFaceThickness+' mm unterschritten.');if(2*edgeDepth>=clear)errors.push('Gegenüberliegende Fräsnuten passen nicht in die Bodenlänge.');}
  if(clear<=0||insideHeight<=0||usableDepth<=0||backWidth<=0||backHeight<=0)errors.push('Außenmaße sind für Platten, Falz und Belag zu klein.');
  if(p.backClearance>=rebateWidth/2)errors.push('Einbauluft lässt zu wenig Auflage im Rückwandfalz.');
+ if(!flat){
  if(p.dowelDiameter>t/2+1e-8)errors.push('Dübeldurchmesser darf höchstens 50 % der Plattendicke betragen.');
  if(p.faceDepth>2*t/3+1e-8)errors.push('Flächenbohrung darf höchstens 2/3 der Plattendicke tief sein.');
  if(edgeInsertion<=0||edgeDepth<=0||2*edgeDepth>=clear)errors.push('Dübellänge oder gegenüberliegende Kantenbohrungen passen nicht zur Bodenlänge.');
  if(p.dowelLength>60||edgeDepth>50)errors.push('Diese Zeichenvorlage unterstützt Dübellängen bis 60 mm und Kantenbohrungen bis 50 mm.');
  if(p.glueAllowance>2)errors.push('Kantenbohrung darf höchstens Restdübellänge plus 2 mm betragen.');
+ }
  const fasteningKnown=p.backFastening!=='offen'&&p.fastenerDiameter>0&&p.fastenerLength>0;
  if(p.backFastening==='offen')pending.push('Rückwandbefestigung festlegen.');
  else if(!fasteningKnown)pending.push('Durchmesser und Länge der Rückwandbefestigung festlegen (0 = offen).');
@@ -1542,15 +1547,31 @@ function buildCorpusDrawing(input){
  }
  // Keep the rear dowel bore envelope outside the entire rear fastening depth zone.
  // A conservative 2 mm free gap plus fastener radius, rounded to 10 mm, is an explicit model choice.
- let rearMargin=p.rearDowelMargin;
+ let rearMargin=flat?p.biscuitMargin:p.rearDowelMargin,positions=[],fastenerRows={horizontal:[],vertical:[]},fastenerCount=0;
+ if(flat){
+  const half=biscuit.slotLength/2,rebateNeed=Math.ceil((rebateDepth+half+2)/5)*5;
+  rearMargin=Math.max(rearMargin,rebateNeed);
+  if(fasteningKnown)rearMargin=Math.max(rearMargin,Math.ceil((p.fastenerLength+3+half+p.fastenerDiameter/2+2)/10)*10);
+  if(rearMargin>p.biscuitMargin)adjustments.push('Hinterer Flachdübel-Endabstand von '+drawingFormat(p.biscuitMargin)+' auf '+drawingFormat(rearMargin)+' mm vergrößert: Fräsnut von Rückwandfalz und Befestigungszone freihalten.');
+  const last=p.depth-rearMargin,span=last-p.biscuitMargin;
+  if(span<=biscuit.slotLength+1e-8)errors.push('Mindestens zwei getrennte Flachdübelnuten passen mit den Endabständen nicht in die Bauteiltiefe.');
+  if(p.biscuitMargin<=half||last+half>=backFront)errors.push('Fräsnut würde am Werkstückende oder im Rückwandfalz austreten.');
+  if(!errors.length){positions=corpusEvenPositions(p.biscuitMargin,last,150);if(positions.length>100||positions.some((v,i)=>i&&v-positions[i-1]<=biscuit.slotLength))errors.push('Flachdübelnuten überlagern sich oder es werden zu viele benötigt.');if(positions.some((v,i)=>i&&v-positions[i-1]<100))warnings.push('Kurze Verbindung: Flachdübelabstand unter dem Richtbereich 100 bis 150 mm. Nutabstände und Belastung prüfen.');}
+  warnings.push('Herstellerprofil Lamello: Größe '+p.biscuitSize+', Frästiefe '+drawingFormat(biscuit.cutDepth)+' mm je Werkstück, 4-mm-Nut mit Ø100-mm-Fräser. Keine zusätzliche Runddübel-Leimzugabe.');
+  warnings.push('Restmaterial hinter der Flächenfräsung: '+drawingFormat(t-biscuit.cutDepth)+' mm. Die 2/3-Bohrgrenze gilt hier ausschließlich für Runddübel.');
+  if(t-biscuit.cutDepth<3)warnings.push('Geringes Restmaterial hinter der Flächenfräsung: sorgfältige Maschineneinstellung und Probefräsung erforderlich.');
+ }else{
  if(fasteningKnown){const needed=Math.ceil((p.fastenerLength+3+p.dowelDiameter/2+p.fastenerDiameter/2+2)/10)*10;rearMargin=Math.max(rearMargin,needed);}
  if(rearMargin>p.rearDowelMargin)adjustments.push('Hinterer Dübel-Randabstand von '+drawingFormat(p.rearDowelMargin)+' auf '+drawingFormat(rearMargin)+' mm vergrößert: Abstand zu Rückwandbefestigungen.');
  const last=p.depth-rearMargin;
  if(p.frontDowelMargin<=p.dowelDiameter/2||last>=backFront-p.dowelDiameter/2||last<=p.frontDowelMargin)errors.push('Dübel-Randabstände passen nicht zwischen Vorderkante und Rückwandfalz.');
- let positions=[],fastenerRows={horizontal:[],vertical:[]},fastenerCount=0;
  if(!errors.length){
   positions=corpusEvenPositions(p.frontDowelMargin,last,120);
   if(positions.length>100||positions.some((v,i)=>i&&v-positions[i-1]<=p.dowelDiameter))errors.push('Dübelbohrungen überlagern sich oder es werden zu viele benötigt.');
+
+  }
+ }
+ if(!errors.length){
   if(p.backFastening!=='offen'){
    if(backWidth<=60||backHeight<=60)errors.push('Rückwand ist für 30 mm Endabstand zu klein.');
    else{fastenerRows={horizontal:corpusEvenPositions(30,backWidth-30,200),vertical:corpusEvenPositions(30,backHeight-30,200)};fastenerCount=2*(fastenerRows.horizontal.length+fastenerRows.vertical.length);if(fastenerCount>400)errors.push('Zu viele Rückwandbefestigungen.');}
@@ -1560,16 +1581,16 @@ function buildCorpusDrawing(input){
  const scale=[.2,.1,.05].find(s=>p.width*s<=120&&p.height*s<=144&&p.depth*s<=70);
  if(!scale)errors.push('Korpus passt in den unterstützten Maßstäben nicht auf das A4-Blatt.');
  warnings.push('Nur rechteckige Holzwerkstoff-Korpusse: Seiten durchgehend, Ober- und Unterboden dazwischen, Rückwand gefälzt.');
- warnings.push('Einbauluft und Dübel-Randabstände sind einstellbare Modellannahmen. Automatische Verlegung nutzt 2 mm Freiraum und Rundung auf 10 mm.');
+ warnings.push(flat?'Einbauluft und Endabstand sind Modellwerte. Endabstand: Werkstückende bis Nutmitte. Automatische Verlegung berücksichtigt die volle Fräsnut, 2 mm Freiraum und Rundung.':'Einbauluft und Dübel-Randabstände sind einstellbare Modellannahmen. Automatische Verlegung nutzt 2 mm Freiraum und Rundung auf 10 mm.');
  warnings.push('Kork nur innerhalb der lichten Öffnung; Zuschnittspiel, Verklebung, Kantenbearbeitung, Aufstellung und Tragfähigkeit gesondert prüfen.');
  if(!fasteningKnown)warnings.push('Kollisionsprüfung mit Rückwandbefestigungen ist bis zur Größenwahl unvollständig. Nur als unbestätigten Entwurf speichern.');
  const parts=[{id:'side',name:'Korpusseite',quantity:2,length:p.height,width:p.depth,thickness:t,material:p.boardMaterial},{id:'bottom',name:'Ober- / Unterboden',quantity:2,length:clear,width:p.depth,thickness:t,material:p.boardMaterial},{id:'back',name:'Rückwand',quantity:1,length:backHeight,width:backWidth,thickness:p.backThickness,material:p.backMaterial}];
  if(p.liningThickness>0)parts.push({id:'lining',name:'Korkbelag innen (lichtes Nennmaß)',quantity:1,length:insideHeight,width:clear,thickness:p.liningThickness,material:'Kork'});
- return{ok:!errors.length,errors:[...new Set(errors)],warnings,pending,adjustments,confirmable:!errors.length&&!pending.length,p,kind:p.kind,clear,insideHeight,rebateWidth,rebateDepth,backFront,backOutside,usableDepth,backWidth,backHeight,backOrigin,edgeInsertion,edgeDepth,fastenerEdge,fastenerRows,fastenerCount,fasteningKnown,rearMargin,positions,dowelCount:positions.length*4,parts,scale};
+ return{ok:!errors.length,errors:[...new Set(errors)],warnings,pending,adjustments,confirmable:!errors.length&&!pending.length,p,kind:p.kind,clear,insideHeight,rebateWidth,rebateDepth,backFront,backOutside,usableDepth,backWidth,backHeight,backOrigin,edgeInsertion,edgeDepth,fastenerEdge,fastenerRows,fastenerCount,fasteningKnown,rearMargin,positions,dowelCount:flat?0:positions.length*4,connectorCount:positions.length*4,biscuit:flat?{...biscuit,size:p.biscuitSize}:null,jointType:flat?'Flachdübel':'Runddübel',parts,scale};
 }
 function corpusDrawingPages(m,{title='Korpus',status='Entwurf - Maße noch bestätigen'}={}){
  if(!m.ok)throw Error(m.errors.join('\n'));
- const {p}=m,{f,e,n,line,text,rect,circle,cross,dh,dv}=svgTools(),s=m.scale,t=p.thickness,W=p.width*s,H=p.height*s,D=p.depth*s,T=t*s,ratio='1:'+f(1/s);
+ const p=corpusRenderParams(m),{f,e,n,line,text,rect,circle,cross,dh,dv}=svgTools(),s=m.scale,t=p.thickness,W=p.width*s,H=p.height*s,D=p.depth*s,T=t*s,ratio='1:'+f(1/s);
  const path=(pts,cls='body')=>`<path class="${cls}" d="${pts.map(([a,b],i)=>(i?'L ':'M ')+n(a)+' '+n(b)).join(' ')} Z"/>`;
  const notes=(x,y,rows,size='small',step=5)=>rows.map((v,i)=>text(x,y+i*step,v,size)).join('');
  const frame=(page,name,b)=>corpusSvgFrame(page,name,b,{title,status});
@@ -1585,17 +1606,18 @@ function corpusDrawingPages(m,{title='Korpus',status='Entwurf - Maße noch best�
  b+=text(z,41,'ANSICHT VON LINKS · M '+ratio,'bold')+rect(z,y,D,H,'body')+dh(z,z+D,y,37,f(p.depth));
  for(const h of [t,p.height-t])b+=line(z,y+h*s,z+D,y+h*s,'hidden');
  for(const d of [m.usableDepth,m.backFront,m.backOutside])b+=line(z+d*s,y+T,z+d*s,y+H-T,'hidden');
- for(const h of [t/2,p.height-t/2])for(const d of m.positions){const xx=z+d*s,yy=y+h*s;b+=circle(xx,yy,p.dowelDiameter*s/2,'hidden')+cross(xx,yy,1);}
+ for(const h of [t/2,p.height-t/2])for(const d of m.positions){const xx=z+d*s,yy=y+h*s;b+=(m.biscuit?rect(xx-m.biscuit.slotLength*s/2,yy-2*s,m.biscuit.slotLength*s,4*s,'hidden'):circle(xx,yy,p.dowelDiameter*s/2,'hidden'))+cross(xx,yy,1);}
  const chain=[0,...m.positions,p.depth];
  for(let i=0;i<chain.length-1;i++)b+=dh(z+chain[i]*s,z+chain[i+1]*s,y+H,y+H+7,f(chain[i+1]-chain[i]));
- b+=notes(x+T+6,H<60?y+H+18:y+22,[m.dowelCount+' Dübel Ø '+f(p.dowelDiameter)+' × '+f(p.dowelLength), 'Fläche '+f(p.faceDepth)+' tief; Kante '+f(m.edgeDepth)+' tief.', 'Achsen mittig: '+f(t/2)+' ab Ober-/Unterkante.', 'Dübelpositionen ab Vorderkante; Maße siehe Seitenansicht.', 'Rückwand '+f(p.backThickness)+'; Kork innen '+f(p.liningThickness)+'.', 'Rückwand '+p.backFastening+'.', 'Nutztiefe: '+f(m.usableDepth)+'. Details 1:1 auf Blatt 2.']);
- b+=notes(z+4,H<60?y+H+18:y+24,['Bohrungen verdeckt dargestellt.', 'Rückwand außen 3 zurückgesetzt.', 'Falz '+f(m.rebateWidth)+' breit × '+f(m.rebateDepth)+' tief.', 'Kork innerhalb der lichten Öffnung.']);
+ b+=notes(x+T+6,H<60?y+H+18:y+22,[m.biscuit?m.connectorCount+' Flachdübel Gr. '+m.biscuit.size:m.dowelCount+' Dübel Ø '+f(p.dowelDiameter)+' × '+f(p.dowelLength), m.biscuit?'Nut 4 breit; Fläche / Kante je '+f(m.biscuit.cutDepth)+' tief.':'Fläche '+f(p.faceDepth)+' tief; Kante '+f(m.edgeDepth)+' tief.', 'Achsen mittig: '+f(t/2)+' ab Ober-/Unterkante.', 'Dübelpositionen ab Vorderkante; Maße siehe Seitenansicht.', 'Rückwand '+f(p.backThickness)+'; Kork innen '+f(p.liningThickness)+'.', 'Rückwand '+p.backFastening+'.', 'Nutztiefe: '+f(m.usableDepth)+'. Details 1:1 auf Blatt 2.']);
+ b+=notes(z+4,H<60?y+H+18:y+24,[m.biscuit?'Nuten verdeckt dargestellt.':'Bohrungen verdeckt dargestellt.', 'Rückwand außen 3 zurückgesetzt.', 'Falz '+f(m.rebateWidth)+' breit × '+f(m.rebateDepth)+' tief.', 'Kork innerhalb der lichten Öffnung.']);
  const first=frame(1,'Korpus · Gesamtansichten · M '+ratio,b);
  // Second sheet: plan and rear elevations above, actual-size joint sections below.
  const px=24,py=45,rs=[.1,.05,.02].find(v=>m.backWidth*v<=95&&m.backHeight*v<=72),rx=180,ry=45;
  b=text(px,40,'DRAUFSICHT · M '+ratio,'bold')+rect(px,py,W,D,'body')+line(px+T,py,px+T,py+D,'body')+line(px+W-T,py,px+W-T,py+D,'body');
  for(const d of [m.usableDepth,m.backFront,m.backOutside])b+=line(px+T,py+d*s,px+W-T,py+d*s,'hidden');
- for(const d of m.positions)for(const [a,end]of [[px+(t-p.faceDepth)*s,px+(t+m.edgeDepth)*s],[px+(p.width-t-m.edgeDepth)*s,px+(p.width-t+p.faceDepth)*s]])for(const sign of [-1,1])b+=line(a,py+(d+sign*p.dowelDiameter/2)*s,end,py+(d+sign*p.dowelDiameter/2)*s,'hidden');
+ if(m.biscuit){for(const d of m.positions)for(const xx of [px+T,px+W-T])b+=biscuitSlotPath(xx,py+d*s,m.biscuit,s);}
+ else for(const d of m.positions)for(const [a,end]of [[px+(t-p.faceDepth)*s,px+(t+m.edgeDepth)*s],[px+(p.width-t-m.edgeDepth)*s,px+(p.width-t+p.faceDepth)*s]])for(const sign of [-1,1])b+=line(a,py+(d+sign*p.dowelDiameter/2)*s,end,py+(d+sign*p.dowelDiameter/2)*s,'hidden');
  b+=dh(px,px+W,py,35,f(p.width))+dv(py,py+D,px,15,f(p.depth));
  if(rs){
   b+=text(rx,40,'RÜCKANSICHT · M 1:'+f(1/rs),'bold')+rect(rx,ry,m.backWidth*rs,m.backHeight*rs,'body')+dh(rx,rx+m.backWidth*rs,ry,35,f(m.backWidth))+dv(ry,ry+m.backHeight*rs,rx+m.backWidth*rs,rx+m.backWidth*rs+8,f(m.backHeight));
@@ -1605,14 +1627,14 @@ function corpusDrawingPages(m,{title='Korpus',status='Entwurf - Maße noch best�
   for(const d of m.fastenerRows.vertical)for(const a of [m.fastenerEdge,m.backWidth-m.fastenerEdge])b+=symbol(rx+a*rs,ry+d*rs);
   b+=notes(rx+5,ry+20,[p.backFastening==='offen'?'Befestigung noch offen.':m.fastenerCount+' Befestigungen; '+p.backFastening+'.', 'Endabstand: 30 ab Rückwandkante.', 'Querrandabstand: '+f(m.fastenerEdge)+'.', 'Achsabstand höchstens 200.', m.fasteningKnown?'Größe Ø '+f(p.fastenerDiameter)+' × '+f(p.fastenerLength)+'.':'Befestigungsgröße noch offen.', p.liningThickness?'Korkfläche innen: '+f(m.clear)+' × '+f(m.insideHeight)+'.':'Ohne Korkbelag.'],'small',4.5);
  }
- b+=notes(24,py+D+6,['Falzraum: '+f(m.backWidth+2*p.backClearance)+' × '+f(m.backHeight+2*p.backClearance)+'. Einbauluft je Rand: '+f(p.backClearance)+'.', 'Dübel je Ecke: '+m.positions.length+'; Rand vorn / hinten: '+f(p.frontDowelMargin)+' / '+f(m.rearMargin)+'.']);
+ b+=notes(24,py+D+6,['Falzraum: '+f(m.backWidth+2*p.backClearance)+' × '+f(m.backHeight+2*p.backClearance)+'. Einbauluft je Rand: '+f(p.backClearance)+'.', (m.biscuit?'Flachdübel':'Dübel')+' je Ecke: '+m.positions.length+'; Rand vorn / hinten: '+f(p.frontDowelMargin)+' / '+f(m.rearMargin)+'.']);
  b+=corpusJointDetails(m);
  return[first,frame(2,'Korpus · Ansichten und Verbindungsdetails',b)];
 }
 
 function corpusSvgFrame(page,name,b,{title,status}){const {f,e,n,line,text,rect,circle,cross,dh,dv}=svgTools();return `<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="${e(name)}"><style>text{font-family:Arial,sans-serif;font-size:2.6px;fill:#111;stroke:none}line,path,rect,circle{stroke:#111;stroke-width:.25;fill:none}.body{stroke-width:.5}.hidden{stroke-width:.18;stroke-dasharray:2 1}.axis{stroke-width:.13;stroke-dasharray:4 1 1 1}.bold{font-weight:700}.small{font-size:2.2px}.measure{paint-order:stroke;stroke:white;stroke-width:1;fill:#111}.hatchA{fill:url(#ha);stroke-width:.5}.hatchB{fill:url(#hb);stroke-width:.5}.white{fill:white}.cork{fill:#ddd}</style><defs><pattern id="ha" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M -1 1 L 1 -1 M 0 3 L 3 0 M 2 4 L 4 2" style="stroke-width:.13"/></pattern><pattern id="hb" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M -1 2 L 1 4 M 0 0 L 3 3 M 2 -1 L 4 1" style="stroke-width:.13"/></pattern></defs>${rect(6,5,285,200)}${text(11,12,"look, talk ’n build",'bold')}${text(286,12,'A4 quer · Blatt '+page+'/2','small','end')}${text(11,20,name,'bold')}${line(6,24,291,24)}${text(11,30,title,'small')}${text(286,30,status,'small','end')}${b}${line(6,200,291,200)}${text(11,204,'Alle Maße in mm · 100 % / Originalgröße','small')}${text(286,204,'Entwurf · DIN-919-Abgleich offen','small','end')}</svg>`;}
 
-function corpusJointDetails(m){const {p}=m,t=p.thickness,{f,n,line,text,rect,circle,dh,dv}=svgTools();let b='';const path=(pts,cls='body')=>`<path class="${cls}" d="${pts.map(([a,b],i)=>(i?'L ':'M ')+n(a)+' '+n(b)).join(' ')} Z"/>`;const notes=(x,y,rows,size='small',step=5)=>rows.map((v,i)=>text(x,y+i*step,v,size)).join('');
+function corpusJointDetails(m){if(m.biscuit)return biscuitJointDetails(m)+corpusRearDetail(m);const {p}=m,t=p.thickness,{f,n,line,text,rect,circle,dh,dv}=svgTools();let b='';const path=(pts,cls='body')=>`<path class="${cls}" d="${pts.map(([a,b],i)=>(i?'L ':'M ')+n(a)+' '+n(b)).join(' ')} Z"/>`;const notes=(x,y,rows,size='small',step=5)=>rows.map((v,i)=>text(x,y+i*step,v,size)).join('');
  // Dowel section. A bore and the actual dowel end are shown separately.
  const a=25,top=140,r=p.dowelDiameter/2,axis=top+t/2,bodyW=Math.max(80,t+m.edgeDepth+8),bodyH=Math.max(40,t+4);
  b+=text(a,129,'DÜBELVERBINDUNG · VERTIKALSCHNITT M 1:1','bold');
@@ -1621,21 +1643,7 @@ function corpusJointDetails(m){const {p}=m,t=p.thickness,{f,n,line,text,rect,cir
  b+=rect(start,axis-r,end-start,2*r,'white')+line(dowelEnd,axis-r,dowelEnd,axis+r)+line(start-3,axis,end+3,axis,'axis');
  b+=dh(start,dowelEnd,axis-r,top-4,f(p.dowelLength)+' Dübellänge')+dh(start,a+t,axis+r,top+t+7,f(p.faceDepth)+' Fläche')+dh(a+t,end,axis+r,top+t+14,f(m.edgeDepth)+' Kante');
  b+=notes(126,143,['Ø '+f(p.dowelDiameter)+' × '+f(p.dowelLength),'Achsen mittig: '+f(t/2), 'Leimzugabe: '+f(p.glueAllowance), 'Restholz: '+f(t-p.faceDepth), 'Max. Dübelabstand: 120.','Befestigungssymbole schematisch.'],'small',5);
- // Rear rebate horizontal section: choose crop long enough for the full fastener.
- const ax=204,top2=124,L=m.fasteningKnown?p.fastenerLength:p.backThickness+10,cropFront=Math.min(m.backOutside-L-5,m.backFront-p.liningThickness-5),seat=m.backFront-cropFront,back=m.backOutside-cropFront,outer=p.depth-cropFront,cw=Math.max(66,t+25),seatX=t-m.rebateWidth,bo=seatX+p.backClearance;
- b+=text(190,120,'RÜCKWANDFALZ · HORIZONTALSCHNITT M 1:1','bold');
- b+=path([[ax,top2],[ax+t,top2],[ax+t,top2+seat],[ax+seatX,top2+seat],[ax+seatX,top2+outer],[ax,top2+outer]],'hatchA');
- b+=rect(ax+bo,top2+seat,cw-bo,p.backThickness,'hatchB');
- if(p.liningThickness)b+=rect(ax+t,top2+seat-p.liningThickness,cw-t,p.liningThickness,'cork')+text(ax+t+8,top2+seat-p.liningThickness-2,f(p.liningThickness)+' Kork innen','small');
- for(let q=0;q<5;q++)b+=line(ax+cw-1,top2+seat+q*p.backThickness/4,ax+cw+1,top2+seat+q*p.backThickness/4+2);
- if(m.fasteningKnown){const xx=ax+bo+m.fastenerEdge,head=top2+back,tip=head-L,fr=p.fastenerDiameter/2;
-  b+=p.backFastening==='geschraubt'?path([[xx,tip],[xx-fr,tip+3],[xx-fr,head-2],[xx-2*fr,head],[xx+2*fr,head],[xx+fr,head-2],[xx+fr,tip+3]],'white'):path([[xx,tip],[xx-fr,tip+3],[xx-fr,head],[xx+fr,head],[xx+fr,tip+3]],'white')+line(xx-2*fr,head,xx+2*fr,head);
-  b+=line(xx,tip-2,xx,head+2,'axis')+dv(tip,head,xx,ax-13,f(L));
- }
- b+=dv(top2+seat,top2+outer,ax+seatX,ax-6,f(m.rebateDepth)+' Falztiefe')+dv(top2+seat,top2+back,ax+cw,ax+cw+5,f(p.backThickness))+dv(top2+back,top2+outer,ax+cw,ax+cw+12,'3');
- b+=dh(ax+seatX,ax+t,top2+outer,top2+outer+6,f(m.rebateWidth))+dh(ax,ax+t,top2+outer,top2+outer+13,f(t));
- b+=line(25,193,75,193)+line(25,192,25,194)+line(75,192,75,194)+text(79,194,'Kontrolle: 50 mm auf Papier','small');
- b+=text(191,198,'Befestigung schematisch; Einbauluft als Modellannahme.','small');
+ b+=corpusRearDetail(m);
  return b;
 }
 
@@ -1659,7 +1667,9 @@ function corpusProfileDepth(profile,height,side='left'){
 }
 function buildWritingDrawing(input){
  const p={kind:'writing-carcass-v1'},errors=[],warnings=[];
- for(const [k,label]of WRITING_FIELDS){
+ if(input?.jointType==='Flachdübel')p.jointType='Flachdübel';
+ if(input?.jointType&&!CORPUS_OPTIONS.jointType.includes(input.jointType))errors.push('Eckverbindung: Auswahl festlegen.');
+ for(const [k,label]of corpusFields({...input,kind:'writing-carcass-v1'})){
   if(CORPUS_OPTIONS[k]){p[k]=input?.[k];if(!CORPUS_OPTIONS[k].includes(p[k]))errors.push(label+': Auswahl festlegen.');}
   else{p[k]=drawingNumber(input?.[k]);if(!Number.isFinite(p[k])||p[k]<0||p[k]>10000)errors.push(label+': gültigen Wert eingeben.');}
  }
@@ -1690,7 +1700,7 @@ function buildWritingDrawing(input){
  warnings.push('Seiten aus Holzwerkstoffplatten: gerade Schräge mit unterem senkrechtem Abschnitt; hintere Bezugskanten senkrecht.');
  warnings.push(...upper.warnings.filter(v=>!v.startsWith('Nur rechteckige')));
  warnings.push('Seitenmaße der Materialliste sind Rohrechtecke. Profil nach Zeichnung ausschneiden; Wandbefestigung und Tragfähigkeit separat prüfen.');
- return {...upper,p,kind:p.kind,ok:!errors.length,errors:[...new Set(errors)],warnings,profile,scale,topPositions,bottomPositions,dowelCount:2*(topPositions.length+bottomPositions.length),parts,backBottom,backTop,topBottom,bottomTop,usableTopDepth:upper.usableDepth,usableBottomDepth:lower.usableDepth,clear:upper.clear,insideHeight:upper.insideHeight,kinkGap:p.kinkHeight-bottomTop,detailModel:upper,confirmable:!errors.length&&upper.confirmable&&lower.confirmable,adjustments:[...new Set(upper.adjustments.concat(lower.adjustments))]};
+ return {...upper,p,kind:p.kind,ok:!errors.length,errors:[...new Set(errors)],warnings,profile,scale,topPositions,bottomPositions,dowelCount:upper.biscuit?0:2*(topPositions.length+bottomPositions.length),connectorCount:2*(topPositions.length+bottomPositions.length),parts,backBottom,backTop,topBottom,bottomTop,usableTopDepth:upper.usableDepth,usableBottomDepth:lower.usableDepth,clear:upper.clear,insideHeight:upper.insideHeight,kinkGap:p.kinkHeight-bottomTop,detailModel:upper,confirmable:!errors.length&&upper.confirmable&&lower.confirmable,adjustments:[...new Set(upper.adjustments.concat(lower.adjustments))]};
 }
 function corpusProfileSvg(profile){
  if(!profile?.ok)return '';
@@ -1700,7 +1710,7 @@ function corpusProfileSvg(profile){
 }
 function writingDrawingPages(m,{title='Schreibkorpus',status='Entwurf – Maße noch bestätigen'}={}){
  if(!m.ok)throw Error(m.errors.join('\n'));
- const {p}=m,{f,n,line,text,rect,circle,cross,dh,dv}=svgTools(),s=m.scale,t=p.thickness,x=24,y=46,z=184,W=p.width*s,H=p.height*s,T=t*s;
+ const p=corpusRenderParams(m),{f,n,line,text,rect,circle,cross,dh,dv}=svgTools(),s=m.scale,t=p.thickness,x=24,y=46,z=184,W=p.width*s,H=p.height*s,T=t*s;
  const ratio='1:'+f(1/s),notes=(a,b,rows,step=5)=>rows.map((v,i)=>text(a,b+i*step,v,'small')).join('');
  const contour=(a,b,side,cls)=>`<path data-profile="${side}" d="${m.profile[side].points.map(([d,h],i)=>(i?'L ':'M ')+n(a+d*s)+' '+n(b+(p.height-h)*s)).join(' ')} Z" class="${cls}"/>`;
  const frame=(page,name,b)=>corpusSvgFrame(page,name,b,{title,status});
@@ -1716,19 +1726,20 @@ function writingDrawingPages(m,{title='Schreibkorpus',status='Entwurf – Maße 
  if(p.depth!==p.rightDepth)b+=contour(z,y,'right','hidden');
  b+=rect(z,y+topY*s,p.topBoardDepth*s,t*s,'hidden')+rect(z,y+bottomY*s,p.bottomBoardDepth*s,t*s,'hidden');
  for(const d of [3,3+p.backThickness,3+p.backThickness+p.liningThickness])b+=line(z+d*s,y+(p.height-m.backTop)*s,z+d*s,y+(p.height-m.backBottom)*s,'hidden');
- for(const [h,ps]of [[topY+t/2,m.topPositions],[bottomY+t/2,m.bottomPositions]])for(const d of ps)b+=circle(z+d*s,y+h*s,p.dowelDiameter*s/2,'hidden')+cross(z+d*s,y+h*s,1);
+ for(const [h,ps]of [[topY+t/2,m.topPositions],[bottomY+t/2,m.bottomPositions]])for(const d of ps)b+=(m.biscuit?rect(z+(d-m.biscuit.slotLength/2)*s,y+(h-2)*s,m.biscuit.slotLength*s,4*s,'hidden'):circle(z+d*s,y+h*s,p.dowelDiameter*s/2,'hidden'))+cross(z+d*s,y+h*s,1);
  const chain=(ps,end,dimY,origin)=>{let v=[0,...ps,end],out='';for(let i=1;i<v.length;i++)out+=dh(z+v[i-1]*s,z+v[i]*s,origin,dimY,f(v[i]-v[i-1]));return out;};
  b+=chain(m.topPositions,p.topBoardDepth,37,y+topY*s)+chain(m.bottomPositions,p.bottomBoardDepth,y+H+7,y+(bottomY+t)*s);
  b+=dh(z,z+p.depth*s,y+H,y+H+15,f(p.depth)+' links');
  b+=dv(y+(p.height-p.kinkHeight)*s,y+H,z+p.depth*s,z+Math.max(p.depth,p.rightDepth)*s+7,f(p.kinkHeight)+' Knick');
- b+=notes(24,132,['Senkrechte Bezugskanten: hinten. Alle Tiefen ab hinterer Korpuskante.', 'Seiten oben '+f(p.sideTopDepth)+'; unten links '+f(p.depth)+', rechts '+f(p.rightDepth)+'.', 'Oberboden '+f(p.topBoardDepth)+' tief, '+f(p.topOffset)+' unter Seitenoberkante.', 'Unterboden '+f(p.bottomBoardDepth)+' tief, '+f(p.bottomOffset)+' über Seitenunterkante.', 'Bodendicke '+f(t)+'; Bodenoberkante unten '+f(m.bottomTop)+'; bis Knick '+f(m.kinkGap)+'.', 'Dübel je oberer Ecke '+m.topPositions.length+', je unterer Ecke '+m.bottomPositions.length+'; insgesamt '+m.dowelCount+'.', 'Flächenbohrung '+f(p.faceDepth)+'; Kantenbohrung '+f(m.edgeDepth)+'; Achsen mittig '+f(t/2)+'.', 'Dübelpositionen: Seitenansicht, obere / untere Maßkette ab hinten.']);
+ b+=notes(24,132,['Senkrechte Bezugskanten: hinten. Alle Tiefen ab hinterer Korpuskante.', 'Seiten oben '+f(p.sideTopDepth)+'; unten links '+f(p.depth)+', rechts '+f(p.rightDepth)+'.', 'Oberboden '+f(p.topBoardDepth)+' tief, '+f(p.topOffset)+' unter Seitenoberkante.', 'Unterboden '+f(p.bottomBoardDepth)+' tief, '+f(p.bottomOffset)+' über Seitenunterkante.', 'Bodendicke '+f(t)+'; Bodenoberkante unten '+f(m.bottomTop)+'; bis Knick '+f(m.kinkGap)+'.', (m.biscuit?'Flachdübel Gr. '+m.biscuit.size:'Dübel')+' je oberer Ecke '+m.topPositions.length+', je unterer Ecke '+m.bottomPositions.length+'; insgesamt '+m.connectorCount+'.', m.biscuit?'Nut 4 breit; Frästiefe je Werkstück '+f(m.biscuit.cutDepth)+'; mittig '+f(t/2)+'.':'Flächenbohrung '+f(p.faceDepth)+'; Kantenbohrung '+f(m.edgeDepth)+'; Achsen mittig '+f(t/2)+'.', 'Dübelpositionen: Seitenansicht, obere / untere Maßkette ab hinten.']);
  b+=notes(184,143,['Rückwand '+f(p.backThickness)+'; Kork '+f(p.liningThickness)+'.','Rückwand '+p.backFastening+'.', 'Nutztiefe oben '+f(m.usableTopDepth)+'.', 'Nutztiefe unten '+f(m.usableBottomDepth)+'.','Details M 1:1 auf Blatt 2.','Rechte Kontur gestrichelt, falls abweichend.']);
  const first=frame(1,'Schreibkorpus · Seitenprofil und Gesamtansichten · M '+ratio,b);
  const px=24,py=45,rx=180,ry=45,D=Math.max(p.depth,p.rightDepth)*s,rs=[.1,.05,.02].find(v=>p.width*v<=95&&p.height*v<=70);
  b=text(px,40,'DRAUFSICHT · M '+ratio,'bold')+rect(px,py,T,p.depth*s,'body')+rect(px+W-T,py,T,p.rightDepth*s,'body');
  b+=rect(px+T,py,m.clear*s,p.topBoardDepth*s,'body')+line(px+T,py+p.bottomBoardDepth*s,px+W-T,py+p.bottomBoardDepth*s,'body');
  for(const d of [3,3+p.backThickness,3+p.backThickness+p.liningThickness])b+=line(px+T,py+d*s,px+W-T,py+d*s,'hidden');
- for(const d of [...new Set(m.topPositions.concat(m.bottomPositions))])for(const [a,end]of [[px+(t-p.faceDepth)*s,px+(t+m.edgeDepth)*s],[px+(p.width-t-m.edgeDepth)*s,px+(p.width-t+p.faceDepth)*s]])for(const sign of [-1,1])b+=line(a,py+(d+sign*p.dowelDiameter/2)*s,end,py+(d+sign*p.dowelDiameter/2)*s,'hidden');
+ if(m.biscuit){for(const d of [...new Set(m.topPositions.concat(m.bottomPositions))])for(const xx of [px+T,px+W-T])b+=biscuitSlotPath(xx,py+d*s,m.biscuit,s);}
+ else for(const d of [...new Set(m.topPositions.concat(m.bottomPositions))])for(const [a,end]of [[px+(t-p.faceDepth)*s,px+(t+m.edgeDepth)*s],[px+(p.width-t-m.edgeDepth)*s,px+(p.width-t+p.faceDepth)*s]])for(const sign of [-1,1])b+=line(a,py+(d+sign*p.dowelDiameter/2)*s,end,py+(d+sign*p.dowelDiameter/2)*s,'hidden');
  b+=dh(px,px+W,py,35,f(p.width))+dv(py,py+D,px,15,f(Math.max(p.depth,p.rightDepth)));
  b+=notes(px,py+D+6,['Oberboden '+f(p.topBoardDepth)+' / Unterboden '+f(p.bottomBoardDepth)+' tief; Tiefen ab hinten.', 'Falz '+f(m.rebateWidth)+' × '+f(m.rebateDepth)+'; Einbauluft je Rand '+f(p.backClearance)+'.']);
  if(rs){
@@ -1745,12 +1756,70 @@ function writingDrawingPages(m,{title='Schreibkorpus',status='Entwurf – Maße 
  return [first,frame(2,'Schreibkorpus · Draufsicht, Rückansicht und Verbindungen',b)];
 }
 
+function corpusRearDetail(m){const {p}=m,t=p.thickness,{f,n,line,text,rect,dh,dv}=svgTools();let b='';const path=(pts,cls='body')=>`<path class="${cls}" d="${pts.map(([a,b],i)=>(i?'L ':'M ')+n(a)+' '+n(b)).join(' ')} Z"/>`;
+ // Rear rebate horizontal section: choose crop long enough for the full fastener.
+ const ax=204,top2=124,L=m.fasteningKnown?p.fastenerLength:p.backThickness+10,cropFront=Math.min(m.backOutside-L-5,m.backFront-p.liningThickness-5),seat=m.backFront-cropFront,back=m.backOutside-cropFront,outer=p.depth-cropFront,cw=Math.max(66,t+25),seatX=t-m.rebateWidth,bo=seatX+p.backClearance;
+ b+=text(190,120,'RÜCKWANDFALZ · HORIZONTALSCHNITT M 1:1','bold');
+ b+=path([[ax,top2],[ax+t,top2],[ax+t,top2+seat],[ax+seatX,top2+seat],[ax+seatX,top2+outer],[ax,top2+outer]],'hatchA');
+ b+=rect(ax+bo,top2+seat,cw-bo,p.backThickness,'hatchB');
+ if(p.liningThickness)b+=rect(ax+t,top2+seat-p.liningThickness,cw-t,p.liningThickness,'cork')+text(ax+t+8,top2+seat-p.liningThickness-2,f(p.liningThickness)+' Kork innen','small');
+ for(let q=0;q<5;q++)b+=line(ax+cw-1,top2+seat+q*p.backThickness/4,ax+cw+1,top2+seat+q*p.backThickness/4+2);
+ if(m.fasteningKnown){const xx=ax+bo+m.fastenerEdge,head=top2+back,tip=head-L,fr=p.fastenerDiameter/2;
+  b+=p.backFastening==='geschraubt'?path([[xx,tip],[xx-fr,tip+3],[xx-fr,head-2],[xx-2*fr,head],[xx+2*fr,head],[xx+fr,head-2],[xx+fr,tip+3]],'white'):path([[xx,tip],[xx-fr,tip+3],[xx-fr,head],[xx+fr,head],[xx+fr,tip+3]],'white')+line(xx-2*fr,head,xx+2*fr,head);
+  b+=line(xx,tip-2,xx,head+2,'axis')+dv(tip,head,xx,ax-13,f(L));
+ }
+ b+=dv(top2+seat,top2+outer,ax+seatX,ax-6,f(m.rebateDepth)+' Falztiefe')+dv(top2+seat,top2+back,ax+cw,ax+cw+5,f(p.backThickness))+dv(top2+back,top2+outer,ax+cw,ax+cw+12,'3');
+ b+=dh(ax+seatX,ax+t,top2+outer,top2+outer+6,f(m.rebateWidth))+dh(ax,ax+t,top2+outer,top2+outer+13,f(t));
+ b+=line(25,m.biscuit?197:193,75,m.biscuit?197:193)+line(25,m.biscuit?196:192,25,m.biscuit?198:194)+line(75,m.biscuit?196:192,75,m.biscuit?198:194)+text(79,m.biscuit?198:194,'Kontrolle: 50 mm auf Papier','small');
+ b+=text(191,198,'Befestigung schematisch; Einbauluft als Modellannahme.','small');
+ return b;
+}
+
+// Lamello original wood biscuits, Classic X / Top21 profile.
+// Manufacturer depths already contain the intended assembly/glue clearance.
+const BISCUIT_PROFILES=Object.freeze(Object.fromEntries([
+ ['0',47,15,8,9],['10',53,19,10,11],['20',56,23,12.3,13]
+].map(([size,length,width,cutDepth,minFaceThickness])=>[size,Object.freeze({length,width,thickness:4,cutDepth,minFaceThickness,cutterDiameter:100,slotLength:2*Math.sqrt(100*cutDepth-cutDepth*cutDepth)})])));
+const BISCUIT_FIELDS=[['biscuitSize','Flachdübel: Größe (Lamello)'],['biscuitMargin','Flachdübel: gewünschter Endabstand zur Mitte']];
+const ROUND_CORPUS_KEYS=new Set(['dowelDiameter','dowelLength','faceDepth','glueAllowance','frontDowelMargin','rearDowelMargin']);
+function corpusFields(params){
+ const fields=params?.kind==='writing-carcass-v1'?WRITING_FIELDS:CORPUS_FIELDS;
+ return params?.jointType==='Flachdübel'?fields.filter(([k])=>!ROUND_CORPUS_KEYS.has(k)).concat(BISCUIT_FIELDS):fields;
+}
+function biscuitRecommendation(thickness){
+ const t=drawingNumber(thickness);if(t>=9&&t<=12)return '0';if(t>12&&t<=15)return '10';if(t>=16&&t<=40)return '20';return null;
+}
+function corpusRenderParams(m){
+ return m.biscuit?{...m.p,dowelDiameter:4,dowelLength:m.biscuit.width,faceDepth:m.biscuit.cutDepth,glueAllowance:m.biscuit.cutDepth-m.biscuit.width/2,frontDowelMargin:m.p.biscuitMargin}:m.p;
+}
+function biscuitSlotPath(x,y,biscuit,scale=1,cls='hidden'){
+ const R=biscuit.cutterDiameter/2,d=biscuit.cutDepth,a=Math.acos((R-d)/R),pts=[];
+ for(let i=0;i<=32;i++){const v=Math.PI+a-2*a*i/32;pts.push([x+((R-d)+R*Math.cos(v))*scale,y+R*Math.sin(v)*scale]);}
+ for(let i=0;i<=32;i++){const v=a-2*a*i/32;pts.push([x+(-(R-d)+R*Math.cos(v))*scale,y+R*Math.sin(v)*scale]);}
+ const n=v=>Number(v.toFixed(4));return `<path data-machining="biscuit-slot" class="${cls}" d="${pts.map(([a,b],i)=>(i?'L ':'M ')+n(a)+' '+n(b)).join(' ')} Z"/>`;
+}
+function biscuitJointDetails(m){
+ const p=m.p,B=m.biscuit,t=p.thickness,{f,line,text,rect,dh,dv}=svgTools(),x=25,y=144,j=x+t,axis=y+t/2,cut=B.cutDepth,w=B.width,bodyH=Math.max(40,t),joint=120+t,cy=157;
+ let b=text(x,121,'FLACHDÜBEL · VERTIKALSCHNITT M 1:1','bold')+text(x,127,'Gr. '+B.size+' · '+f(B.length)+' × '+f(w)+' × 4','small')+text(x,132,'Frästiefe je Werkstück '+f(cut)+'; Rest '+f(t-cut)+'.','small');
+ b+=rect(x,y,t,bodyH,'hatchA')+rect(j,y,80-t,t,'hatchB');
+ b+=rect(j-cut,axis-2,2*cut,4,'white')+rect(j-w/2,axis-2,w,4)+line(j-cut-3,axis,j+cut+3,axis,'axis');
+ b+=dh(j-w/2,j+w/2,axis-2,y-7,f(w)+' Einsteckbreite')+dh(j-cut,j,axis+2,y+t+7,f(cut))+dh(j,j+cut,axis+2,y+t+7,f(cut));
+ b+=text(25,187,'Nut 4 breit; Nutmitte '+f(t/2)+' ab Ober-/Unterkante.','small');
+ b+=text(120,118,'NUT / FLACHDÜBEL · DRAUFSICHT M 1:1','small');
+ b+=rect(120,121,t,72,'hatchA')+rect(joint,121,180-joint,72,'hatchB')+biscuitSlotPath(joint,cy,B,1,'white');
+ b+=`<ellipse data-connector="biscuit" cx="${joint}" cy="${cy}" rx="${w/2}" ry="${B.length/2}" style="fill:#ddd;stroke:#111;stroke-width:.25"/>`;
+ b+=line(joint,122,joint,192,'axis')+line(121,cy,180,cy,'axis');
+ b+=dv(cy-B.length/2,cy+B.length/2,joint,113,f(B.length))+dv(cy-B.slotLength/2,cy+B.slotLength/2,joint,184,f(B.slotLength)+' Nut');
+ b+=text(120,198,'Dübelkontur schematisch; Nut aus Ø100-Fräser.','small');
+ return b;
+}
+
 // Read only the refreshed factual snapshot and, when current, the structured cut list.
 // No numbers are taken from old dialogue, free-form assumptions or a project photo.
 function drawingImport(project={},kind){
  project=project||{};const list=x=>Array.isArray(x)?x:[];
- const isFrame=kind==='bread-frame-v1',isWriting=kind==='writing-carcass-v1',isCorpus=isWriting||kind==='carcass-v1',fields=isWriting?WRITING_FIELDS:isCorpus?CORPUS_FIELDS:isFrame?FRAME_FIELDS:DRAWING_FIELDS,allowed=new Set(fields.map(([k])=>k)),found=new Map(),blocked=new Set(),issues=[];
- const add=(key,value,source)=>{if(!allowed.has(key)||(typeof value==='number'?(!Number.isFinite(value)||value<0||value>10000):!isCorpus||!CORPUS_OPTIONS[key]?.includes(value)))return;const rows=found.get(key)||[];rows.push({value,source});found.set(key,rows);};
+ const isFrame=kind==='bread-frame-v1',isWriting=kind==='writing-carcass-v1',isCorpus=isWriting||kind==='carcass-v1',fields=isCorpus?[['jointType','Eckverbindung'],...corpusFields({...project.woodDrawing?.params,...project.woodDrawingDraft,kind})]:isFrame?FRAME_FIELDS:DRAWING_FIELDS,allowed=new Set(fields.concat(isCorpus?BISCUIT_FIELDS:[]).map(([k])=>k)),found=new Map(),blocked=new Set(),issues=[];
+ const add=(key,value,source)=>{if(key==='biscuitSize'&&typeof value==='number')value=String(value);if(!allowed.has(key)||(typeof value==='number'?(!Number.isFinite(value)||value<0||value>10000):!isCorpus||!CORPUS_OPTIONS[key]?.includes(value)))return;const rows=found.get(key)||[];rows.push({value,source});found.set(key,rows);};
  const analysis=project.analysis||{},r=project.reconstruction||{};
  const snapshot=analysis.stateVersion===2;
  const planCurrent=snapshot&&r.planSchemaVersion===2&&r.sourceRevision===analysis.revision&&(!project.projectDirty||project.woodDrawing?.importSource===drawingImportSource(project));
@@ -1764,7 +1833,7 @@ function drawingImport(project={},kind){
   width:isFrame?['Außenbreite','Aussenbreite']:['Gesamtbreite','Außenbreite','Bordbreite'],depth:isFrame?['Außentiefe','Aussentiefe']:['Gesamttiefe','Außentiefe'],height:isFrame?['Außenhöhe','Aussenhöhe']:['Gesamthöhe','Außenhöhe'],thickness:isCorpus?['Korpus: Plattendicke','Korpusplatten','Korpusdicke','Plattendicke']:['Materialdicke','Materialstärke','Wandstärke','Wanddicke','Holzstärke','Holzdicke','Brettstärke'],
   screwDiameter:['Gewindeaußendurchmesser','Gewinde außen','Schraube: Gewinde außen'],screwLength:['Schraubenlänge','Schraube: Länge'],headDiameter:['Schraubenkopf(?:durchmesser)?','Kopf(?:durchmesser)?'],screwTop:['Obere Schraube: ab Oberkante'],screwMiddle:['Mittlere Schraube: ab Oberkante'],screwBottom:['Untere Schraube: ab Oberkante'],chamfer:['Außenfase(?: bei 45°)?'],jointChamfer:['Äußere Stoßkante: Fase(?: bei 45°)?','Stoßkantenfase'],
   frontSetback:['Boden: Rücksprung vorn'],bottomOffset:['Boden: Abstand unten'],railHeight:['Rücksteg: Höhe','Rücksteghöhe'],railTopOffset:['Rücksteg: Abstand oben'],pocketDiameter:['Sackloch: Durchmesser','Sacklochdurchmesser'],pocketDepth:['Sackloch: Tiefe','Sacklochtiefe'],gap:['Freier Abstand der Sacklöcher','Abstand zwischen den Bohrungen'],minEndMargin:['Mindestens freier Endrand'],dowelDiameter:['Dübel: Durchmesser','Dübeldurchmesser'],dowelLength:['Dübel: Länge','Dübellänge'],dowelEdge:['Dübelachse: Abstand zur Bauteilkante'],faceDepth:['Flächenbohrung: Tiefe'],glueAllowance:['Kantenbohrung: Leimzugabe'],cordDiameter:['Stropp: Durchmesser'],cordHeight:['Stroppachse: Höhe ab unten'],cordFront:['Stroppachse: Abstand von vorn']};
- Object.assign(aliases,{rightDepth:['Seitenteil rechts: Tiefe unten','Seitentiefe rechts'],topBoardDepth:['Oberboden: Tiefe','Oberbodentiefe'],bottomBoardDepth:['Unterboden: Tiefe','Unterbodentiefe'],sideTopDepth:['Seitenteile: Tiefe oben','Seitentiefe oben'],kinkHeight:['Knickhöhe ab Seitenunterkante','Knickhöhe'],topOffset:['Oberboden: Rücksprung oben'],backThickness:['Rückwand: Dicke','Rückwanddicke'],liningThickness:['Kork innen: Dicke','Korkdicke','Korkbelag: Dicke'],backClearance:['Rückwand: Einbauluft je Rand'],frontDowelMargin:['Dübel: Randabstand vorn'],rearDowelMargin:['Dübel: Mindest-Randabstand hinten'],fastenerDiameter:['Rückwandbefestigung: Durchmesser'],fastenerLength:['Rückwandbefestigung: Länge']});
+ Object.assign(aliases,{jointType:['Eckverbindung','Verbindungstyp'],biscuitSize:['Flachdübelgröße'],biscuitMargin:['Flachdübel: gewünschter Endabstand zur Mitte'],rightDepth:['Seitenteil rechts: Tiefe unten','Seitentiefe rechts'],topBoardDepth:['Oberboden: Tiefe','Oberbodentiefe'],bottomBoardDepth:['Unterboden: Tiefe','Unterbodentiefe'],sideTopDepth:['Seitenteile: Tiefe oben','Seitentiefe oben'],kinkHeight:['Knickhöhe ab Seitenunterkante','Knickhöhe'],topOffset:['Oberboden: Rücksprung oben'],backThickness:['Rückwand: Dicke','Rückwanddicke'],liningThickness:['Kork innen: Dicke','Korkdicke','Korkbelag: Dicke'],backClearance:['Rückwand: Einbauluft je Rand'],frontDowelMargin:['Dübel: Randabstand vorn'],rearDowelMargin:['Dübel: Mindest-Randabstand hinten'],fastenerDiameter:['Rückwandbefestigung: Durchmesser'],fastenerLength:['Rückwandbefestigung: Länge']});
  if(isWriting){aliases.depth.push('Seitenteil links: Tiefe unten','Seitentiefe links');aliases.height.push('Seitenhöhe');aliases.bottomOffset=['Unterboden: Rücksprung unten'];}
  const uncertain=/\?|\b(?:vorschlag|vorgeschlagen|könnte|eventuell|evtl|vielleicht|ungeklärt|unbestätigt|unbekannt|geschätzt|nicht|statt|verworfen|früher|nicht bestätigt|noch klären|nicht festgelegt|zurückgestellt)\b/i;
  for(const s of facts){
@@ -1774,6 +1843,9 @@ function drawingImport(project={},kind){
   const order=isFrame?/Breite\s*[×x/]\s*Tiefe\s*[×x/]\s*Höhe/i:/Breite\s*[×x/]\s*Höhe\s*[×x/]\s*Tiefe/i;
   if(order.test(s)){const m=s.match(new RegExp('Außenmaß(?:e)?\\s*:?\\s*'+number+'\\s*[×x]\\s*'+number+'\\s*[×x]\\s*'+number+unit,'i'));if(m){const u=m[4].toLowerCase()==='cm'?10:1;[isFrame?'width':'width',isFrame?'depth':'height',isFrame?'height':'depth'].forEach((k,i)=>add(k,drawingNumber(m[i+1])*u,s));}}
   if(isCorpus){
+   for(const [type,rx]of [['Flachdübel',/Flachdübel|Holzlamellen/i],['Runddübel',/Rund(?:holz)?dübel/i]])if(rx.test(s))add('jointType',type,s);
+   const bs=s.match(/(?:Flachdübel|Holzlamellen)(?:größe)?\s*(?::\s*)?(?:Größe|Gr\.)?\s*(0|10|20)\b/i);if(bs)add('biscuitSize',bs[1],s);
+   const bm=s.match(/Flachdübel(?:n)?[^.;]{0,25}(?:Endabstand|Randabstand)[^\d.;]{0,25}(\d+(?:[.,]\d+)?)\s*mm/i);if(bm)add('biscuitMargin',drawingNumber(bm[1]),s);
    if(isWriting){for(const edge of ['hinten','vorne'])if(new RegExp('(?:Senkrechte Bezugskante|Bezugskante)\\s*(?::|ist)?\\s*'+edge,'i').test(s))add('referenceEdge',edge,s);}
    for(const [k,rx] of [['backThickness',/(?:Rückwand(?: aus Sperrholz)?|Sperrholz-Rückwand)\s*(?:ist|:)?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm)/i],['liningThickness',/(?:Kork(?: innen)?|Korkbelag)\s*(?:ist|:)?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm)/i]]){const v=s.match(rx);if(v)add(k,drawingNumber(v[1])*(v[2].toLowerCase()==='cm'?10:1),s);}
    for(const mat of CORPUS_OPTIONS.boardMaterial)if(new RegExp('Korpus(?:platten)?[^.;]{0,20}'+mat,'i').test(s))add('boardMaterial',mat,s);
@@ -1838,7 +1910,7 @@ function drawingImport(project={},kind){
   if(currentFacts.some(v=>(isWriting?/Massivholz|Vollholz|Gehrung|Dachschräge|geneigter Oberboden|Seiten[^.]{0,30}gekrümmt|Böden[^.]{0,30}durchgehend/i:/Massivholz|Vollholz|Gehrung|trapez|Seiten[^.]{0,30}(?:schräg|gekrümmt)|Böden[^.]{0,30}durchgehend/i).test(v)))issues.push('Diese Korpusvorlage unterstützt die genannte Bauform noch nicht. Konstruktion zuerst abgleichen.');
  }
  const values={},sources={},conflicts=[];
- for(const [k,rows]of found){const distinct=[...new Set(rows.map(x=>x.value))];if(blocked.has(k)||distinct.length!==1){conflicts.push({key:k,label:fields.find(x=>x[0]===k)[1],reason:blocked.has(k)?'Noch als offen oder zurückgestellt geführt.':'Widersprüchliche Maßangaben.',sources:rows});continue;}values[k]=distinct[0];sources[k]=[...new Set(rows.map(x=>x.source))];}
+ for(const [k,rows]of found){const distinct=[...new Set(rows.map(x=>x.value))];if(blocked.has(k)||distinct.length!==1){conflicts.push({key:k,label:fields.concat(BISCUIT_FIELDS).find(x=>x[0]===k)[1],reason:blocked.has(k)?'Noch als offen oder zurückgestellt geführt.':'Widersprüchliche Maßangaben.',sources:rows});continue;}values[k]=distinct[0];sources[k]=[...new Set(rows.map(x=>x.source))];}
  if(!snapshot)issues.push('Aktueller Projektstand fehlt. Bitte zuerst im Werkstatt-Talk klären oder das Projekt neu erstellen.');
  if(isFrame&&[...facts,...(planCurrent&&typeof r.construction==='string'?[r.construction]:[])].filter(s=>!uncertain.test(s)).some(s=>/lang[^.\n]{0,55}(?:laufen[^.\n]{0,20}durch|durchgehend)/i.test(s)))issues.push('Das Projekt nennt durchgehende lange Teile. Diese Backrahmenvorlage setzt durchgehende kurze Teile voraus. Konstruktion zuerst abgleichen.');
  return{values,sources,conflicts,issues,missing:fields.filter(([k])=>!(k in values)).map(([key,label])=>({key,label})),source:drawingImportSource(project)};
@@ -1886,7 +1958,7 @@ async function drawingPdfBlob(model,options={}){
 
 function wdIsCorpus(params){return ['carcass-v1','writing-carcass-v1'].includes(params?.kind)}
 // Per-project drafts retain typed values even while other panes refresh.
-function wdFields(params){return params?.kind==='writing-carcass-v1'?WRITING_FIELDS:params?.kind==='carcass-v1'?CORPUS_FIELDS:params?.kind==='bread-frame-v1'?FRAME_FIELDS:DRAWING_FIELDS}
+function wdFields(params){return wdIsCorpus(params)?[['jointType','Eckverbindung'],...corpusFields(params)]:params?.kind==='bread-frame-v1'?FRAME_FIELDS:DRAWING_FIELDS}
 function wdModelName(params){return params?.kind==='writing-carcass-v1'?'Schreibkorpus mit Schräge':params?.kind==='carcass-v1'?'Rechteckiger Korpus':params?.kind==='bread-frame-v1'?'Backrahmen':'Gewürzbord'}
 function wdParams(project=current){return project.woodDrawingDraft||project.woodDrawing?.params||null}
 function wdCutlistForProject(project=current){
@@ -1900,6 +1972,7 @@ function wdKnowledge(project){
  const m=buildDrawing(project.woodDrawing.params);
  if(!m.ok)return project.knowledge||'';
  const p=m.p,f=drawingFormat;
+ if(m.biscuit)return wdBiscuitKnowledge(project,m);
  if(m.kind==='writing-carcass-v1')return wdWritingKnowledge(project,m);
  if(wdIsCorpus(m))return wdCorpusKnowledge(project,m);
  if(m.kind==='bread-frame-v1')return wdFrameKnowledge(project,m);
@@ -1927,16 +2000,17 @@ function wdRender(){
  let params=current.woodDrawingChoosing?null:wdParams();
  if(params?.kind==='bread-frame-v1'&&params.jointChamfer===undefined){current.woodDrawingDraft={...params,jointChamfer:params.chamfer};params=wdParams();}
  if(!params){box.innerHTML='<h3>Werkzeichnung</h3><p>Zeichenmodell für dieses Projekt wählen. Unterstützt werden Gewürzbord, Backrahmen, rechteckiger Korpus und Schreibkorpus mit gerader Schräge und unterem Knick. Die Werkzeichnung des Schreibkorpus verwendet hinten senkrechte Bezugskanten.</p><p class="hint">Aktuelle Projektangaben werden in die Eingaben übernommen. Fehlende Maße bleiben leer. Keine Maßermittlung aus dem Foto. Alle Werte vor dem Speichern prüfen. Der Backrahmen verwendet massive unbehandelte Buche, kurze Teile durchgehend, drei Konfirmatschrauben je Ecke und außen eine 45°-Fase. Äußere Stoßkanten bilden eine V-Nut; Innenkanten und Innenfugen bleiben ungefast. Andere Konstruktionen werden nicht automatisch gezeichnet.</p><button class="secondary" id="wdStartWriting">Schreibkorpus mit Schräge</button> <button class="secondary" id="wdStartCorpus">Rechteckiger Korpus als Ausgangsmodell</button> <button class="ghost" id="wdCancelModel">Zur Zeichnung zurück</button><button class="secondary" id="wdStart">Gewürzbord als Ausgangsmodell</button> <button class="secondary" id="wdStartFrame">Backrahmen als Ausgangsmodell</button>';$('#wdStartWriting').onclick=()=>wdBeginFromProject('writing-carcass-v1');$('#wdStartCorpus').onclick=()=>wdBeginFromProject('carcass-v1');$('#wdCancelModel').disabled=!wdParams();$('#wdCancelModel').onclick=()=>{delete current.woodDrawingChoosing;wdRender();};$('#wdStart').onclick=()=>{wdBeginFromProject('spice-rack-v1')};$('#wdStartFrame').onclick=()=>{wdBeginFromProject('bread-frame-v1')};return;}
- const isFrame=params.kind==='bread-frame-v1',isWriting=params.kind==='writing-carcass-v1',isCorpus=wdIsCorpus(params),fields=wdFields(params),baseCount=isWriting?12:isCorpus?10:isFrame?4:8;
- const input=([key,label])=>`<label class="wdField" for="wd-${key}"><span>${esc(label)}${key==='count'||isCorpus&&CORPUS_OPTIONS[key]?'':' (mm)'}</span>${isCorpus&&CORPUS_OPTIONS[key]?'<select id="wd-'+key+'" data-wd="'+key+'">'+'<option value="">Bitte wählen</option>'+CORPUS_OPTIONS[key].map(v=>'<option '+(v===params[key]?'selected':'')+' value="'+esc(v)+'">'+esc(v)+'</option>').join('')+'</select>':'<input id="wd-'+key+'" data-wd="'+key+'" inputmode="decimal" value="'+esc(params[key]??'')+'" autocomplete="off">'}</label>`;
- box.innerHTML=`<h3>Werkzeichnung · ${wdModelName(params)}</h3>${wdImportHtml(current,params)}<p>${isWriting?'Schreibkorpus: Seitenprofil mit gerader Schräge und unterem Knick. Vier Bauteiltiefen getrennt eingeben. Tiefen ab gewählter senkrechter Bezugskante; Rücksprünge oben und unten beziehen sich auf die Seitenkanten. Für Bezugskante vorne gibt es vorerst eine Formvorschau.':isCorpus?'Seiten durchgehend; Ober- und Unterboden dazwischen. Rückwandfalz: 2/3 Plattendicke breit, Rückwanddicke + 3 mm tief. Kork liegt nur in der lichten Öffnung.':isFrame?'Kurze Teile laufen über die volle Außenbreite. Lange Teile sitzen dazwischen: Länge = Außentiefe minus zweimal Materialdicke. Höhe und Fase werden gesondert geführt.':'Gesamtmaß ändern: Ablageboden und Rücksteg erhalten automatisch dieselbe lichte Länge. Materialdicke, Rücksprünge und Verbindungsmaße werden gesondert geführt.'}</p><div class="wdFields">${fields.slice(0,baseCount).map(input).join('')}</div><details><summary>${isWriting?'Werkstoffe, Dübel und Rückwand bearbeiten':isCorpus?'Dübel und Rückwandbefestigung bearbeiten':isFrame?'Schraubenpositionen und Außenfase bearbeiten':'Bohrungen, Dübel und Stropp bearbeiten'}</summary><div class="wdFields">${fields.slice(baseCount).map(input).join('')}</div></details><p class="hint">${isCorpus?'Regeln: Dübel-Ø höchstens halbe Plattendicke; Flächenbohrung höchstens 2/3; Kantenbohrung Restdübellänge + höchstens 2 mm. Mindestens zwei Dübel je Ecke, Achsabstand höchstens 120 mm. Befestigung der Rückwand: Endabstand 30 mm, quer halbe Falzbreite, Achsabstand höchstens 200 mm. 0 bei Befestigungsgröße bedeutet offen; eine Bestätigung ist dann noch nicht möglich. Einbauluft ist eine einstellbare Annahme.':isFrame?'Vorlage: massive unbehandelte Buche, oben und unten offen. Außenfase bei 45°; Äußere Stoßkanten bilden mit ihren Fasen eine V-Nut. Innenkanten mit Teigkontakt und Innenfugen bleiben ungefast. Schraubenachsen mittig in der Wandstärke; die drei Höhen beziehen sich auf die Oberkante. Erkannte Projektwerte prüfen; fehlende Angaben ergänzen.':'Rücksteg hinten bündig. Lochabstand und Anzahl bleiben fest; zusätzliche Breite verteilt sich auf beide Endränder. Holzart, Wandbefestigung und Tragfähigkeit sind separat zu klären.'}</p><button class="ghost" id="wdLoadExample">Musterwerte verwenden (Vorlage)</button>${isWriting?'<button class="ghost" id="wdLoadWriting">Muster Schreibkorpus (Deine Skizze)</button>':isCorpus?'<button class="ghost" id="wdLoadK02">Muster K-02 (Sperrholz und Kork)</button>':''}<button class="ghost" id="wdChangeModel">Anderes Zeichenmodell wählen</button><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input type="checkbox" id="wdConfirmed"> Ich habe Maße, Bezüge und Bohrungen für dieses Projekt geprüft.</label><div class="composerActions"><button id="wdSave" class="primary">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="wdOpenPreview" class="ghost">Große Vorschau öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>`;
+ const isFrame=params.kind==='bread-frame-v1',isWriting=params.kind==='writing-carcass-v1',isCorpus=wdIsCorpus(params),isFlat=isCorpus&&params.jointType==='Flachdübel',fields=wdFields(params),baseCount=isWriting?13:isCorpus?11:isFrame?4:8;
+ const input=([key,label])=>`<label class="wdField" for="wd-${key}"><span>${esc(label)}${key==='count'||isCorpus&&CORPUS_OPTIONS[key]?'':' (mm)'}</span>${isCorpus&&CORPUS_OPTIONS[key]?'<select id="wd-'+key+'" data-wd="'+key+'">'+'<option value="">Bitte wählen</option>'+CORPUS_OPTIONS[key].map(v=>'<option '+(v===(key==='jointType'?(params[key]||'Runddübel'):params[key])?'selected':'')+' value="'+esc(v)+'">'+esc(v)+'</option>').join('')+'</select>':'<input id="wd-'+key+'" data-wd="'+key+'" inputmode="decimal" value="'+esc(params[key]??'')+'" autocomplete="off">'}</label>`;
+ box.innerHTML=`<h3>Werkzeichnung · ${wdModelName(params)}</h3>${wdImportHtml(current,params)}<p>${isWriting?'Schreibkorpus: Seitenprofil mit gerader Schräge und unterem Knick. Vier Bauteiltiefen getrennt eingeben. Tiefen ab gewählter senkrechter Bezugskante; Rücksprünge oben und unten beziehen sich auf die Seitenkanten. Für Bezugskante vorne gibt es vorerst eine Formvorschau.':isCorpus?'Seiten durchgehend; Ober- und Unterboden dazwischen. Rückwandfalz: 2/3 Plattendicke breit, Rückwanddicke + 3 mm tief. Kork liegt nur in der lichten Öffnung.':isFrame?'Kurze Teile laufen über die volle Außenbreite. Lange Teile sitzen dazwischen: Länge = Außentiefe minus zweimal Materialdicke. Höhe und Fase werden gesondert geführt.':'Gesamtmaß ändern: Ablageboden und Rücksteg erhalten automatisch dieselbe lichte Länge. Materialdicke, Rücksprünge und Verbindungsmaße werden gesondert geführt.'}</p><div class="wdFields">${fields.slice(0,baseCount).map(input).join('')}</div><details ${isFlat?'open':''}><summary>${isFlat?'Flachdübel und Rückwand bearbeiten':isWriting?'Werkstoffe, Dübel und Rückwand bearbeiten':isCorpus?'Dübel und Rückwandbefestigung bearbeiten':isFrame?'Schraubenpositionen und Außenfase bearbeiten':'Bohrungen, Dübel und Stropp bearbeiten'}</summary><div class="wdFields">${fields.slice(baseCount).map(input).join('')}</div></details><p class="hint">${isFlat?'Flachdübel: Lamello-Herstellerprofil 0 / 10 / 20 mit Frästiefen 8 / 10 / 12,3 mm je Werkstück. Nut 4 mm, Fräser Ø100 mm. Endabstand 40–50 mm bis Nutmitte; Richtabstand Mitte–Mitte 100–150 mm. Kurze Verbindungen mindestens zwei, sofern beide Nuten vollständig passen. Hinterer Abstand kann wegen Falz oder Rückwandbefestigung vergrößert werden. Größenempfehlung nach Materialstärke ist eine Vorauswahl; Flächenfräsung und Restmaterial werden gesondert geprüft.':isCorpus?'Regeln: Dübel-Ø höchstens halbe Plattendicke; Flächenbohrung höchstens 2/3; Kantenbohrung Restdübellänge + höchstens 2 mm. Mindestens zwei Dübel je Ecke, Achsabstand höchstens 120 mm. Befestigung der Rückwand: Endabstand 30 mm, quer halbe Falzbreite, Achsabstand höchstens 200 mm. 0 bei Befestigungsgröße bedeutet offen; eine Bestätigung ist dann noch nicht möglich. Einbauluft ist eine einstellbare Annahme.':isFrame?'Vorlage: massive unbehandelte Buche, oben und unten offen. Außenfase bei 45°; Äußere Stoßkanten bilden mit ihren Fasen eine V-Nut. Innenkanten mit Teigkontakt und Innenfugen bleiben ungefast. Schraubenachsen mittig in der Wandstärke; die drei Höhen beziehen sich auf die Oberkante. Erkannte Projektwerte prüfen; fehlende Angaben ergänzen.':'Rücksteg hinten bündig. Lochabstand und Anzahl bleiben fest; zusätzliche Breite verteilt sich auf beide Endränder. Holzart, Wandbefestigung und Tragfähigkeit sind separat zu klären.'}</p><button class="ghost" id="wdLoadExample">Musterwerte verwenden (Vorlage)</button>${isWriting?'<button class="ghost" id="wdLoadWriting">Muster Schreibkorpus (Deine Skizze)</button>':isCorpus?'<button class="ghost" id="wdLoadK02">Muster K-02 (Sperrholz und Kork)</button>':''}<button class="ghost" id="wdChangeModel">Anderes Zeichenmodell wählen</button>${isFlat?'<button class="ghost" id="wdSuggestBiscuit">Größenempfehlung übernehmen</button>':''}<div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input type="checkbox" id="wdConfirmed"> Ich habe Maße, Bezüge und Bohrungen für dieses Projekt geprüft.</label><div class="composerActions"><button id="wdSave" class="primary">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="wdOpenPreview" class="ghost">Große Vorschau öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>`;
  $('#wdImportApply').onclick=wdApplyProjectValues;
  $('#wdLoadExample').onclick=()=>{current.woodDrawingDraft={...(isWriting?WRITING_DEFAULTS:isCorpus?CORPUS_DEFAULTS:isFrame?FRAME_DEFAULTS:DRAWING_DEFAULTS)};delete current.woodDrawingImportStamp;wdRender();};
  $('#wdLoadWriting')&&($('#wdLoadWriting').onclick=()=>{current.woodDrawingDraft={...WRITING_DEFAULTS};delete current.woodDrawingImportStamp;wdRender();});
  $('#wdLoadK02')&&( $('#wdLoadK02').onclick=()=>{current.woodDrawingDraft={...CORPUS_K02};delete current.woodDrawingImportStamp;wdRender();});
  $('#wdChangeModel').onclick=()=>{if(confirm('Anderes Zeichenmodell wählen? Ungespeicherte Eingaben werden beim Auswählen ersetzt.')){current.woodDrawingChoosing=true;wdRender();}};
  $('#wdConfirmed').checked=!!current.woodDrawing?.confirmed&&drawingStatus(current)==='checked'&&wdSame(params,current.woodDrawing.params);
- box.querySelectorAll('[data-wd]').forEach(el=>el.addEventListener('input',()=>{current.woodDrawingDraft={...wdParams(),[el.dataset.wd]:el.value};delete current.woodDrawingImportStamp;$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';wdPreview();}));
+ box.querySelectorAll('[data-wd]').forEach(el=>el.addEventListener('input',()=>{current.woodDrawingDraft={...wdParams(),[el.dataset.wd]:el.value};delete current.woodDrawingImportStamp;$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';if(el.dataset.wd==='jointType'){if(el.value==='Flachdübel'){current.woodDrawingDraft.biscuitSize??=biscuitRecommendation(current.woodDrawingDraft.thickness)||'';current.woodDrawingDraft.biscuitMargin??=45;}wdRender();}else wdPreview();}));
+ $('#wdSuggestBiscuit')&&($('#wdSuggestBiscuit').onclick=()=>{const size=biscuitRecommendation(wdParams().thickness);if(size){current.woodDrawingDraft={...wdParams(),biscuitSize:size};delete current.woodDrawingImportStamp;wdRender();}else alert('Für diese Materialdicke gibt es keine eindeutige Vorauswahl. Bitte Größe manuell wählen und Herstellergrenzen prüfen.');});
  $('#wdConfirmed').onchange=()=>wdPreview();
  $('#wdSave').onclick=wdSave;
  $('#wdOpenPreview').onclick=()=>{const m=buildDrawing(wdParams());if(m.ok){const d=current.woodDrawing,unsaved=!d||!wdSame(wdParams(),d.params)||$('#wdConfirmed').checked!==!!d.confirmed||wdImportBlocks();openPrintableHtml(drawingPrintHtml(m,{title:wdTitle(),status:unsaved?'Vorschau · Eingaben noch nicht übernommen':wdStateText()}));}};
@@ -1962,8 +2036,8 @@ function wdPreview(){
  const unsaved=!saved||!wdSame(wdParams(),saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed;
  const stale=drawingStatus(current)==='stale';
  const status=unsaved?'Vorschau · Eingaben noch nicht übernommen':wdStateText();
- const checks=$('#wdChecks');
- checks.innerHTML=`<div class="notice"><strong>${esc(status)}</strong></div>${!m.ok?'<div class="notice"><strong>Bitte korrigieren</strong><ul>'+m.errors.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':''}${m.pending?.length?'<div class="notice"><strong>Noch offen</strong><ul>'+m.pending.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':''}${m.adjustments?.length?'<div class="notice"><strong>Automatisch angepasst</strong><ul>'+m.adjustments.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':''}${m.warnings.length?'<div class="notice"><strong>Vor dem Bohren prüfen</strong><ul>'+m.warnings.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':''}`;
+ const checks=$('#wdChecks');const proposed=m.biscuit?biscuitRecommendation(m.p.thickness):null;
+ checks.innerHTML=`${m.biscuit?'<p class="hint">'+(proposed?'Vorauswahl nach Materialstärke: Größe '+proposed+'. Gewählt: '+m.p.biscuitSize+'.':'Keine eindeutige Vorauswahl für diese Materialstärke; Größe manuell prüfen.')+' Restmaterial nach Flächenfräsung: '+drawingFormat(m.p.thickness-m.biscuit.cutDepth)+' mm.</p>':''}<div class="notice"><strong>${esc(status)}</strong></div>${!m.ok?'<div class="notice"><strong>Bitte korrigieren</strong><ul>'+m.errors.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':''}${m.pending?.length?'<div class="notice"><strong>Noch offen</strong><ul>'+m.pending.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':''}${m.adjustments?.length?'<div class="notice"><strong>Automatisch angepasst</strong><ul>'+m.adjustments.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':''}${m.warnings.length?'<div class="notice"><strong>'+(m.biscuit?'Vor dem Fräsen prüfen':'Vor dem Bohren prüfen')+'</strong><ul>'+m.warnings.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':''}`;
  $('#wdSave').disabled=!m.ok||busy||reconstructionBusy||wdImportBlocks();
  $('#wdPrint').disabled=!m.ok||unsaved||stale||wdImportBlocks();
  $('#wdPreview').innerHTML=m.ok?`<p class="hint">${wdIsCorpus(m)?esc(wdCorpusSummary(m)):m.kind==='bread-frame-v1'?'Innenmaß: '+drawingFormat(m.insideWidth)+' × '+drawingFormat(m.clear)+' mm · 12 Schrauben · Außenfase '+drawingFormat(m.p.chamfer)+' × 45°':'Lichte Länge: '+drawingFormat(m.clear)+' mm · Boden: '+drawingFormat(m.shelfDepth)+' mm tief · Endränder: '+drawingFormat(m.margin)+' mm · Kantenbohrung: '+drawingFormat(m.edgeDepth)+' mm'}</p>${drawingPages(m,{title:wdTitle(),status}).map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Werkzeichnung Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join('')}`:m.profile?.ok?'<p class="hint">Formvorschau – noch keine Werkzeichnung. Speichern und PDF erst nach gültiger Verbindungsberechnung.</p><div class="wdSheet"><img class="wdDrawingImage" alt="Seitenprofil Formvorschau" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(corpusProfileSvg(m.profile))+'"></div>':'';
@@ -2006,10 +2080,10 @@ function wdSheetGeometry(project=current){
  return '<section class="section"><h3>Backrahmen · Angaben aus der Werkzeichnung</h3><p>'+esc(wdStateText(project))+'. Außenmaß '+f(p.width)+' × '+f(p.depth)+' × '+f(p.height)+' mm; Materialdicke '+f(p.thickness)+' mm. Innenmaß '+f(m.insideWidth)+' × '+f(m.clear)+' mm.</p><p>Kurze Rahmenteile durchgehend, lange dazwischen. Massive unbehandelte Buche. Oben und unten offen, ohne Boden.</p><p>12 Konfirmatschrauben, Länge '+f(p.screwLength)+' mm; Gewinde außen Ø '+f(p.screwDiameter)+' mm, Kopf Ø '+f(p.headDiameter)+' mm. Drei je Ecke, '+m.positions.map(f).join(' / ')+' mm ab Oberkante; Achsen '+f(p.thickness/2)+' mm von der Seitenkante.</p><p>Außenfase '+f(p.chamfer)+' × 45° an frei liegenden Außenkanten einschließlich äußerer Ober-/Unterkanten und senkrechter Außenecken. Äußere Stoßkanten: je '+f(p.jointChamfer)+' × 45°; zusammen V-Nut '+f(2*p.jointChamfer)+' mm breit und '+f(p.jointChamfer)+' mm tief. Innenkanten mit Teigkontakt und Innenfugen bleiben ungefast. Kontaktflächen bleiben eben; Fasen vor dem Zusammenbau anbringen.</p><p>Passenden Konfirmat-Stufenbohrer mit Senker verwenden. Bohrstufen und Tiefe nach Hersteller; am Reststück prüfen. Abweichende Angaben einer älteren Bauanleitung vor der Ausführung abgleichen.</p></section>';
 }
 function wdBeginFromProject(kind){
- const fields=kind==='writing-carcass-v1'?WRITING_FIELDS:kind==='carcass-v1'?CORPUS_FIELDS:kind==='bread-frame-v1'?FRAME_FIELDS:DRAWING_FIELDS,proposal=drawingImport(current,kind);
+ const fields=wdFields({kind}),proposal=drawingImport(current,kind);
  current.woodDrawingDraft=Object.fromEntries(fields.map(([k])=>[k,'']));
  delete current.woodDrawingChoosing;
- if(['carcass-v1','writing-carcass-v1'].includes(kind)){current.woodDrawingDraft.kind=kind;for(const k of Object.keys(CORPUS_OPTIONS))current.woodDrawingDraft[k]=k==='backFastening'?'offen':'';}
+ if(['carcass-v1','writing-carcass-v1'].includes(kind)){current.woodDrawingDraft.kind=kind;for(const k of Object.keys(CORPUS_OPTIONS))current.woodDrawingDraft[k]=k==='backFastening'?'offen':k==='jointType'?'Runddübel':'';}
  if(kind==='bread-frame-v1')current.woodDrawingDraft.kind=kind;
  if(!proposal.issues.length&&!proposal.conflicts.length)Object.assign(current.woodDrawingDraft,proposal.values);
  current.woodDrawingImportStamp=proposal.source;
@@ -2038,9 +2112,9 @@ function wdRefreshImport(){
  $('#wdImportApply').onclick=wdApplyProjectValues;
 }
 
-function wdValueEqual(k,a,b,kind){return wdIsCorpus({kind})&&CORPUS_OPTIONS[k]?a===b:drawingNumber(a)===drawingNumber(b)}
+function wdValueEqual(k,a,b,kind){if(k==='jointType')return (a||'Runddübel')===(b||'Runddübel');return wdIsCorpus({kind})&&CORPUS_OPTIONS[k]?a===b:drawingNumber(a)===drawingNumber(b)}
 function wdImportValue(k,v,kind){return wdIsCorpus({kind})&&CORPUS_OPTIONS[k]?esc(v):drawingFormat(v)}
-function wdCorpusSummary(m){const f=drawingFormat;if(m.kind==='writing-carcass-v1')return 'Licht: '+f(m.clear)+' × '+f(m.insideHeight)+' mm · Nutztiefe oben / unten '+f(m.usableTopDepth)+' / '+f(m.usableBottomDepth)+' mm · Rückwand '+f(m.backWidth)+' × '+f(m.backHeight)+' mm · '+m.dowelCount+' Dübel · '+m.fastenerCount+' Rückwandbefestigungen';return 'Licht: '+f(m.clear)+' × '+f(m.insideHeight)+' mm · Nutztiefe '+f(m.usableDepth)+' mm · Rückwand '+f(m.backWidth)+' × '+f(m.backHeight)+' mm · '+m.dowelCount+' Dübel · '+m.fastenerCount+' Rückwandbefestigungen'}
+function wdCorpusSummary(m){const f=drawingFormat;if(m.kind==='writing-carcass-v1')return 'Licht: '+f(m.clear)+' × '+f(m.insideHeight)+' mm · Nutztiefe oben / unten '+f(m.usableTopDepth)+' / '+f(m.usableBottomDepth)+' mm · Rückwand '+f(m.backWidth)+' × '+f(m.backHeight)+' mm · '+(m.biscuit?m.connectorCount+' Flachdübel':m.dowelCount+' Dübel')+' · '+m.fastenerCount+' Rückwandbefestigungen';return 'Licht: '+f(m.clear)+' × '+f(m.insideHeight)+' mm · Nutztiefe '+f(m.usableDepth)+' mm · Rückwand '+f(m.backWidth)+' × '+f(m.backHeight)+' mm · '+(m.biscuit?m.connectorCount+' Flachdübel':m.dowelCount+' Dübel')+' · '+m.fastenerCount+' Rückwandbefestigungen'}
 function wdCorpusKnowledge(project,m){
  const p=m.p,f=drawingFormat;
  return (project.knowledge||'')+'\n\nGespeichertes Werkzeichnungsmodell: rechteckiger Korpus aus Holzwerkstoffplatten. '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Unbestätigter Entwurf.')+'\n'+CORPUS_FIELDS.map(([k,label])=>label+': '+(CORPUS_OPTIONS[k]?p[k]:f(p[k])+' mm')+'.').join('\n')+'\nSeiten laufen durch, Ober- und Unterboden sitzen dazwischen. '+wdCorpusSummary(m)+'.\nFalz '+f(m.rebateWidth)+' breit und '+f(m.rebateDepth)+' tief. Rückwand außen 3 mm zurückgesetzt. Einbauluft je Rand '+f(p.backClearance)+' mm als einstellbare Annahme. Kork nur innerhalb der lichten Öffnung.\nDübel Ø '+f(p.dowelDiameter)+' × '+f(p.dowelLength)+'; vier Verbindungen mit je '+m.positions.length+' Dübeln. Positionen ab Vorderkante: '+m.positions.map(f).join(' / ')+' mm. Flächenbohrung '+f(p.faceDepth)+' tief; Kantenbohrung '+f(m.edgeDepth)+' tief mit '+f(p.glueAllowance)+' Leimzugabe. Bohrungen materialmittig.\nRückwand '+p.backFastening+'. '+m.fastenerCount+' Befestigungen, Endabstand 30, Randabstand '+f(m.fastenerEdge)+'; Achsabstand höchstens 200. '+(m.fasteningKnown?'Befestigung Ø '+f(p.fastenerDiameter)+' × '+f(p.fastenerLength)+' mm'+(p.backFastening==='geschraubt'?'; mit Senkkopf.':'.'):'Befestigungsgrößen offen.')+'\n'+m.parts.map(v=>v.quantity+' '+v.name+': '+[v.length,v.width,v.thickness].map(f).join(' × ')+' mm; '+v.material).join('\n')+'\n'+m.adjustments.concat(m.pending,m.warnings).join('\n')+'\nDiese Geometrie für Materialliste und Bauanleitung verwenden; Befestigungsmittel nicht doppelt zählen. Keine zusätzliche Maßannahme aus Fotos. Bereits festgelegte Bezugskanten nicht erneut abfragen. Bei Widersprüchen gezielt nachfragen. Keine Tragfähigkeitsfreigabe durch die Zeichnung.';
@@ -2048,12 +2122,17 @@ function wdCorpusKnowledge(project,m){
 function wdCorpusSheet(project){
  if(drawingStatus(project)==='stale')return '<section class="notice"><strong>Korpuszeichnung erneut abgleichen</strong><p>Projekt geändert; Zeichnungsmaße prüfen.</p></section>';
  const m=buildDrawing(project.woodDrawing.params);if(!m.ok)return '';
- return '<section class="section"><h3>Korpus · Angaben aus der Werkzeichnung</h3><p>'+esc(wdStateText(project))+'. '+esc(wdCorpusSummary(m))+'.</p><p>Seiten durchgehend, Böden dazwischen. Falz '+drawingFormat(m.rebateWidth)+' × '+drawingFormat(m.rebateDepth)+' mm. Rückwand '+esc(m.p.backFastening)+'. Kork nur innerhalb der lichten Öffnung.</p><p>'+esc(m.adjustments.concat(m.pending).join(' '))+'</p></section>';
+ return '<section class="section"><h3>Korpus · Angaben aus der Werkzeichnung</h3><p>'+esc(wdStateText(project))+'. '+esc(wdCorpusSummary(m))+'.</p><p>Seiten durchgehend, Böden dazwischen. Falz '+drawingFormat(m.rebateWidth)+' × '+drawingFormat(m.rebateDepth)+' mm. Rückwand '+esc(m.p.backFastening)+'. Kork nur innerhalb der lichten Öffnung.</p><p>'+esc((m.biscuit?[m.connectorCount+' Flachdübel Gr. '+m.biscuit.size+'; 4-mm-Nut, Frästiefe je Werkstück '+drawingFormat(m.biscuit.cutDepth)+' mm.']:[]).concat(m.adjustments,m.pending).join(' '))+'</p></section>';
 }
 
 function wdWritingKnowledge(project,m){
  const p=m.p,f=drawingFormat;
  return (project.knowledge||'')+'\n\nGespeichertes Werkzeichnungsmodell: Schreibkorpus aus Holzwerkstoffplatten, Seiten durchgehend, Böden dazwischen. '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Unbestätigter Entwurf.')+'\n'+WRITING_FIELDS.map(([k,label])=>label+': '+(CORPUS_OPTIONS[k]?p[k]:f(p[k])+' mm')+'.').join('\n')+'\nSenkrechte Bezugskanten hinten. Alle Tiefen ab hinterer Korpuskante. Geradlinige Schräge oberhalb des '+f(p.kinkHeight)+' mm hohen senkrechten Abschnitts. Seiten oben '+f(p.sideTopDepth)+' mm tief. Ober- und Unterboden waagerecht, Rücksprünge '+f(p.topOffset)+' / '+f(p.bottomOffset)+' mm. Unterbodenoberkante '+f(m.bottomTop)+' mm über Seitenunterkante, bis Knick '+f(m.kinkGap)+' mm.\n'+wdCorpusSummary(m)+'.\nDübel Ø '+f(p.dowelDiameter)+' × '+f(p.dowelLength)+'; oben je '+m.topPositions.length+', unten je '+m.bottomPositions.length+'. Positionen ab hinten: oben '+m.topPositions.map(f).join(' / ')+'; unten '+m.bottomPositions.map(f).join(' / ')+' mm. Achsen mittig '+f(p.thickness/2)+' mm. Fläche '+f(p.faceDepth)+' tief, Kante '+f(m.edgeDepth)+' tief inklusive '+f(p.glueAllowance)+' Leimzugabe. Höchstens 120 mm Achsabstand.\nRückwandfalz '+f(m.rebateWidth)+' × '+f(m.rebateDepth)+' mm. Rückwand außen 3 mm zurückgesetzt; Einbauluft je Rand '+f(p.backClearance)+' mm als Modellannahme. Kork nur innerhalb der lichten Öffnung. Rückwand '+p.backFastening+'; '+m.fastenerCount+' Befestigungen, Ø '+f(p.fastenerDiameter)+' × '+f(p.fastenerLength)+' mm. Endabstand 30, quer '+f(m.fastenerEdge)+', Achsabstand höchstens 200. '+(p.backFastening==='geschraubt'?'Schrauben mit Senkkopf. ':'')+'Bei offener Größe nicht erfinden.\n'+m.parts.map(v=>v.quantity+' '+v.name+': '+[v.length,v.width,v.thickness].map(f).join(' × ')+' mm; '+v.material+'. '+(v.note||'')).join('\n')+'\n'+m.adjustments.concat(m.pending,m.warnings).join('\n')+'\nMaterialliste und Anleitung auf diese Geometrie abstimmen. Keine zusätzlichen Maße aus Fotos ableiten; bei Widersprüchen nachfragen. Wandaufhängung, Kantenbearbeitung und Tragfähigkeit separat festlegen.';
+}
+
+function wdBiscuitKnowledge(project,m){
+ const p=m.p,B=m.biscuit,f=drawingFormat,writing=m.kind==='writing-carcass-v1';
+ return (project.knowledge||'')+'\n\nGespeichertes Werkzeichnungsmodell: '+(writing?'Schreibkorpus mit gerader Schräge und unterem Knick; senkrechte Bezugskanten hinten.':'Rechteckiger Holzwerkstoff-Korpus.')+' '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Unbestätigter Entwurf.')+'\n'+wdFields(p).map(([k,label])=>label+': '+(CORPUS_OPTIONS[k]?p[k]:f(p[k])+' mm')+'.').join('\n')+'\n'+wdCorpusSummary(m)+'. Seiten durchgehend, Böden dazwischen.\nFlachdübel Lamello Gr. '+B.size+', '+[B.length,B.width,B.thickness].map(f).join(' × ')+' mm. Nut 4 mm breit mit Ø100-mm-Fräser, Frästiefe in beiden Werkstücken '+f(B.cutDepth)+' mm. Herstellerfrästiefe enthält bereits den Fräsraum, keine zusätzliche Runddübel-Leimzugabe. Die 2/3-Regel gilt nur für Runddübelbohrungen. Restmaterial hinter Flächenfräsung '+f(p.thickness-B.cutDepth)+' mm. Nutmitte in Plattendickenmitte '+f(p.thickness/2)+' mm.\n'+(writing?'Dübel je obere Ecke '+m.topPositions.length+', je untere Ecke '+m.bottomPositions.length+'. Positionen ab hinterer Korpuskante: oben '+m.topPositions.map(f).join(' / ')+'; unten '+m.bottomPositions.map(f).join(' / '):'Je Ecke '+m.positions.length+' Flachdübel. Positionen ab Vorderkante: '+m.positions.map(f).join(' / '))+' mm. Insgesamt '+m.connectorCount+' Flachdübel. Fräsnutlänge '+f(B.slotLength)+' mm berücksichtigen. Endabstand bis Mitte gewünscht '+f(p.biscuitMargin)+', hinten tatsächlich '+f(m.rearMargin)+'. Richtabstand Mitte–Mitte 100 bis 150; bei kurzen Verbindungen können kleinere Abstände nach Nutprüfung angezeigt sein.\nRückwandfalz '+f(m.rebateWidth)+' × '+f(m.rebateDepth)+' mm; Rückwand außen 3 mm zurückgesetzt; Einbauluft je Rand '+f(p.backClearance)+' mm als Modellannahme. Rückwand '+p.backFastening+'; '+m.fastenerCount+' Befestigungen. '+(m.fasteningKnown?'Ø '+f(p.fastenerDiameter)+' × '+f(p.fastenerLength)+' mm. ':'Befestigungsgröße offen. ')+(p.backFastening==='geschraubt'?'Senkkopfschrauben. ':'')+'Endabstand 30, quer '+f(m.fastenerEdge)+', Achsabstand höchstens 200. Kork nur innerhalb der lichten Öffnung.\n'+m.parts.map(v=>v.quantity+' '+v.name+': '+[v.length,v.width,v.thickness].map(f).join(' × ')+' mm; '+v.material+'. '+(v.note||'')).join('\n')+'\n'+m.adjustments.concat(m.pending,m.warnings).join('\n')+'\nHerstellerprofil vor Ausführung mit der verwendeten Maschine abgleichen; Probefräsung. Flachdübel und Rückwandbefestigungen in Bauanleitung und Einkaufsliste nur einmal zählen. Keine alten Runddübelmaße übernehmen. Bezugskanten nicht erneut erfragen; Widersprüche gezielt klären. Wandaufhängung, Kanten und Tragfähigkeit gesondert festlegen.';
 }
 
 function renderRecord(){
