@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev23</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev23.1</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev23 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev23.1 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev23';
+const APP_VERSION='0.9.21-dev23.1';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1246,6 +1246,7 @@ document.addEventListener('click',async e=>{const button=e.target.closest?.('.de
  if(button.classList.contains('decisionDiscuss')){const prompt='Bitte hilf mir bei „'+d.topic+'“. '+(d.question||'Erkläre mir deinen Vorschlag und die Alternativen.');const input=$('#chatInput');input.value=prompt+(input.value.trim()?'\n\n'+input.value:'');autoGrowChatInput();input.focus();return}
  if(busy){alert('Bitte warte, bis die aktuelle Antwort fertig ist.');return}button.disabled=true;try{await talk({message:'Meine Entscheidung zu „'+d.topic+'“: Ich übernehme folgenden Vorschlag: '+d.recommendation+'. Bitte in der weiteren Planung berücksichtigen.'})}finally{button.disabled=false}
 });
+let cutPlannerNeedsRefresh=false;
 // Deterministic first construction family. No image-derived or AI-invented dimensions.
 const DRAWING_DEFAULTS=Object.freeze({width:386,height:160,depth:90,thickness:18,frontSetback:5,bottomOffset:5,railHeight:70,railTopOffset:20,count:6,pocketDiameter:45,pocketDepth:5,gap:10,minEndMargin:15,dowelDiameter:6,dowelLength:30,dowelEdge:20,faceDepth:12,glueAllowance:2,cordDiameter:6,cordHeight:85,cordFront:12});
 const DRAWING_FIELDS=[['width','Gesamtbreite'],['height','Gesamthöhe'],['depth','Gesamttiefe'],['thickness','Materialdicke'],['frontSetback','Boden: Rücksprung vorn'],['bottomOffset','Boden: Abstand unten'],['railHeight','Rücksteg: Höhe'],['railTopOffset','Rücksteg: Abstand oben'],['count','Anzahl Gläser / Sacklöcher'],['pocketDiameter','Sackloch: Durchmesser'],['pocketDepth','Sackloch: Tiefe'],['gap','Freier Abstand der Sacklöcher'],['minEndMargin','Mindestens freier Endrand'],['dowelDiameter','Dübel: Durchmesser'],['dowelLength','Dübel: Länge'],['dowelEdge','Dübelachse: Abstand zur Bauteilkante'],['faceDepth','Flächenbohrung: Tiefe'],['glueAllowance','Kantenbohrung: Leimzugabe'],['cordDiameter','Stropp: Durchmesser'],['cordHeight','Stroppachse: Höhe ab unten'],['cordFront','Stroppachse: Abstand von vorn']];
@@ -2042,22 +2043,31 @@ function wdPreview(){
  $('#wdPrint').disabled=!m.ok||unsaved||stale||wdImportBlocks();
  $('#wdPreview').innerHTML=m.ok?`<p class="hint">${wdIsCorpus(m)?esc(wdCorpusSummary(m)):m.kind==='bread-frame-v1'?'Innenmaß: '+drawingFormat(m.insideWidth)+' × '+drawingFormat(m.clear)+' mm · 12 Schrauben · Außenfase '+drawingFormat(m.p.chamfer)+' × 45°':'Lichte Länge: '+drawingFormat(m.clear)+' mm · Boden: '+drawingFormat(m.shelfDepth)+' mm tief · Endränder: '+drawingFormat(m.margin)+' mm · Kantenbohrung: '+drawingFormat(m.edgeDepth)+' mm'}</p>${drawingPages(m,{title:wdTitle(),status}).map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Werkzeichnung Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join('')}`:m.profile?.ok?'<p class="hint">Formvorschau – noch keine Werkzeichnung. Speichern und PDF erst nach gültiger Verbindungsberechnung.</p><div class="wdSheet"><img class="wdDrawingImage" alt="Seitenprofil Formvorschau" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(corpusProfileSvg(m.profile))+'"></div>':'';
 }
+let wdSaving=false;
 async function wdSave(){
- if(busy||reconstructionBusy)return;
+ if(wdSaving||busy||reconstructionBusy)return;
  const project=current,m=buildDrawing(wdParams(project));if(!m.ok||wdImportBlocks(project)||wdIsCorpus(m)&&$('#wdConfirmed').checked&&!m.confirmable)return;
  const prior=project.woodDrawing,priorDirty=project.projectDirty;
  const changed=!prior||!wdSame(m.p,prior.params);
  const drawing={importSource:project.woodDrawingImportStamp===drawingImportSource(project)&&!priorDirty?drawingImportSource(project):prior?.importSource,schemaVersion:1,type:m.kind||'spice-rack-v1',params:m.p,confirmed:$('#wdConfirmed').checked,source:drawingSource(project),revision:(prior?.revision||0)+1,updatedAt:new Date().toISOString()};
  project.woodDrawing=drawing;
  if(changed)project.projectDirty=true;
+ wdSaving=true;
  $('#wdSave').disabled=true;
+ $('#wdSave').setAttribute?.('aria-busy','true');
+ $('#wdSaveStatus').textContent='Werkzeichnungsmaße werden auf diesem Gerät gespeichert …';
+ let persisted=false;
  try{
+  await new Promise(resolve=>setTimeout(resolve,0));
   await dbPutProject(project);
-  if(current===project){if(wdSame(wdParams(project),m.p))project.woodDrawingDraft={...m.p};renderRecord();$('#wdSaveStatus').textContent='Werkzeichnungsmaße gespeichert. Bei Änderungen am Projekt bitte erneut abgleichen.';}
+  persisted=true;
+  if(current===project){if(wdSame(wdParams(project),m.p))project.woodDrawingDraft={...m.p};renderRecord({drawingSave:true});$('#wdSaveStatus').textContent='Werkzeichnungsmaße gespeichert. Bei Änderungen am Projekt bitte erneut abgleichen.';}
  }catch(e){
-  if(prior)project.woodDrawing=prior;else delete project.woodDrawing;
-  project.projectDirty=priorDirty;
-  if(current===project){wdPreview();$('#wdSaveStatus').textContent='Speichern fehlgeschlagen. Die Eingaben bleiben sichtbar; bitte erneut speichern.';}
+  if(!persisted){if(prior)project.woodDrawing=prior;else delete project.woodDrawing;project.projectDirty=priorDirty;}
+  if(current===project){if(!persisted)wdPreview();$('#wdSaveStatus').textContent=persisted?'Werkzeichnungsmaße gespeichert. Die Anzeige konnte nicht aktualisiert werden; bitte die Seite neu laden.':'Speichern fehlgeschlagen. Die Eingaben bleiben sichtbar; bitte erneut speichern.';}
+ }finally{
+  wdSaving=false;
+  if(current===project){$('#wdSave').removeAttribute?.('aria-busy');$('#wdSave').disabled=false;}
  }
 }
 function wdCutPlanMatches(project,input){
@@ -2136,6 +2146,7 @@ function wdBiscuitKnowledge(project,m){
 }
 
 function renderRecord(){
+  const drawingSave=arguments[0]?.drawingSave===true;
   const r=current.reconstruction||{};
   const refreshBtn=$('#refreshProject');
 if(refreshBtn){
@@ -2171,16 +2182,16 @@ if(refreshBtn){
   const profileChoice=$('#projectProfileChoice');
   if(hasSource&&profileChoice)profileChoice.onchange=async()=>{const project=current,old=project.profileChoice,dirty=project.projectDirty;project.profileChoice=profileChoice.value;project.projectDirty=true;try{await dbPutProject(project);if(current===project)renderRecord()}catch(e){project.profileChoice=old;project.projectDirty=dirty;if(current===project)renderRecord();alert('Profilauswahl konnte nicht gespeichert werden.')}};
 
-  renderAllPhotos();renderSketches();renderTalk();wdRender();
+  if(!drawingSave){renderAllPhotos();renderSketches();renderTalk();}wdRender();
   const cutlistHtml=renderCutlist(wdCutlistForProject(current));
   const materialHtml=renderTable(r.materials||[]);
-  $('#materialBox').innerHTML=(cutlistHtml?`${cutlistHtml}<h3>Material / Einkauf</h3>`:'')+materialHtml+'<p class="hint">Vor dem Einkauf unter „Zukaufteile“ den Bestand prüfen. Dort steht die bereinigte Einkaufsliste.</p>';renderPurchasedParts();renderCutPlanner();
+  $('#materialBox').innerHTML=(cutlistHtml?`${cutlistHtml}<h3>Material / Einkauf</h3>`:'')+materialHtml+'<p class="hint">Vor dem Einkauf unter „Zukaufteile“ den Bestand prüfen. Dort steht die bereinigte Einkaufsliste.</p>';renderPurchasedParts();if(drawingSave){cutPlannerNeedsRefresh=true}else{renderCutPlanner();cutPlannerNeedsRefresh=false}
   $('#toolsBox').innerHTML=(r.tools||[]).map(x=>`<p>• ${escGerman(x)}</p>`).join('')||'<p>Noch keine Angaben.</p>';
   $('#stepsBox').innerHTML=wdSheetGeometry(current)+((sheetState(current).current&&!sheetState(current).open.length?(r.steps||[]):[]).map((s,i)=>`<div class="step"><div class="stepnum">${i+1}</div><p>${escGerman(s)}</p></div>`).join('')||'<p>Vor der Bauanleitung bitte die offenen Punkte im Werkstatt-Talk klären und den Entwurf aktualisieren.</p>');
   $('#safetyBox').innerHTML=(r.safety_notes||[]).map(x=>`<div class="notice">${escGerman(x)}</div>`).join('')||'<div class="ok notice">Keine besonderen Hinweise ermittelt.</div>';
   $('#projectStatus').textContent=`${current.photos.length} Foto${current.photos.length===1?'':'s'} · ${(current.sketches||[]).length} Skizze${(current.sketches||[]).length===1?'':'n'} · ${sheetState(current).open.length} offene Punkte · ${current.chat.length} Talk-Beiträge`;
 }
-function switchTab(id){$$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.pane===id));$$('.pane').forEach(x=>x.classList.toggle('on',x.id===id));const ww=$('#workWindow');if(!ww)return;if(id==='talkPane'){requestAnimationFrame(()=>{ww.scrollTop=ww.scrollHeight})}else{ww.scrollTo({top:0,behavior:'smooth'})}}document.addEventListener('click',e=>{const t=e.target.closest?.('.tab[data-pane]');if(t) switchTab(t.dataset.pane)});
+function switchTab(id){if(id==='material'&&cutPlannerNeedsRefresh){renderCutPlanner();cutPlannerNeedsRefresh=false;}$$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.pane===id));$$('.pane').forEach(x=>x.classList.toggle('on',x.id===id));const ww=$('#workWindow');if(!ww)return;if(id==='talkPane'){requestAnimationFrame(()=>{ww.scrollTop=ww.scrollHeight})}else{ww.scrollTo({top:0,behavior:'smooth'})}}document.addEventListener('click',e=>{const t=e.target.closest?.('.tab[data-pane]');if(t) switchTab(t.dataset.pane)});
 function calcView(c){if(!c)return'';if(c.status&&c.status!=='ok')return `<div class="notice">${esc(c.message||'Rechnung bitte prüfen.')}</div>`;if(c.type==='linear_layout')return `<div class="calc"><strong>Werkstattrechnung</strong><br>${esc(c.count)} Plätze · Brettlänge ${esc(c.length_mm)} mm<br>Mitte zu Mitte: ${esc(c.spacing_mm)} mm · freier Zwischenraum: ${esc(c.edge_gap_mm)} mm<br>Freier Endrand: ${esc(c.end_margin_mm)} mm · Mittelpunkte ab links: ${esc(c.positions_mm?.join(' / '))} mm</div>`;if(c.type==='circle_pattern')return `<div class="calc"><strong>Werkstattrechnung</strong><br>Teilkreis Ø ${c.pitch_diameter_mm} mm · Umfang ${c.circumference_mm} mm<br><strong>${c.count} Bohrungen</strong> · tatsächliche Teilung ${c.actual_center_pitch_mm} mm · Winkel ${c.angle_deg}°${c.actual_edge_gap_mm!=null?` · freier Abstand ${c.actual_edge_gap_mm} mm`:''}</div>`;if(c.type==='equal_spacing')return `<div class="calc"><strong>Werkstattrechnung</strong><br>${esc(c.count)} Positionen · Abstand der äußeren Mittelpunkte ${esc(c.length_mm)} mm → ${esc(c.spacing_mm)} mm Mitte zu Mitte${c.mode!=='center_span'?' · Altrechnung: Bezug prüfen':''}</div>`;if(c.type==='rectangle')return `<div class="calc"><strong>Werkstattrechnung</strong><br>Fläche ${c.area_m2} m²${c.volume_l!=null?` · Volumen ${c.volume_l} l`:''}</div>`;return''}
 function deferredPanel(project=current,interactive=true){
  const items=deferredItems(project.analysis?.deferred);
