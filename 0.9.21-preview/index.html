@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev23.2</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev24</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev23.2 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev24 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev23.2';
+const APP_VERSION='0.9.21-dev24';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1247,6 +1247,112 @@ document.addEventListener('click',async e=>{const button=e.target.closest?.('.de
  if(busy){alert('Bitte warte, bis die aktuelle Antwort fertig ist.');return}button.disabled=true;try{await talk({message:'Meine Entscheidung zu „'+d.topic+'“: Ich übernehme folgenden Vorschlag: '+d.recommendation+'. Bitte in der weiteren Planung berücksichtigen.'})}finally{button.disabled=false}
 });
 let cutPlannerNeedsRefresh=false;
+// Agreed rules and explicitly editable project dimensions. No inferred photo dimensions.
+const SOLID_MODELS=Object.freeze({
+ 'finger-joint-v1':{name:'Fingerzinken',fields:[['width','Brettbreite'],['thickness','Brettdicke'],['divisions','Anzahl gleich breiter Abschnitte']],sample:{width:170,thickness:16,divisions:11}},
+ 'dovetail-joint-v1':{name:'Offene Schwalbenschwanzzinkung',fields:[['width','Brettbreite'],['thickness','Brettdicke'],['tails','Schwalbenanzahl']],sample:{width:170,thickness:16,tails:7}},
+ 'breadboard-end-v1':{name:'Angezapfte Hirnleiste',fields:[['width','Brettbreite'],['thickness','Brettdicke'],['endWidth','Hirnleistenbreite / Zapfenlänge ab Schulter'],['endThickness','Hirnleistendicke'],['tenonWidth','Mittlerer Zapfen: Breite (Richtwert 60)']],sample:{width:650,thickness:20,endWidth:80,endThickness:20,tenonWidth:60}},
+ 'sliding-batten-v1':{name:'Stehende Gratleiste',fields:[['width','Brettbreite'],['thickness','Brettdicke'],['battenThickness','Gratleistendicke'],['battenHeight','Gesamthöhe der Gratleiste einschließlich Grat'],['gratWidth','Maximale Gratbreite am Nutgrund'],['edgeDistance','Abstand Nutbegrenzung zur Brettkante']],sample:{width:650,thickness:20,battenThickness:30,battenHeight:60,gratWidth:30,edgeDistance:50}}
+});
+function isSolidJoint(p){return Object.hasOwn(SOLID_MODELS,p?.kind)}
+function solidFields(p){return SOLID_MODELS[p?.kind]?.fields||[]}
+function buildSolidJoint(input,{drawingNumber,drawingFormat}){
+ const definition=SOLID_MODELS[input?.kind],errors=[],warnings=[],pending=[],p={kind:input?.kind};
+ if(!definition)return{ok:false,errors:['Unbekanntes Vollholzdetail.'],warnings};
+ for(const[k,label]of definition.fields){p[k]=drawingNumber(input[k]);if(!Number.isFinite(p[k])||p[k]<=0)errors.push(label+': positiven Wert eingeben.');}
+ if(errors.length)return{ok:false,errors,warnings,pending,p,kind:p.kind,parts:[]};
+ if(p.width>2000||p.thickness<6||p.thickness>60)errors.push('Detailbereich: Brettbreite bis 2000 mm, Brettdicke 6 bis 60 mm.');
+ const m={kind:p.kind,p,parts:[],errors,warnings,pending,notes:[],confirmable:true};
+ const f=drawingFormat;
+ if(p.kind==='finger-joint-v1'){
+  if(!Number.isSafeInteger(p.divisions)||p.divisions<3||p.divisions>101||p.divisions%2!==1)errors.push('Ungerade Teilungszahl von 3 bis 101 eingeben.');
+  m.unit=p.width/p.divisions;m.teethA=(p.divisions+1)/2;m.teethB=(p.divisions-1)/2;
+  m.notes=['Zinken und Lücken gleich breit: '+f(m.unit)+' mm.','Zinkenlänge und Ausnehmungstiefe: '+f(p.thickness)+' mm.','Teil A: '+m.teethA+' Zinken; Teil B: '+m.teethB+' Zinken.','Teilungszahl ist eine Projektwahl, keine allgemeine Festregel.'];
+ }else if(p.kind==='dovetail-joint-v1'){
+  if(!Number.isSafeInteger(p.tails)||p.tails<1||p.tails>50)errors.push('Ganze Schwalbenanzahl von 1 bis 50 eingeben.');
+  m.unit=p.width/(3*p.tails+1);m.offset=p.thickness/7;m.minPin=m.unit-2*m.offset;
+  if(m.minPin<=0)errors.push('Teilung und Neigung 1:7 lassen keine positiven inneren Zinkenbreiten zu. Anzahl verringern.');
+  m.notes=['Neigung 1:7 fest. Teilungsbezug: Schwalbengrund.','Einheit a = B / (3 n + 1) = '+f(m.unit)+' mm.','Schwalbenbreite am Grund: '+f(2*m.unit)+' mm.','Schmalster innerer Zinken: '+f(m.minPin)+' mm.','Randzinken am Grund je a; Anzahl individuell gewählt.'];
+ }else if(p.kind==='breadboard-end-v1'){
+  m.feather=p.thickness/3;m.tenonLength=p.endWidth;m.extension=p.endWidth-m.feather;
+  if(p.tenonWidth>=p.width)errors.push('Der mittlere Zapfen muss schmaler als das Brett sein.');
+  if(p.endWidth<=m.feather)errors.push('Hirnleistenbreite muss größer als die Federtiefe sein.');
+  if(p.endWidth>200||p.endThickness>100||p.endThickness<=m.feather)errors.push('Hirnleiste: Breite bis 200 mm; Dicke größer als Federdicke und höchstens 100 mm.');
+  m.notes=['Feder- und Zapfendicke: D/3 = '+f(m.feather)+' mm.','Durchgehende Feder greift '+f(m.feather)+' mm tief ein.','Ein mittiger Zapfen, '+f(p.tenonWidth)+' mm breit (Richtwert 60 mm).','Zapfenlänge ab Brettschulter: '+f(p.endWidth)+' mm.','Überstand über Feder: '+f(m.extension)+' mm.','Feder und Zapfen im Detail mittig in der Brettdicke.'];
+  pending.push('Leimstellen, Bewegungsspiel und Sicherung der Hirnleiste sind noch festzulegen.');
+ }else{
+  m.grooveDepth=p.thickness/3;m.offset=m.grooveDepth/Math.tan(75*Math.PI/180);m.neck=p.gratWidth-2*m.offset;
+  if(p.edgeDistance<50)errors.push('Mindestens 50 mm von der nächstliegenden Nutbegrenzung zur Brettkante einhalten.');
+  if(p.battenHeight<=m.grooveDepth||p.battenHeight>120)errors.push('Gesamthöhe muss größer als Nuttiefe sein und darf hier 120 mm nicht überschreiten.');
+  if(p.battenThickness>100||p.gratWidth>p.battenThickness||m.neck<=0)errors.push('Gratbreite muss in die Leistendicke passen; Halsbreite muss positiv bleiben. Leistendicke bis 100 mm.');
+  m.notes=['Nuttiefe D/3 = '+f(m.grooveDepth)+' mm; Gratwinkel 75° zur Brettfläche.','Nutbegrenzung bis Brettkante: '+f(p.edgeDistance)+' mm (mindestens 50).','Maximale Gratbreite '+f(p.gratWidth)+' mm; Hals '+f(m.neck)+' mm.','Gesamthöhe einschließlich Grat '+f(p.battenHeight)+' mm.','Gratprofil mittig in der Leistendicke; Leistenlänge im Muster gleich Brettbreite.'];
+  pending.push('Leimstellen, Befestigung und Bewegungsspiel der Gratleiste sind noch festzulegen.');
+ }
+ m.ok=!errors.length;m.confirmable=m.ok&&!pending.length;
+ warnings.push('Verbindungsdetail ohne Passungs- oder Bearbeitungszugaben; kein vollständiger Möbelentwurf.');
+ return m;
+}
+function solidJointPages(m,{title='Vollholzdetail',status='Entwurf'}={}, {svgTools}){
+ if(!m.ok)throw Error(m.errors.join('\n'));
+ const {p}=m,{f,e,n,line,text,rect,dh,dv}=svgTools();
+ const poly=pts=>'<path class="body" d="'+pts.map(([x,y],i)=>(i?'L':'M')+n(x)+','+n(y)).join(' ')+' Z"/>';
+ const frame=(body,scaleLabel,page='1/1')=>'<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><style>text{font-family:Arial,sans-serif;font-size:2.6px;fill:#111}.bold{font-weight:bold;font-size:3px}.small{font-size:2.2px}line{stroke:#111;stroke-width:.16;fill:none}rect{stroke:#111;stroke-width:.25;fill:none}.body{stroke:#111;stroke-width:.32;fill:none}.hidden{stroke-dasharray:2 1}.axis{stroke-dasharray:4 1 1 1}</style>'+rect(6,6,285,198)+text(12,14,"look, talk ’n build",'bold')+text(265,14,'Blatt '+page,'small')+text(12,23,SOLID_MODELS[p.kind].name+' · '+scaleLabel,'bold')+line(6,28,291,28)+text(12,35,title)+text(12,41,status,'small')+body+line(15,190,65,190)+line(15,189,15,191)+line(65,189,65,191)+text(70,191,'Kontrolle: 50 mm auf Papier','small')+line(6,197,291,197)+text(12,202,'Alle Maße mm · Druck 100 % / Originalgröße · Nenngeometrie','small')+text(218,202,'DIN-919-Abgleich offen','small')+'</svg>';
+ let b='',scale=1;
+ if(['finger-joint-v1','dovetail-joint-v1'].includes(p.kind)){
+  scale=p.width<=170&&p.thickness<=30?1:p.width<=340&&p.thickness<=60?.5:Math.min(.2,170/p.width);
+  const x=24,W=p.width*scale,T=p.thickness*scale;
+  if(p.kind==='finger-joint-v1'){
+   for(let part=0;part<2;part++){
+    const top=60+part*60,root=top+T,end=root+14,pts=[[x,root],[x,end],[x+W,end],[x+W,root]];
+    for(let i=p.divisions-1;i>=0;i--){const l=x+i*m.unit*scale,r=l+m.unit*scale;if(i%2===part)pts.push([r,root],[r,top],[l,top],[l,root]);else pts.push([l,root]);}
+    b+=text(x,top-8,'TEIL '+(part?'B':'A')+' · Breitfläche','bold')+poly(pts)+line(x,root,x+W,root,'hidden');
+   }
+  }else{
+   const top=60,root=top+T,end=root+18,pts=[[x,root],[x,end],[x+W,end],[x+W,root]];
+   for(let i=p.tails-1;i>=0;i--){const l=x+(1+3*i)*m.unit*scale,r=l+2*m.unit*scale,o=m.offset*scale;pts.push([r,root],[r+o,top],[l-o,top],[l,root]);}
+   b+=text(x,52,'SCHWALBENSTÜCK · Breitfläche','bold')+poly(pts)+line(x,root,x+W,root,'hidden')+text(x,112,'ZINKENSTÜCK · Stirnfläche','bold')+rect(x,120,W,T);
+   for(let i=0;i<p.tails;i++){const l=x+(1+3*i)*m.unit*scale,r=l+2*m.unit*scale,o=m.offset*scale;b+=poly([[l-o,120],[r+o,120],[r,120+T],[l,120+T]]);}
+  }
+  b+=dh(x,x+W,60,x?48:48,f(p.width))+text(24,175,'Brettdicke '+f(p.thickness)+' mm; Verbindungstiefe '+f(p.thickness)+' mm.','small');
+ }else if(p.kind==='breadboard-end-v1'){
+  scale=Math.min(.2,170/p.width);
+  const W=p.width*scale,x=22,C=x+W/2,Z=p.tenonWidth*scale,F=m.feather*scale,H=p.endWidth*scale,root=145,tip=root-H;
+  b+=text(x,52,'HIRNLEISTE vor dem Aufschieben · Draufsicht','bold')+rect(x,60,W,H)+line(C-Z/2,60,C-Z/2,60+H,'hidden')+line(C+Z/2,60,C+Z/2,60+H,'hidden')+line(x,60+H-F,x+W,60+H-F,'hidden');
+  b+=poly([[x,root],[x,160],[x+W,160],[x+W,root-F],[C+Z/2,root-F],[C+Z/2,tip],[C-Z/2,tip],[C-Z/2,root-F],[x,root-F]]);
+  b+=line(x,root,x+W,root,'hidden')+dh(x,x+W,160,170,f(p.width))+text(x,178,'Zapfenlänge '+f(p.endWidth)+' ab Brettschulter, einschließlich Feder.','small');
+ }else{
+  const cx=80,y=65,under=y+p.thickness,tip=under-m.grooveDepth,base=tip+p.battenHeight,l=cx-p.battenThickness/2,r=cx+p.battenThickness/2,gl=cx-p.gratWidth/2,gr=cx+p.gratWidth/2,end=gr+p.edgeDistance;
+  scale=Math.min(1,150/(end-20),115/(base-55));
+  const S=(pts)=>pts.map(([x,Y])=>[20+(x-20)*scale,55+(Y-55)*scale]);
+  b+=poly(S([[25,y],[end,y],[end,under],[gr-m.offset,under],[gr,tip],[gl,tip],[gl+m.offset,under],[25,under]]));
+  b+=poly(S([[gl,tip],[gr,tip],[gr-m.offset,under],[r,under],[r,base],[l,base],[l,under],[gl+m.offset,under]]));
+  b+=text(25,177,'Brettbreite / Leistenlänge '+f(p.width)+' mm, senkrecht zur Schnittebene.','small');
+  b+=text(25,49,'Stehende Gratleiste · Querschnitt','bold');
+  const at=(x,y)=>[20+(x-20)*scale,55+(y-55)*scale];
+  const [lx,by]=at(l,base),[rx]=at(r,base),[ex,yy]=at(end,y),[gx]=at(gr,y),[,uy]=at(end,under);
+  b+=dh(lx,rx,by,by+8,f(p.battenThickness))+dh(gx,ex,yy,yy-7,f(p.edgeDistance))+dv(yy,uy,ex,ex+8,f(p.thickness));
+ }
+ const notes=[...m.notes,...m.pending];
+ notes.forEach((v,i)=>{
+  // Wrap at words, no clipping of long German notes.
+  const words=v.split(' ');let rows=[''];for(const word of words){let k=rows.length-1;if((rows[k]+' '+word).length>42)rows.push(word);else rows[k]+=(rows[k]?' ':'')+word;}
+  rows.forEach((row,j)=>b+=text(205,52+i*15+j*3.4,row,'small'));
+ });
+ let label=scale===1?'M 1:1':'M 1:'+f(1/scale);
+ b+=text(205,174,'Maßprüfung umfasst nur dieses Detail.','small');
+ if(p.kind==='breadboard-end-v1'){
+  const F=m.feather,D=p.thickness,x=50,y=68;
+  let detail=text(25,53,'Federdetail · Längsschnitt außerhalb des mittleren Zapfens','bold');
+  detail+=poly([[x,y],[110,y],[110,y+D],[x,y+D],[x,y+2*F],[x-F,y+2*F],[x-F,y+F],[x,y+F]]);
+  detail+=dv(y,y+D,110,123,f(D))+dv(y+F,y+2*F,x-F,30,f(F))+dh(x-F,x,y+2*F,y+D+12,f(F));
+  detail+=text(25,120,'Feder- und Zapfendicke: '+f(F)+' mm.','bold')+text(25,128,'Zapfenlänge ab Schulter '+f(p.endWidth)+' mm; davon '+f(F)+' mm Feder.','small');
+  detail+=text(25,136,'Ein mittiger Zapfen, Breite '+f(p.tenonWidth)+' mm; Lage symmetrisch zur Brettbreite.','small');
+  detail+=text(25,148,m.pending[0],'small');
+  return [frame(b,label,'1/2'),frame(detail,'Federdetail M 1:1','2/2')];
+ }
+ return [frame(b,label)];
+}
+
 // Deterministic first construction family. No image-derived or AI-invented dimensions.
 const DRAWING_DEFAULTS=Object.freeze({width:386,height:160,depth:90,thickness:18,frontSetback:5,bottomOffset:5,railHeight:70,railTopOffset:20,count:6,pocketDiameter:45,pocketDepth:5,gap:10,minEndMargin:15,dowelDiameter:6,dowelLength:30,dowelEdge:20,faceDepth:12,glueAllowance:2,cordDiameter:6,cordHeight:85,cordFront:12});
 const DRAWING_FIELDS=[['width','Gesamtbreite'],['height','Gesamthöhe'],['depth','Gesamttiefe'],['thickness','Materialdicke'],['frontSetback','Boden: Rücksprung vorn'],['bottomOffset','Boden: Abstand unten'],['railHeight','Rücksteg: Höhe'],['railTopOffset','Rücksteg: Abstand oben'],['count','Anzahl Gläser / Sacklöcher'],['pocketDiameter','Sackloch: Durchmesser'],['pocketDepth','Sackloch: Tiefe'],['gap','Freier Abstand der Sacklöcher'],['minEndMargin','Mindestens freier Endrand'],['dowelDiameter','Dübel: Durchmesser'],['dowelLength','Dübel: Länge'],['dowelEdge','Dübelachse: Abstand zur Bauteilkante'],['faceDepth','Flächenbohrung: Tiefe'],['glueAllowance','Kantenbohrung: Leimzugabe'],['cordDiameter','Stropp: Durchmesser'],['cordHeight','Stroppachse: Höhe ab unten'],['cordFront','Stroppachse: Abstand von vorn']];
@@ -1254,6 +1360,7 @@ function drawingNumber(x){return typeof x==='number'?x:typeof x==='string'&&x.tr
 function drawingSource(project={}){return JSON.stringify({analysis:project.analysis||null,reconstruction:project.reconstruction||null,knowledge:project.knowledge||'',description:project.customDescription||'',photos:(project.photos||[]).map(p=>p.id),sketches:(project.sketches||[]).map(s=>({id:s.id,analysis:s.analysis})),chat:project.chat||[]});}
 function drawingStatus(project){const d=project.woodDrawing;if(!d)return 'missing';if(d.source!==drawingSource(project))return 'stale';return d.confirmed?'checked':'draft';}
 function buildDrawing(input){
+ if(isSolidJoint(input))return buildSolidJoint(input,{drawingNumber,drawingFormat});
  if(input?.kind==='writing-carcass-v1')return buildWritingDrawing(input);
  if(input?.kind==='carcass-v1')return buildCorpusDrawing(input);
  if(input?.kind==='bread-frame-v1')return buildFrameDrawing(input);
@@ -1316,6 +1423,7 @@ function svgTools(){
  return {f,e,n,line,text,rect,circle,cross,dh,dv,warn};
 }
 function drawingPages(model,{title='Werkzeichnung',status='Entwurf - Maße noch bestätigen'}={}){
+ if(isSolidJoint(model))return solidJointPages(model,{title,status},{svgTools});
  if(model.kind==='writing-carcass-v1')return writingDrawingPages(model,{title,status});
  if(model.kind==='carcass-v1')return corpusDrawingPages(model,{title,status});
  if(model.kind==='bread-frame-v1')return frameDrawingPages(model,{title,status});
@@ -1968,11 +2076,11 @@ async function drawingPdfBlob(model,options={}){
 
 function wdIsCorpus(params){return ['carcass-v1','writing-carcass-v1'].includes(params?.kind)}
 // Per-project drafts retain typed values even while other panes refresh.
-function wdFields(params){return wdIsCorpus(params)?[['jointType','Eckverbindung'],...corpusFields(params)]:params?.kind==='bread-frame-v1'?FRAME_FIELDS:DRAWING_FIELDS}
-function wdModelName(params){return params?.kind==='writing-carcass-v1'?'Schreibkorpus mit Schräge':params?.kind==='carcass-v1'?'Rechteckiger Korpus':params?.kind==='bread-frame-v1'?'Backrahmen':'Gewürzbord'}
+function wdFields(params){if(isSolidJoint(params))return solidFields(params);return wdIsCorpus(params)?[['jointType','Eckverbindung'],...corpusFields(params)]:params?.kind==='bread-frame-v1'?FRAME_FIELDS:DRAWING_FIELDS}
+function wdModelName(params){if(isSolidJoint(params))return SOLID_MODELS[params.kind].name;return params?.kind==='writing-carcass-v1'?'Schreibkorpus mit Schräge':params?.kind==='carcass-v1'?'Rechteckiger Korpus':params?.kind==='bread-frame-v1'?'Backrahmen':'Gewürzbord'}
 function wdParams(project=current){return project.woodDrawingDraft||project.woodDrawing?.params||null}
 function wdCutlistForProject(project=current){
- if(!project.woodDrawing)return project.reconstruction?.cutlist||[];
+ if(!project.woodDrawing||isSolidJoint(project.woodDrawing.params))return project.reconstruction?.cutlist||[];
  if(drawingStatus(project)==='stale')return [];
  const m=buildDrawing(project.woodDrawing.params);if(!m.ok)return [];
  return m.parts.map(p=>({part:p.name,qty:p.quantity,length_mm:p.length,width_mm:p.width,thickness_mm:p.thickness,material:p.material||(m.kind==='bread-frame-v1'?'Massive Buche, unbehandelt':'Holzart noch festlegen'),direction_basis:wdIsCorpus(m)?'unknown':'fiber',note:(wdIsCorpus(m)?'Maße aus Korpuszeichnung; Dekor-/Faserrichtung und Belag-Zuschnittspiel prüfen. ':'Maße aus Werkzeichnung; Massivholz, L in Faserrichtung. ')+(p.note||'')+' '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Entwurf: Maße noch bestätigen.')}));
@@ -1982,6 +2090,7 @@ function wdKnowledge(project){
  const m=buildDrawing(project.woodDrawing.params);
  if(!m.ok)return project.knowledge||'';
  const p=m.p,f=drawingFormat;
+ if(isSolidJoint(m))return wdSolidKnowledge(project,m);
  if(m.biscuit)return wdBiscuitKnowledge(project,m);
  if(m.kind==='writing-carcass-v1')return wdWritingKnowledge(project,m);
  if(wdIsCorpus(m))return wdCorpusKnowledge(project,m);
@@ -2017,7 +2126,8 @@ function wdRender(){
  const box=$('#woodDrawingBox');if(!box)return;
  let params=current.woodDrawingChoosing?null:wdParams();
  if(params?.kind==='bread-frame-v1'&&params.jointChamfer===undefined){current.woodDrawingDraft={...params,jointChamfer:params.chamfer};params=wdParams();}
- if(!params){box.innerHTML='<h3>Werkzeichnung</h3><p>Zeichenmodell für dieses Projekt wählen. Unterstützt werden Gewürzbord, Backrahmen, rechteckiger Korpus und Schreibkorpus mit gerader Schräge und unterem Knick. Die Werkzeichnung des Schreibkorpus verwendet hinten senkrechte Bezugskanten.</p><p class="hint">Aktuelle Projektangaben werden in die Eingaben übernommen. Fehlende Maße bleiben leer. Keine Maßermittlung aus dem Foto. Alle Werte vor dem Speichern prüfen. Der Backrahmen verwendet massive unbehandelte Buche, kurze Teile durchgehend, drei Konfirmatschrauben je Ecke und außen eine 45°-Fase. Äußere Stoßkanten bilden eine V-Nut; Innenkanten und Innenfugen bleiben ungefast. Andere Konstruktionen werden nicht automatisch gezeichnet.</p><button class="secondary" id="wdStartWriting">Schreibkorpus mit Schräge</button> <button class="secondary" id="wdStartCorpus">Rechteckiger Korpus als Ausgangsmodell</button> <button class="ghost" id="wdCancelModel">Zur Zeichnung zurück</button><button class="secondary" id="wdStart">Gewürzbord als Ausgangsmodell</button> <button class="secondary" id="wdStartFrame">Backrahmen als Ausgangsmodell</button>';$('#wdStartWriting').onclick=()=>wdBeginFromProject('writing-carcass-v1');$('#wdStartCorpus').onclick=()=>wdBeginFromProject('carcass-v1');$('#wdCancelModel').disabled=!wdParams();$('#wdCancelModel').onclick=()=>{delete current.woodDrawingChoosing;wdRender();};$('#wdStart').onclick=()=>{wdBeginFromProject('spice-rack-v1')};$('#wdStartFrame').onclick=()=>{wdBeginFromProject('bread-frame-v1')};return;}
+ if(!params){box.innerHTML='<h3>Werkzeichnung</h3><p>Zeichenmodell für dieses Projekt wählen. Unterstützt werden Gewürzbord, Backrahmen, rechteckiger Korpus und Schreibkorpus mit gerader Schräge und unterem Knick. Die Werkzeichnung des Schreibkorpus verwendet hinten senkrechte Bezugskanten.</p><p class="hint">Aktuelle Projektangaben werden in die Eingaben übernommen. Fehlende Maße bleiben leer. Keine Maßermittlung aus dem Foto. Alle Werte vor dem Speichern prüfen. Der Backrahmen verwendet massive unbehandelte Buche, kurze Teile durchgehend, drei Konfirmatschrauben je Ecke und außen eine 45°-Fase. Äußere Stoßkanten bilden eine V-Nut; Innenkanten und Innenfugen bleiben ungefast. Andere Konstruktionen werden nicht automatisch gezeichnet.</p><button class="secondary" id="wdStartWriting">Schreibkorpus mit Schräge</button> <button class="secondary" id="wdStartCorpus">Rechteckiger Korpus als Ausgangsmodell</button> <button class="ghost" id="wdCancelModel">Zur Zeichnung zurück</button><button class="secondary" id="wdStart">Gewürzbord als Ausgangsmodell</button> <button class="secondary" id="wdStartFrame">Backrahmen als Ausgangsmodell</button>';$('#wdStartWriting').onclick=()=>wdBeginFromProject('writing-carcass-v1');$('#wdStartCorpus').onclick=()=>wdBeginFromProject('carcass-v1');$('#wdCancelModel').disabled=!wdParams();$('#wdCancelModel').onclick=()=>{delete current.woodDrawingChoosing;wdRender();};$('#wdStart').onclick=()=>{wdBeginFromProject('spice-rack-v1')};$('#wdStartFrame').onclick=()=>{wdBeginFromProject('bread-frame-v1')};box.insertAdjacentHTML('beforeend','<h4>Vollholz · Verbindungsdetails</h4>'+Object.entries(SOLID_MODELS).map(([kind,def])=>'<button class="secondary" data-solid-model="'+kind+'">'+esc(def.name)+'</button>').join(''));box.querySelectorAll('[data-solid-model]').forEach(button=>button.onclick=()=>wdBeginSolid(button.dataset.solidModel));return;}
+ if(isSolidJoint(params)){wdRenderSolid(params);return;}
  const isFrame=params.kind==='bread-frame-v1',isWriting=params.kind==='writing-carcass-v1',isCorpus=wdIsCorpus(params),isFlat=isCorpus&&params.jointType==='Flachdübel',fields=wdFields(params),baseCount=isWriting?13:isCorpus?11:isFrame?4:8;
  const input=([key,label])=>`<label class="wdField" for="wd-${key}"><span>${esc(label)}${key==='count'||isCorpus&&CORPUS_OPTIONS[key]?'':' (mm)'}</span>${isCorpus&&CORPUS_OPTIONS[key]?'<select id="wd-'+key+'" data-wd="'+key+'">'+'<option value="">Bitte wählen</option>'+wdSelectOptions(key,key==='jointType'?(params[key]||'Runddübel'):params[key])+'</select>':'<input id="wd-'+key+'" data-wd="'+key+'" inputmode="decimal" value="'+esc(params[key]??'')+'" autocomplete="off">'}</label>`;
  box.innerHTML=`<h3>Werkzeichnung · ${wdModelName(params)}</h3>${wdImportHtml(current,params)}<p>${isWriting?'Schreibkorpus: Seitenprofil mit gerader Schräge und unterem Knick. Vier Bauteiltiefen getrennt eingeben. Tiefen ab gewählter senkrechter Bezugskante; Rücksprünge oben und unten beziehen sich auf die Seitenkanten. Für Bezugskante vorne gibt es vorerst eine Formvorschau.':isCorpus?'Seiten durchgehend; Ober- und Unterboden dazwischen. Rückwandfalz: 2/3 Plattendicke breit, Rückwanddicke + 3 mm tief. Kork liegt nur in der lichten Öffnung.':isFrame?'Kurze Teile laufen über die volle Außenbreite. Lange Teile sitzen dazwischen: Länge = Außentiefe minus zweimal Materialdicke. Höhe und Fase werden gesondert geführt.':'Gesamtmaß ändern: Ablageboden und Rücksteg erhalten automatisch dieselbe lichte Länge. Materialdicke, Rücksprünge und Verbindungsmaße werden gesondert geführt.'}</p><div class="wdFields">${fields.slice(0,baseCount).map(input).join('')}</div><details ${isFlat?'open':''}><summary>${isFlat?'Flachdübel und Rückwand bearbeiten':isWriting?'Werkstoffe, Dübel und Rückwand bearbeiten':isCorpus?'Dübel und Rückwandbefestigung bearbeiten':isFrame?'Schraubenpositionen und Außenfase bearbeiten':'Bohrungen, Dübel und Stropp bearbeiten'}</summary><div class="wdFields">${fields.slice(baseCount).map(input).join('')}</div></details><p class="hint">${isFlat?'Flachdübel: Lamello-Herstellerprofil 0 / 10 / 20 mit Frästiefen 8 / 10 / 12,3 mm je Werkstück. Nut 4 mm, Fräser Ø100 mm. Endabstand 40–50 mm bis Nutmitte; Richtabstand Mitte–Mitte 100–150 mm. Kurze Verbindungen mindestens zwei, sofern beide Nuten vollständig passen. Hinterer Abstand kann wegen Falz oder Rückwandbefestigung vergrößert werden. Größenempfehlung nach Materialstärke ist eine Vorauswahl; Flächenfräsung und Restmaterial werden gesondert geprüft.':isCorpus?'Regeln: Dübel-Ø höchstens halbe Plattendicke; Flächenbohrung höchstens 2/3; Kantenbohrung Restdübellänge + höchstens 2 mm. Mindestens zwei Dübel je Ecke, Achsabstand höchstens 120 mm. Befestigung der Rückwand: Endabstand 30 mm, quer halbe Falzbreite, Achsabstand höchstens 200 mm. 0 bei Befestigungsgröße bedeutet offen; eine Bestätigung ist dann noch nicht möglich. Einbauluft ist eine einstellbare Annahme.':isFrame?'Vorlage: massive unbehandelte Buche, oben und unten offen. Außenfase bei 45°; Äußere Stoßkanten bilden mit ihren Fasen eine V-Nut. Innenkanten mit Teigkontakt und Innenfugen bleiben ungefast. Schraubenachsen mittig in der Wandstärke; die drei Höhen beziehen sich auf die Oberkante. Erkannte Projektwerte prüfen; fehlende Angaben ergänzen.':'Rücksteg hinten bündig. Lochabstand und Anzahl bleiben fest; zusätzliche Breite verteilt sich auf beide Endränder. Holzart, Wandbefestigung und Tragfähigkeit sind separat zu klären.'}</p><button class="ghost" id="wdLoadExample">Musterwerte verwenden (Vorlage)</button>${isWriting?'<button class="ghost" id="wdLoadWriting">Muster Schreibkorpus (Deine Skizze)</button>':isCorpus?'<button class="ghost" id="wdLoadK02">Muster K-02 (Sperrholz und Kork)</button>':''}<button class="ghost" id="wdChangeModel">Anderes Zeichenmodell wählen</button>${isFlat?'<button class="ghost" id="wdSuggestBiscuit">Größenempfehlung übernehmen</button>':''}<p class="hint">Vollholz und Leimholzplatte sind massive Holzwerkstoffe; Dreischichtplatte ist unter Sperrholz eingeordnet. Sägerau, gehobelt und besäumt werden beim Rohmaterial für den Zuschnitt erfasst.</p><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input type="checkbox" id="wdConfirmed"> Ich habe Maße, Bezüge und Bohrungen für dieses Projekt geprüft.</label><div class="composerActions"><button id="wdSave" class="primary">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="wdOpenPreview" class="ghost">Große Vorschau öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>`;
@@ -2048,6 +2158,7 @@ function wdRender(){
  wdPreview();
 }
 function wdPreview(){
+ if(isSolidJoint(wdParams()))return wdPreviewSolid();
  wdRefreshImport();
  const m=buildDrawing(wdParams()),saved=current.woodDrawing;
  if(wdIsCorpus(wdParams())){$('#wdConfirmed').disabled=!m.confirmable;if(!m.confirmable)$('#wdConfirmed').checked=false;}
@@ -2063,7 +2174,7 @@ function wdPreview(){
 let wdSaving=false;
 async function wdSave(){
  if(wdSaving||busy||reconstructionBusy)return;
- const project=current,m=buildDrawing(wdParams(project));if(!m.ok||wdImportBlocks(project)||wdIsCorpus(m)&&$('#wdConfirmed').checked&&!m.confirmable)return;
+ const project=current,m=buildDrawing(wdParams(project));if(!m.ok||wdImportBlocks(project)||(wdIsCorpus(m)||isSolidJoint(m))&&$('#wdConfirmed').checked&&!m.confirmable)return;
  const prior=project.woodDrawing,priorDirty=project.projectDirty;
  const changed=!prior||!wdSame(m.p,prior.params);
  const drawing={importSource:project.woodDrawingImportStamp===drawingImportSource(project)&&!priorDirty?drawingImportSource(project):prior?.importSource,schemaVersion:1,type:m.kind||'spice-rack-v1',params:m.p,confirmed:$('#wdConfirmed').checked,source:drawingSource(project),revision:(prior?.revision||0)+1,updatedAt:new Date().toISOString()};
@@ -2088,7 +2199,7 @@ async function wdSave(){
  }
 }
 function wdCutPlanMatches(project,input){
- if(!project.woodDrawing)return true;
+ if(!project.woodDrawing||isSolidJoint(project.woodDrawing.params))return true;
  if(drawingStatus(project)==='stale')return false;
  const expected=wdCutlistForProject(project),actual=input.parts||[];
  return expected.length===actual.length&&expected.every(p=>actual.some(a=>a.name===p.part&&Number(a.qty)===p.qty&&drawingNumber(a.length)===p.length_mm&&drawingNumber(a.width)===p.width_mm&&drawingNumber(a.thickness)===p.thickness_mm));
@@ -2099,6 +2210,7 @@ function wdFrameKnowledge(project,m){
  return (project.knowledge||'')+'\n\nGespeichertes Werkzeichnungsmodell: offener Backrahmen aus massiver unbehandelter Buche. '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Entwurf, Maße noch bestätigen.')+'\n'+FRAME_FIELDS.map(([k,label])=>label+': '+f(p[k])+' mm.').join('\n')+'\nKurze Rahmenteile laufen über die volle Außenbreite; lange Teile sitzen stumpf dazwischen. Oben und unten offen, kein Boden.\n'+m.parts.map(v=>v.quantity+' '+v.name+': '+[v.length,v.width,v.thickness].map(f).join(' × ')+' mm; L in Faserrichtung.').join('\n')+'\nJe Ecke drei Konfirmatschrauben, insgesamt genau zwölf. Schraubenachse '+f(p.thickness/2)+' mm von der Seitenkante (mittig in der Wandstärke); Höhen '+m.positions.map(f).join(' / ')+' mm ab Oberkante. Gewinde außen Ø '+f(p.screwDiameter)+' mm, Länge '+f(p.screwLength)+' mm, Kopf Ø '+f(p.headDiameter)+' mm. Keine Nenngröße aus dem Gewindeaußendurchmesser erfinden.\nAußenfase '+f(p.chamfer)+' mm bei 45° an allen frei liegenden Außenkanten einschließlich äußerer Ober-/Unterkanten und senkrechter Außenecken. Äußere Stoßkanten erhalten jeweils '+f(p.jointChamfer)+' mm Fase bei 45° und bilden zusammen eine V-Nut mit '+f(2*p.jointChamfer)+' mm Öffnung und '+f(p.jointChamfer)+' mm Tiefe. Innenkanten mit Brotteigkontakt und Innenfugen bleiben ungefast; übrige Kontaktflächen liegen eben an. Fasen vor dem Zusammenbau anbringen.\nPassenden Konfirmat-Stufenbohrer einschließlich Senker verwenden; Bohrstufen und Tiefe nach Schraubenhersteller, am Reststück prüfen. Keine pauschale durchgehende Ø5-mm-Bohrung anweisen. Schrauben in Material- und Einkaufsliste nur einmal mit insgesamt zwölf Stück aufführen. Keine Temperatur- oder Lebensmittelkontaktfreigabe behaupten.\nDiese Zeichnungsmaße und Regeln in Stückliste und Bauanleitung übernehmen. Bei widersprechenden Benutzereingaben gezielt nachfragen; gespeicherte Maße nicht stillschweigend überschreiben. Bereits festgelegte Bezugskanten nicht erneut abfragen.';
 }
 function wdSheetGeometry(project=current){
+ if(isSolidJoint(project.woodDrawing?.params))return wdSolidSheet(project);
  if(wdIsCorpus(project.woodDrawing?.params))return wdCorpusSheet(project);
  if(project.woodDrawing?.params?.kind!=='bread-frame-v1')return '';
  if(drawingStatus(project)==='stale')return '<section class="notice"><strong>Backrahmen-Zeichnung erneut abgleichen</strong><p>Das Projekt wurde geändert. Alte Zeichnungsmaße nicht als aktuelle Fertigungsmaße verwenden.</p></section>';
@@ -2127,7 +2239,7 @@ function wdApplyProjectValues(){
  current.woodDrawingDraft={...params,...proposal.values};current.woodDrawingImportStamp=proposal.source;wdRender();
 }
 function wdImportBlocks(project=current){
- const params=wdParams(project);if(!params)return false;
+ const params=wdParams(project);if(!params||isSolidJoint(params))return false;
  const p=drawingImport(project,params.kind||'spice-rack-v1');return p.conflicts.length>0||p.issues.some(x=>x.includes('Konstruktion zuerst'));
 }
 
@@ -2160,6 +2272,64 @@ function wdWritingKnowledge(project,m){
 function wdBiscuitKnowledge(project,m){
  const p=m.p,B=m.biscuit,f=drawingFormat,writing=m.kind==='writing-carcass-v1';
  return (project.knowledge||'')+'\n\nGespeichertes Werkzeichnungsmodell: '+(writing?'Schreibkorpus mit gerader Schräge und unterem Knick; senkrechte Bezugskanten hinten.':'Rechteckiger Holzwerkstoff-Korpus.')+' '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Unbestätigter Entwurf.')+'\n'+wdFields(p).map(([k,label])=>label+': '+(CORPUS_OPTIONS[k]?p[k]:f(p[k])+' mm')+'.').join('\n')+'\n'+wdCorpusSummary(m)+'. Seiten durchgehend, Böden dazwischen.\nFlachdübel Lamello Gr. '+B.size+', '+[B.length,B.width,B.thickness].map(f).join(' × ')+' mm. Nut 4 mm breit mit Ø100-mm-Fräser, Frästiefe in beiden Werkstücken '+f(B.cutDepth)+' mm. Herstellerfrästiefe enthält bereits den Fräsraum, keine zusätzliche Runddübel-Leimzugabe. Die 2/3-Regel gilt nur für Runddübelbohrungen. Restmaterial hinter Flächenfräsung '+f(p.thickness-B.cutDepth)+' mm. Nutmitte in Plattendickenmitte '+f(p.thickness/2)+' mm.\n'+(writing?'Dübel je obere Ecke '+m.topPositions.length+', je untere Ecke '+m.bottomPositions.length+'. Positionen ab hinterer Korpuskante: oben '+m.topPositions.map(f).join(' / ')+'; unten '+m.bottomPositions.map(f).join(' / '):'Je Ecke '+m.positions.length+' Flachdübel. Positionen ab Vorderkante: '+m.positions.map(f).join(' / '))+' mm. Insgesamt '+m.connectorCount+' Flachdübel. Fräsnutlänge '+f(B.slotLength)+' mm berücksichtigen. Endabstand bis Mitte gewünscht '+f(p.biscuitMargin)+', hinten tatsächlich '+f(m.rearMargin)+'. Richtabstand Mitte–Mitte 100 bis 150; bei kurzen Verbindungen können kleinere Abstände nach Nutprüfung angezeigt sein.\nRückwandfalz '+f(m.rebateWidth)+' × '+f(m.rebateDepth)+' mm; Rückwand außen 3 mm zurückgesetzt; Einbauluft je Rand '+f(p.backClearance)+' mm als Modellannahme. Rückwand '+p.backFastening+'; '+m.fastenerCount+' Befestigungen. '+(m.fasteningKnown?'Ø '+f(p.fastenerDiameter)+' × '+f(p.fastenerLength)+' mm. ':'Befestigungsgröße offen. ')+(p.backFastening==='geschraubt'?'Senkkopfschrauben. ':'')+'Endabstand 30, quer '+f(m.fastenerEdge)+', Achsabstand höchstens 200. Kork nur innerhalb der lichten Öffnung.\n'+m.parts.map(v=>v.quantity+' '+v.name+': '+[v.length,v.width,v.thickness].map(f).join(' × ')+' mm; '+v.material+'. '+(v.note||'')).join('\n')+'\n'+m.adjustments.concat(m.pending,m.warnings).join('\n')+'\nHerstellerprofil vor Ausführung mit der verwendeten Maschine abgleichen; Probefräsung. Flachdübel und Rückwandbefestigungen in Bauanleitung und Einkaufsliste nur einmal zählen. Keine alten Runddübelmaße übernehmen. Bezugskanten nicht erneut erfragen; Widersprüche gezielt klären. Wandaufhängung, Kanten und Tragfähigkeit gesondert festlegen.';
+}
+
+function wdBeginSolid(kind){
+ current.woodDrawingDraft={kind,...Object.fromEntries(solidFields({kind}).map(([k])=>[k,'']))};
+ delete current.woodDrawingChoosing;delete current.woodDrawingImportStamp;wdRender();
+}
+function wdSolidGlueNote(project=current){
+ const p=project.woodDrawing?.params;
+ if(!isSolidJoint(p)&&!['Vollholz','Leimholzplatte'].includes(p?.boardMaterial))return '';
+ return '<section class="notice"><strong>Hinweis vor dem Verleimen einer Brettfläche</strong><p>Jahrringlage beachten: Kern an Kern, Splint an Splint. Rechte und linke Brettseiten wechselweise nach oben legen. Reihenfolge vor der Bearbeitung kennzeichnen. Die Anordnung vermindert das gemeinsame Schüsseln; Holzbewegungen bleiben möglich.</p></section>';
+}
+function wdSolidKnowledge(project,m){
+ return (project.knowledge||'')+'\n\nGespeichertes Vollholz-Verbindungsdetail: '+SOLID_MODELS[m.kind].name+'.\n'+solidFields(m.p).map(([k,label])=>label+': '+drawingFormat(m.p[k])+(k==='tails'||k==='divisions'?' Stück':' mm')+'.').concat(m.notes,m.pending,m.warnings).join('\n')+'\nNur Verbindungsdetail, kein vollständiger Möbelentwurf. Bestehende Gesamtstückliste nicht durch Detailabmessungen ersetzen. Leimstellen und Bewegungsspiel nicht erfinden. Die Verleimregel für Brettflächen gehört nur als Hinweis in die Schritt-für-Schritt-Anleitung.';
+}
+function wdSolidSheet(project){
+ if(drawingStatus(project)==='stale')return '<section class="notice"><strong>Vollholzdetail erneut abgleichen</strong><p>Projekt geändert; bisherige Detailmaße sind nicht als aktuell bestätigt.</p></section>';
+ const m=buildDrawing(project.woodDrawing.params);if(!m.ok)return '';
+ return '<section class="section"><h3>'+esc(SOLID_MODELS[m.kind].name)+' · Verbindungsdetail</h3><p>'+esc(wdStateText(project))+'</p>'+m.notes.map(v=>'<p>'+esc(v)+'</p>').join('')+m.pending.map(v=>'<p><strong>Offen: '+esc(v)+'</strong></p>').join('')+'<p>Keine vollständige Möbelkonstruktion; bestehende Stückliste separat abgleichen.</p></section>';
+}
+function wdRenderSolid(params){
+ const box=$('#woodDrawingBox'),def=SOLID_MODELS[params.kind];
+ box.innerHTML='<h3>Werkzeichnung · '+esc(def.name)+'</h3><p>Eigenständiges Verbindungsdetail. Brettmaße und individuelle Verbindungsmaße eingeben. Es werden keine Maße aus Fotos geschätzt.</p><div class="wdFields">'+def.fields.map(([k,label])=>'<label class="wdField"><span>'+esc(label)+(k==='tails'||k==='divisions'?'':' (mm)')+'</span><input data-wd="'+k+'" inputmode="decimal" value="'+esc(params[k]??'')+'"></label>').join('')+'</div><p class="hint">Musterwerte sind Beispiele. Hirnleiste: Breite und Dicke individuell. Gratleiste: Gesamthöhe einschließlich Grat und maximale Gratbreite getrennt prüfen. Zinkenteilungen können individuell geändert werden.</p><button id="wdSolidExample" class="ghost">Musterwerte verwenden</button><button id="wdChangeModel" class="ghost">Anderes Zeichenmodell wählen</button><div id="wdChecks"></div><label class="wdConfirm"><input type="checkbox" id="wdConfirmed"> Ich habe die Detailmaße geprüft.</label><div class="composerActions"><button id="wdSave">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="wdOpenPreview" class="ghost">Große Vorschau öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>';
+ box.querySelectorAll('[data-wd]').forEach(el=>el.oninput=()=>{
+  current.woodDrawingDraft={...wdParams(),[el.dataset.wd]:el.value};$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';wdPreviewSolid();
+ });
+ $('#wdSolidExample').onclick=()=>{current.woodDrawingDraft={kind:params.kind,...def.sample};wdRender();};
+ $('#wdChangeModel').onclick=()=>{current.woodDrawingChoosing=true;wdRender();};
+ $('#wdConfirmed').checked=!!current.woodDrawing?.confirmed&&wdSame(params,current.woodDrawing.params);
+ $('#wdConfirmed').onchange=wdPreviewSolid;
+ $('#wdSave').onclick=wdSave;
+ $('#wdOpenPreview').onclick=()=>{
+  const m=buildDrawing(wdParams());if(m.ok)openPrintableHtml(drawingPrintHtml(m,{title:wdTitle(),status:wdSolidStatus()}));
+ };
+ $('#wdPrint').onclick=async()=>{
+  const project=current,m=buildDrawing(wdParams()),saved=project.woodDrawing;
+  if(!m.ok||!saved||!wdSame(wdParams(),saved.params)||drawingStatus(project)==='stale'||$('#wdConfirmed').checked!==!!saved.confirmed)return;
+  const button=$('#wdPrint'),status=$('#wdSaveStatus'),source=drawingSource(project);button.disabled=true;status.textContent='A4-PDF wird erstellt …';
+  try{
+   const blob=await drawingPdfBlob(m,{title:wdTitle(),status:wdSolidStatus()});
+   if(current!==project||project.woodDrawing!==saved||drawingSource(project)!==source||!wdSame(wdParams(),m.p)||$('#wdConfirmed').checked!==!!saved.confirmed)throw Error('Maße oder Projekt geändert; erneut speichern.');
+   const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=safeProjectFilename(wdTitle())+'-Vollholzdetail-A4.pdf';link.textContent='PDF herunterladen';status.textContent='PDF bereit. Druck 100 % / Originalgröße. ';status.appendChild(link);link.click();setTimeout(()=>URL.revokeObjectURL(url),300000);
+  }catch(e){if(current===project)status.textContent='PDF konnte nicht erstellt werden: '+e.message;}
+  finally{if(current===project)wdPreviewSolid();}
+ };
+ wdPreviewSolid();
+}
+function wdSolidStatus(){
+ const p=wdParams(),saved=current.woodDrawing;
+ return !saved||!wdSame(p,saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed?'Vorschau · Eingaben noch nicht übernommen':wdStateText();
+}
+function wdPreviewSolid(){
+ const m=buildDrawing(wdParams()),saved=current.woodDrawing;
+ $('#wdConfirmed').disabled=!m.confirmable;if(!m.confirmable)$('#wdConfirmed').checked=false;
+ const status=wdSolidStatus(),unsaved=!saved||!wdSame(wdParams(),saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed;
+ $('#wdChecks').innerHTML='<div class="notice">'+esc(status)+'</div>'+[...m.errors,...(m.notes||[]),...(m.pending||[]),...m.warnings].map(v=>'<p>'+esc(v)+'</p>').join('');
+ $('#wdSave').disabled=!m.ok||busy||reconstructionBusy;
+ $('#wdPrint').disabled=!m.ok||unsaved||drawingStatus(current)==='stale';
+ $('#wdPreview').innerHTML=m.ok?drawingPages(m,{title:wdTitle(),status}).map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Vollholzdetail Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'';
 }
 
 function renderRecord(){
@@ -2204,7 +2374,7 @@ if(refreshBtn){
   const materialHtml=renderTable(r.materials||[]);
   $('#materialBox').innerHTML=(cutlistHtml?`${cutlistHtml}<h3>Material / Einkauf</h3>`:'')+materialHtml+'<p class="hint">Vor dem Einkauf unter „Zukaufteile“ den Bestand prüfen. Dort steht die bereinigte Einkaufsliste.</p>';renderPurchasedParts();if(drawingSave){cutPlannerNeedsRefresh=true}else{renderCutPlanner();cutPlannerNeedsRefresh=false}
   $('#toolsBox').innerHTML=(r.tools||[]).map(x=>`<p>• ${escGerman(x)}</p>`).join('')||'<p>Noch keine Angaben.</p>';
-  $('#stepsBox').innerHTML=wdSheetGeometry(current)+((sheetState(current).current&&!sheetState(current).open.length?(r.steps||[]):[]).map((s,i)=>`<div class="step"><div class="stepnum">${i+1}</div><p>${escGerman(s)}</p></div>`).join('')||'<p>Vor der Bauanleitung bitte die offenen Punkte im Werkstatt-Talk klären und den Entwurf aktualisieren.</p>');
+  $('#stepsBox').innerHTML=wdSheetGeometry(current)+wdSolidGlueNote(current)+((sheetState(current).current&&!sheetState(current).open.length?(r.steps||[]):[]).map((s,i)=>`<div class="step"><div class="stepnum">${i+1}</div><p>${escGerman(s)}</p></div>`).join('')||'<p>Vor der Bauanleitung bitte die offenen Punkte im Werkstatt-Talk klären und den Entwurf aktualisieren.</p>');
   $('#safetyBox').innerHTML=(r.safety_notes||[]).map(x=>`<div class="notice">${escGerman(x)}</div>`).join('')||'<div class="ok notice">Keine besonderen Hinweise ermittelt.</div>';
   $('#projectStatus').textContent=`${current.photos.length} Foto${current.photos.length===1?'':'s'} · ${(current.sketches||[]).length} Skizze${(current.sketches||[]).length===1?'':'n'} · ${sheetState(current).open.length} offene Punkte · ${current.chat.length} Talk-Beiträge`;
 }
@@ -2382,7 +2552,7 @@ function workshopSheetHtml(project=current){
   const workshopSteps=(state.current&&!state.open.length?(r.steps||[]):[]).filter(x=>!applicationPattern.test(String(x)));
   const steps=workshopSteps.map((x,i)=>`<li><span>${i+1}</span><div>${escGerman(x)}</div></li>`).join('')||'<li><div>Vor der Ausführung die offenen Punkte im Werkstatt-Talk klären und den Entwurf aktualisieren. Noch keine ausführbare Schrittfolge.</div></li>';
   const notes=(r.safety_notes||[]).map(x=>`<li>${escGerman(x)}</li>`).join('');
-  return `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} – Werkstattbogen</title><style>@page{size:A4;margin:14mm}*{box-sizing:border-box}body{font-family:Arial,sans-serif;color:#182019;font-size:11pt;margin:0;padding-top:17mm}.sheetActions{position:fixed;z-index:99;top:0;left:0;right:0;display:flex;gap:8px;justify-content:flex-end;padding:7px 12px;background:#f7f6f1;border-bottom:1px solid #dcdedb}.sheetActions button{width:auto;border:1px solid #dcdedb;border-radius:9px;padding:8px 12px;background:#fff;color:#182019;font-weight:700}.sheetActions .primary{background:#183327;color:#fff}h1{font-size:22pt;margin:0 0 4mm}h2{font-size:15pt;border-bottom:1px solid #bbb;padding-bottom:2mm;margin:8mm 0 4mm}p{line-height:1.4}.top{display:grid;grid-template-columns:1fr 52mm;gap:8mm;align-items:start}.top img{width:52mm;height:40mm;object-fit:cover;border:1px solid #ccc}.meta{font-size:9pt;color:#666}.dims{display:grid;grid-template-columns:1fr 1fr;gap:1.5mm 6mm}.dim{padding:2mm 0;border-bottom:1px solid #ddd}table{width:100%;border-collapse:collapse;font-size:9.5pt}th,td{border-bottom:1px solid #ccc;padding:2.2mm;text-align:left;vertical-align:top}th{background:#f0f2f0}ol{list-style:none;padding:0;margin:0}ol li{display:grid;grid-template-columns:9mm 1fr;gap:3mm;margin:0 0 4mm;page-break-inside:avoid}ol li span{width:8mm;height:8mm;border-radius:50%;background:#183327;color:#fff;display:grid;place-items:center;font-weight:bold;font-size:9pt}.section{page-break-inside:auto}@media print{html,body{height:auto!important;overflow:visible!important;background:#fff!important;color:#000!important}body{padding:0;width:auto}.sheetActions{display:none!important}.top{display:block}.top img{float:right;margin:0 0 4mm 6mm}h1,h2{break-after:avoid;page-break-after:avoid}h2+table{break-before:avoid}thead{break-after:avoid}ol li span{background:transparent!important;color:#000!important;border-radius:0!important}table{table-layout:auto}.cutTable{table-layout:fixed}.cutTable tbody{break-inside:avoid}th,td{overflow-wrap:break-word;word-break:normal}h2{margin-top:6mm}.section li{line-height:1.3}ol li{margin-bottom:2.5mm}thead{display:table-header-group}tr{break-inside:avoid}ol li{display:block;break-inside:avoid}ol li span{display:inline-block;text-align:center;line-height:8mm;float:left;margin-right:3mm}ol li div{margin-left:12mm}section{clear:both}}</style><\/head><body><div class="sheetActions"><button onclick="if(window.opener){window.close()}else{history.back()}">Zurück zur App</button><button class="primary" onclick="(async()=>{this.disabled=true;try{await Promise.all(Array.from(document.images,img=>img.decode?img.decode().catch(()=>{}):Promise.resolve()));if(document.fonts)await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));window.focus();window.print()}finally{this.disabled=false}})()">Drucken / PDF</button></div><div class="top"><div><div class="meta">look, talk ’n build · Werkstattbogen · ${esc(APP_VERSION)}</div><h1>${title}</h1>${project.woodDrawing?'<p><strong>Werkzeichnung: '+esc(wdStateText(project))+'</strong>. Geometrische Maße siehe separate A4-Werkzeichnung. Bauanleitung und Einkaufsliste auf Übereinstimmung prüfen.</p>':''}<p><strong>${esc(state.message)}</strong></p><p>${desc}</p>${dims.length?`<h2>Hauptmaße</h2><div class="dims">${dims.map(x=>`<div class="dim">${x}</div>`).join('')}</div>`:''}</div>${image?`<img src="${image}" alt="Projektfoto">`:''}</div>${wdSheetGeometry(project)}<section class="section"><h2>Zuschnitt- / Materialliste</h2>${cut}</section>${purchased?`<section class="section"><h2>Bestand / Einkauf</h2>${purchased}</section>`:''}${deferredPanel(project,false)}${state.open.length?`<section class="section"><h2>Offene Punkte vor der Ausführung</h2><ul>${state.open.map(x=>`<li>${escGerman(x)}</li>`).join('')}</ul></section>`:''}<section class="section"><h2>${state.current&&!state.open.length?'Schritt für Schritt':'Vorbereitung der Bauanleitung'}</h2><ol>${steps}</ol></section>${notes?`<section class="section"><h2>Wichtige Hinweise</h2><ul>${notes}</ul></section>`:''}<\/body><\/html>`;
+  return `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} – Werkstattbogen</title><style>@page{size:A4;margin:14mm}*{box-sizing:border-box}body{font-family:Arial,sans-serif;color:#182019;font-size:11pt;margin:0;padding-top:17mm}.sheetActions{position:fixed;z-index:99;top:0;left:0;right:0;display:flex;gap:8px;justify-content:flex-end;padding:7px 12px;background:#f7f6f1;border-bottom:1px solid #dcdedb}.sheetActions button{width:auto;border:1px solid #dcdedb;border-radius:9px;padding:8px 12px;background:#fff;color:#182019;font-weight:700}.sheetActions .primary{background:#183327;color:#fff}h1{font-size:22pt;margin:0 0 4mm}h2{font-size:15pt;border-bottom:1px solid #bbb;padding-bottom:2mm;margin:8mm 0 4mm}p{line-height:1.4}.top{display:grid;grid-template-columns:1fr 52mm;gap:8mm;align-items:start}.top img{width:52mm;height:40mm;object-fit:cover;border:1px solid #ccc}.meta{font-size:9pt;color:#666}.dims{display:grid;grid-template-columns:1fr 1fr;gap:1.5mm 6mm}.dim{padding:2mm 0;border-bottom:1px solid #ddd}table{width:100%;border-collapse:collapse;font-size:9.5pt}th,td{border-bottom:1px solid #ccc;padding:2.2mm;text-align:left;vertical-align:top}th{background:#f0f2f0}ol{list-style:none;padding:0;margin:0}ol li{display:grid;grid-template-columns:9mm 1fr;gap:3mm;margin:0 0 4mm;page-break-inside:avoid}ol li span{width:8mm;height:8mm;border-radius:50%;background:#183327;color:#fff;display:grid;place-items:center;font-weight:bold;font-size:9pt}.section{page-break-inside:auto}@media print{html,body{height:auto!important;overflow:visible!important;background:#fff!important;color:#000!important}body{padding:0;width:auto}.sheetActions{display:none!important}.top{display:block}.top img{float:right;margin:0 0 4mm 6mm}h1,h2{break-after:avoid;page-break-after:avoid}h2+table{break-before:avoid}thead{break-after:avoid}ol li span{background:transparent!important;color:#000!important;border-radius:0!important}table{table-layout:auto}.cutTable{table-layout:fixed}.cutTable tbody{break-inside:avoid}th,td{overflow-wrap:break-word;word-break:normal}h2{margin-top:6mm}.section li{line-height:1.3}ol li{margin-bottom:2.5mm}thead{display:table-header-group}tr{break-inside:avoid}ol li{display:block;break-inside:avoid}ol li span{display:inline-block;text-align:center;line-height:8mm;float:left;margin-right:3mm}ol li div{margin-left:12mm}section{clear:both}}</style><\/head><body><div class="sheetActions"><button onclick="if(window.opener){window.close()}else{history.back()}">Zurück zur App</button><button class="primary" onclick="(async()=>{this.disabled=true;try{await Promise.all(Array.from(document.images,img=>img.decode?img.decode().catch(()=>{}):Promise.resolve()));if(document.fonts)await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));window.focus();window.print()}finally{this.disabled=false}})()">Drucken / PDF</button></div><div class="top"><div><div class="meta">look, talk ’n build · Werkstattbogen · ${esc(APP_VERSION)}</div><h1>${title}</h1>${project.woodDrawing?'<p><strong>Werkzeichnung: '+esc(wdStateText(project))+'</strong>. Geometrische Maße siehe separate A4-Werkzeichnung. Bauanleitung und Einkaufsliste auf Übereinstimmung prüfen.</p>':''}<p><strong>${esc(state.message)}</strong></p><p>${desc}</p>${dims.length?`<h2>Hauptmaße</h2><div class="dims">${dims.map(x=>`<div class="dim">${x}</div>`).join('')}</div>`:''}</div>${image?`<img src="${image}" alt="Projektfoto">`:''}</div>${wdSheetGeometry(project)}${wdSolidGlueNote(project)}<section class="section"><h2>Zuschnitt- / Materialliste</h2>${cut}</section>${purchased?`<section class="section"><h2>Bestand / Einkauf</h2>${purchased}</section>`:''}${deferredPanel(project,false)}${state.open.length?`<section class="section"><h2>Offene Punkte vor der Ausführung</h2><ul>${state.open.map(x=>`<li>${escGerman(x)}</li>`).join('')}</ul></section>`:''}<section class="section"><h2>${state.current&&!state.open.length?'Schritt für Schritt':'Vorbereitung der Bauanleitung'}</h2><ol>${steps}</ol></section>${notes?`<section class="section"><h2>Wichtige Hinweise</h2><ul>${notes}</ul></section>`:''}<\/body><\/html>`;
 }
 function printActionsHtml(){return `<div class="printActions"><button onclick="window.close()">Zurück zur App</button> <button onclick="(async()=>{this.disabled=true;try{await Promise.all(Array.from(document.images,img=>img.decode?img.decode().catch(()=>{}):Promise.resolve()));if(document.fonts)await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));window.focus();window.print()}finally{this.disabled=false}})()">Drucken / PDF</button></div>`}
 function openPrintableHtml(html){
