@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev24</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev25</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev24 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev25 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev24';
+const APP_VERSION='0.9.21-dev25';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1353,6 +1353,180 @@ function solidJointPages(m,{title='Vollholzdetail',status='Entwurf'}={}, {svgToo
  return [frame(b,label)];
 }
 
+// Reusable rectangular panel + edge-mounted components. Geometry does not depend on object names.
+const ASSEMBLY_KIND='board-assembly-v1';
+const ASSEMBLY_FIELDS=[['length','Grundbrett: Länge'],['width','Grundbrett: Breite'],['thickness','Grundbrett: Dicke']];
+const ASSEMBLY_EDGES=Object.freeze({left:'links',right:'rechts',front:'vorn',back:'hinten'});
+function isBoardAssembly(p){return p?.kind===ASSEMBLY_KIND}
+const assemblyN=x=>typeof x==='number'?x:typeof x==='string'&&x.trim()?Number(x.replace(',','.')):null;
+function assemblySignature(input){
+ const p={kind:input?.kind};
+ for(const[k]of ASSEMBLY_FIELDS)p[k]=assemblyN(input?.[k]);
+ for(const k of ['grain','basis'])p[k]=input?.[k]||'';
+ p.attachments=(input?.attachments||[]).map(a=>{
+  const v={};for(const k of ['id','name','kind','edge','joint','direction','span'])v[k]=String(a[k]||'');
+  for(const k of ['cross','height','projection','tenonWidth'])v[k]=assemblyN(a[k]);return v;
+ });
+ return JSON.stringify(p);
+}
+function assemblyProposal(project){
+ const facts=[project.customDescription,project.knowledge,...(project.analysis?.recognized||[]).filter(x=>typeof x==='string'),project.analysis?.summary].filter(x=>typeof x==='string');
+ const dims=[],sources=[];
+ for(const text of facts){
+  const rx=/(?:Grundbrett|Grundplatte)\s*(?:von|mit|:)?\s*(\d+(?:[.,]\d+)?)\s*[×x]\s*(\d+(?:[.,]\d+)?)\s*[×x]\s*(\d+(?:[.,]\d+)?)\s*(mm|cm)\b/gi;
+  for(const m of text.matchAll(rx)){const unit=m[4].toLowerCase()==='cm'?10:1;dims.push(m.slice(1,4).map(x=>assemblyN(x)*unit));sources.push(m[0]);}
+ }
+ const unique=[...new Set(dims.map(x=>JSON.stringify(x)))],values={},conflicts=[];
+ if(unique.length===1){const [length,width,thickness]=JSON.parse(unique[0]);Object.assign(values,{length,width,thickness});}
+ if(unique.length>1)conflicts.push('Widersprüchliche Grundbrettmaße: '+sources.join(' / '));
+ const text=facts.join('\n'),attachments=[];
+ // Only explicit counts and locations. No inference from the name "Backbrett".
+ if(/(?:zwei|beiden|2)\s+(?:seitlichen\s+)?Hirnleisten|Hirnleisten[^.]{0,70}links[^.]{0,30}rechts|beiden Seiten[^.]{0,30}links[^.]{0,30}rechts[^.]{0,30}Hirnleisten/i.test(text)&&/links[^.]{0,30}rechts/i.test(text)){
+  for(const edge of ['left','right'])attachments.push({id:'end-'+edge,name:'Hirnleiste '+ASSEMBLY_EDGES[edge],kind:'end_strip',edge,joint:'',cross:'',height:'',projection:'',tenonWidth:'',direction:'',span:''});
+ }
+ if(/(?:zwei|beiden|2)\s+(?:Längskanten[^.]*?zwei\s+)?Anschlagleisten/i.test(text)||/zwei Anschlagleisten/i.test(text)){
+  for(const [id,direction]of [['stop-a','above'],['stop-b','below']])attachments.push({id,name:'Anschlagleiste '+(direction==='above'?'oben':'unten'),kind:'stop_strip',edge:'',joint:'',cross:'',height:'',projection:'',tenonWidth:'',direction:/nach oben/i.test(text)&&/nach unten/i.test(text)?direction:'',span:''});
+ }
+ return {values,attachments,sources:[...new Set(sources)],conflicts,notes:['Maßbezug und Faserrichtung prüfen. Anbauteilmaße und Anschlüsse werden nicht aus der Beschreibung geraten.','Bei Anschlagleisten ist oben/unten keine Zuordnung zu vorn/hinten. Diese bleibt gegebenenfalls offen.']};
+}
+function buildBoardAssembly(input,{drawingNumber,drawingFormat,buildJoint}){
+ const f=drawingFormat,errors=[],pending=[],p={kind:ASSEMBLY_KIND,grain:input?.grain||'',basis:input?.basis||''};
+ for(const[k,label]of ASSEMBLY_FIELDS){p[k]=drawingNumber(input?.[k]);if(!Number.isFinite(p[k])||p[k]<=0||p[k]>2000)errors.push(label+': Wert größer 0 und höchstens 2000 mm eingeben.');}
+ if(Number.isFinite(p.thickness)&&(p.thickness<6||p.thickness>60))errors.push('Grundbrettdicke: unterstützt werden 6 bis 60 mm.');
+ if(p.grain&&!['length','width'].includes(p.grain))errors.push('Faserrichtung ungültig.');
+ if(p.basis&&!['tip','shoulder'].includes(p.basis))errors.push('Maßbezug ungültig.');
+ if(!p.grain)pending.push('Faserrichtung des Grundbretts festlegen.');
+ if(!p.basis)pending.push('Grundbrettmaß: Außenmaß einschließlich Zapfen oder Schultermaß festlegen.');
+ const raw=Array.isArray(input?.attachments)?input.attachments:[];
+ if(raw.length>4)errors.push('Diese Ausbaustufe unterstützt ein Anbauteil pro Brettkante, insgesamt höchstens vier.');
+ const ids=new Set(),edges=new Set();
+ p.attachments=raw.slice(0,4).map((a,i)=>{
+  const v={id:String(a.id||'part-'+i),name:String(a.name||'Anbauteil '+(i+1)),parent:'panel',kind:a.kind,edge:a.edge||'',joint:a.joint||'',direction:a.direction||'',span:a.span||''};
+  if(ids.has(v.id)||v.id==='panel')errors.push('Bauteil-IDs müssen eindeutig sein.');ids.add(v.id);
+  if(!['end_strip','stop_strip'].includes(v.kind))errors.push(v.name+': Bauteilart ungültig.');
+  if(v.edge&&!Object.hasOwn(ASSEMBLY_EDGES,v.edge))errors.push(v.name+': Brettkante ungültig.');
+  if(v.edge){if(edges.has(v.edge))errors.push('Mehrere Bauteile an derselben Kante sind hier noch nicht unterstützt.');edges.add(v.edge);}else pending.push(v.name+': Anschlusskante wählen.');
+  for(const k of ['cross','height','projection','tenonWidth']){
+   const n=assemblyN(a[k]);v[k]=n;
+   if(n!==null&&(!Number.isFinite(n)||n<=0||n>500))errors.push(v.name+': '+k+' muss größer 0 und höchstens 500 mm sein.');
+  }
+  if(v.cross===null)pending.push(v.name+': Breite quer zur Anschlusskante fehlt.');
+  if(v.height===null)pending.push(v.name+': Dicke/Höhe fehlt.');
+  if(v.kind==='end_strip'){
+   if(v.joint&&!['breadboard-end-v1'].includes(v.joint))errors.push(v.name+': Anschlussregel ungültig.');
+   if(!v.joint)pending.push(v.name+': Verbindung auswählen.');
+   if(v.joint&&v.tenonWidth===null)pending.push(v.name+': Breite des mittleren Zapfens festlegen (Richtwert 60 mm).');
+   const allowed=p.grain==='length'?['left','right']:p.grain==='width'?['front','back']:[];
+   if(v.edge&&p.grain&&!allowed.includes(v.edge))errors.push(v.name+': Hirnleiste muss an einem Brettende quer zur Faser liegen.');
+  }else{
+   if(v.joint)errors.push(v.name+': Für Anschlagleisten ist noch keine Befestigungsregel hinterlegt.');
+   if(v.direction&&!['above','below'].includes(v.direction))errors.push(v.name+': Richtung ungültig.');
+   if(v.span&&!['body','overall'].includes(v.span))errors.push(v.name+': Längenbezug ungültig.');
+   if(!v.direction)pending.push(v.name+': Anschlag nach oben oder unten wählen.');
+   if(!v.span)pending.push(v.name+': Längenbezug wählen.');
+   if(v.projection===null)pending.push(v.name+': Überstand über die Brettfläche fehlt.');
+   if(v.height!==null&&v.projection!==null&&v.projection>=v.height)errors.push(v.name+': Überstand muss kleiner als Leistenhöhe sein, damit eine Anlage am Brett verbleibt.');
+   if(Number.isFinite(p.thickness)&&v.height!==null&&v.projection!==null&&v.height-v.projection>p.thickness)errors.push(v.name+': Die Leiste würde auch die gegenüberliegende Brettfläche überragen. Maße prüfen.');
+   pending.push(v.name+': Befestigung noch festlegen; dargestellt wird die Lage, keine erfundene Verbindung.');
+  }
+  return v;
+ });
+ const m={kind:ASSEMBLY_KIND,p,errors,pending,warnings:[],parts:[],components:[],connections:[],notes:[],partsComplete:false,confirmable:false};
+ if(errors.length){m.ok=false;return m;}
+ const ends=p.attachments.filter(a=>a.kind==='end_strip'),crosses={left:0,right:0,front:0,back:0};
+ let geometryReady=!!p.basis&&!!p.grain;
+ for(const a of p.attachments)if(!a.edge||a.cross===null||a.height===null||(a.kind==='stop_strip'&&(!a.direction||!a.span||a.projection===null)))geometryReady=false;
+ for(const a of ends)if(a.edge&&a.cross!==null)crosses[a.edge]=a.cross;
+ const body={x:0,y:0,length:p.length,width:p.width,z:0,thickness:p.thickness};
+ if(p.basis==='tip'){
+  body.x=crosses.left;body.y=crosses.front;
+  body.length-=crosses.left+crosses.right;body.width-=crosses.front+crosses.back;
+ }
+ if(body.length<=0||body.width<=0)errors.push('Die Hirnleisten lassen keine positive Brettfläche zwischen den Schultern übrig.');
+ const outer={x:p.basis==='shoulder'?-crosses.left:0,y:p.basis==='shoulder'?-crosses.front:0,length:p.basis==='shoulder'?p.length+crosses.left+crosses.right:p.length,width:p.basis==='shoulder'?p.width+crosses.front+crosses.back:p.width};
+ m.body=body;m.outer=outer;m.geometryReady=geometryReady;
+ m.components.push({id:'panel',name:'Grundbrett',...body});
+ for(const a of p.attachments){
+  if(!a.edge||a.cross===null||a.height===null){m.components.push({id:a.id,name:a.name,edge:a.edge,unresolved:true});continue;}
+  const horizontal=['front','back'].includes(a.edge),g={id:a.id,name:a.name,edge:a.edge,kind:a.kind};
+  if(a.kind==='end_strip'){
+   Object.assign(g,{x:horizontal?body.x:a.edge==='left'?body.x-a.cross:body.x+body.length,y:horizontal?(a.edge==='front'?body.y-a.cross:body.y+body.width):body.y,length:horizontal?body.length:a.cross,width:horizontal?a.cross:body.width,z:(p.thickness-a.height)/2,thickness:a.height});
+  }else{
+   if(!a.direction||!a.span||a.projection===null){m.components.push({id:a.id,name:a.name,edge:a.edge,unresolved:true});continue;}
+   const span=a.span==='overall'?outer:body;
+   Object.assign(g,{x:horizontal?span.x:a.edge==='left'?outer.x-a.cross:outer.x+outer.length,y:horizontal?(a.edge==='front'?outer.y-a.cross:outer.y+outer.width):span.y,length:horizontal?span.length:a.cross,width:horizontal?a.cross:span.width,z:a.direction==='above'?p.thickness+a.projection-a.height:-a.projection,thickness:a.height});
+  }
+  m.components.push(g);
+  if(a.kind==='end_strip'&&a.joint&&a.tenonWidth!==null&&p.grain){
+   const joint=buildJoint({kind:a.joint,width:horizontal?body.length:body.width,thickness:p.thickness,endWidth:a.cross,endThickness:a.height,tenonWidth:a.tenonWidth});
+   if(!joint.ok)errors.push(...joint.errors.map(v=>a.name+': '+v));
+   else {m.connections.push({id:'connection-'+a.id,parent:'panel',child:a.id,edge:a.edge,rule:a.joint,model:joint});pending.push(...joint.pending.map(v=>a.name+': '+v));}
+  }
+ }
+ // Rectangular part collisions are checked in 3D, including opposite-side rails.
+ const visible=m.components.filter(c=>!c.unresolved);
+ const overlap=(a,b,key,size)=>Math.min(a[key]+a[size],b[key]+b[size])-Math.max(a[key],b[key])>1e-6;
+ for(let i=1;i<visible.length;i++)for(let j=i+1;j<visible.length;j++)if(overlap(visible[i],visible[j],'x','length')&&overlap(visible[i],visible[j],'y','width')&&overlap(visible[i],visible[j],'z','thickness'))errors.push(visible[i].name+' und '+visible[j].name+' überschneiden sich.');
+ m.ok=!errors.length;m.geometryReady=geometryReady&&m.ok;
+ m.partsComplete=m.geometryReady&&ends.every(a=>a.joint&&a.tenonWidth!==null);
+ if(m.partsComplete){
+  const rootLength=p.basis==='shoulder'?p.length+crosses.left+crosses.right:p.length,rootWidth=p.basis==='shoulder'?p.width+crosses.front+crosses.back:p.width;
+  m.parts.push({id:'panel',name:'Grundbrett einschließlich angearbeiteter Zapfen',quantity:1,length:p.grain==='width'?rootWidth:rootLength,width:p.grain==='width'?rootLength:rootWidth,thickness:p.thickness,material:'Vollholz',note:'Faserrichtung '+(p.grain==='length'?'entlang L':'entlang B')+'; Schultermaße '+f(body.length)+' × '+f(body.width)+' mm. Ohne Bearbeitungszugabe.'});
+  for(const g of m.components.slice(1))m.parts.push({id:g.id,name:g.name,quantity:1,length:['front','back'].includes(g.edge)?g.length:g.width,width:['front','back'].includes(g.edge)?g.width:g.length,thickness:g.thickness,material:'Vollholz',note:'Anschluss an '+ASSEMBLY_EDGES[g.edge]+'. Entwurfsmaße, Befestigung prüfen.'});
+ }
+ m.pending=[...new Set(pending)];
+ m.notes=['Grundbrett '+f(p.length)+' × '+f(p.width)+' × '+f(p.thickness)+' mm.','Maßbezug: '+({tip:'Außenmaß einschließlich Zapfen',shoulder:'Schultermaß'}[p.basis]||'noch offen')+'.',m.geometryReady?'Gemeinsame Geometrie aus '+m.components.length+' Bauteilen.':'Unvollständige Anordnung: offene Bauteile werden symbolisch gestrichelt dargestellt.'];
+ m.confirmable=m.ok&&!m.pending.length;
+ return m;
+}
+function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgTools}){
+ if(!m.ok)throw Error(m.errors.join('\n'));
+ const {f,e,n,line,text,rect,dh,dv}=svgTools(),p=m.p;
+ const frame=(body,subtitle,page)=>'<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><style>text{font-family:Arial,sans-serif;font-size:2.7px;fill:#111}.bold{font-weight:bold;font-size:3.2px}.small{font-size:2.3px}line{stroke:#111;stroke-width:.17;fill:none}rect{stroke:#111;stroke-width:.3;fill:white}.open{stroke-dasharray:2 1;fill:#fff8e5}.hidden{stroke-dasharray:2 1}.body{stroke:#111;stroke-width:.35;fill:none}</style>'+rect(6,6,285,198)+text(12,15,"look, talk ’n build",'bold')+text(260,15,'Blatt '+page,'small')+text(12,24,title+' · '+subtitle,'bold')+line(6,29,291,29)+text(12,36,status,'small')+body+line(15,190,65,190)+line(15,189,15,191)+line(65,189,65,191)+text(70,191,'Kontrolle: 50 mm auf Papier','small')+line(6,197,291,197)+text(12,202,'Alle Maße mm · Druck 100 % / Originalgröße · Entwurf','small')+text(218,202,'DIN-919-Abgleich offen','small')+'</svg>';
+ const b=m.geometryReady?m.body:{x:0,y:0,length:p.length,width:p.width},known=m.geometryReady?m.components.filter(c=>!c.unresolved):[{...b,z:0,thickness:p.thickness}];
+ const minX=Math.min(...known.map(c=>c.x)),minY=Math.min(...known.map(c=>c.y)),maxX=Math.max(...known.map(c=>c.x+c.length)),maxY=Math.max(...known.map(c=>c.y+c.width));
+ const scale=Math.min(.2,170/(maxX-minX),103/(maxY-minY)),X=x=>24+(x-minX)*scale,Y=y=>64+(y-minY)*scale;
+ let body=text(24,46,'DRAUFSICHT · '+(m.geometryReady?'M 1:'+f(1/scale):'Anordnung teilweise schematisch'),'bold');
+ body+=rect(X(b.x),Y(b.y),b.length*scale,b.width*scale)+text(X(b.x)+3,Y(b.y)+7,'1 · Grundbrett','bold');
+ body+=dh(X(b.x),X(b.x+b.length),Y(b.y),Y(b.y)-6,f(m.geometryReady?b.length:p.length))+dv(Y(b.y),Y(b.y+b.width),X(b.x),X(b.x)-8,f(m.geometryReady?b.width:p.width));
+ m.components.slice(1).forEach((g,i)=>{
+  if(m.geometryReady&&!g.unresolved){
+   body+=rect(X(g.x),Y(g.y),g.length*scale,g.width*scale)+text(X(g.x)+1,Y(g.y)+3,String(i+2),'small');
+  }else{
+   const edge=g.edge,width=p.length*scale,height=p.width*scale,x=X(b.x),y=Y(b.y);
+   if(edge==='left')body+=rect(x-7,y,5,height,'open')+text(x-6,y+4,String(i+2),'small');
+   else if(edge==='right')body+=rect(x+width+2,y,5,height,'open')+text(x+width+3,y+4,String(i+2),'small');
+   else if(edge==='front'||edge==='back'){const yy=edge==='front'?y+1:y+height-6;body+=rect(x,yy,width,5,'open')+text(x+2,yy+4,String(i+2),'small');}
+   // Unassigned edges are listed as components, without inventing a location.
+  }
+ });
+ const rows=['BAUTEILE UND ANSCHLÜSSE',...m.components.map((g,i)=>(i+1)+' · '+g.name+(g.edge?' · '+ASSEMBLY_EDGES[g.edge]:i?' · Kante offen':'')),...m.connections.map(c=>'Anschluss '+c.child+': Feder / Zapfen D/3'),...m.pending];
+ let yy=47;for(const row of rows){let current='';for(const word of row.split(' ')){if((current+' '+word).length>43){body+=text(207,yy,current,'small');yy+=3.4;current=word;}else current+=(current?' ':'')+word;}body+=text(207,yy,current,'small');yy+=5;if(yy>179){body+=text(207,185,'Weitere offene Angaben siehe App.','small');break;}}
+ if(m.geometryReady){
+  body+=dh(X(minX),X(maxX),Y(minY),Y(minY)-14,f(maxX-minX)+' gesamt');
+  const z0=Math.min(0,...known.map(g=>g.z)),z1=Math.max(p.thickness,...known.map(g=>g.z+g.thickness)),sy=Math.min(scale,20/(z1-z0));
+  body+=text(24,169,'VORDERANSICHT · Höhenlage der Bauteile','bold');
+  for(const g of known)body+=rect(X(g.x),175+(z1-g.z-g.thickness)*sy,g.length*scale,g.thickness*sy);
+ }else{
+  const free=m.components.slice(1).map((g,i)=>({...g,number:i+2})).filter(g=>!g.edge);
+  free.forEach((g,i)=>{const x=24+(i%2)*86,y=172+Math.floor(i/2)*9;body+=rect(x,y,82,7,'open')+text(x+2,y+4,g.number+' · '+g.name.slice(0,30)+' (Kante offen)','small');});
+  if(!free.length)body+=text(24,179,'Offene Leistenmaße werden nicht geschätzt.','small');
+ }
+ const pages=[];
+ pages.push(frame(body,'Gesamtaufbau aus '+m.components.length+' Bauteilen',m.connections.length?'1/2':'1/1'));
+ if(m.connections.length){
+  const D=p.thickness,F=D/3,x=45,y=65,poly=pts=>'<path class="body" d="'+pts.map(([a,b],i)=>(i?'L':'M')+n(a)+','+n(b)).join(' ')+' Z"/>';
+  let detail=text(24,48,'ANGEZAPFTE HIRNLEISTEN · Federdetail M 1:1','bold');
+  detail+=poly([[x,y],[105,y],[105,y+D],[x,y+D],[x,y+2*F],[x-F,y+2*F],[x-F,y+F],[x,y+F]]);
+  detail+=dv(y,y+D,105,120,f(D))+dh(x-F,x,y+2*F,y+D+10,f(F));
+  detail+=text(24,110,'Feder- und Zapfendicke: '+f(F)+' mm; Federtiefe '+f(F)+' mm.','bold');
+  m.connections.forEach((c,i)=>{const a=p.attachments.find(a=>a.id===c.child);detail+=text(24,122+i*14,a.name+': Zapfen mittig, '+f(a.tenonWidth)+' mm breit.','small')+text(24,127+i*14,'Zapfenlänge ab Brettschulter '+f(a.cross)+' mm, Feder darin enthalten.','small');});
+  detail+=text(24,166,'Zuordnung: '+m.connections.map(c=>m.components.findIndex(g=>g.id===c.child)+1).join(' / ')+' der Gesamtzeichnung.','small')+text(24,173,'Leimstellen, Bewegungsspiel und Sicherung sind weiterhin offen.','small');
+  pages.push(frame(detail,'Zugeordnete Verbindungsdetails','2/2'));
+ }
+ return pages;
+}
+
 // Deterministic first construction family. No image-derived or AI-invented dimensions.
 const DRAWING_DEFAULTS=Object.freeze({width:386,height:160,depth:90,thickness:18,frontSetback:5,bottomOffset:5,railHeight:70,railTopOffset:20,count:6,pocketDiameter:45,pocketDepth:5,gap:10,minEndMargin:15,dowelDiameter:6,dowelLength:30,dowelEdge:20,faceDepth:12,glueAllowance:2,cordDiameter:6,cordHeight:85,cordFront:12});
 const DRAWING_FIELDS=[['width','Gesamtbreite'],['height','Gesamthöhe'],['depth','Gesamttiefe'],['thickness','Materialdicke'],['frontSetback','Boden: Rücksprung vorn'],['bottomOffset','Boden: Abstand unten'],['railHeight','Rücksteg: Höhe'],['railTopOffset','Rücksteg: Abstand oben'],['count','Anzahl Gläser / Sacklöcher'],['pocketDiameter','Sackloch: Durchmesser'],['pocketDepth','Sackloch: Tiefe'],['gap','Freier Abstand der Sacklöcher'],['minEndMargin','Mindestens freier Endrand'],['dowelDiameter','Dübel: Durchmesser'],['dowelLength','Dübel: Länge'],['dowelEdge','Dübelachse: Abstand zur Bauteilkante'],['faceDepth','Flächenbohrung: Tiefe'],['glueAllowance','Kantenbohrung: Leimzugabe'],['cordDiameter','Stropp: Durchmesser'],['cordHeight','Stroppachse: Höhe ab unten'],['cordFront','Stroppachse: Abstand von vorn']];
@@ -1360,6 +1534,7 @@ function drawingNumber(x){return typeof x==='number'?x:typeof x==='string'&&x.tr
 function drawingSource(project={}){return JSON.stringify({analysis:project.analysis||null,reconstruction:project.reconstruction||null,knowledge:project.knowledge||'',description:project.customDescription||'',photos:(project.photos||[]).map(p=>p.id),sketches:(project.sketches||[]).map(s=>({id:s.id,analysis:s.analysis})),chat:project.chat||[]});}
 function drawingStatus(project){const d=project.woodDrawing;if(!d)return 'missing';if(d.source!==drawingSource(project))return 'stale';return d.confirmed?'checked':'draft';}
 function buildDrawing(input){
+ if(isBoardAssembly(input))return buildBoardAssembly(input,{drawingNumber,drawingFormat,buildJoint:p=>buildSolidJoint(p,{drawingNumber,drawingFormat})});
  if(isSolidJoint(input))return buildSolidJoint(input,{drawingNumber,drawingFormat});
  if(input?.kind==='writing-carcass-v1')return buildWritingDrawing(input);
  if(input?.kind==='carcass-v1')return buildCorpusDrawing(input);
@@ -1423,6 +1598,7 @@ function svgTools(){
  return {f,e,n,line,text,rect,circle,cross,dh,dv,warn};
 }
 function drawingPages(model,{title='Werkzeichnung',status='Entwurf - Maße noch bestätigen'}={}){
+ if(isBoardAssembly(model))return boardAssemblyPages(model,{title,status},{svgTools});
  if(isSolidJoint(model))return solidJointPages(model,{title,status},{svgTools});
  if(model.kind==='writing-carcass-v1')return writingDrawingPages(model,{title,status});
  if(model.kind==='carcass-v1')return corpusDrawingPages(model,{title,status});
@@ -2076,8 +2252,8 @@ async function drawingPdfBlob(model,options={}){
 
 function wdIsCorpus(params){return ['carcass-v1','writing-carcass-v1'].includes(params?.kind)}
 // Per-project drafts retain typed values even while other panes refresh.
-function wdFields(params){if(isSolidJoint(params))return solidFields(params);return wdIsCorpus(params)?[['jointType','Eckverbindung'],...corpusFields(params)]:params?.kind==='bread-frame-v1'?FRAME_FIELDS:DRAWING_FIELDS}
-function wdModelName(params){if(isSolidJoint(params))return SOLID_MODELS[params.kind].name;return params?.kind==='writing-carcass-v1'?'Schreibkorpus mit Schräge':params?.kind==='carcass-v1'?'Rechteckiger Korpus':params?.kind==='bread-frame-v1'?'Backrahmen':'Gewürzbord'}
+function wdFields(params){if(isBoardAssembly(params))return ASSEMBLY_FIELDS;if(isSolidJoint(params))return solidFields(params);return wdIsCorpus(params)?[['jointType','Eckverbindung'],...corpusFields(params)]:params?.kind==='bread-frame-v1'?FRAME_FIELDS:DRAWING_FIELDS}
+function wdModelName(params){if(isBoardAssembly(params))return 'Bauteilaufbau · Brett und Leisten';if(isSolidJoint(params))return SOLID_MODELS[params.kind].name;return params?.kind==='writing-carcass-v1'?'Schreibkorpus mit Schräge':params?.kind==='carcass-v1'?'Rechteckiger Korpus':params?.kind==='bread-frame-v1'?'Backrahmen':'Gewürzbord'}
 function wdParams(project=current){return project.woodDrawingDraft||project.woodDrawing?.params||null}
 function wdCutlistForProject(project=current){
  if(!project.woodDrawing||isSolidJoint(project.woodDrawing.params))return project.reconstruction?.cutlist||[];
@@ -2090,6 +2266,7 @@ function wdKnowledge(project){
  const m=buildDrawing(project.woodDrawing.params);
  if(!m.ok)return project.knowledge||'';
  const p=m.p,f=drawingFormat;
+ if(isBoardAssembly(m))return wdAssemblyKnowledge(project,m);
  if(isSolidJoint(m))return wdSolidKnowledge(project,m);
  if(m.biscuit)return wdBiscuitKnowledge(project,m);
  if(m.kind==='writing-carcass-v1')return wdWritingKnowledge(project,m);
@@ -2111,7 +2288,7 @@ function wdKnowledge(project){
  const parts=m.parts.map(v=>v.quantity+' '+v.name+': '+[v.length,v.width,v.thickness].map(f).join(' × ')+' mm (L × B × D).');
  return (project.knowledge||'')+'\n\nGespeichertes Werkzeichnungsmodell: Gewürzbord. '+(project.woodDrawing.confirmed?'Maße wurden vom Benutzer bestätigt.':'Maßentwurf, noch nicht vom Benutzer bestätigt.')+'\n'+dimensions.concat(references,parts,m.warnings).join('\n')+'\nDie oben erläuterten Bezugskanten sind in dieser Vorlage eindeutig festgelegt. Dazu keine erneute Klärungsfrage stellen, sofern der Benutzer keinen Widerspruch oder eine Änderung nennt. Nur verständliche deutsche Bezeichnungen verwenden. Bei Widersprüchen zum Gespräch gezielt nachfragen. Gespeicherte Zeichnungsmaße nicht stillschweigend überschreiben. Holzart, Wandbefestigung und Tragfähigkeit sind damit nicht geklärt.';
 }
-function wdSame(a,b){return (a?.kind||'spice-rack-v1')===(b?.kind||'spice-rack-v1')&&wdFields(a).every(([k])=>wdValueEqual(k,a?.[k],b?.[k],a?.kind))}
+function wdSame(a,b){if(isBoardAssembly(a)||isBoardAssembly(b))return isBoardAssembly(a)&&isBoardAssembly(b)&&assemblySignature(a)===assemblySignature(b);return (a?.kind||'spice-rack-v1')===(b?.kind||'spice-rack-v1')&&wdFields(a).every(([k])=>wdValueEqual(k,a?.[k],b?.[k],a?.kind))}
 function wdTitle(){return current.customTitle||current.title||'Gewürzbord'}
 function wdStateText(project=current){return {checked:'Maße bestätigt · Konstruktionsentwurf',draft:'Entwurf · Maße noch bestätigen',stale:'Projekt geändert · Zeichnungsmaße erneut abgleichen',missing:'Noch keine Werkzeichnung'}[drawingStatus(project)]}
 function wdSelectOptions(key,selected){
@@ -2126,7 +2303,8 @@ function wdRender(){
  const box=$('#woodDrawingBox');if(!box)return;
  let params=current.woodDrawingChoosing?null:wdParams();
  if(params?.kind==='bread-frame-v1'&&params.jointChamfer===undefined){current.woodDrawingDraft={...params,jointChamfer:params.chamfer};params=wdParams();}
- if(!params){box.innerHTML='<h3>Werkzeichnung</h3><p>Zeichenmodell für dieses Projekt wählen. Unterstützt werden Gewürzbord, Backrahmen, rechteckiger Korpus und Schreibkorpus mit gerader Schräge und unterem Knick. Die Werkzeichnung des Schreibkorpus verwendet hinten senkrechte Bezugskanten.</p><p class="hint">Aktuelle Projektangaben werden in die Eingaben übernommen. Fehlende Maße bleiben leer. Keine Maßermittlung aus dem Foto. Alle Werte vor dem Speichern prüfen. Der Backrahmen verwendet massive unbehandelte Buche, kurze Teile durchgehend, drei Konfirmatschrauben je Ecke und außen eine 45°-Fase. Äußere Stoßkanten bilden eine V-Nut; Innenkanten und Innenfugen bleiben ungefast. Andere Konstruktionen werden nicht automatisch gezeichnet.</p><button class="secondary" id="wdStartWriting">Schreibkorpus mit Schräge</button> <button class="secondary" id="wdStartCorpus">Rechteckiger Korpus als Ausgangsmodell</button> <button class="ghost" id="wdCancelModel">Zur Zeichnung zurück</button><button class="secondary" id="wdStart">Gewürzbord als Ausgangsmodell</button> <button class="secondary" id="wdStartFrame">Backrahmen als Ausgangsmodell</button>';$('#wdStartWriting').onclick=()=>wdBeginFromProject('writing-carcass-v1');$('#wdStartCorpus').onclick=()=>wdBeginFromProject('carcass-v1');$('#wdCancelModel').disabled=!wdParams();$('#wdCancelModel').onclick=()=>{delete current.woodDrawingChoosing;wdRender();};$('#wdStart').onclick=()=>{wdBeginFromProject('spice-rack-v1')};$('#wdStartFrame').onclick=()=>{wdBeginFromProject('bread-frame-v1')};box.insertAdjacentHTML('beforeend','<h4>Vollholz · Verbindungsdetails</h4>'+Object.entries(SOLID_MODELS).map(([kind,def])=>'<button class="secondary" data-solid-model="'+kind+'">'+esc(def.name)+'</button>').join(''));box.querySelectorAll('[data-solid-model]').forEach(button=>button.onclick=()=>wdBeginSolid(button.dataset.solidModel));return;}
+ if(!params){box.innerHTML='<h3>Werkzeichnung</h3><p>Zeichenmodell für dieses Projekt wählen. Unterstützt werden Gewürzbord, Backrahmen, rechteckiger Korpus und Schreibkorpus mit gerader Schräge und unterem Knick. Die Werkzeichnung des Schreibkorpus verwendet hinten senkrechte Bezugskanten.</p><p class="hint">Aktuelle Projektangaben werden in die Eingaben übernommen. Fehlende Maße bleiben leer. Keine Maßermittlung aus dem Foto. Alle Werte vor dem Speichern prüfen. Der Backrahmen verwendet massive unbehandelte Buche, kurze Teile durchgehend, drei Konfirmatschrauben je Ecke und außen eine 45°-Fase. Äußere Stoßkanten bilden eine V-Nut; Innenkanten und Innenfugen bleiben ungefast. Andere Konstruktionen werden nicht automatisch gezeichnet.</p><button class="secondary" id="wdStartWriting">Schreibkorpus mit Schräge</button> <button class="secondary" id="wdStartCorpus">Rechteckiger Korpus als Ausgangsmodell</button> <button class="ghost" id="wdCancelModel">Zur Zeichnung zurück</button><button class="secondary" id="wdStart">Gewürzbord als Ausgangsmodell</button> <button class="secondary" id="wdStartFrame">Backrahmen als Ausgangsmodell</button>';$('#wdStartWriting').onclick=()=>wdBeginFromProject('writing-carcass-v1');$('#wdStartCorpus').onclick=()=>wdBeginFromProject('carcass-v1');$('#wdCancelModel').disabled=!wdParams();$('#wdCancelModel').onclick=()=>{delete current.woodDrawingChoosing;wdRender();};$('#wdStart').onclick=()=>{wdBeginFromProject('spice-rack-v1')};$('#wdStartFrame').onclick=()=>{wdBeginFromProject('bread-frame-v1')};box.insertAdjacentHTML('beforeend','<h4>Bauteile und Anschlüsse</h4><button class="secondary" id="wdStartAssembly">Bauteilaufbau · Brett und Leisten</button>');$('#wdStartAssembly').onclick=wdBeginBoardAssembly;box.insertAdjacentHTML('beforeend','<h4>Vollholz · Verbindungsdetails</h4>'+Object.entries(SOLID_MODELS).map(([kind,def])=>'<button class="secondary" data-solid-model="'+kind+'">'+esc(def.name)+'</button>').join(''));box.querySelectorAll('[data-solid-model]').forEach(button=>button.onclick=()=>wdBeginSolid(button.dataset.solidModel));return;}
+ if(isBoardAssembly(params)){wdRenderBoardAssembly(params);return;}
  if(isSolidJoint(params)){wdRenderSolid(params);return;}
  const isFrame=params.kind==='bread-frame-v1',isWriting=params.kind==='writing-carcass-v1',isCorpus=wdIsCorpus(params),isFlat=isCorpus&&params.jointType==='Flachdübel',fields=wdFields(params),baseCount=isWriting?13:isCorpus?11:isFrame?4:8;
  const input=([key,label])=>`<label class="wdField" for="wd-${key}"><span>${esc(label)}${key==='count'||isCorpus&&CORPUS_OPTIONS[key]?'':' (mm)'}</span>${isCorpus&&CORPUS_OPTIONS[key]?'<select id="wd-'+key+'" data-wd="'+key+'">'+'<option value="">Bitte wählen</option>'+wdSelectOptions(key,key==='jointType'?(params[key]||'Runddübel'):params[key])+'</select>':'<input id="wd-'+key+'" data-wd="'+key+'" inputmode="decimal" value="'+esc(params[key]??'')+'" autocomplete="off">'}</label>`;
@@ -2158,6 +2336,7 @@ function wdRender(){
  wdPreview();
 }
 function wdPreview(){
+ if(isBoardAssembly(wdParams()))return wdPreviewBoardAssembly();
  if(isSolidJoint(wdParams()))return wdPreviewSolid();
  wdRefreshImport();
  const m=buildDrawing(wdParams()),saved=current.woodDrawing;
@@ -2174,7 +2353,7 @@ function wdPreview(){
 let wdSaving=false;
 async function wdSave(){
  if(wdSaving||busy||reconstructionBusy)return;
- const project=current,m=buildDrawing(wdParams(project));if(!m.ok||wdImportBlocks(project)||(wdIsCorpus(m)||isSolidJoint(m))&&$('#wdConfirmed').checked&&!m.confirmable)return;
+ const project=current,m=buildDrawing(wdParams(project));if(!m.ok||wdImportBlocks(project)||(wdIsCorpus(m)||isSolidJoint(m)||isBoardAssembly(m))&&$('#wdConfirmed').checked&&!m.confirmable)return;
  const prior=project.woodDrawing,priorDirty=project.projectDirty;
  const changed=!prior||!wdSame(m.p,prior.params);
  const drawing={importSource:project.woodDrawingImportStamp===drawingImportSource(project)&&!priorDirty?drawingImportSource(project):prior?.importSource,schemaVersion:1,type:m.kind||'spice-rack-v1',params:m.p,confirmed:$('#wdConfirmed').checked,source:drawingSource(project),revision:(prior?.revision||0)+1,updatedAt:new Date().toISOString()};
@@ -2200,6 +2379,7 @@ async function wdSave(){
 }
 function wdCutPlanMatches(project,input){
  if(!project.woodDrawing||isSolidJoint(project.woodDrawing.params))return true;
+ if(isBoardAssembly(project.woodDrawing.params)&&!buildDrawing(project.woodDrawing.params).partsComplete)return false;
  if(drawingStatus(project)==='stale')return false;
  const expected=wdCutlistForProject(project),actual=input.parts||[];
  return expected.length===actual.length&&expected.every(p=>actual.some(a=>a.name===p.part&&Number(a.qty)===p.qty&&drawingNumber(a.length)===p.length_mm&&drawingNumber(a.width)===p.width_mm&&drawingNumber(a.thickness)===p.thickness_mm));
@@ -2210,6 +2390,7 @@ function wdFrameKnowledge(project,m){
  return (project.knowledge||'')+'\n\nGespeichertes Werkzeichnungsmodell: offener Backrahmen aus massiver unbehandelter Buche. '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Entwurf, Maße noch bestätigen.')+'\n'+FRAME_FIELDS.map(([k,label])=>label+': '+f(p[k])+' mm.').join('\n')+'\nKurze Rahmenteile laufen über die volle Außenbreite; lange Teile sitzen stumpf dazwischen. Oben und unten offen, kein Boden.\n'+m.parts.map(v=>v.quantity+' '+v.name+': '+[v.length,v.width,v.thickness].map(f).join(' × ')+' mm; L in Faserrichtung.').join('\n')+'\nJe Ecke drei Konfirmatschrauben, insgesamt genau zwölf. Schraubenachse '+f(p.thickness/2)+' mm von der Seitenkante (mittig in der Wandstärke); Höhen '+m.positions.map(f).join(' / ')+' mm ab Oberkante. Gewinde außen Ø '+f(p.screwDiameter)+' mm, Länge '+f(p.screwLength)+' mm, Kopf Ø '+f(p.headDiameter)+' mm. Keine Nenngröße aus dem Gewindeaußendurchmesser erfinden.\nAußenfase '+f(p.chamfer)+' mm bei 45° an allen frei liegenden Außenkanten einschließlich äußerer Ober-/Unterkanten und senkrechter Außenecken. Äußere Stoßkanten erhalten jeweils '+f(p.jointChamfer)+' mm Fase bei 45° und bilden zusammen eine V-Nut mit '+f(2*p.jointChamfer)+' mm Öffnung und '+f(p.jointChamfer)+' mm Tiefe. Innenkanten mit Brotteigkontakt und Innenfugen bleiben ungefast; übrige Kontaktflächen liegen eben an. Fasen vor dem Zusammenbau anbringen.\nPassenden Konfirmat-Stufenbohrer einschließlich Senker verwenden; Bohrstufen und Tiefe nach Schraubenhersteller, am Reststück prüfen. Keine pauschale durchgehende Ø5-mm-Bohrung anweisen. Schrauben in Material- und Einkaufsliste nur einmal mit insgesamt zwölf Stück aufführen. Keine Temperatur- oder Lebensmittelkontaktfreigabe behaupten.\nDiese Zeichnungsmaße und Regeln in Stückliste und Bauanleitung übernehmen. Bei widersprechenden Benutzereingaben gezielt nachfragen; gespeicherte Maße nicht stillschweigend überschreiben. Bereits festgelegte Bezugskanten nicht erneut abfragen.';
 }
 function wdSheetGeometry(project=current){
+ if(isBoardAssembly(project.woodDrawing?.params))return wdAssemblySheet(project);
  if(isSolidJoint(project.woodDrawing?.params))return wdSolidSheet(project);
  if(wdIsCorpus(project.woodDrawing?.params))return wdCorpusSheet(project);
  if(project.woodDrawing?.params?.kind!=='bread-frame-v1')return '';
@@ -2239,7 +2420,7 @@ function wdApplyProjectValues(){
  current.woodDrawingDraft={...params,...proposal.values};current.woodDrawingImportStamp=proposal.source;wdRender();
 }
 function wdImportBlocks(project=current){
- const params=wdParams(project);if(!params||isSolidJoint(params))return false;
+ const params=wdParams(project);if(!params||isSolidJoint(params)||isBoardAssembly(params))return false;
  const p=drawingImport(project,params.kind||'spice-rack-v1');return p.conflicts.length>0||p.issues.some(x=>x.includes('Konstruktion zuerst'));
 }
 
@@ -2280,7 +2461,7 @@ function wdBeginSolid(kind){
 }
 function wdSolidGlueNote(project=current){
  const p=project.woodDrawing?.params;
- if(!isSolidJoint(p)&&!['Vollholz','Leimholzplatte'].includes(p?.boardMaterial))return '';
+ if(!isSolidJoint(p)&&!isBoardAssembly(p)&&!['Vollholz','Leimholzplatte'].includes(p?.boardMaterial))return '';
  return '<section class="notice"><strong>Hinweis vor dem Verleimen einer Brettfläche</strong><p>Jahrringlage beachten: Kern an Kern, Splint an Splint. Rechte und linke Brettseiten wechselweise nach oben legen. Reihenfolge vor der Bearbeitung kennzeichnen. Die Anordnung vermindert das gemeinsame Schüsseln; Holzbewegungen bleiben möglich.</p></section>';
 }
 function wdSolidKnowledge(project,m){
@@ -2330,6 +2511,68 @@ function wdPreviewSolid(){
  $('#wdSave').disabled=!m.ok||busy||reconstructionBusy;
  $('#wdPrint').disabled=!m.ok||unsaved||drawingStatus(current)==='stale';
  $('#wdPreview').innerHTML=m.ok?drawingPages(m,{title:wdTitle(),status}).map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Vollholzdetail Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'';
+}
+
+function wdBeginBoardAssembly(){
+ current.woodDrawingDraft={kind:ASSEMBLY_KIND,length:'',width:'',thickness:'',grain:'',basis:'',attachments:[]};
+ delete current.woodDrawingChoosing;delete current.woodDrawingImportStamp;wdRender();
+}
+function wdAssemblyKnowledge(project,m){
+ return (project.knowledge||'')+'\n\nBauteilaufbau mit zugeordneten Anschlüssen.\n'+m.notes.concat(m.p.attachments.map(a=>a.name+': Kante '+(ASSEMBLY_EDGES[a.edge]||'offen')+', Querschnitt '+(a.cross??'offen')+' × '+(a.height??'offen')+' mm, Anschluss '+(a.joint||'offen')+(a.kind==='stop_strip'?', Anschlag '+(a.direction==='above'?'oben':a.direction==='below'?'unten':'offen')+', Überstand '+(a.projection??'offen')+' mm.':'.')),m.connections.flatMap(c=>[m.components.find(g=>g.id===c.child).name,...c.model.notes]),m.pending).join('\n')+'\nOffene Angaben nicht erfinden; erst gemeinsam klären. Keine Mustermaße einsetzen. Die Verleimregel für Brettflächen ist nur ein Anleitungshinweis.';
+}
+function wdAssemblySheet(project){
+ if(drawingStatus(project)==='stale')return '<section class="notice"><strong>Bauteilaufbau erneut abgleichen</strong><p>Projekt geändert; gespeicherte Maße sind erneut zu prüfen.</p></section>';
+ const m=buildDrawing(project.woodDrawing.params);if(!m.ok)return '';
+ return '<section class="section"><h3>Bauteilaufbau und Anschlüsse</h3>'+m.notes.map(s=>'<p>'+esc(s)+'</p>').join('')+'<ol>'+m.components.map(g=>'<li>'+esc(g.name)+(g.edge?' · '+esc(ASSEMBLY_EDGES[g.edge]):'')+'</li>').join('')+'</ol><p>'+esc(m.partsComplete?'Bauteilmaße in Material übernommen; Befestigung und offene Punkte weiterhin prüfen.':'Stückliste noch unvollständig: offene Bauteilmaße ergänzen.')+'</p>'+m.pending.map(s=>'<p>Offen: '+esc(s)+'</p>').join('')+'</section>';
+}
+function wdRenderBoardAssembly(params){
+ const box=$('#woodDrawingBox'),proposal=assemblyProposal(current);
+ const opts=(values,value)=>'<option value="">Bitte wählen</option>'+Object.entries(values).map(([key,label])=>'<option value="'+esc(key)+'" '+(key===value?'selected':'')+'>'+esc(label)+'</option>').join('');
+ const num=(key,label,value,index)=>'<label class="wdField"><span>'+esc(label)+' (mm)</span><input '+(index===undefined?'data-assembly-root="'+key+'"':'data-assembly-part="'+index+'" data-key="'+key+'"')+' inputmode="decimal" value="'+esc(value??'')+'"></label>';
+ const select=(key,label,values,value,index)=>'<label class="wdField"><span>'+esc(label)+'</span><select '+(index===undefined?'data-assembly-root="'+key+'"':'data-assembly-part="'+index+'" data-key="'+key+'"')+'>'+opts(values,value)+'</select></label>';
+ box.innerHTML='<h3>Bauteilaufbau · Brett und Leisten</h3><p>Gemeinsame Zeichnung aus einem Grundbrett und Anbauteilen. Jede Leiste wird einer Brettkante zugeordnet. Hirnleisten können unsere hinterlegte Anschlussregel verwenden.</p><section class="notice"><strong>Angaben aus dem Projekttext</strong><p>'+esc(proposal.sources.join(' · ')||'Keine eindeutig bezeichneten Grundbrettmaße erkannt.')+'</p><p>'+esc(proposal.attachments.length?proposal.attachments.length+' Anbauteile erkannt; Leistenmaße und Kantenzuordnung prüfen.':'Anbauteile können unten einzeln ergänzt werden.')+'</p>'+proposal.conflicts.map(s=>'<p>'+esc(s)+'</p>').join('')+'<button class="secondary" id="wdAssemblyImport" '+(proposal.conflicts.length||!proposal.sources.length&&!proposal.attachments.length?'disabled':'')+'>Bauteilaufbau aus Projekttext übernehmen</button><p class="hint">Übernimmt erkannte Maße und ersetzt die Anbauteile im Entwurf. Fehlende Werte bleiben offen. Die gespeicherte Zeichnung bleibt bis zum Speichern erhalten.</p></section><h4>Grundbrett</h4><div class="wdFields">'+ASSEMBLY_FIELDS.map(([k,label])=>num(k,label,params[k])).join('')+select('grain','Faserrichtung',{length:'entlang der Länge',width:'entlang der Breite'},params.grain)+select('basis','Maßbezug des Grundbretts',{tip:'Außenmaß einschließlich Zapfen',shoulder:'Maß zwischen den Brettschultern'},params.basis)+'</div><p class="hint">Ansicht von oben: Länge läuft links–rechts, Breite vorn–hinten. Der Maßbezug entscheidet, ob Hirnleisten innerhalb des angegebenen Grundbrettmaßes oder außen an den Brettschultern liegen.</p><h4>Anbauteile</h4><p class="hint">Erste Ausbaustufe: ein Anbauteil pro Brettkante. Oben/unten beschreibt die Höhenlage und ersetzt nicht die Wahl vorn/hinten.</p><div id="wdAssemblyParts">'+(params.attachments||[]).map((a,i)=>'<section class="card"><strong>Bauteil '+(i+2)+'</strong><label class="wdField"><span>Bezeichnung</span><input data-assembly-part="'+i+'" data-key="name" value="'+esc(a.name||'')+'"></label><div class="wdFields">'+select('kind','Bauteilart',{end_strip:'Hirnleiste',stop_strip:'Anschlagleiste'},a.kind,i)+select('edge','Anschlusskante am Grundbrett',ASSEMBLY_EDGES,a.edge,i)+num('cross',a.kind==='end_strip'?'Hirnleistenbreite':'Leistendicke quer zur Brettkante',a.cross,i)+num('height',a.kind==='end_strip'?'Hirnleistendicke':'Leistenhöhe',a.height,i)+(a.kind==='end_strip'?select('joint','Verbindung',{'breadboard-end-v1':'Angezapfte Hirnleiste'},a.joint,i)+num('tenonWidth','Mittlerer Zapfen: Breite (Richtwert 60)',a.tenonWidth,i):select('direction','Anschlag zeigt',{above:'nach oben',below:'nach unten'},a.direction,i)+num('projection','Überstand über die entsprechende Brettfläche',a.projection,i)+select('span','Leistenlänge folgt',{body:'Brettfläche zwischen den Schultern',overall:'Gesamter Kante einschließlich Hirnleisten'},a.span,i))+'</div><button class="ghost" data-assembly-remove="'+i+'">Anbauteil entfernen</button></section>').join('')+'</div><button id="wdAssemblyAdd" class="secondary" '+((params.attachments||[]).length>=4?'disabled':'')+'>Anbauteil ergänzen</button><button id="wdChangeModel" class="ghost">Anderes Zeichenmodell wählen</button>'+(current.woodDrawing?'<button id="wdAssemblyRestore" class="ghost">Gespeicherte Zeichnung wiederherstellen</button>':'')+'<div id="wdChecks"></div><label class="wdConfirm"><input type="checkbox" id="wdConfirmed"> Ich habe Bauteile, Maße und Anschlüsse geprüft.</label><div class="composerActions"><button id="wdSave">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="wdOpenPreview" class="ghost">Große Vorschau öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>';
+ box.querySelectorAll('[data-assembly-root],[data-assembly-part]').forEach(el=>el.addEventListener('input',()=>{
+  const draft={...wdParams(),attachments:(wdParams().attachments||[]).map(a=>({...a}))};
+  if(el.dataset.assemblyRoot)draft[el.dataset.assemblyRoot]=el.value;
+  else{
+   const a=draft.attachments[Number(el.dataset.assemblyPart)];a[el.dataset.key]=el.value;
+   if(el.dataset.key==='kind')Object.assign(a,{cross:'',height:'',joint:'',tenonWidth:'',direction:'',span:'',projection:''});
+  }
+  current.woodDrawingDraft=draft;$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';
+  if(el.dataset.key==='kind')wdRender();else wdPreviewBoardAssembly();
+ }));
+ $('#wdAssemblyImport').onclick=()=>{if(proposal.conflicts.length)return;current.woodDrawingDraft={...wdParams(),...proposal.values,attachments:proposal.attachments.map(a=>({...a}))};wdRender();};
+ $('#wdAssemblyAdd').onclick=()=>{current.woodDrawingDraft={...wdParams(),attachments:[...(wdParams().attachments||[]),{id:newId(),name:'Anbauteil',kind:'stop_strip',edge:'',cross:'',height:'',projection:'',direction:'',span:'',joint:'',tenonWidth:''}]};wdRender();};
+ box.querySelectorAll('[data-assembly-remove]').forEach(button=>button.onclick=()=>{current.woodDrawingDraft={...wdParams(),attachments:wdParams().attachments.filter((_,i)=>i!==Number(button.dataset.assemblyRemove))};wdRender();});
+ $('#wdChangeModel').onclick=()=>{current.woodDrawingChoosing=true;wdRender();};
+ if($('#wdAssemblyRestore'))$('#wdAssemblyRestore').onclick=()=>{delete current.woodDrawingDraft;delete current.woodDrawingChoosing;wdRender();};
+ $('#wdConfirmed').checked=!!current.woodDrawing?.confirmed&&wdSame(params,current.woodDrawing.params);
+ $('#wdConfirmed').onchange=wdPreviewBoardAssembly;$('#wdSave').onclick=wdSave;
+ $('#wdOpenPreview').onclick=()=>{const m=buildDrawing(wdParams());if(m.ok)openPrintableHtml(drawingPrintHtml(m,{title:wdTitle(),status:wdAssemblyStatus()}));};
+ $('#wdPrint').onclick=async()=>{
+  const project=current,m=buildDrawing(wdParams()),saved=project.woodDrawing;
+  if(!m.ok||!saved||!wdSame(m.p,saved.params)||drawingStatus(project)==='stale'||$('#wdConfirmed').checked!==!!saved.confirmed)return;
+  const button=$('#wdPrint'),status=$('#wdSaveStatus'),source=drawingSource(project);button.disabled=true;status.textContent='A4-PDF wird erstellt …';
+  try{
+   const blob=await drawingPdfBlob(m,{title:wdTitle(),status:wdAssemblyStatus()});
+   if(current!==project||project.woodDrawing!==saved||drawingSource(project)!==source||!wdSame(wdParams(),m.p)||$('#wdConfirmed').checked!==!!saved.confirmed)throw Error('Projekt oder Maße geändert. Erneut speichern.');
+   const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=safeProjectFilename(wdTitle())+'-Bauteilaufbau-A4.pdf';link.textContent='PDF herunterladen';status.textContent='PDF bereit. Druck 100 % / Originalgröße. ';status.appendChild(link);link.click();setTimeout(()=>URL.revokeObjectURL(url),300000);
+  }catch(e){if(current===project)status.textContent='PDF konnte nicht erstellt werden: '+e.message;}
+  finally{if(current===project)wdPreviewBoardAssembly();}
+ };
+ wdPreviewBoardAssembly();
+}
+function wdAssemblyStatus(){
+ const saved=current.woodDrawing,p=wdParams();
+ return !saved||!wdSame(p,saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed?'Vorschau · Eingaben noch nicht übernommen':wdStateText();
+}
+function wdPreviewBoardAssembly(){
+ const m=buildDrawing(wdParams()),saved=current.woodDrawing;
+ $('#wdConfirmed').disabled=!m.confirmable;if(!m.confirmable)$('#wdConfirmed').checked=false;
+ $('#wdChecks').innerHTML='<div class="notice"><strong>'+esc(wdAssemblyStatus())+'</strong></div>'+[...m.errors,...(m.notes||[]),...(m.pending||[])].map(s=>'<p>'+esc(s)+'</p>').join('');
+ const unsaved=!saved||!wdSame(wdParams(),saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed;
+ $('#wdSave').disabled=!m.ok||busy||reconstructionBusy;$('#wdPrint').disabled=!m.ok||unsaved||drawingStatus(current)==='stale';
+ $('#wdPreview').innerHTML=m.ok?drawingPages(m,{title:wdTitle(),status:wdAssemblyStatus()}).map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Bauteilaufbau Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'';
 }
 
 function renderRecord(){
