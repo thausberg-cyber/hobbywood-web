@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev25</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev26</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev25 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev26 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev25';
+const APP_VERSION='0.9.21-dev26';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1360,7 +1360,7 @@ const ASSEMBLY_EDGES=Object.freeze({left:'links',right:'rechts',front:'vorn',bac
 function isBoardAssembly(p){return p?.kind===ASSEMBLY_KIND}
 const assemblyN=x=>typeof x==='number'?x:typeof x==='string'&&x.trim()?Number(x.replace(',','.')):null;
 function assemblySignature(input){
- const p={kind:input?.kind};
+ const p={kind:input?.kind,layoutReview:input?.layoutReview||''};
  for(const[k]of ASSEMBLY_FIELDS)p[k]=assemblyN(input?.[k]);
  for(const k of ['grain','basis'])p[k]=input?.[k]||'';
  p.attachments=(input?.attachments||[]).map(a=>{
@@ -1369,8 +1369,12 @@ function assemblySignature(input){
  });
  return JSON.stringify(p);
 }
+// Review covers placement, not numerical sizes. Any change of placement invalidates it.
+function assemblyLayoutSignature(p){return JSON.stringify({grain:p?.grain||'',basis:p?.basis||'',parts:(p?.attachments||[]).map(a=>[a.id,a.kind,a.edge||'',a.direction||'',a.span||''])});}
+function assemblyLayoutReady(p){return !!p?.grain&&!!p?.basis&&(p.attachments||[]).every(a=>Object.hasOwn(ASSEMBLY_EDGES,a.edge)&&(a.kind==='end_strip'||a.direction&&a.span));}
+function assemblyCanOutput(m){return !!(m?.ok&&m.partsComplete&&m.p.layoutReview===assemblyLayoutSignature(m.p));}
 function assemblyProposal(project){
- const facts=[project.customDescription,project.knowledge,...(project.analysis?.recognized||[]).filter(x=>typeof x==='string'),project.analysis?.summary].filter(x=>typeof x==='string');
+ const facts=[project.customDescription,project.knowledge,...(project.analysis?.recognized||[]).filter(x=>typeof x==='string'),project.analysis?.summary,...(project.sketches||[]).flatMap(s=>s.analysis?.facts||[]),...(project.woodDrawingAssemblyRead&&project.woodDrawingAssemblyRead.imageId===project.woodDrawingAssemblyImageId?project.woodDrawingAssemblyRead.facts||[]:[])].filter(x=>typeof x==='string');
  const dims=[],sources=[];
  for(const text of facts){
   const rx=/(?:Grundbrett|Grundplatte)\s*(?:von|mit|:)?\s*(\d+(?:[.,]\d+)?)\s*[×x]\s*(\d+(?:[.,]\d+)?)\s*[×x]\s*(\d+(?:[.,]\d+)?)\s*(mm|cm)\b/gi;
@@ -1387,10 +1391,26 @@ function assemblyProposal(project){
  if(/(?:zwei|beiden|2)\s+(?:Längskanten[^.]*?zwei\s+)?Anschlagleisten/i.test(text)||/zwei Anschlagleisten/i.test(text)){
   for(const [id,direction]of [['stop-a','above'],['stop-b','below']])attachments.push({id,name:'Anschlagleiste '+(direction==='above'?'oben':'unten'),kind:'stop_strip',edge:'',joint:'',cross:'',height:'',projection:'',tenonWidth:'',direction:/nach oben/i.test(text)&&/nach unten/i.test(text)?direction:'',span:''});
  }
+ // Singular statements from the existing image reader may identify one rail at a time.
+ if(!attachments.some(a=>a.kind==='stop_strip')){
+  for(const [direction,word]of [['above','oben'],['below','unten']]){
+   const statement=new RegExp('(?:Anschlag(?:leiste)?[^.\\n]{0,60}nach '+word+'|nach '+word+'[^.\\n]{0,60}Anschlag(?:leiste)?)','i');
+   if(statement.test(text))attachments.push({id:'stop-'+direction,name:'Anschlagleiste '+word,kind:'stop_strip',edge:'',joint:'',cross:'',height:'',projection:'',tenonWidth:'',direction,span:''});
+  }
+ }
+ for(const a of attachments.filter(a=>a.kind==='stop_strip')){
+  const vertical=a.direction==='above'?'oben':'unten',locations=[];
+  for(const [edge,word]of [['back','hinten|hintere[nr]?'],['front','vorne?|vordere[nr]?']]){
+   const rx=new RegExp('(?:'+word+')[^.\\n]{0,50}Anschlag(?:leiste)?[^.\\n]{0,40}(?:nach '+vertical+'|'+vertical+' über)|Anschlag(?:leiste)?[^.\\n]{0,30}(?:'+word+')[^.\\n]{0,30}nach '+vertical,'i');
+   if(rx.test(text))locations.push(edge);
+  }
+  if(locations.length===1)a.edge=locations[0];
+  else if(locations.length>1)conflicts.push(a.name+': widersprüchliche Lage vorn/hinten.');
+ }
  return {values,attachments,sources:[...new Set(sources)],conflicts,notes:['Maßbezug und Faserrichtung prüfen. Anbauteilmaße und Anschlüsse werden nicht aus der Beschreibung geraten.','Bei Anschlagleisten ist oben/unten keine Zuordnung zu vorn/hinten. Diese bleibt gegebenenfalls offen.']};
 }
 function buildBoardAssembly(input,{drawingNumber,drawingFormat,buildJoint}){
- const f=drawingFormat,errors=[],pending=[],p={kind:ASSEMBLY_KIND,grain:input?.grain||'',basis:input?.basis||''};
+ const f=drawingFormat,errors=[],pending=[],p={kind:ASSEMBLY_KIND,layoutReview:input?.layoutReview||'',grain:input?.grain||'',basis:input?.basis||''};
  for(const[k,label]of ASSEMBLY_FIELDS){p[k]=drawingNumber(input?.[k]);if(!Number.isFinite(p[k])||p[k]<=0||p[k]>2000)errors.push(label+': Wert größer 0 und höchstens 2000 mm eingeben.');}
  if(Number.isFinite(p.thickness)&&(p.thickness<6||p.thickness>60))errors.push('Grundbrettdicke: unterstützt werden 6 bis 60 mm.');
  if(p.grain&&!['length','width'].includes(p.grain))errors.push('Faserrichtung ungültig.');
@@ -1408,7 +1428,7 @@ function buildBoardAssembly(input,{drawingNumber,drawingFormat,buildJoint}){
   if(v.edge){if(edges.has(v.edge))errors.push('Mehrere Bauteile an derselben Kante sind hier noch nicht unterstützt.');edges.add(v.edge);}else pending.push(v.name+': Anschlusskante wählen.');
   for(const k of ['cross','height','projection','tenonWidth']){
    const n=assemblyN(a[k]);v[k]=n;
-   if(n!==null&&(!Number.isFinite(n)||n<=0||n>500))errors.push(v.name+': '+k+' muss größer 0 und höchstens 500 mm sein.');
+   if(n!==null&&(!Number.isFinite(n)||n<=0||n>500))errors.push(v.name+': '+({cross:'Leistenbreite / Querdicke',height:'Leistendicke / Höhe',projection:'Überstand',tenonWidth:'Zapfenbreite'}[k])+' muss größer 0 und höchstens 500 mm sein.');
   }
   if(v.cross===null)pending.push(v.name+': Breite quer zur Anschlusskante fehlt.');
   if(v.height===null)pending.push(v.name+': Dicke/Höhe fehlt.');
@@ -1469,44 +1489,55 @@ function buildBoardAssembly(input,{drawingNumber,drawingFormat,buildJoint}){
  for(let i=1;i<visible.length;i++)for(let j=i+1;j<visible.length;j++)if(overlap(visible[i],visible[j],'x','length')&&overlap(visible[i],visible[j],'y','width')&&overlap(visible[i],visible[j],'z','thickness'))errors.push(visible[i].name+' und '+visible[j].name+' überschneiden sich.');
  m.ok=!errors.length;m.geometryReady=geometryReady&&m.ok;
  m.partsComplete=m.geometryReady&&ends.every(a=>a.joint&&a.tenonWidth!==null);
+ m.layoutReviewed=assemblyLayoutReady(p)&&p.layoutReview===assemblyLayoutSignature(p);
  if(m.partsComplete){
   const rootLength=p.basis==='shoulder'?p.length+crosses.left+crosses.right:p.length,rootWidth=p.basis==='shoulder'?p.width+crosses.front+crosses.back:p.width;
   m.parts.push({id:'panel',name:'Grundbrett einschließlich angearbeiteter Zapfen',quantity:1,length:p.grain==='width'?rootWidth:rootLength,width:p.grain==='width'?rootLength:rootWidth,thickness:p.thickness,material:'Vollholz',note:'Faserrichtung '+(p.grain==='length'?'entlang L':'entlang B')+'; Schultermaße '+f(body.length)+' × '+f(body.width)+' mm. Ohne Bearbeitungszugabe.'});
   for(const g of m.components.slice(1))m.parts.push({id:g.id,name:g.name,quantity:1,length:['front','back'].includes(g.edge)?g.length:g.width,width:['front','back'].includes(g.edge)?g.width:g.length,thickness:g.thickness,material:'Vollholz',note:'Anschluss an '+ASSEMBLY_EDGES[g.edge]+'. Entwurfsmaße, Befestigung prüfen.'});
  }
  m.pending=[...new Set(pending)];
- m.notes=['Grundbrett '+f(p.length)+' × '+f(p.width)+' × '+f(p.thickness)+' mm.','Maßbezug: '+({tip:'Außenmaß einschließlich Zapfen',shoulder:'Schultermaß'}[p.basis]||'noch offen')+'.',m.geometryReady?'Gemeinsame Geometrie aus '+m.components.length+' Bauteilen.':'Unvollständige Anordnung: offene Bauteile werden symbolisch gestrichelt dargestellt.'];
- m.confirmable=m.ok&&!m.pending.length;
+ m.notes=['Grundbrett '+f(p.length)+' × '+f(p.width)+' × '+f(p.thickness)+' mm.','Maßbezug: '+({tip:'Außenmaß einschließlich Zapfen',shoulder:'Schultermaß'}[p.basis]||'noch offen')+'.',m.geometryReady?'Gemeinsame Geometrie aus '+m.components.length+' Bauteilen.':'Keine Werkzeichnung: erst offene Bauteilmaße und Zuordnungen ergänzen.'];
+ m.confirmable=m.ok&&m.layoutReviewed&&!m.pending.length;
  return m;
 }
 function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgTools}){
- if(!m.ok)throw Error(m.errors.join('\n'));
+ if(!assemblyCanOutput(m))throw Error('Bauteile zuordnen, Maße und Verbindungen ergänzen und Aufbau mit Skizze abgleichen.');
  const {f,e,n,line,text,rect,dh,dv}=svgTools(),p=m.p;
  const frame=(body,subtitle,page)=>'<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><style>text{font-family:Arial,sans-serif;font-size:2.7px;fill:#111}.bold{font-weight:bold;font-size:3.2px}.small{font-size:2.3px}line{stroke:#111;stroke-width:.17;fill:none}rect{stroke:#111;stroke-width:.3;fill:white}.open{stroke-dasharray:2 1;fill:#fff8e5}.hidden{stroke-dasharray:2 1}.body{stroke:#111;stroke-width:.35;fill:none}</style>'+rect(6,6,285,198)+text(12,15,"look, talk ’n build",'bold')+text(260,15,'Blatt '+page,'small')+text(12,24,title+' · '+subtitle,'bold')+line(6,29,291,29)+text(12,36,status,'small')+body+line(15,190,65,190)+line(15,189,15,191)+line(65,189,65,191)+text(70,191,'Kontrolle: 50 mm auf Papier','small')+line(6,197,291,197)+text(12,202,'Alle Maße mm · Druck 100 % / Originalgröße · Entwurf','small')+text(218,202,'DIN-919-Abgleich offen','small')+'</svg>';
  const b=m.geometryReady?m.body:{x:0,y:0,length:p.length,width:p.width},known=m.geometryReady?m.components.filter(c=>!c.unresolved):[{...b,z:0,thickness:p.thickness}];
  const minX=Math.min(...known.map(c=>c.x)),minY=Math.min(...known.map(c=>c.y)),maxX=Math.max(...known.map(c=>c.x+c.length)),maxY=Math.max(...known.map(c=>c.y+c.width));
- const scale=Math.min(.2,170/(maxX-minX),103/(maxY-minY)),X=x=>24+(x-minX)*scale,Y=y=>64+(y-minY)*scale;
+ const scale=Math.min(.2,170/(maxX-minX),92/(maxY-minY)),X=x=>24+(x-minX)*scale,Y=y=>64+(maxY-y)*scale;
  let body=text(24,46,'DRAUFSICHT · '+(m.geometryReady?'M 1:'+f(1/scale):'Anordnung teilweise schematisch'),'bold');
- body+=rect(X(b.x),Y(b.y),b.length*scale,b.width*scale)+text(X(b.x)+3,Y(b.y)+7,'1 · Grundbrett','bold');
- body+=dh(X(b.x),X(b.x+b.length),Y(b.y),Y(b.y)-6,f(m.geometryReady?b.length:p.length))+dv(Y(b.y),Y(b.y+b.width),X(b.x),X(b.x)-8,f(m.geometryReady?b.width:p.width));
+ body+=rect(X(b.x),Y(b.y+b.width),b.length*scale,b.width*scale)+text(X(b.x)+3,Y(b.y+b.width)+7,'1 · Grundbrett','bold');
+ body+=dh(X(b.x),X(b.x+b.length),Y(b.y+b.width),Y(b.y+b.width)-6,f(m.geometryReady?b.length:p.length))+dv(Y(b.y+b.width),Y(b.y),X(b.x),X(b.x)-8,f(m.geometryReady?b.width:p.width));
  m.components.slice(1).forEach((g,i)=>{
   if(m.geometryReady&&!g.unresolved){
-   body+=rect(X(g.x),Y(g.y),g.length*scale,g.width*scale)+text(X(g.x)+1,Y(g.y)+3,String(i+2),'small');
+   body+=rect(X(g.x),Y(g.y+g.width),g.length*scale,g.width*scale)+text(X(g.x)+1,Y(g.y+g.width)+3,String(i+2),'small');
   }else{
-   const edge=g.edge,width=p.length*scale,height=p.width*scale,x=X(b.x),y=Y(b.y);
+   const edge=g.edge,width=p.length*scale,height=p.width*scale,x=X(b.x),y=Y(b.y+b.width);
    if(edge==='left')body+=rect(x-7,y,5,height,'open')+text(x-6,y+4,String(i+2),'small');
    else if(edge==='right')body+=rect(x+width+2,y,5,height,'open')+text(x+width+3,y+4,String(i+2),'small');
-   else if(edge==='front'||edge==='back'){const yy=edge==='front'?y+1:y+height-6;body+=rect(x,yy,width,5,'open')+text(x+2,yy+4,String(i+2),'small');}
+   else if(edge==='front'||edge==='back'){const yy=edge==='back'?y+1:y+height-6;body+=rect(x,yy,width,5,'open')+text(x+2,yy+4,String(i+2),'small');}
    // Unassigned edges are listed as components, without inventing a location.
   }
  });
  const rows=['BAUTEILE UND ANSCHLÜSSE',...m.components.map((g,i)=>(i+1)+' · '+g.name+(g.edge?' · '+ASSEMBLY_EDGES[g.edge]:i?' · Kante offen':'')),...m.connections.map(c=>'Anschluss '+c.child+': Feder / Zapfen D/3'),...m.pending];
- let yy=47;for(const row of rows){let current='';for(const word of row.split(' ')){if((current+' '+word).length>43){body+=text(207,yy,current,'small');yy+=3.4;current=word;}else current+=(current?' ':'')+word;}body+=text(207,yy,current,'small');yy+=5;if(yy>179){body+=text(207,185,'Weitere offene Angaben siehe App.','small');break;}}
+ let yy=47;for(const row of rows){let current='';for(const word of row.split(' ')){if((current+' '+word).length>43){body+=text(207,yy,current,'small');yy+=3.4;current=word;}else current+=(current?' ':'')+word;}body+=text(207,yy,current,'small');yy+=5;if(yy>166){body+=text(207,171,'Weitere offene Angaben siehe App.','small');break;}}
  if(m.geometryReady){
-  body+=dh(X(minX),X(maxX),Y(minY),Y(minY)-14,f(maxX-minX)+' gesamt');
-  const z0=Math.min(0,...known.map(g=>g.z)),z1=Math.max(p.thickness,...known.map(g=>g.z+g.thickness)),sy=Math.min(scale,20/(z1-z0));
-  body+=text(24,169,'VORDERANSICHT · Höhenlage der Bauteile','bold');
-  for(const g of known)body+=rect(X(g.x),175+(z1-g.z-g.thickness)*sy,g.length*scale,g.thickness*sy);
+  body+=dh(X(minX),X(maxX),Y(maxY),Y(maxY)-14,f(maxX-minX)+' gesamt');
+  const z0=Math.min(0,...known.map(g=>g.z)),z1=Math.max(p.thickness,...known.map(g=>g.z+g.thickness));
+  // Both elevations use the same scale; front is at the left of the side view.
+  const es=Math.min(.18,76/(maxX-minX),76/(maxY-minY),17/(z1-z0)),Z=z=>182-(z-z0)*es;
+  body+=text(24,164,'VORDERANSICHT · M 1:'+f(1/es),'bold')+text(114,164,'SEITENANSICHT VON LINKS · M 1:'+f(1/es),'bold');
+  for(const g of [...known].sort((a,b)=>b.y-a.y))body+=rect(24+(g.x-minX)*es,Z(g.z+g.thickness),g.length*es,g.thickness*es);
+  for(const g of [...known].sort((a,b)=>b.x-a.x))body+=rect(114+(g.y-minY)*es,Z(g.z+g.thickness),g.width*es,g.thickness*es);
+  body+=text(114,187,'vorn','small')+text(177,187,'hinten','small');
+  for(const g of known.filter(g=>g.kind==='stop_strip'&&['front','back'].includes(g.edge))){
+   const a=p.attachments.find(a=>a.id===g.id),x=114+(g.y-minY)*es;
+   body+=dv(Z(a.direction==='above'?p.thickness+a.projection:0),Z(a.direction==='above'?p.thickness:-a.projection),x,g.edge==='front'?x-4:x+g.width*es+4,f(a.projection));
+  }
+  for(const [i,a]of p.attachments.filter(a=>a.kind==='stop_strip').entries())body+=text(207,180+i*4,a.name+': '+ASSEMBLY_EDGES[a.edge]+', '+f(a.projection)+' mm '+(a.direction==='above'?'über Brett':'unter Brett'),'small');
+
  }else{
   const free=m.components.slice(1).map((g,i)=>({...g,number:i+2})).filter(g=>!g.edge);
   free.forEach((g,i)=>{const x=24+(i%2)*86,y=172+Math.floor(i/2)*9;body+=rect(x,y,82,7,'open')+text(x+2,y+4,g.number+' · '+g.name.slice(0,30)+' (Kante offen)','small');});
@@ -2258,7 +2289,7 @@ function wdParams(project=current){return project.woodDrawingDraft||project.wood
 function wdCutlistForProject(project=current){
  if(!project.woodDrawing||isSolidJoint(project.woodDrawing.params))return project.reconstruction?.cutlist||[];
  if(drawingStatus(project)==='stale')return [];
- const m=buildDrawing(project.woodDrawing.params);if(!m.ok)return [];
+ const m=buildDrawing(project.woodDrawing.params);if(!m.ok||isBoardAssembly(m)&&!assemblyCanOutput(m))return [];
  return m.parts.map(p=>({part:p.name,qty:p.quantity,length_mm:p.length,width_mm:p.width,thickness_mm:p.thickness,material:p.material||(m.kind==='bread-frame-v1'?'Massive Buche, unbehandelt':'Holzart noch festlegen'),direction_basis:wdIsCorpus(m)?'unknown':'fiber',note:(wdIsCorpus(m)?'Maße aus Korpuszeichnung; Dekor-/Faserrichtung und Belag-Zuschnittspiel prüfen. ':'Maße aus Werkzeichnung; Massivholz, L in Faserrichtung. ')+(p.note||'')+' '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Entwurf: Maße noch bestätigen.')}));
 }
 function wdKnowledge(project){
@@ -2530,7 +2561,7 @@ function wdRenderBoardAssembly(params){
  const opts=(values,value)=>'<option value="">Bitte wählen</option>'+Object.entries(values).map(([key,label])=>'<option value="'+esc(key)+'" '+(key===value?'selected':'')+'>'+esc(label)+'</option>').join('');
  const num=(key,label,value,index)=>'<label class="wdField"><span>'+esc(label)+' (mm)</span><input '+(index===undefined?'data-assembly-root="'+key+'"':'data-assembly-part="'+index+'" data-key="'+key+'"')+' inputmode="decimal" value="'+esc(value??'')+'"></label>';
  const select=(key,label,values,value,index)=>'<label class="wdField"><span>'+esc(label)+'</span><select '+(index===undefined?'data-assembly-root="'+key+'"':'data-assembly-part="'+index+'" data-key="'+key+'"')+'>'+opts(values,value)+'</select></label>';
- box.innerHTML='<h3>Bauteilaufbau · Brett und Leisten</h3><p>Gemeinsame Zeichnung aus einem Grundbrett und Anbauteilen. Jede Leiste wird einer Brettkante zugeordnet. Hirnleisten können unsere hinterlegte Anschlussregel verwenden.</p><section class="notice"><strong>Angaben aus dem Projekttext</strong><p>'+esc(proposal.sources.join(' · ')||'Keine eindeutig bezeichneten Grundbrettmaße erkannt.')+'</p><p>'+esc(proposal.attachments.length?proposal.attachments.length+' Anbauteile erkannt; Leistenmaße und Kantenzuordnung prüfen.':'Anbauteile können unten einzeln ergänzt werden.')+'</p>'+proposal.conflicts.map(s=>'<p>'+esc(s)+'</p>').join('')+'<button class="secondary" id="wdAssemblyImport" '+(proposal.conflicts.length||!proposal.sources.length&&!proposal.attachments.length?'disabled':'')+'>Bauteilaufbau aus Projekttext übernehmen</button><p class="hint">Übernimmt erkannte Maße und ersetzt die Anbauteile im Entwurf. Fehlende Werte bleiben offen. Die gespeicherte Zeichnung bleibt bis zum Speichern erhalten.</p></section><h4>Grundbrett</h4><div class="wdFields">'+ASSEMBLY_FIELDS.map(([k,label])=>num(k,label,params[k])).join('')+select('grain','Faserrichtung',{length:'entlang der Länge',width:'entlang der Breite'},params.grain)+select('basis','Maßbezug des Grundbretts',{tip:'Außenmaß einschließlich Zapfen',shoulder:'Maß zwischen den Brettschultern'},params.basis)+'</div><p class="hint">Ansicht von oben: Länge läuft links–rechts, Breite vorn–hinten. Der Maßbezug entscheidet, ob Hirnleisten innerhalb des angegebenen Grundbrettmaßes oder außen an den Brettschultern liegen.</p><h4>Anbauteile</h4><p class="hint">Erste Ausbaustufe: ein Anbauteil pro Brettkante. Oben/unten beschreibt die Höhenlage und ersetzt nicht die Wahl vorn/hinten.</p><div id="wdAssemblyParts">'+(params.attachments||[]).map((a,i)=>'<section class="card"><strong>Bauteil '+(i+2)+'</strong><label class="wdField"><span>Bezeichnung</span><input data-assembly-part="'+i+'" data-key="name" value="'+esc(a.name||'')+'"></label><div class="wdFields">'+select('kind','Bauteilart',{end_strip:'Hirnleiste',stop_strip:'Anschlagleiste'},a.kind,i)+select('edge','Anschlusskante am Grundbrett',ASSEMBLY_EDGES,a.edge,i)+num('cross',a.kind==='end_strip'?'Hirnleistenbreite':'Leistendicke quer zur Brettkante',a.cross,i)+num('height',a.kind==='end_strip'?'Hirnleistendicke':'Leistenhöhe',a.height,i)+(a.kind==='end_strip'?select('joint','Verbindung',{'breadboard-end-v1':'Angezapfte Hirnleiste'},a.joint,i)+num('tenonWidth','Mittlerer Zapfen: Breite (Richtwert 60)',a.tenonWidth,i):select('direction','Anschlag zeigt',{above:'nach oben',below:'nach unten'},a.direction,i)+num('projection','Überstand über die entsprechende Brettfläche',a.projection,i)+select('span','Leistenlänge folgt',{body:'Brettfläche zwischen den Schultern',overall:'Gesamter Kante einschließlich Hirnleisten'},a.span,i))+'</div><button class="ghost" data-assembly-remove="'+i+'">Anbauteil entfernen</button></section>').join('')+'</div><button id="wdAssemblyAdd" class="secondary" '+((params.attachments||[]).length>=4?'disabled':'')+'>Anbauteil ergänzen</button><button id="wdChangeModel" class="ghost">Anderes Zeichenmodell wählen</button>'+(current.woodDrawing?'<button id="wdAssemblyRestore" class="ghost">Gespeicherte Zeichnung wiederherstellen</button>':'')+'<div id="wdChecks"></div><label class="wdConfirm"><input type="checkbox" id="wdConfirmed"> Ich habe Bauteile, Maße und Anschlüsse geprüft.</label><div class="composerActions"><button id="wdSave">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="wdOpenPreview" class="ghost">Große Vorschau öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>';
+ box.innerHTML='<h3>Bauteilaufbau · Brett und Leisten</h3><p>Gemeinsame Zeichnung aus einem Grundbrett und Anbauteilen. Jede Leiste wird einer Brettkante zugeordnet. Hirnleisten können unsere hinterlegte Anschlussregel verwenden.</p><section class="notice"><strong>1 · Angaben aus Projekt und Skizze</strong><p>Die Bildauswertung liefert Vorschläge. Lage und Maße müssen anschließend gemeinsam geprüft werden.</p><div id="wdAssemblyImage"></div><p>'+esc(proposal.sources.join(' · ')||'Keine eindeutig bezeichneten Grundbrettmaße erkannt.')+'</p><p>'+esc(proposal.attachments.length?proposal.attachments.length+' Anbauteile erkannt; Leistenmaße und Kantenzuordnung prüfen.':'Anbauteile können unten einzeln ergänzt werden.')+'</p>'+proposal.conflicts.map(s=>'<p>'+esc(s)+'</p>').join('')+'<button class="secondary" id="wdAssemblyImport" '+(proposal.conflicts.length||!proposal.sources.length&&!proposal.attachments.length?'disabled':'')+'>Bauteilaufbau aus Projekttext übernehmen</button><p class="hint">Übernimmt erkannte Maße und ersetzt die Anbauteile im Entwurf. Fehlende Werte bleiben offen. Die gespeicherte Zeichnung bleibt bis zum Speichern erhalten.</p></section><h4>2 · Grundbrett und Maßbezug</h4><div class="wdFields">'+ASSEMBLY_FIELDS.map(([k,label])=>num(k,label,params[k])).join('')+select('grain','Faserrichtung',{length:'entlang der Länge',width:'entlang der Breite'},params.grain)+select('basis','Maßbezug des Grundbretts',{tip:'Außenmaß einschließlich Zapfen',shoulder:'Maß zwischen den Brettschultern'},params.basis)+'</div><p class="hint">Ansicht von oben: Länge läuft links–rechts, Breite vorn–hinten. Der Maßbezug entscheidet, ob Hirnleisten innerhalb des angegebenen Grundbrettmaßes oder außen an den Brettschultern liegen.</p><h4>3 · Bauteile zuordnen und bemaßen</h4><p class="hint">Erste Ausbaustufe: ein Anbauteil pro Brettkante. Oben/unten beschreibt die Höhenlage und ersetzt nicht die Wahl vorn/hinten.</p><div id="wdAssemblyParts">'+(params.attachments||[]).map((a,i)=>'<section class="card"><strong>Bauteil '+(i+2)+'</strong><label class="wdField"><span>Bezeichnung</span><input data-assembly-part="'+i+'" data-key="name" value="'+esc(a.name||'')+'"></label><div class="wdFields">'+select('kind','Bauteilart',{end_strip:'Hirnleiste',stop_strip:'Anschlagleiste'},a.kind,i)+select('edge','Anschlusskante am Grundbrett',ASSEMBLY_EDGES,a.edge,i)+num('cross',a.kind==='end_strip'?'Hirnleistenbreite':'Leistendicke quer zur Brettkante',a.cross,i)+num('height',a.kind==='end_strip'?'Hirnleistendicke':'Leistenhöhe',a.height,i)+(a.kind==='end_strip'?select('joint','Verbindung',{'breadboard-end-v1':'Angezapfte Hirnleiste'},a.joint,i)+num('tenonWidth','Mittlerer Zapfen: Breite (Richtwert 60)',a.tenonWidth,i):select('direction','Anschlag zeigt',{above:'nach oben',below:'nach unten'},a.direction,i)+num('projection','Überstand über die entsprechende Brettfläche',a.projection,i)+select('span','Leistenlänge folgt',{body:'Brettfläche zwischen den Schultern',overall:'Gesamter Kante einschließlich Hirnleisten'},a.span,i))+'</div><button class="ghost" data-assembly-remove="'+i+'">Anbauteil entfernen</button></section>').join('')+'</div><button id="wdAssemblyAdd" class="secondary" '+((params.attachments||[]).length>=4?'disabled':'')+'>Anbauteil ergänzen</button><button id="wdChangeModel" class="ghost">Anderes Zeichenmodell wählen</button>'+(current.woodDrawing?'<button id="wdAssemblyRestore" class="ghost">Gespeicherte Zeichnung wiederherstellen</button>':'')+'<section class="notice"><h4>4 · Aufbau mit Skizze abgleichen</h4><div id="wdAssemblyLayout"></div><label class="wdConfirm"><input type="checkbox" id="wdAssemblyLayoutReviewed"> Bauteile, Anschlusskanten und Richtung entsprechen meiner Skizze.</label><p id="wdAssemblyNext" role="status"></p><button class="secondary" id="wdAssemblyNextField">Fehlende Angabe bearbeiten</button></section><div id="wdChecks"></div><label class="wdConfirm"><input type="checkbox" id="wdConfirmed"> Ich habe Bauteile, Maße und Anschlüsse geprüft.</label><div class="composerActions"><button id="wdSave">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="wdOpenPreview" class="ghost">Große Vorschau öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>';
  box.querySelectorAll('[data-assembly-root],[data-assembly-part]').forEach(el=>el.addEventListener('input',()=>{
   const draft={...wdParams(),attachments:(wdParams().attachments||[]).map(a=>({...a}))};
   if(el.dataset.assemblyRoot)draft[el.dataset.assemblyRoot]=el.value;
@@ -2541,17 +2572,20 @@ function wdRenderBoardAssembly(params){
   current.woodDrawingDraft=draft;$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';
   if(el.dataset.key==='kind')wdRender();else wdPreviewBoardAssembly();
  }));
- $('#wdAssemblyImport').onclick=()=>{if(proposal.conflicts.length)return;current.woodDrawingDraft={...wdParams(),...proposal.values,attachments:proposal.attachments.map(a=>({...a}))};wdRender();};
+ wdAssemblyRenderImage();
+ $('#wdAssemblyLayoutReviewed').onchange=()=>{current.woodDrawingDraft={...wdParams(),layoutReview:$('#wdAssemblyLayoutReviewed').checked?assemblyLayoutSignature(wdParams()):''};wdPreviewBoardAssembly();};
+ $('#wdAssemblyNextField').onclick=()=>{const next=wdAssemblyQuestions(wdParams())[0];if(next){const field=box.querySelector(next.selector);field?.scrollIntoView({block:'center',behavior:'smooth'});field?.focus();}};
+ $('#wdAssemblyImport').onclick=()=>{if(proposal.conflicts.length)return;current.woodDrawingDraft={...wdParams(),...proposal.values,layoutReview:'',attachments:proposal.attachments.map(a=>({...a}))};wdRender();};
  $('#wdAssemblyAdd').onclick=()=>{current.woodDrawingDraft={...wdParams(),attachments:[...(wdParams().attachments||[]),{id:newId(),name:'Anbauteil',kind:'stop_strip',edge:'',cross:'',height:'',projection:'',direction:'',span:'',joint:'',tenonWidth:''}]};wdRender();};
  box.querySelectorAll('[data-assembly-remove]').forEach(button=>button.onclick=()=>{current.woodDrawingDraft={...wdParams(),attachments:wdParams().attachments.filter((_,i)=>i!==Number(button.dataset.assemblyRemove))};wdRender();});
  $('#wdChangeModel').onclick=()=>{current.woodDrawingChoosing=true;wdRender();};
  if($('#wdAssemblyRestore'))$('#wdAssemblyRestore').onclick=()=>{delete current.woodDrawingDraft;delete current.woodDrawingChoosing;wdRender();};
  $('#wdConfirmed').checked=!!current.woodDrawing?.confirmed&&wdSame(params,current.woodDrawing.params);
  $('#wdConfirmed').onchange=wdPreviewBoardAssembly;$('#wdSave').onclick=wdSave;
- $('#wdOpenPreview').onclick=()=>{const m=buildDrawing(wdParams());if(m.ok)openPrintableHtml(drawingPrintHtml(m,{title:wdTitle(),status:wdAssemblyStatus()}));};
+ $('#wdOpenPreview').onclick=()=>{const m=buildDrawing(wdParams());if(assemblyCanOutput(m))openPrintableHtml(drawingPrintHtml(m,{title:wdTitle(),status:wdAssemblyStatus()}));};
  $('#wdPrint').onclick=async()=>{
   const project=current,m=buildDrawing(wdParams()),saved=project.woodDrawing;
-  if(!m.ok||!saved||!wdSame(m.p,saved.params)||drawingStatus(project)==='stale'||$('#wdConfirmed').checked!==!!saved.confirmed)return;
+  if(!assemblyCanOutput(m)||!saved||!wdSame(m.p,saved.params)||drawingStatus(project)==='stale'||$('#wdConfirmed').checked!==!!saved.confirmed)return;
   const button=$('#wdPrint'),status=$('#wdSaveStatus'),source=drawingSource(project);button.disabled=true;status.textContent='A4-PDF wird erstellt …';
   try{
    const blob=await drawingPdfBlob(m,{title:wdTitle(),status:wdAssemblyStatus()});
@@ -2568,11 +2602,61 @@ function wdAssemblyStatus(){
 }
 function wdPreviewBoardAssembly(){
  const m=buildDrawing(wdParams()),saved=current.woodDrawing;
+ const questions=wdAssemblyQuestions(wdParams()),reviewed=!!m.layoutReviewed;
+ $('#wdAssemblyLayoutReviewed').disabled=!assemblyLayoutReady(wdParams());$('#wdAssemblyLayoutReviewed').checked=reviewed;
+ $('#wdAssemblyLayout').innerHTML='<p>Grundbrett; '+(m.p.attachments.length||0)+' Anbauteile.</p><ul>'+m.p.attachments.map(a=>'<li>'+esc(a.name)+': '+esc(ASSEMBLY_EDGES[a.edge]||'Kante noch offen')+(a.kind==='stop_strip'?' · '+esc(a.direction==='above'?'nach oben':a.direction==='below'?'nach unten':'Richtung offen'):'')+'</li>').join('')+'</ul>';
+ $('#wdAssemblyNext').textContent=questions.length?'Nächste Frage: '+questions[0].question:!reviewed?'Bitte den Aufbau oben mit deiner Skizze abgleichen und bestätigen.':'Bauteile und Maße sind zugeordnet. Offene Befestigungen bleiben im Entwurf vermerkt.';
+ $('#wdAssemblyNextField').hidden=!questions.length;
  $('#wdConfirmed').disabled=!m.confirmable;if(!m.confirmable)$('#wdConfirmed').checked=false;
- $('#wdChecks').innerHTML='<div class="notice"><strong>'+esc(wdAssemblyStatus())+'</strong></div>'+[...m.errors,...(m.notes||[]),...(m.pending||[])].map(s=>'<p>'+esc(s)+'</p>').join('');
+ $('#wdChecks').innerHTML='<div class="notice"><strong>'+esc(wdAssemblyStatus())+'</strong></div>'+[...m.errors,...(m.notes||[]),...(!questions.length&&reviewed?m.pending||[]:questions.length?['Noch '+questions.length+' Angaben ergänzen; die nächste Frage steht oben.']:[])].map(s=>'<p>'+esc(s)+'</p>').join('');
  const unsaved=!saved||!wdSame(wdParams(),saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed;
- $('#wdSave').disabled=!m.ok||busy||reconstructionBusy;$('#wdPrint').disabled=!m.ok||unsaved||drawingStatus(current)==='stale';
- $('#wdPreview').innerHTML=m.ok?drawingPages(m,{title:wdTitle(),status:wdAssemblyStatus()}).map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Bauteilaufbau Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'';
+ $('#wdSave').disabled=!m.ok||busy||reconstructionBusy;$('#wdPrint').disabled=!assemblyCanOutput(m)||unsaved||drawingStatus(current)==='stale';
+ $('#wdOpenPreview').disabled=!assemblyCanOutput(m);
+ $('#wdPreview').innerHTML=assemblyCanOutput(m)?drawingPages(m,{title:wdTitle(),status:wdAssemblyStatus()}).map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Bauteilaufbau Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'<p class="notice"><strong>Noch keine Werkzeichnung.</strong> Erst Bauteile zuordnen, fehlende Maße und Verbindungen ergänzen und den Aufbau mit deiner Skizze abgleichen. Unvollständige Bauteile werden nicht als Zeichnungsplatzhalter ausgegeben.</p>';
+}
+
+function wdAssemblyQuestions(p){
+ const out=[],add=(selector,question)=>out.push({selector,question}),root=(k,q)=>{if(p[k]===undefined||p[k]===null||p[k]==='')add('[data-assembly-root="'+k+'"]',q);};
+ root('length','Wie lang ist das Grundbrett?');root('width','Wie breit ist das Grundbrett?');root('thickness','Wie dick ist das Grundbrett?');
+ root('grain','In welcher Richtung verlaufen die Holzfasern?');root('basis','Bezeichnen die Brettmaße das Außenmaß einschließlich Zapfen oder das Maß zwischen den Schultern?');
+ (p.attachments||[]).forEach((a,i)=>{const part=(k,q)=>{if(a[k]===undefined||a[k]===null||a[k]==='')add('[data-assembly-part="'+i+'"][data-key="'+k+'"]',a.name+': '+q);};
+  part('edge','An welcher Brettkante sitzt die Leiste: links, rechts, vorn oder hinten?');
+  if(a.kind==='stop_strip'){part('direction','Zeigt der Anschlag nach oben oder nach unten?');part('span','Läuft die Leiste zwischen den Hirnleisten oder über die ganze Kante?');}
+  part('cross',a.kind==='end_strip'?'Wie breit ist die Hirnleiste?':'Wie dick ist die Leiste quer zur Brettkante?');
+  part('height',a.kind==='end_strip'?'Wie dick ist die Hirnleiste?':'Wie hoch ist die Leiste insgesamt?');
+  if(a.kind==='end_strip'){part('joint','Welche Verbindung soll verwendet werden?');if(a.joint)part('tenonWidth','Wie breit ist der mittlere Zapfen?');}
+  else part('projection','Wie weit ragt die Leiste über die entsprechende Brettfläche hinaus?');
+ });return out;
+}
+let wdAssemblyReading=false;
+function wdAssemblyImages(project){return [...(project.sketches||[]).map(s=>({...s,sourceType:'Skizze'})),...(project.photos||[]).map(s=>({...s,sourceType:'Foto'}))];}
+async function wdAssemblyImageData(source){const data=source?.dataUrl||(source?.blob instanceof Blob?await blobToDataUrl(source.blob):'');return /^data:image\/(?:jpeg|png|webp|gif);base64,/i.test(data)?data:'';}
+function wdAssemblyRenderImage(){
+ const box=$('#wdAssemblyImage'),images=wdAssemblyImages(current),project=current;
+ if(!images.length){box.innerHTML='<p class="hint">Noch kein Bild im Projekt. Eine Skizze oder ein Foto kannst du unter Skizzen beziehungsweise Fotos ergänzen. Die Zuordnung bleibt auch von Hand möglich.</p>';return;}
+ const selected=images.some(i=>i.id===project.woodDrawingAssemblyImageId)?project.woodDrawingAssemblyImageId:images[0].id;
+ box.innerHTML='<label>Skizze oder Foto zum Abgleich<select id="wdAssemblyImageSelect">'+images.map(i=>'<option value="'+esc(i.id)+'" '+(i.id===selected?'selected':'')+'>'+esc(i.sourceType+' · '+(i.name||'Projektbild'))+'</option>').join('')+'</select></label><img id="wdAssemblyImagePreview" class="sketchSource" alt="Projektbild für den Bauteilabgleich" style="max-height:260px"><button id="wdAssemblyReadImage" class="secondary">Bauteile im Bild auswerten</button><p id="wdAssemblyImageStatus" role="status" class="hint"></p><div id="wdAssemblyImageFacts"></div>';
+ const show=async()=>{const id=$('#wdAssemblyImageSelect').value,source=images.find(i=>i.id===id),target=$('#wdAssemblyImagePreview');project.woodDrawingAssemblyImageId=id;const data=await wdAssemblyImageData(source);if(current===project&&$('#wdAssemblyImagePreview')===target){target.src=data;target.hidden=!data;}};
+ $('#wdAssemblyImageSelect').onchange=()=>{project.woodDrawingAssemblyImageId=$('#wdAssemblyImageSelect').value;wdRender();};show();
+ $('#wdAssemblyReadImage').disabled=wdAssemblyReading;
+ const read=project.woodDrawingAssemblyRead?.imageId===selected?project.woodDrawingAssemblyRead:null;
+ if(read){$('#wdAssemblyImageFacts').innerHTML='<strong>Bildauswertung · Vorschlag, noch zu prüfen</strong><ul>'+(read.facts||[]).map(v=>'<li>'+esc(v)+'</li>').join('')+'</ul>'+[...(read.assumptions||[]),...(read.unknown||[])].map(v=>'<p>Offen / vermutet: '+esc(v)+'</p>').join('');}
+ $('#wdAssemblyReadImage').onclick=async()=>{
+  if(wdAssemblyReading)return;const id=$('#wdAssemblyImageSelect').value,source=images.find(i=>i.id===id),status=$('#wdAssemblyImageStatus'),button=$('#wdAssemblyReadImage'),stamp=drawingSource(project);
+  wdAssemblyReading=true;button.disabled=true;status.textContent='Bild wird ausgewertet. Maße und verdeckte Verbindungen bleiben offen, soweit sie nicht eindeutig angegeben sind …';
+  try{
+   const data=await wdAssemblyImageData(source);if(!data)throw Error('Bilddaten fehlen. Bitte das Bild erneut zum Projekt hinzufügen.');
+   const response=await secureFetch(API+'/sketch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:data,knowledge:(project.knowledge||'')+'\n'+(project.customDescription||'')+'\nBitte den Bauteilaufbau einer Brettfläche erfassen. Beschreibe nur erkennbare Hirnleisten links/rechts sowie Anschlagleisten vorn/hinten und ihre Richtung nach oben/unten als einzelne klare Sätze. Verdeckte Anschlüsse offenlassen. Keine Maße aus Bildproportionen ableiten.',analysis:project.analysis||{},profile:profilePayload()})});
+   if(!response.ok)throw Error('Bildauswertung nicht verfügbar ('+response.status+').');
+   const value=await response.json();
+   if(current!==project||drawingSource(project)!==stamp||project.woodDrawingAssemblyImageId!==id)throw Error('Projekt oder Bild geändert. Auswertung bitte erneut starten.');
+   const strings=v=>Array.isArray(v)?v.filter(s=>typeof s==='string').slice(0,20):[];
+   project.woodDrawingAssemblyRead={imageId:id,facts:strings(value.facts),assumptions:strings(value.assumptions),unknown:strings(value.unknown),at:new Date().toISOString()};
+   // Existing entries are preserved; the import button is the only application step.
+   wdRender();$('#wdAssemblyImageStatus').textContent='Vorschlag bereit. Prüfen und bei Bedarf über „Bauteilaufbau aus Projekttext übernehmen“ in den Entwurf übernehmen. Bestehende Zeichnungsmaße wurden nicht geändert.';
+  }catch(error){if(current===project&&$('#wdAssemblyImageStatus')===status)status.textContent='Bildauswertung fehlgeschlagen: '+error.message+' Die vorhandenen Eingaben bleiben erhalten.';}
+  finally{wdAssemblyReading=false;if(current===project&&$('#wdAssemblyReadImage'))$('#wdAssemblyReadImage').disabled=false;}
+ };
 }
 
 function renderRecord(){
