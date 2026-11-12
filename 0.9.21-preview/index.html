@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev28.4</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev28.5</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev28.4 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev28.5 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev28.4';
+const APP_VERSION='0.9.21-dev28.5';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1616,13 +1616,13 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
  const minX=Math.min(...known.map(c=>c.x)),minY=Math.min(...known.map(c=>c.y)),maxX=Math.max(...known.map(c=>c.x+c.length)),maxY=Math.max(...known.map(c=>c.y+c.width));
  const z0=Math.min(0,...known.map(g=>g.z)),z1=Math.max(p.thickness,...known.map(g=>g.z+g.thickness));
  const W=maxX-minX,T=maxY-minY,H=z1-z0;
- // Reserve room for the side view to the right and front view beneath the plan.
- const denominator=assemblyScaleDenominator(Math.min(.2,120/W,80/T,20/H,240/(W+T)));
- const scale=1/denominator,X=x=>24+(x-minX)*scale,Y=y=>64+(maxY-y)*scale;
- const sideX=24+W*scale+28,frontTop=64+T*scale+27;
+ // Fold the side projection about its depth axis; depth shares the plan Y coordinate.
+ const denominator=assemblyScaleDenominator(Math.min(.2,176/(W+H),126/(T+H)));
+ const scale=1/denominator,X=x=>24+(x-minX)*scale,Y=y=>58+(maxY-y)*scale;
+ const sideX=24+W*scale+16,frontTop=58+T*scale+10;
 
- let body='<g data-view="plan" data-scale="'+n(scale)+'" data-origin-x="24" data-origin-y="64">'+text(24,46,'DRAUFSICHT · '+(m.geometryReady?'M 1:'+f(1/scale):'Anordnung teilweise schematisch'),'bold');
- body+=rect(X(b.x),Y(b.y+b.width),b.length*scale,b.width*scale)+text(X(b.x)+3,Y(b.y+b.width)+7,'1 · Grundbrett','bold');
+ let body='<g data-view="plan" data-scale="'+n(scale)+'" data-origin-x="24" data-origin-y="58">'+text(24,40,'DRAUFSICHT · '+(m.geometryReady?'M 1:'+f(1/scale):'Anordnung teilweise schematisch'),'bold');
+ body+=rect(X(b.x),Y(b.y+b.width),b.length*scale,b.width*scale)+text(X(b.x)+3,Y(b.y+b.width)+Math.min(14,b.width*scale/2),'1 · Grundbrett','bold');
  body+=dh(X(b.x),X(b.x+b.length),Y(b.y+b.width),Y(b.y+b.width)-6,f(m.geometryReady?b.length:p.length))+dv(Y(b.y+b.width),Y(b.y),X(b.x),X(b.x)-(m.connections.some(c=>c.wedge?.mode&&c.wedge.mode!=='plain')?16:8),f(m.geometryReady?b.width:p.width));
  m.components.slice(1).forEach((g,i)=>{
   if(m.geometryReady&&!g.unresolved){
@@ -1650,22 +1650,22 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
    if(c.type==='round-6')body+='<circle class="hidden" cx="'+n(X(x))+'" cy="'+n(Y(y))+'" r="'+n(3*scale)+'" fill="none" stroke="#111" stroke-width=".17"/>';
    else if(c.profile)body+=rect(X(x-(horizontal?c.profile.slotLength/2:2)),Y(y+(horizontal?2:c.profile.slotLength/2)),(horizontal?c.profile.slotLength:4)*scale,(horizontal?4:c.profile.slotLength)*scale,'hidden');
   }
-  if(horizontal&&c.positions.length)body+=dh(X(g.x),X(g.x+50),Y(g.y+g.width),Y(g.y+g.width)-4,'50');
+  if(horizontal&&c.positions.length)body+=dh(X(g.x),X(g.x+50),Y(g.y+g.width),Y(g.y+g.width)+(c.edge==='back'?10:-6),'50');
  }
  body+='</g>';
- const rows=['BAUTEILE UND ANSCHLÜSSE',...m.components.map((g,i)=>(i+1)+' · '+g.name+(g.edge?' · '+ASSEMBLY_EDGES[g.edge]:i?' · Kante offen':'')),...m.connections.map(c=>'Anschluss '+c.child+': Feder / Zapfen D/3'),...m.railConnections.map(c=>c.name+': '+(c.type==='glue'?'stumpf verleimt':'3 '+(c.type==='round-6'?'Runddübel Ø6':'Flachdübel '+(c.size||'Größe offen'))+'; Achsen 50 / '+f(c.length/2)+' / '+f(c.length-50)+' mm; verleimt')),...m.pending];
- let yy=100;for(const row of rows){let current='';for(const word of row.split(' ')){if((current+' '+word).length>43){body+=text(150,yy,current,'small');yy+=3.4;current=word;}else current+=(current?' ':'')+word;}body+=text(150,yy,current,'small');yy+=5;if(yy>171){body+=text(150,176,'Weitere offene Angaben siehe App.','small');break;}}
+ const rows=['BAUTEILE UND ANSCHLÜSSE',...m.components.map((g,i)=>(i+1)+' · '+g.name+(g.edge?' · '+ASSEMBLY_EDGES[g.edge]:i?' · Kante offen':'')),...m.connections.map(c=>'Anschluss '+c.child+': Feder / Zapfen D/3'),...m.railConnections.map(c=>c.name+': '+(c.type==='glue'?'stumpf verleimt':'3 '+(c.type==='round-6'?'Runddübel Ø6':'Flachdübel '+(c.size||'Größe offen'))+'; Achsen 50 / '+f(c.length/2)+' / '+f(c.length-50)+' mm; verleimt')),...p.attachments.filter(a=>a.kind==='stop_strip').map(a=>a.name+': '+ASSEMBLY_EDGES[a.edge]+', '+f(a.projection)+' mm '+(a.direction==='above'?'über Brett':'unter Brett')),...m.pending];
+ let yy=65;for(const row of rows){let current='';for(const word of row.split(' ')){if((current+' '+word).length>37){body+=text(228,yy,current,'small');yy+=3.4;current=word;}else current+=(current?' ':'')+word;}body+=text(228,yy,current,'small');yy+=5;if(yy>171){body+=text(228,177,'Weitere offene Angaben siehe App.','small');break;}}
  if(m.geometryReady){
   body+=dh(X(minX),X(maxX),Y(maxY),Y(maxY)-14,f(maxX-minX)+' gesamt');
-  const es=scale,Z=z=>frontTop+(z1-z)*es,SZ=z=>64+(z1-z)*es;
-  let front='<g data-view="front" data-scale="'+n(es)+'" data-origin-x="24" data-origin-y="'+n(frontTop)+'">'+text(24,frontTop-8,'VORDERANSICHT · M 1:'+denominator,'bold');
-  let side='<g data-view="side" data-scale="'+n(es)+'" data-origin-x="'+n(sideX)+'" data-origin-y="64">'+text(sideX,46,'SEITENANSICHT VON LINKS · M 1:'+denominator,'bold');
+  const es=scale,Z=z=>frontTop+(z1-z)*es,SX=z=>sideX+(z-z0)*es;
+  let front='<g data-view="front" data-scale="'+n(es)+'" data-origin-x="24" data-origin-y="'+n(frontTop)+'">'+text(24,frontTop-4,'VORDERANSICHT · M 1:'+denominator,'bold');
+  let side='<g data-view="side" data-scale="'+n(es)+'" data-origin-x="'+n(sideX)+'" data-origin-y="58" data-projection="folded-depth">'+text(sideX,48,'SEITENANSICHT','bold')+text(sideX,52,'VON LINKS · M 1:'+denominator,'small');
   for(const g of [...known].sort((a,b)=>b.y-a.y))front+=rect(X(g.x),Z(g.z+g.thickness),g.length*es,g.thickness*es);
-  for(const g of [...known].sort((a,b)=>b.x-a.x))side+=rect(sideX+(g.y-minY)*es,SZ(g.z+g.thickness),g.width*es,g.thickness*es);
+  for(const g of [...known].sort((a,b)=>b.x-a.x))side+=rect(SX(g.z),Y(g.y+g.width),g.thickness*es,g.width*es);
   for(const c of m.connections){
    const a=p.attachments.find(a=>a.id===c.child),F=p.thickness/3;
    if(['left','right'].includes(a.edge)){const start=a.edge==='left'?b.x-a.cross:b.x+b.length;front+=rect(X(start),Z((p.thickness+F)/2),a.cross*es,F*es,'hidden');}
-   else{const start=a.edge==='front'?b.y-a.cross:b.y+b.width;side+=rect(sideX+(start-minY)*es,SZ((p.thickness+F)/2),a.cross*es,F*es,'hidden');}
+   else{const start=a.edge==='front'?b.y-a.cross:b.y+b.width;side+=rect(SX((p.thickness-F)/2),Y(start+a.cross),F*es,a.cross*es,'hidden');}
   }
   for(const c of m.railConnections.filter(c=>['front','back'].includes(c.edge))){
    const g=known.find(g=>g.id===c.child),a=p.attachments.find(a=>a.id===c.child),above=a.direction==='above';
@@ -1674,13 +1674,19 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
     else if(c.type==='biscuit'&&c.profile){const half=c.profile.width/2;front+='<ellipse class="hidden" cx="'+n(center)+'" cy="'+n(Z(plane))+'" rx="'+n(c.profile.length*es/2)+'" ry="'+n(half*es)+'" fill="none" stroke="#111" stroke-width=".17"/>';}
    }
   }
-  side+=text(sideX,64+H*es+6,'vorn','small')+text(sideX+T*es-8,64+H*es+6,'hinten','small');
+  side+=text(SX(z1)+2,Y(maxY)+2,'hinten','small')+text(SX(z1)+2,Y(minY),'vorn','small');
   for(const g of known.filter(g=>g.kind==='stop_strip'&&['front','back'].includes(g.edge))){
-   const a=p.attachments.find(a=>a.id===g.id),x=sideX+(g.y-minY)*es;
-   side+=dv(SZ(a.direction==='above'?p.thickness+a.projection:0),SZ(a.direction==='above'?p.thickness:-a.projection),x,g.edge==='front'?x-4:x+g.width*es+4,f(a.projection));
+   const a=p.attachments.find(a=>a.id===g.id),above=a.direction==='above',lo=above?p.thickness:-a.projection,hi=above?p.thickness+a.projection:0;
+   side+=dh(SX(lo),SX(hi),Y(g.y),Y(g.y)+6,f(a.projection));
+  }
+  // In the folded side projection, all three rail positioners superpose.
+  for(const c of m.railConnections.filter(c=>['front','back'].includes(c.edge))){
+   const g=known.find(g=>g.id===c.child),a=p.attachments.find(a=>a.id===c.child),above=a.direction==='above',plane=above?p.thickness:0,depth=g.y+g.width/2;
+   if(c.type==='round-6'&&c.dowelLength){const low=above?plane-c.panelInsertion:plane-c.railInsertion;side+=rect(SX(low),Y(depth+3),c.dowelLength*es,6*es,'hidden');}
+   else if(c.type==='biscuit'&&c.profile)side+='<ellipse class="hidden" cx="'+n(SX(plane))+'" cy="'+n(Y(depth))+'" rx="'+n(c.profile.width*es/2)+'" ry="'+n(c.profile.length*es/2)+'" fill="none" stroke="#111" stroke-width=".17"/>';
   }
   body+=front+'</g>'+side+'</g>';
-  for(const [i,a]of p.attachments.filter(a=>a.kind==='stop_strip').entries())body+=text(150,182+i*4,a.name+': '+ASSEMBLY_EDGES[a.edge]+', '+f(a.projection)+' mm '+(a.direction==='above'?'über Brett':'unter Brett'),'small');
+
 
  }else{
   const free=m.components.slice(1).map((g,i)=>({...g,number:i+2})).filter(g=>!g.edge);
@@ -1694,7 +1700,7 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
    const cx=horizontal?b.x+b.length/2:a.edge==='left'?b.x-a.cross/2:b.x+b.length+a.cross/2;
    const cy=horizontal?(a.edge==='front'?b.y-a.cross/2:b.y+b.width+a.cross/2):b.y+b.width/2;
    const radius=Math.hypot(a.cross,a.tenonWidth+6)*scale/2+1;
-   body+='<g data-detail-source="'+g.label+'"><circle class="detail-source" cx="'+n(X(cx))+'" cy="'+n(Y(cy))+'" r="'+n(radius)+'"/>'+text(X(cx)+radius+2,Y(cy)-radius,g.label+' · Blatt 2','small')+'</g>';
+   body+='<g data-detail-source="'+g.label+'"><circle class="detail-source" cx="'+n(X(cx))+'" cy="'+n(Y(cy))+'" r="'+n(radius)+'"/>'+text(a.edge==='right'?X(cx)-radius-23:X(cx)+radius+2,Y(cy)-radius,g.label+' · Blatt 2','small')+'</g>';
   }));
  }
  const pages=[];
