@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev35</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev36</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev35 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev36 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev35';
+const APP_VERSION='0.9.21-dev36';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1247,6 +1247,49 @@ document.addEventListener('click',async e=>{const button=e.target.closest?.('.de
  if(busy){alert('Bitte warte, bis die aktuelle Antwort fertig ist.');return}button.disabled=true;try{await talk({message:'Meine Entscheidung zu „'+d.topic+'“: Ich übernehme folgenden Vorschlag: '+d.recommendation+'. Bitte in der weiteren Planung berücksichtigen.'})}finally{button.disabled=false}
 });
 let cutPlannerNeedsRefresh=false;
+// Common woodworking rule. New constructions inherit it; explicit project values override it.
+const FREE_EDGE_RULE=Object.freeze({size:3,angle:45,exceptions:'Leim- und Anschlussflächen, Nut- und Gratpassungen ungefast'});
+function edgeChamferValue(value){return value===undefined||value===null||value===''?null:typeof value==='number'?value:Number(String(value).replace(',','.'));}
+function edgeChamferError(value,minThickness){
+ if(value!==null&&(!Number.isFinite(value)||value<0||value>100))return 'Fase: 0 bis 100 mm eingeben.';
+ if(value>0&&2*value>=minThickness)return 'Fase muss kleiner als die halbe Dicke des betroffenen Bauteils sein.';
+ return '';
+}
+function chamferRectangle(x,y,w,h,c=0){return c?[[x+c,y],[x+w-c,y],[x+w,y+c],[x+w,y+h-c],[x+w-c,y+h],[x+c,y+h],[x,y+h-c],[x,y+c]]:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]];}
+
+// Only explicit, supported user instructions can change drawing geometry.
+function drawingTalkChange(input,text,{buildDrawing}){
+ const wording=String(text||'');
+ const mentions=/fas(?:e|en)|anfas|abfas|gefast|kanten|abrund|abschräg/i.test(wording);
+ if(!mentions||/\?|\bwenn\b|\bwürde\b|\bvielleicht\b|\beventuell\b|zum Beispiel|beispielsweise/i.test(wording))return {status:'none'};
+ if(/\d+(?:[.,]\d+)?\s*(?:mm)?\s+(?:und|oder)\s+\d+(?:[.,]\d+)?\s*mm/i.test(wording))return {status:'blocked',feedback:'Werkzeichnung nicht geändert: Mehrere Maße für dieselbe Bearbeitung sind nicht eindeutig. Bitte ein Fasenmaß nennen.'};
+ const finish=assemblyFinishProposal({chat:[{role:'user',text:wording}]});
+ if(finish.conflicts.length)return {status:'blocked',feedback:'Werkzeichnung nicht geändert: '+finish.conflicts.join(' ')+' Bitte ein eindeutiges Maß und die betroffenen Kanten oder Bauteile nennen.'};
+ const keys=Object.keys(finish.values);
+ if(!keys.length)return {status:'clarify',feedback:'Diese Kantenänderung konnte ich der Werkzeichnung noch nicht eindeutig zuordnen. Bitte Bauteile und Bearbeitung mit Maß nennen, zum Beispiel: „Alle freien Kanten mit einer Fase von 2 mm versehen.“ Die Zeichnung wurde nicht geändert.'};
+ if(!['board-assembly-v1','tray-board-v1'].includes(input?.kind))return {status:'unsupported',feedback:'Diese Kantenänderung wird von der aktuellen Zeichenfunktion dieses Projekts noch nicht unterstützt. Die Werkzeichnung wurde nicht geändert.'};
+ if(input.kind==='tray-board-v1'&&keys.some(k=>k!=='edgeChamfer'))return {status:'unsupported',feedback:'Die Gesamtzeichnung mit Auffangschale kann die Fase aller freien Kanten übernehmen. Diese zusätzliche Eckbearbeitung ist hier noch nicht unterstützt; die Zeichnung wurde nicht geändert.'};
+ const targets={railCornerCut:'stop_strip',railCornerRadius:'stop_strip',endStripCornerCut:'end_strip',endStripCornerRadius:'end_strip'};
+ if(keys.some(k=>targets[k]&&!(input.attachments||[]).some(a=>a.kind===targets[k])))return {status:'clarify',feedback:'Werkzeichnung nicht geändert: Die genannte Leistenart ist im aktuellen Aufbau nicht vorhanden. Bitte das Bauteil zuordnen oder die Erweiterung ergänzen.'};
+ const next=input.kind==='board-assembly-v1'?assemblyApplyFinishProposal(input,finish,{overwrite:true}):{...input,edgeChamfer:finish.values.edgeChamfer};
+ const model=buildDrawing(next);
+ if(!model.ok)return {status:'blocked',feedback:'Werkzeichnung nicht geändert: '+model.errors.join(' ')+' Bitte die betroffenen Maße im Talk klären.'};
+ const summaries=[];
+ if(finish.values.edgeChamfer!==undefined)summaries.push(finish.values.edgeChamfer===0?'Freie Kanten ohne Fase.':'Alle freien Kanten: Fase '+String(finish.values.edgeChamfer).replace('.',',')+' mm × 45°. Anschlussflächen, Nut- und Gratpassungen bleiben ungefast.');
+ for(const [key,label]of [['railCornerCut','Anbauleisten-Ecken abschrägen'],['railCornerRadius','Anbauleisten-Ecken abrunden'],['endStripCornerCut','Hirnleisten-Ecken abschrägen'],['endStripCornerRadius','Hirnleisten-Ecken abrunden']])if(finish.values[key]!==undefined)summaries.push(label+': '+finish.values[key]+' mm.');
+ const before=buildDrawing(input),same=before.ok&&JSON.stringify(before.p)===JSON.stringify(model.p);
+ return {status:same?'unchanged':'applied',params:model.p,feedback:(same?'Bereits in der Werkzeichnung enthalten: ':'In der Werkzeichnung umgesetzt: ')+summaries.join(' ')};
+}
+
+// Inherit earlier explicit instructions when an old drawing has no recorded edge treatment.
+function drawingInheritedChamfer(project,params){
+ if(!['board-assembly-v1','tray-board-v1'].includes(params?.kind))return null;
+ if(params.edgeChamfer!==undefined&&params.edgeChamfer!==null&&params.edgeChamfer!=='')return params.edgeChamfer;
+ const proposal=assemblyFinishProposal(project);
+ if(proposal.conflicts.length)return null;
+ return proposal.values.edgeChamfer??(params.baseConstruction==='edge-glued'?FREE_EDGE_RULE.size:null);
+}
+
 // Shared presentation setting; dimensions and joint geometry remain in real millimetres.
 const DRAWING_SCALES=Object.freeze({auto:'Automatisch · größter passender Maßstab','1':'1:1','2':'1:2','5':'1:5','10':'1:10','20':'1:20','50':'1:50','100':'1:100'});
 function drawingOverviewScale(value,maxScale){
@@ -1290,7 +1333,7 @@ function boardAddExtension(input,kind,id){
  return {...input,layoutReview:'',attachments:[...(input.attachments||[]),a]};
 }
 function boardConstructionDraft(counts={},makeId){
- let p={kind:'board-assembly-v1',baseConstruction:'edge-glued',length:'',width:'',thickness:'',grain:'length',basis:'tip',attachments:[]};
+ let p={kind:'board-assembly-v1',baseConstruction:'edge-glued',edgeChamfer:FREE_EDGE_RULE.size,length:'',width:'',thickness:'',grain:'length',basis:'tip',attachments:[]};
  for(const {kind} of BOARD_EXTENSIONS){
   const count=Number(counts[kind]||0);if(!Number.isInteger(count)||count<0||count>2)throw Error('Je Erweiterung null, eine oder zwei Leisten wählen.');
   for(let i=0;i<count;i++)p=boardAddExtension(p,kind,makeId());
@@ -1446,12 +1489,12 @@ function endWedgeNotes(m){
 function assemblyFinishProposal(project){
  const read=text=>{
   const found={edgeChamfer:[],railCornerCut:[],railCornerRadius:[],endStripCornerCut:[],endStripCornerRadius:[]},sources=[];
-  for(const sentence of String(text||'').split(/(?<=[!?])\s+|\n/)){
+  for(const sentence of String(text||'').replace(/(\d+(?:[.,]\d+)?)\s*[-–]\s*mm\s*[-–]\s*/gi,'$1 mm ').replace(/(\d+(?:[.,]\d+)?\s*mm)\s*(?:statt|anstatt)\s*\d+(?:[.,]\d+)?\s*mm/gi,'$1').split(/(?<=[!?])\s+|\n/)){
    if(/\?|vielleicht|eventuell|zum Beispiel|nicht\s+alle/i.test(sentence))continue;
    if(/alle[nr]?\s+(?:freien|sichtbaren|äußeren)\s+Kanten/i.test(sentence)){
-    const matches=[...sentence.matchAll(/(\d+(?:[.,]\d+)?)\s*mm\s*(?:[×x]\s*45\s*°\s*)?(?:fasen|anfasen|Fase(?:n)?)/gi),...sentence.matchAll(/Fase(?:n)?\s*(?:von\s*)?(\d+(?:[.,]\d+)?)\s*mm/gi)];
+    const matches=[...sentence.matchAll(/(\d+(?:[.,]\d+)?)\s*mm\s*(?:[×x]\s*45\s*°\s*)?(?:fasen|anfasen|abfasen|gefast|Fase(?:n)?)/gi),...sentence.matchAll(/Fase(?:n)?\s*(?:von\s*)?(\d+(?:[.,]\d+)?)\s*mm/gi)];
     if(!/nicht\s+fasen|ungefast|keine\s+Fasen/i.test(sentence))for(const match of matches)found.edgeChamfer.push(Number(match[1].replace(',','.')));
-    else if(/ungefast|keine\s+Fasen/i.test(sentence))found.edgeChamfer.push(0);
+    else if(/ungefast|keine\s+Fasen|nicht\s+fasen/i.test(sentence))found.edgeChamfer.push(0);
    }
    for(const [term,cutKey,radiusKey]of [['Anschlagleisten','railCornerCut','railCornerRadius'],['Hirnleisten','endStripCornerCut','endStripCornerRadius']]){
     if(!sentence.toLowerCase().includes(term.toLowerCase())||!/Ecken|Enden/i.test(sentence))continue;
@@ -1796,8 +1839,7 @@ function buildBoardAssembly(input,{drawingNumber,drawingFormat,buildJoint,biscui
  if(!Object.hasOwn(DRAWING_SCALES,p.viewScale))errors.push('Maßstab der Gesamtansichten wählen.');
  if(!['','edge-glued'].includes(p.baseConstruction))errors.push('Unbekannte Brett-Grundkonstruktion.');
  for(const[k,label]of ASSEMBLY_FIELDS){p[k]=drawingNumber(input?.[k]);if(!Number.isFinite(p[k])||p[k]<=0||p[k]>2000)errors.push(label+': Wert größer 0 und höchstens 2000 mm eingeben.');}
- p.edgeChamfer=assemblyN(input?.edgeChamfer);if(p.edgeChamfer!==null&&(!Number.isFinite(p.edgeChamfer)||p.edgeChamfer<0||p.edgeChamfer>100))errors.push('Fase: 0 bis 100 mm eingeben.');
- if(p.edgeChamfer>0&&p.edgeChamfer*2>=p.thickness)errors.push('Fase muss kleiner als die halbe Brettdicke sein.');
+ p.edgeChamfer=edgeChamferValue(input?.edgeChamfer);const chamferError=edgeChamferError(p.edgeChamfer,p.thickness);if(chamferError)errors.push(chamferError);
  if(Number.isFinite(p.thickness)&&(p.thickness<6||p.thickness>60))errors.push('Grundbrettdicke: unterstützt werden 6 bis 60 mm.');
  if(p.grain&&!['length','width'].includes(p.grain))errors.push('Faserrichtung ungültig.');
  if(p.basis&&!['tip','shoulder'].includes(p.basis))errors.push('Maßbezug ungültig.');
@@ -2059,7 +2101,7 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
   }));
  }
  const pages=[];
- pages.push(frame(body,'Gesamtaufbau aus '+m.components.length+' Bauteilen',(m.connections.length||m.battenConnections.length||p.edgeChamfer>0||p.attachments.some(a=>a.endShape!=='none'))?'1/2':'1/1'));
+ pages.push(frame(body,'Gesamtaufbau aus '+m.components.length+' Bauteilen',(m.connections.length||m.battenConnections.length||p.edgeChamfer>0&&p.attachments.length>0||p.attachments.some(a=>a.endShape!=='none'))?'1/2':'1/1'));
  if(m.connections.some(c=>c.wedge?.mode&&c.wedge.mode!=='plain')){
   pages.push(frame(assemblyWedgeDetail(m,svgTools,{compact:!!m.battenConnections.length})+assemblyBattenDetails(m,svgTools,{mixed:true})+assemblyFinishingDetail(m,svgTools,m.battenConnections.length?{compactY:165}:assemblyFinishSpace(m)),m.battenConnections.length?'Hirnleisten und Gratleisten':'Hirnleisten · Verkeilte Zapfen','2/2'));
  }else if(m.connections.length){
@@ -2073,7 +2115,7 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
   pages.push(frame(detail+assemblyBattenDetails(m,svgTools,{mixed:true})+assemblyFinishingDetail(m,svgTools,m.battenConnections.length?{compactY:165}:{}),'Zugeordnete Verbindungsdetails','2/2'));
  }
  if(!m.connections.length&&m.battenConnections.length)pages.push(frame(assemblyBattenDetails(m,svgTools)+assemblyFinishingDetail(m,svgTools,{compactY:165}),'Gratleisten und zugeordnete Details','2/2'));
- if(!m.connections.length&&!m.battenConnections.length&&(p.edgeChamfer>0||p.attachments.some(a=>a.endShape!=='none')))pages.push(frame(text(24,48,'KANTENBEARBEITUNG','bold')+(m.finishingNotes||[]).map((v,i)=>text(24,65+i*8,v,'small')).join('')+assemblyFinishingDetail(m,svgTools),'Kanten und Leistenenden','2/2'));
+ if(!m.connections.length&&!m.battenConnections.length&&(p.edgeChamfer>0&&p.attachments.length>0||p.attachments.some(a=>a.endShape!=='none')))pages.push(frame(text(24,48,'KANTENBEARBEITUNG','bold')+(m.finishingNotes||[]).map((v,i)=>text(24,65+i*8,v,'small')).join('')+assemblyFinishingDetail(m,svgTools),'Kanten und Leistenenden','2/2'));
  return pages;
 }
 
@@ -2166,7 +2208,7 @@ function assemblyFinishSpace(m){
 // Complete construction family: two transverse standing dovetail battens and a sliding tray.
 const TRAY_KIND='tray-board-v1';
 const TRAY_FIELDS=[['length','Brettlänge in Faserrichtung'],['width','Brettbreite'],['thickness','Brettdicke'],['height','Gesamthöhe ab Brettoberkante'],['battenThickness','Gratleistendicke'],['edgeDistance','Brettende bis Leistenaußenfläche, beidseitig'],['battenLength','Gratleistenlänge, mittig'],['grooveWidth','Schalennut: Breite / Höhe'],['grooveDepth','Schalennut: Tiefe'],['trayLength','Schale: Außenlänge zwischen den Leisten'],['trayWidth','Schale: Außenbreite in Einschubrichtung'],['trayHeight','Schale: Außenhöhe'],['rimThickness','Schalenrand: Dicke'],['entrySide','Gratnut zum Einschieben öffnen']];
-const TRAY_SAMPLE=Object.freeze({kind:TRAY_KIND,baseConstruction:'edge-glued',length:455,width:240,thickness:20,height:50,battenThickness:20,gratWidth:20,edgeDistance:50,battenLength:230,grooveWidth:3,grooveDepth:3,grooveOffset:10,trayLength:320,trayWidth:220,trayHeight:20,rimThickness:3,entrySide:'front'});
+const TRAY_SAMPLE=Object.freeze({kind:TRAY_KIND,edgeChamfer:FREE_EDGE_RULE.size,baseConstruction:'edge-glued',length:455,width:240,thickness:20,height:50,battenThickness:20,gratWidth:20,edgeDistance:50,battenLength:230,grooveWidth:3,grooveDepth:3,grooveOffset:10,trayLength:320,trayWidth:220,trayHeight:20,rimThickness:3,entrySide:'front'});
 function trayGrooveOffset(p){
  const n=v=>typeof v==='number'?v:typeof v==='string'&&v.trim()?Number(v.replace(',','.')):NaN;
  return n(p?.height)-n(p?.thickness)-n(p?.trayHeight);
@@ -2175,6 +2217,9 @@ function isTrayBoard(p){return p?.kind===TRAY_KIND}
 function buildTrayBoard(input,{drawingNumber,drawingFormat:f}){
  const errors=[],warnings=[],p={kind:TRAY_KIND,viewScale:String(input?.viewScale??'auto'),baseConstruction:input?.baseConstruction||''};
  for(const [k,label] of TRAY_FIELDS){if(k==='entrySide'){p[k]=input?.[k];continue;}p[k]=drawingNumber(input?.[k]);if(!Number.isFinite(p[k])||p[k]<=0||p[k]>10000)errors.push(label+': einen Wert größer 0 und höchstens 10000 eingeben.');}
+ p.edgeChamfer=edgeChamferValue(input?.edgeChamfer);
+ const chamferError=edgeChamferError(p.edgeChamfer,Math.min(p.thickness,p.battenThickness));
+ if(chamferError)errors.push(chamferError);
  p.gratWidth=p.battenThickness;
  p.grooveOffset=trayGrooveOffset(p);
  if(Number.isFinite(p.grooveOffset)&&p.grooveOffset<=0)errors.push('Schale zu hoch für die Gesamthöhe: Zwischen Gratschulter und Nutoberkante verbleibt kein positiver Abstand. Gesamthöhe, Brettdicke oder Schalenhöhe prüfen.');
@@ -2182,6 +2227,7 @@ function buildTrayBoard(input,{drawingNumber,drawingFormat:f}){
  if(errors.length)return {kind:TRAY_KIND,p,ok:false,confirmable:false,errors,warnings};
  const d=p.thickness/3,neck=p.gratWidth-2*d/Math.tan(75*Math.PI/180),battenHeight=p.height-p.thickness+d,projection=p.height-p.thickness,inset=(p.width-p.battenLength)/2;
  const clear=p.length-2*(p.edgeDistance+p.battenThickness),rootSpan=clear+2*p.grooveDepth,play=rootSpan-p.trayLength,engagement=(p.trayLength-clear)/2;
+ if(p.edgeChamfer>0&&(2*p.edgeChamfer>=Math.min(p.thickness,p.battenThickness,p.battenLength,p.width,p.length,projection)||p.edgeChamfer>=p.trayHeight-p.grooveWidth))errors.push('Die Fase ist für Brett, Gratleisten oder den Holzrest unter der Schalennut zu groß.');
  if(p.height<=p.thickness)errors.push('Gesamthöhe muss größer als die Brettdicke sein.');
  if(p.gratWidth>p.battenThickness||neck<=0)errors.push('Gratprofil passt nicht zur Leistendicke oder Brettdicke.');
  if(p.battenLength>p.width)errors.push('Gratleistenlänge überschreitet die Brettbreite.');
@@ -2206,17 +2252,27 @@ function buildTrayBoard(input,{drawingNumber,drawingFormat:f}){
  const detailScale=detailChoice.scale;
  const parts=[{id:'board',name:'Schneidebrett',quantity:1,length:p.length,width:p.width,thickness:p.thickness,note:'Ohne Randteile und Eingriffmulde; L in Faserrichtung.'},{id:'batten',name:'Gratleiste',quantity:2,length:p.battenLength,width:battenHeight,thickness:p.battenThickness,note:'L in Leistenfaserrichtung. Breite ist die Höhe einschließlich Grat.'}];
  const notes=['Keine Randteile, keine Eingriffmulde.', 'Gesamthöhe '+f(p.height)+' ab Brettoberkante; Leistenhöhe einschließlich Grat '+f(battenHeight)+'.', 'Gratwinkel 75° zur Brettfläche; Tiefe '+f(d)+'; Hals '+f(neck)+'.', 'Je Brettende '+f(p.edgeDistance)+' bis Leistenaußenfläche; Leisten quer zur Brettfaser.', 'Nutlage automatisch: '+f(p.height)+' - '+f(p.thickness)+' - '+f(p.trayHeight)+' = '+f(p.grooveOffset)+'. Schalenboden bündig mit Leistenunterkante.', 'Schalennuten durchgehend '+f(p.grooveWidth)+' × '+f(p.grooveDepth)+'; '+f(p.grooveOffset)+' von Gratschulter bis Nutoberkante.', 'Lichtes Maß '+f(clear)+'; Nutgrundabstand '+f(rootSpan)+'; Gesamtspiel '+f(play)+'.', 'Gratnut nach '+(p.entrySide==='front'?'vorn':'hinten')+' offen; gegenüberliegend am Leistenende gestoppt.', 'Schale mittig in Ruhestellung; Kontur schematisch. Schraubenbohrungen nicht festgelegt.'];
+ if(p.edgeChamfer>0)notes.push('Alle freien Kanten: Fase '+f(p.edgeChamfer)+' mm × 45°; Anschlussflächen, Nut und Gratpassungen ungefast.');
  if(p.baseConstruction==='edge-glued')notes.unshift('Grundkonstruktion: stumpf verleimtes Brett.');
  return {kind:TRAY_KIND,p,ok:!errors.length,confirmable:!errors.length,errors,warnings,notes,pending:[],parts,d,neck,battenHeight,projection,inset,clear,rootSpan,play,engagement,scale,detailScale};
 }
 function trayBoardPages(m,{title='Schneidebrett mit Auffangschale',status='Entwurf'}={}, {svgTools}){
  if(!m.ok)throw Error(m.errors.join('\n'));
- const {p,scale:s}=m,{f,e,n,line,text,rect,dh,dv}=svgTools();
+ const {p,scale:s}=m,C=p.edgeChamfer||0,{f,e,n,line,text,rect,dh,dv}=svgTools();
  const path=(pts,cl='body')=>'<path class="'+cl+'" d="'+pts.map(([x,y],i)=>(i?'L':'M')+n(x)+','+n(y)).join(' ')+' Z"/>';
+ const outline=(x,y,w,h,c,cl='body')=>c?path(chamferRectangle(x,y,w,h,c),cl):rect(x,y,w,h,cl);
+ const lower=(x,y,w,h,c)=>c?path([[x,y],[x+w,y],[x+w,y+h-c],[x+w-c,y+h],[x+c,y+h],[x,y+h-c]]):rect(x,y,w,h,'body');
  const frame=(page,subtitle,body)=>`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><style>text{font:2.6px Arial,sans-serif;fill:#111;stroke:none}line,rect,path{stroke:#111;stroke-width:.18;fill:none}.body{stroke-width:.35;fill:white}.hidden{stroke-dasharray:2 1}.axis{stroke-dasharray:4 1 1 1}.bold{font-weight:bold}.small{font-size:2.2px}.measure{paint-order:stroke;stroke:white;stroke-width:1;fill:#111}.hatch{fill:url(#hatch);stroke-width:.35}</style><defs><pattern id="hatch" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0,3 L3,0" stroke-width=".12"/></pattern></defs><rect x="0" y="0" width="297" height="210" style="fill:white;stroke:none"/>${rect(7,6,283,198)}${text(12,13,'look, talk ’n build · '+title,'bold')}${text(12,21,subtitle)}${line(7,25,290,25)}${text(12,31,status,'small')}${body}${line(7,193,290,193)}${text(12,198,'Maße in mm · Druck 100 % / Originalgröße · Entwurf; DIN-919-Abgleich offen','small')}${text(285,198,'Blatt '+page+'/2','small','end')}</svg>`;
  const x=30,y=45,X=u=>x+u*s,Y=v=>y+v*s,a=p.edgeDistance,b=p.length-a-p.battenThickness;
- let body=text(x,y-7,'Unteransicht · M 1:'+f(1/s),'bold')+rect(x,y,p.length*s,p.width*s,'body');
- for(const q of [a,b])body+=rect(X(q),Y(m.inset),p.battenThickness*s,p.battenLength*s,'body');
+ let body=text(x,y-7,'Unteransicht · M 1:'+f(1/s),'bold')+outline(x,y,p.length*s,p.width*s,C*s);
+ for(const q of [a,b])body+=outline(X(q),Y(m.inset),p.battenThickness*s,p.battenLength*s,C*s);
+ if(C){
+  body+='<g data-tray-chamfer="underside">';
+  for(const edge of ['front','back']){let intervals=[[C,p.length-C]];if(edge===p.entrySide)for(const q of [a,b])intervals=intervals.flatMap(([lo,hi])=>[[lo,Math.min(hi,q-C)],[Math.max(lo,q+p.battenThickness+C),hi]].filter(([l,r])=>r>l));for(const[lo,hi]of intervals)body+=line(X(lo),Y(edge==='front'?C:p.width-C),X(hi),Y(edge==='front'?C:p.width-C));}
+  body+=line(X(C),Y(C),X(C),Y(p.width-C))+line(X(p.length-C),Y(C),X(p.length-C),Y(p.width-C));
+  for(const q of [a,b])body+=rect(X(q+C),Y(m.inset+C),(p.battenThickness-2*C)*s,(p.battenLength-2*C)*s);
+  body+='</g>';
+ }
  // Open insertion channels: both neck and root boundaries, extended to the selected entry edge.
  const start=p.entrySide==='front'?0:m.inset,end=p.entrySide==='back'?p.width:p.width-m.inset;
  for(const q of [a,b])for(const half of [p.gratWidth/2,m.neck/2])for(const sign of [-1,1])body+=line(X(q+p.battenThickness/2+sign*half),Y(start),X(q+p.battenThickness/2+sign*half),Y(end),'hidden');
@@ -2227,25 +2283,28 @@ function trayBoardPages(m,{title='Schneidebrett mit Auffangschale',status='Entwu
  body+=dv(Y(m.inset),Y(p.width-m.inset),X(p.length),X(p.length)+8,f(p.battenLength));
  body+=text(x,Y(p.width)+17,'Schale gestrichelt. Gratleisten mittig: je '+f(m.inset)+' Rücksprung.','small');
  const fy=147,t=p.thickness*s;
- body+=text(x,fy-5,'Längsansicht · M 1:'+f(1/s),'bold')+rect(x,fy,p.length*s,t,'body');
- for(const q of [a,b])body+=rect(X(q),fy+t,p.battenThickness*s,m.projection*s,'body');
+ body+=text(x,fy-5,'Längsansicht · M 1:'+f(1/s),'bold')+outline(x,fy,p.length*s,t,C*s);
+ if(C)body+='<g data-tray-chamfer="front">'+line(x+C*s,fy+C*s,X(p.length-C),fy+C*s)+line(x+C*s,fy+t-C*s,X(p.length-C),fy+t-C*s)+'</g>';
+ for(const q of [a,b]){body+=lower(X(q),fy+t,p.battenThickness*s,m.projection*s,C*s);if(C)body+=line(X(q),fy+p.height*s-C*s,X(q+p.battenThickness),fy+p.height*s-C*s);}
  body+=rect(X((p.length-p.trayLength)/2),fy+(p.thickness+p.grooveOffset)*s,p.trayLength*s,p.trayHeight*s,'hidden');
  body+=dv(fy,fy+p.height*s,x,x-8,f(p.height))+dh(X(a+p.battenThickness),X(b),fy+p.height*s,fy+p.height*s+10,f(m.clear)+' licht');
- body+=text(202,fy-5,'Ansicht auf Leistenlänge','bold')+rect(202,fy,p.width*s,t,'body')+rect(202+m.inset*s,fy+t,p.battenLength*s,m.projection*s,'body');
+ body+=text(202,fy-5,'Ansicht auf Leistenlänge','bold')+outline(202,fy,p.width*s,t,C*s)+lower(202+m.inset*s,fy+t,p.battenLength*s,m.projection*s,C*s);
+ if(C)body+='<g data-tray-chamfer="side">'+line(202+C*s,fy+C*s,202+(p.width-C)*s,fy+C*s)+line(202+C*s,fy+t-C*s,202+(p.width-C)*s,fy+t-C*s)+line(202+m.inset*s,fy+p.height*s-C*s,202+(p.width-m.inset)*s,fy+p.height*s-C*s)+'</g>';
  body+=rect(202+(p.width-p.trayWidth)*s/2,fy+(p.thickness+p.grooveOffset)*s,p.trayWidth*s,p.trayHeight*s,'hidden');
  body+=dh(202,202+p.width*s,fy+p.height*s,fy+p.height*s+10,f(p.width));
- const summary=['Brett: '+f(p.length)+' × '+f(p.width)+' × '+f(p.thickness),'2 Gratleisten: '+f(p.battenLength)+' × '+f(m.battenHeight)+' × '+f(p.battenThickness),'1 Schale (Zukauf): '+f(p.trayLength)+' × '+f(p.trayWidth)+' × '+f(p.trayHeight),'Brettfaser entlang '+f(p.length)+' mm','Keine Randteile, keine Eingriffmulde','Nutgrundabstand: '+f(m.rootSpan),'Gesamtspiel der Schale: '+f(m.play),'Gratnut offen nach '+(p.entrySide==='front'?'vorn':'hinten')];
+ const summary=['Brett: '+f(p.length)+' × '+f(p.width)+' × '+f(p.thickness),'2 Gratleisten: '+f(p.battenLength)+' × '+f(m.battenHeight)+' × '+f(p.battenThickness),'1 Schale (Zukauf): '+f(p.trayLength)+' × '+f(p.trayWidth)+' × '+f(p.trayHeight),'Brettfaser entlang '+f(p.length)+' mm','Keine Randteile, keine Eingriffmulde',...(C?['Freie Kanten: Fase '+f(C)+' × 45°']:[]),'Nutgrundabstand: '+f(m.rootSpan),'Gesamtspiel der Schale: '+f(m.play),'Gratnut offen nach '+(p.entrySide==='front'?'vorn':'hinten')];
  summary.forEach((t,i)=>body+=text(202,44+i*7,t,'small'));
  const page1=frame(1,'Gesamtzeichnung · Brett, Gratleisten und Schalenführung',body);
  const ds=m.detailScale,dx=46,dy=62,DX=u=>dx+u*ds,DY=z=>dy+z*ds,W=p.battenThickness/2,G=p.gratWidth/2,N=m.neck/2,sh=p.thickness,root=sh-m.d,go=sh+p.grooveOffset,gb=go+p.grooveWidth;
  let detail=text(17,43,'Schnitt durch Gratleiste · M 1:'+f(1/ds),'bold');
  detail+=path([[-W-15,0],[W+28,0],[W+28,sh],[N,sh],[G,root],[-G,root],[-N,sh],[-W-15,sh]].map(([u,z])=>[DX(u),DY(z)]),'hatch');
- detail+=path([[-W,p.height],[W,p.height],[W,gb],[W-p.grooveDepth,gb],[W-p.grooveDepth,go],[W,go],[W,sh],[N,sh],[G,root],[-G,root],[-N,sh],[-W,sh]].map(([u,z])=>[DX(u),DY(z)]),'body');
+ detail+=path([[-W,p.height-C],[-W+C,p.height],[W-C,p.height],[W,p.height-C],[W,gb],[W-p.grooveDepth,gb],[W-p.grooveDepth,go],[W,go],[W,sh],[N,sh],[G,root],[-G,root],[-N,sh],[-W,sh]].map(([u,z])=>[DX(u),DY(z)]),'body');
  detail+=dv(DY(0),DY(p.height),DX(-W),16,f(p.height))+dv(DY(root),DY(p.height),DX(-W),23,f(m.battenHeight));
  detail+=dv(DY(0),DY(sh),DX(W+28),DX(W+28)+6,f(sh))+dv(DY(sh),DY(go),DX(W),DX(W+28)+13,f(p.grooveOffset));
  detail+=dh(DX(-W),DX(W),DY(p.height),DY(p.height)+8,f(p.battenThickness))+dh(DX(-G),DX(G),DY(root),DY(root)-5,f(p.gratWidth));
  detail+=line(DX(W-p.grooveDepth/2),DY(go+p.grooveWidth/2),113,153)+text(56,158,'Schalennut '+f(p.grooveWidth)+' × '+f(p.grooveDepth),'small');
  detail+=text(17,174,'75° · Grattiefe '+f(m.d)+' · Grathals '+f(m.neck),'small')+line(17,182,67,182)+line(17,180,17,184)+line(67,180,67,184)+text(17,189,'Kontrollstrecke 50 mm bei 100 % Druck','small');
+ if(C)detail+='<g data-tray-chamfer="detail">'+line(DX(-W+C/2),DY(p.height-C/2),30,161)+text(17,166,'Freie Kanten: '+f(C)+' × 45°','small')+'</g>';
  const wrap=(t,max=78)=>{const words=t.split(' '),lines=[''];for(const w of words){let k=lines.length-1;if((lines[k]+' '+w).trim().length>max)lines.push(w);else lines[k]+=(lines[k]?' ':'')+w;}return lines;};
  let yy=43;detail+=text(145,yy,'Konstruktion und Maßbezüge','bold');yy+=7;
  for(const t of m.notes){for(const l of wrap(t)) {detail+=text(145,yy,l,'small');yy+=4;}yy+=2;}
@@ -2406,7 +2465,7 @@ function drawingPrintHtml(model,options={}){
 }
 
 // Second construction family: open butt-jointed solid-beech frame.
-const FRAME_DEFAULTS=Object.freeze({kind:'bread-frame-v1',width:150,depth:250,height:90,thickness:20,screwDiameter:6.3,screwLength:70,headDiameter:10,screwTop:15,screwMiddle:45,screwBottom:75,chamfer:3,jointChamfer:3});
+const FRAME_DEFAULTS=Object.freeze({kind:'bread-frame-v1',width:150,depth:250,height:90,thickness:20,screwDiameter:6.3,screwLength:70,headDiameter:10,screwTop:15,screwMiddle:45,screwBottom:75,chamfer:FREE_EDGE_RULE.size,jointChamfer:FREE_EDGE_RULE.size});
 const FRAME_FIELDS=[['width','Außenbreite (kurze Teile)'],['depth','Außentiefe (lange Richtung)'],['height','Außenhöhe'],['thickness','Materialdicke'],['screwDiameter','Schraube: Gewinde außen'],['screwLength','Schraube: Länge'],['headDiameter','Schraubenkopf: Durchmesser'],['screwTop','Obere Schraube: ab Oberkante'],['screwMiddle','Mittlere Schraube: ab Oberkante'],['screwBottom','Untere Schraube: ab Oberkante'],['chamfer','Außenfase bei 45°'],['jointChamfer','Äußere Stoßkante: Fase bei 45°']];
 function buildFrameDrawing(input){
  const errors=[],warnings=[],p={kind:'bread-frame-v1'};
@@ -3018,7 +3077,7 @@ function wdKnowledge(project){
  const parts=m.parts.map(v=>v.quantity+' '+v.name+': '+[v.length,v.width,v.thickness].map(f).join(' × ')+' mm (L × B × D).');
  return (project.knowledge||'')+'\n\nGespeichertes Werkzeichnungsmodell: Gewürzbord. '+(project.woodDrawing.confirmed?'Maße wurden vom Benutzer bestätigt.':'Maßentwurf, noch nicht vom Benutzer bestätigt.')+'\n'+dimensions.concat(references,parts,m.warnings).join('\n')+'\nDie oben erläuterten Bezugskanten sind in dieser Vorlage eindeutig festgelegt. Dazu keine erneute Klärungsfrage stellen, sofern der Benutzer keinen Widerspruch oder eine Änderung nennt. Nur verständliche deutsche Bezeichnungen verwenden. Bei Widersprüchen zum Gespräch gezielt nachfragen. Gespeicherte Zeichnungsmaße nicht stillschweigend überschreiben. Holzart, Wandbefestigung und Tragfähigkeit sind damit nicht geklärt.';
 }
-function wdSame(a,b){if([a,b].some(p=>isTrayBoard(p)&&p.grooveOffset!==undefined&&Math.abs(drawingNumber(p.grooveOffset)-trayGrooveOffset(p))>1e-6))return false;if([a,b].some(p=>['tray-board-v1','sliding-batten-v1'].includes(p?.kind)&&p.gratWidth!==undefined&&drawingNumber(p.gratWidth)!==drawingNumber(p.battenThickness)))return false;if(isTrayBoard(a)||isTrayBoard(b))return isTrayBoard(a)&&isTrayBoard(b)&&(a.baseConstruction||'')===(b.baseConstruction||'')&&String(a.viewScale??'auto')===String(b.viewScale??'auto')&&TRAY_FIELDS.every(([k])=>k==='entrySide'?a[k]===b[k]:drawingNumber(a[k])===drawingNumber(b[k]));if(isBoardAssembly(a)||isBoardAssembly(b))return isBoardAssembly(a)&&isBoardAssembly(b)&&assemblySignature(a)===assemblySignature(b);return (a?.kind||'spice-rack-v1')===(b?.kind||'spice-rack-v1')&&wdFields(a).every(([k])=>wdValueEqual(k,a?.[k],b?.[k],a?.kind))}
+function wdSame(a,b){if([a,b].some(p=>isTrayBoard(p)&&p.grooveOffset!==undefined&&Math.abs(drawingNumber(p.grooveOffset)-trayGrooveOffset(p))>1e-6))return false;if([a,b].some(p=>['tray-board-v1','sliding-batten-v1'].includes(p?.kind)&&p.gratWidth!==undefined&&drawingNumber(p.gratWidth)!==drawingNumber(p.battenThickness)))return false;if(isTrayBoard(a)||isTrayBoard(b))return isTrayBoard(a)&&isTrayBoard(b)&&(a.baseConstruction||'')===(b.baseConstruction||'')&&String(a.viewScale??'auto')===String(b.viewScale??'auto')&&((a.edgeChamfer===undefined||a.edgeChamfer===null||a.edgeChamfer==='')&&(b.edgeChamfer===undefined||b.edgeChamfer===null||b.edgeChamfer==='')||drawingNumber(a.edgeChamfer)===drawingNumber(b.edgeChamfer))&&TRAY_FIELDS.every(([k])=>k==='entrySide'?a[k]===b[k]:drawingNumber(a[k])===drawingNumber(b[k]));if(isBoardAssembly(a)||isBoardAssembly(b))return isBoardAssembly(a)&&isBoardAssembly(b)&&assemblySignature(a)===assemblySignature(b);return (a?.kind||'spice-rack-v1')===(b?.kind||'spice-rack-v1')&&wdFields(a).every(([k])=>wdValueEqual(k,a?.[k],b?.[k],a?.kind))}
 function wdTitle(){return current.customTitle||current.title||'Gewürzbord'}
 function wdStateText(project=current){return {checked:'Maße bestätigt · Konstruktionsentwurf',draft:'Entwurf · Maße noch bestätigen',stale:'Projekt geändert · Zeichnungsmaße erneut abgleichen',missing:'Noch keine Werkzeichnung'}[drawingStatus(project)]}
 function wdSelectOptions(key,selected){
@@ -3032,6 +3091,7 @@ function wdSelectOptions(key,selected){
 function wdRender(){
  const box=$('#woodDrawingBox');if(!box)return;
  let params=current.woodDrawingChoosing?null:wdParams();
+ if(params&&(isTrayBoard(params)||isBoardAssembly(params))&&(params.edgeChamfer===undefined||params.edgeChamfer===null||params.edgeChamfer==='')){const inherited=drawingInheritedChamfer(current,params);if(inherited!==null){current.woodDrawingDraft={...params,edgeChamfer:inherited};params=wdParams();}}
  if(isTrayBoard(params)&&params.grooveOffset!==undefined&&Math.abs(drawingNumber(params.grooveOffset)-trayGrooveOffset(params))>1e-6){current.woodDrawingDraft={...params};delete current.woodDrawingDraft.grooveOffset;params=wdParams();}
  if(params&&['tray-board-v1','sliding-batten-v1'].includes(params.kind)&&params.gratWidth!==undefined&&drawingNumber(params.gratWidth)!==drawingNumber(params.battenThickness)){current.woodDrawingDraft={...params};delete current.woodDrawingDraft.gratWidth;params=wdParams();}
  if(isBoardAssembly(params)&&params.attachments?.some(a=>a.kind==='sliding_batten'&&a.gratWidth!==undefined&&drawingNumber(a.gratWidth)!==drawingNumber(a.cross))){current.woodDrawingDraft={...params,attachments:params.attachments.map(a=>{const v={...a};if(v.kind==='sliding_batten')delete v.gratWidth;return v;})};params=wdParams();}
@@ -3380,7 +3440,7 @@ function wdAssemblyRenderImage(){
 function wdBeginTray(){
  const old=wdParams()||{},cut=current.reconstruction?.cutlist?.find(r=>/schneidebrett/i.test(r.part||''));
  // Only directly evidenced board dimensions are carried across. Height datum and tray details need review.
- current.woodDrawingDraft={kind:TRAY_KIND,baseConstruction:'edge-glued',...Object.fromEntries(TRAY_FIELDS.map(([k])=>[k,''])),length:cut?.length_mm??'',width:cut?.width_mm??'',thickness:cut?.thickness_mm??old.thickness??''};
+ current.woodDrawingDraft={kind:TRAY_KIND,baseConstruction:'edge-glued',edgeChamfer:FREE_EDGE_RULE.size,...Object.fromEntries(TRAY_FIELDS.map(([k])=>[k,''])),length:cut?.length_mm??'',width:cut?.width_mm??'',thickness:cut?.thickness_mm??old.thickness??''};
  delete current.woodDrawingChoosing;delete current.woodDrawingImportStamp;wdRender();
 }
 function wdTrayStatus(){const d=current.woodDrawing;return !d||!wdSame(wdParams(),d.params)||$('#wdConfirmed').checked!==!!d.confirmed?'Vorschau · Eingaben noch nicht übernommen':wdStateText();}
@@ -3388,7 +3448,7 @@ function wdTrayKnowledge(project,m){return (project.knowledge||'')+'\n\nGespeich
 function wdTraySheet(project){const m=buildDrawing(project.woodDrawing.params);return '<section class="notice"><h3>Gesamtzeichnung · Schneidebrett mit Auffangschale</h3><p>'+esc(wdStateText(project))+'</p>'+(m.ok?m.notes.map(t=>'<p>'+esc(t)+'</p>').join(''):'<p>Zeichnungsmaße prüfen.</p>')+'</section>';}
 function wdRenderTray(params){
  const box=$('#woodDrawingBox');
- box.innerHTML='<h3>Gesamtzeichnung · Schneidebrett mit Auffangschale</h3><p>Grundbrett mit zwei gleichen, quer zur Brettfaser stehenden Gratleisten. Beide Leisten liegen mittig und gleich weit von den Brettenden entfernt. Ohne Randteile und Eingriffmulde. Nutabstand immer von der Gratschulter bis zur Nutoberkante.</p><div class="wdFields">'+TRAY_FIELDS.map(([k,label])=>'<label class="wdField"><span>'+esc(label)+(k==='entrySide'?'':' (mm)')+'</span>'+(k==='entrySide'?'<select data-tray="entrySide"><option value="">Bitte wählen</option><option value="front" '+(params[k]==='front'?'selected':'')+'>Vorn</option><option value="back" '+(params[k]==='back'?'selected':'')+'>Hinten</option></select>':'<input data-tray="'+k+'" inputmode="decimal" value="'+esc(params[k]??'')+'">')+'</label>').join('')+'<label class="wdField"><span>Maßstab der Gesamtansichten</span><select data-tray="viewScale">'+Object.entries(DRAWING_SCALES).map(([k,label])=>'<option value="'+k+'" '+(String(params.viewScale??'auto')===k?'selected':'')+'>'+label+'</option>').join('')+'</select></label></div><p class="hint">Gratgeometrie automatisch: maximale Gratbreite = Gratleistendicke, Grattiefe = Brettdicke/3, Winkel = 75°; die Grathalsbreite wird daraus berechnet. Die Nutlage wird automatisch aus Gesamthöhe minus Brettdicke minus Schalenhöhe berechnet. Bezug ist die Nutoberkante; der Schalenboden liegt bündig mit der Leistenunterkante. Die Gesamthöhe wird ab Brettoberkante gemessen. Die App berechnet daraus die Höhe der Gratleisten einschließlich Grat. Der gewählte Maßstab gilt für die Gesamtansichten; der Detailschnitt erhält unabhängig davon den größten passenden Maßstab, beim Beispiel 1:1. Schraubenbohrungen und Oberflächenbearbeitung sind nicht Bestandteil dieses Modells.</p><button id="wdTrayExample" class="ghost">Beispiel Schneidebrett 455 × 240 laden</button> <button id="wdChangeModel" class="ghost">Anderes Zeichenmodell wählen</button><div id="wdChecks"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Gesamtmaße, Nutbezug und Einschubseite geprüft.</label><div class="composerActions"><button id="wdSave">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="wdOpenPreview" class="ghost">Große Vorschau öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>';
+ box.innerHTML='<h3>Gesamtzeichnung · Schneidebrett mit Auffangschale</h3><p>Grundbrett mit zwei gleichen, quer zur Brettfaser stehenden Gratleisten. Beide Leisten liegen mittig und gleich weit von den Brettenden entfernt. Ohne Randteile und Eingriffmulde. Nutabstand immer von der Gratschulter bis zur Nutoberkante.</p><div class="wdFields">'+TRAY_FIELDS.map(([k,label])=>'<label class="wdField"><span>'+esc(label)+(k==='entrySide'?'':' (mm)')+'</span>'+(k==='entrySide'?'<select data-tray="entrySide"><option value="">Bitte wählen</option><option value="front" '+(params[k]==='front'?'selected':'')+'>Vorn</option><option value="back" '+(params[k]==='back'?'selected':'')+'>Hinten</option></select>':'<input data-tray="'+k+'" inputmode="decimal" value="'+esc(params[k]??'')+'">')+'</label>').join('')+'<label class="wdField"><span>Freie Kanten: Fase bei 45° (mm)</span><input data-tray="edgeChamfer" inputmode="decimal" value="'+esc(params.edgeChamfer??'')+'"></label><label class="wdField"><span>Maßstab der Gesamtansichten</span><select data-tray="viewScale">'+Object.entries(DRAWING_SCALES).map(([k,label])=>'<option value="'+k+'" '+(String(params.viewScale??'auto')===k?'selected':'')+'>'+label+'</option>').join('')+'</select></label></div><p class="hint">Gratgeometrie automatisch: maximale Gratbreite = Gratleistendicke, Grattiefe = Brettdicke/3, Winkel = 75°; die Grathalsbreite wird daraus berechnet. Die Nutlage wird automatisch aus Gesamthöhe minus Brettdicke minus Schalenhöhe berechnet. Bezug ist die Nutoberkante; der Schalenboden liegt bündig mit der Leistenunterkante. Die Gesamthöhe wird ab Brettoberkante gemessen. Die App berechnet daraus die Höhe der Gratleisten einschließlich Grat. Der gewählte Maßstab gilt für die Gesamtansichten; der Detailschnitt erhält unabhängig davon den größten passenden Maßstab, beim Beispiel 1:1. Gemeinsame Vorgabe für neue Brettkonstruktionen: 3 mm Fase. Abweichungen können direkt im Werkstatt-Talk angegeben werden; Anschlussflächen, Nut und Gratpassungen bleiben ungefast. Schraubenbohrungen und Oberflächenbehandlung sind nicht Bestandteil dieses Modells.</p><button id="wdTrayExample" class="ghost">Beispiel Schneidebrett 455 × 240 laden</button> <button id="wdChangeModel" class="ghost">Anderes Zeichenmodell wählen</button><div id="wdChecks"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Gesamtmaße, Nutbezug und Einschubseite geprüft.</label><div class="composerActions"><button id="wdSave">Maße übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="wdOpenPreview" class="ghost">Große Vorschau öffnen</button></div><p id="wdSaveStatus" role="status" class="hint"></p><div id="wdPreview" class="wdPreview"></div>';
  box.querySelectorAll('[data-tray]').forEach(el=>el.oninput=()=>{current.woodDrawingDraft={...wdParams(),[el.dataset.tray]:el.value};delete current.woodDrawingDraft.gratWidth;delete current.woodDrawingDraft.grooveOffset;$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';wdPreviewTray();});
  $('#wdTrayExample').onclick=()=>{current.woodDrawingDraft={...TRAY_SAMPLE};delete current.woodDrawingImportStamp;wdRender();};
  $('#wdChangeModel').onclick=()=>{current.woodDrawingChoosing=true;wdRender();};
@@ -3433,6 +3493,21 @@ function wdChooseBoardExtension(){
  box.innerHTML='<h3>Welche Erweiterung möchtest du ergänzen?</h3>'+BOARD_EXTENSIONS.map(x=>'<button class="secondary" data-add-board-extension="'+x.kind+'">'+esc(x.name)+'</button>').join('')+'<button id="wdBoardExtensionCancel" class="ghost">Zurück zum Brett</button>';
  box.querySelectorAll('[data-add-board-extension]').forEach(b=>b.onclick=()=>{current.woodDrawingDraft=boardAddExtension(wdParams(),b.dataset.addBoardExtension,newId());wdRender();});
  $('#wdBoardExtensionCancel').onclick=wdRender;
+}
+
+function wdApplyTalkDrawing(project,text){
+ let result;try{result=drawingTalkChange(project.woodDrawingDraft||project.woodDrawing?.params,text,{buildDrawing});}catch(e){return {status:'blocked',feedback:'Die Zeichnungsänderung konnte nicht verarbeitet werden: '+e.message+'. Die bisherige Zeichnung bleibt erhalten.'};}
+ if(!['applied','unchanged'].includes(result.status))return result;
+ const previous=project.woodDrawing;
+ const drawing={...(previous||{}),schemaVersion:1,type:result.params.kind,params:result.params,confirmed:false,source:drawingSource(project),revision:(previous?.revision||0)+1,updatedAt:new Date().toISOString()};
+ project.woodDrawing=drawing;project.woodDrawingDraft={...result.params};project.projectDirty=true;
+ delete project.woodDrawingChoosing;delete project.woodDrawingImportStamp;
+ return {...result,drawing,feedback:result.feedback+' Bitte die aktualisierte Zeichnung prüfen. Die bisherige Maßbestätigung wurde zurückgesetzt.'};
+}
+function wdFinalizeTalkDrawing(project,change){
+ if(!change?.feedback)return;
+ project.chat.push({role:'assistant',text:change.feedback,drawingChange:['applied','unchanged'].includes(change.status)});
+ if(change.drawing&&project.woodDrawing===change.drawing)change.drawing.source=drawingSource(project);
 }
 
 function renderRecord(){
@@ -3494,7 +3569,7 @@ function captureOpenAnswerDrafts(project=current){
  $$('.openAnswer').forEach(el=>{const question=questions[Number(el.dataset.i)];if(!question)return;const index=drafts.findIndex(x=>x.question===question),value={question,answer:el.value};if(index<0)drafts.push(value);else drafts[index]=value});
  project.openAnswerDrafts=drafts.filter(x=>x.answer.trim());
 }
-function renderTalk(){const log=$('#chatLog');log.innerHTML=current.chat.length?current.chat.map(m=>`<div class="chatmsg ${m.role==='assistant'?'ai':''}"><div class="chatname">${m.role==='assistant'?"look, talk ’n build":"Du"}</div><div>${(m.role==='assistant'?escGerman(m.text):esc(m.text)).replace(/\n/g,'<br>')}</div>${m.photoIds?.length?`<div class="photoStrip">${m.photoIds.map(id=>{const p=current.photos.find(x=>x.id===id);return p?`<img src="${p.dataUrl}" alt="Talk-Foto">`:''}).join('')}</div>`:''}${calcView(m.calculation)}</div>`).join(''):'<p>Noch kein Werkstattgespräch. Stell eine Frage – oder antworte mit Text, Foto oder beidem.</p>';const u=(current.analysis?.unknown||[]).slice(0,3),box=$('#editableOpen');box.innerHTML=u.length?u.map((q,i)=>`<div class="status"><span class="dot unknown"></span><div style="width:100%"><strong>${escGerman(q)}</strong><input class="openAnswer" data-i="${i}" value="${esc((current.openAnswerDrafts||[]).find(x=>x.question===q)?.answer||'')}" ${busy?'readonly aria-busy="true"':''} style="margin-top:7px" placeholder="Antwort optional …"><button type="button" class="ghost deferOpen" data-open="${i}" ${busy?'disabled':''}>Später klären</button></div></div>`).join('')+'<button class="secondary" id="acceptOpenAnswers">Ausgefüllte Antworten übernehmen</button>':`<div class="ok notice">${current.analysis?.deferred?.length?'Planung vorerst abgeschlossen. Die vorgemerkten Punkte klärst Du später.':'Keine offenen Punkte.'}</div>`;box.innerHTML+=deferredPanel();$$('.openAnswer').forEach(el=>el.oninput=()=>captureOpenAnswerDrafts());gallery($('#pendingTalkPhotos'),pendingTalkPhotos)}
+function renderTalk(){const log=$('#chatLog');log.innerHTML=current.chat.length?current.chat.map(m=>`<div class="chatmsg ${m.role==='assistant'?'ai':''}"><div class="chatname">${m.role==='assistant'?"look, talk ’n build":"Du"}</div><div>${(m.role==='assistant'?escGerman(m.text):esc(m.text)).replace(/\n/g,'<br>')}</div>${m.photoIds?.length?`<div class="photoStrip">${m.photoIds.map(id=>{const p=current.photos.find(x=>x.id===id);return p?`<img src="${p.dataUrl}" alt="Talk-Foto">`:''}).join('')}</div>`:''}${calcView(m.calculation)}${m.drawingChange?'<button class="ghost" data-talk-drawing>Werkzeichnung ansehen</button>':''}</div>`).join(''):'<p>Noch kein Werkstattgespräch. Stell eine Frage – oder antworte mit Text, Foto oder beidem.</p>';const u=(current.analysis?.unknown||[]).slice(0,3),box=$('#editableOpen');box.innerHTML=u.length?u.map((q,i)=>`<div class="status"><span class="dot unknown"></span><div style="width:100%"><strong>${escGerman(q)}</strong><input class="openAnswer" data-i="${i}" value="${esc((current.openAnswerDrafts||[]).find(x=>x.question===q)?.answer||'')}" ${busy?'readonly aria-busy="true"':''} style="margin-top:7px" placeholder="Antwort optional …"><button type="button" class="ghost deferOpen" data-open="${i}" ${busy?'disabled':''}>Später klären</button></div></div>`).join('')+'<button class="secondary" id="acceptOpenAnswers">Ausgefüllte Antworten übernehmen</button>':`<div class="ok notice">${current.analysis?.deferred?.length?'Planung vorerst abgeschlossen. Die vorgemerkten Punkte klärst Du später.':'Keine offenen Punkte.'}</div>`;box.innerHTML+=deferredPanel();$$('.openAnswer').forEach(el=>el.oninput=()=>captureOpenAnswerDrafts());gallery($('#pendingTalkPhotos'),pendingTalkPhotos)}
 
 let mediaRecorder=null,speechRecording=false,speechChunks=[],speechStream=null,speechTimer=null,speechStartedAt=0;
 let speechTarget=null,speechSelStart=null,speechSelEnd=null,lastEditableTarget=null;
@@ -3598,8 +3673,9 @@ document.addEventListener('focusin',e=>{if(e.target?.matches?.('textarea,input')
 $('#speechFloatBtn')?.addEventListener('pointerdown',e=>{e.preventDefault();rememberSpeechTarget()});if($('#speechFloatBtn'))$('#speechFloatBtn').onclick=startSpeech;
 if($('#backFloatBtn'))$('#backFloatBtn').onclick=goBackView;
 let busy=false;
+document.addEventListener('click',e=>{if(e.target?.closest?.('[data-talk-drawing]'))switchTab('woodDrawingPane')});
 function setTalkBusy(on){busy=on;if(on&&speechRecording)stopSpeech();const w=$('#talkWorking'),send=$('#sendChat'),accept=$('#acceptOpenAnswers'),speech=$('#speechBtn'),speechFloat=$('#speechFloatBtn');if(w)w.classList.toggle('on',on);if(send){send.disabled=on;send.textContent=on?'Wird geprüft …':'Beitrag senden'}if(accept)accept.disabled=on;$$('.reopenDeferred,.deferOpen').forEach(el=>el.disabled=on);$$('.openAnswer').forEach(el=>el.readOnly=on);if(speech)speech.disabled=on;if(speechFloat)speechFloat.disabled=on;['talkCameraInput','talkLibraryInput'].forEach(id=>$('#'+id).disabled=on)}
-async function talk({openAnswers=[],message=null,reopenQuestion=null}={}){if(busy||reconstructionBusy)return;const project=current;const t=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];if(!t&&!pics.length&&!openAnswers.length)return alert('Bitte Text, Foto oder Antwort ergänzen.');const photoIds=pics.map(p=>p.id);if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];renderAllPhotos()}captureOpenAnswerDrafts(project);project.projectDirty=true;const answerText=openAnswers.map(x=>x.question+'\nDeine Antwort: '+x.answer).join('\n\n');const userText=[t,answerText].filter(Boolean).join('\n\n')||(pics.length?'Foto als Antwort hinzugefügt.':'Antworten zu offenen Punkten.');project.chat.push({role:'user',text:userText,photoIds});if(message===null)$('#chatInput').value='';autoGrowChatInput();setTalkBusy(true);renderTalk();setTalkBusy(true);try{const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({images:project.photos.map(p=>p.dataUrl),knowledge:wdKnowledge(project),analysis:project.analysis||{},chat:project.chat,openAnswers,reopenQuestion,profile:projectProfile(project),sketches:sketchContext(),purchasedParts:project.purchasedParts||[]})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.analysis?.stateVersion!==2||d.analysis?.deferralVersion!==1)throw Error('Entwickler-Server benötigt dev17; bisherige Projektdaten bleiben erhalten.');project.stateHistory=[...(project.stateHistory||[]),{analysis:project.analysis,at:new Date().toISOString()}].slice(-10);project.analysis=d.analysis;project.openAnswerDrafts=(project.openAnswerDrafts||[]).filter(draft=>!openAnswers.some(sent=>sent.question===draft.question&&sent.answer===draft.answer.trim()));if(Array.isArray(d.purchased_parts_updates))mergePurchasedParts(d.purchased_parts_updates,project);project.chat.push({role:'assistant',text:d.reply||'Projektstand aktualisiert.',calculation:d.calculation||null});if(project.reconstruction?.decision_support)project.reconstruction.decision_support=[];project.projectDirty=true;if(current===project){renderRecord();switchTab('talkPane')}}catch(e){alert('Werkstatt-Talk fehlgeschlagen: '+e.message)}finally{try{await dbPutProject(project);await updateSaved()}catch(e){alert('Gespräch konnte nicht gespeichert werden. Bitte erneut speichern.')}setTalkBusy(false)}}
+async function talk({openAnswers=[],message=null,reopenQuestion=null}={}){if(busy||reconstructionBusy)return;const project=current;const t=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];if(!t&&!pics.length&&!openAnswers.length)return alert('Bitte Text, Foto oder Antwort ergänzen.');const photoIds=pics.map(p=>p.id);if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];renderAllPhotos()}captureOpenAnswerDrafts(project);project.projectDirty=true;const answerText=openAnswers.map(x=>x.question+'\nDeine Antwort: '+x.answer).join('\n\n');const userText=[t,answerText].filter(Boolean).join('\n\n')||(pics.length?'Foto als Antwort hinzugefügt.':'Antworten zu offenen Punkten.');project.chat.push({role:'user',text:userText,photoIds});const drawingChange=wdApplyTalkDrawing(project,userText);if(message===null)$('#chatInput').value='';autoGrowChatInput();setTalkBusy(true);renderTalk();setTalkBusy(true);try{const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({images:project.photos.map(p=>p.dataUrl),knowledge:wdKnowledge(project),analysis:project.analysis||{},chat:project.chat,openAnswers,reopenQuestion,profile:projectProfile(project),sketches:sketchContext(),purchasedParts:project.purchasedParts||[]})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.analysis?.stateVersion!==2||d.analysis?.deferralVersion!==1)throw Error('Entwickler-Server benötigt dev17; bisherige Projektdaten bleiben erhalten.');project.stateHistory=[...(project.stateHistory||[]),{analysis:project.analysis,at:new Date().toISOString()}].slice(-10);project.analysis=d.analysis;project.openAnswerDrafts=(project.openAnswerDrafts||[]).filter(draft=>!openAnswers.some(sent=>sent.question===draft.question&&sent.answer===draft.answer.trim()));if(Array.isArray(d.purchased_parts_updates))mergePurchasedParts(d.purchased_parts_updates,project);project.chat.push({role:'assistant',text:d.reply||'Projektstand aktualisiert.',calculation:d.calculation||null});if(project.reconstruction?.decision_support)project.reconstruction.decision_support=[];project.projectDirty=true;if(current===project)switchTab('talkPane')}catch(e){alert('Werkstatt-Talk fehlgeschlagen: '+e.message)}finally{wdFinalizeTalkDrawing(project,drawingChange);if(current===project)renderRecord();try{await dbPutProject(project);await updateSaved()}catch(e){alert('Gespräch konnte nicht gespeichert werden. Bitte erneut speichern.')}setTalkBusy(false)}}
 document.addEventListener('click',e=>{const button=e.target.closest?.('.deferOpen');if(!button||busy||reconstructionBusy)return;const question=current.analysis?.unknown?.[Number(button.dataset.open)];if(question)talk({openAnswers:[{question,answer:'Wird später geklärt.'}],message:''})});
 document.addEventListener('click',e=>{const button=e.target.closest?.('.reopenDeferred');if(!button||busy||reconstructionBusy)return;const item=deferredItems(current.analysis?.deferred)[Number(button.dataset.deferred)];if(item)talk({message:'Ich möchte diesen vorgemerkten Punkt erneut besprechen: '+item.question,reopenQuestion:item.question})});
 $('#sendChat').onclick=()=>talk();document.addEventListener('click',e=>{if(e.target?.id==='acceptOpenAnswers'){const u=(current.analysis?.unknown||[]).slice(0,3);const answers=$$('.openAnswer').map(el=>({question:u[+el.dataset.i],answer:el.value.trim()})).filter(x=>x.answer);talk({openAnswers:answers})}});
