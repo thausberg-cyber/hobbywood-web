@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev37</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev38</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -62,7 +62,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
     <button class="choice" id="startDevelop"><strong>Eigenes Projekt entwickeln</strong><p>Mit einer groben Vorstellung beginnen und sie im Werkstatt-Talk ausarbeiten.</p></button>
     <button class="choice" id="startIdeas"><strong>Idee finden</strong><p>Noch kein Projekt? Anlass, Person und Rahmen nennen – die App schlägt passende Ideen vor.</p></button>
   </div>
-  <section class="startProjectsSection" aria-labelledby="recentProjectsTitle"><div style="display:flex;justify-content:space-between;gap:12px;align-items:end;flex-wrap:wrap"><div><div class="eyebrow">Direkt weiterarbeiten</div><h2 id="recentProjectsTitle" style="margin-bottom:4px">Meine letzten Projekte</h2><p id="savedCount" class="hint" style="margin-top:0">Noch keine Projekte gespeichert.</p></div><button class="ghost small" id="showAllProjects">Alle Projekte anzeigen</button></div><div id="startProjectList"></div></section>
+  <section class="card"><h2>Mit einer Grundkonstruktion beginnen</h2><p>Brettfläche festlegen und im Werkstatt-Talk ausarbeiten. Der gemeinsame Brettbaukasten verbindet Maße, Bearbeitungen und Ausgaben. Rahmen und Kästen verwenden vorerst den bisherigen Zeichenbereich.</p><button class="primary" data-c-new>Brettkonstruktion</button><button class="ghost" data-c-family-legacy="frame">Rahmenkonstruktion · bisheriger Bereich</button><button class="ghost" data-c-family-legacy="box">Kastenkonstruktion · bisheriger Bereich</button></section><section class="startProjectsSection" aria-labelledby="recentProjectsTitle"><div style="display:flex;justify-content:space-between;gap:12px;align-items:end;flex-wrap:wrap"><div><div class="eyebrow">Direkt weiterarbeiten</div><h2 id="recentProjectsTitle" style="margin-bottom:4px">Meine letzten Projekte</h2><p id="savedCount" class="hint" style="margin-top:0">Noch keine Projekte gespeichert.</p></div><button class="ghost small" id="showAllProjects">Alle Projekte anzeigen</button></div><div id="startProjectList"></div></section>
 </section>
 
 <section id="photos" class="screen">
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev37 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev38 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev37';
+const APP_VERSION='0.9.21-dev38';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -978,7 +978,7 @@ $('#analyzeBtn').onclick=()=>analyze();$('#developGo').onclick=()=>analyze();
 function renderAnalysis(){const a=current.analysis||{},list=(t,x,c='')=>`<h3>${t}</h3>${(x||[]).map(v=>`<div class="status"><span class="dot ${c}"></span><div>${escGerman(v)}</div></div>`).join('')||'<p>Keine Angaben.</p>'}`;$('#analysisCard').innerHTML=`<h2 style="margin-top:0">${esc(a.object||'Projekt')}</h2><p>${escGerman(a.summary||'')}</p>${list('Erkannt',a.recognized)}${list('Vermutet',a.assumptions,'mid')}${list('Offen',a.unknown,'unknown')}`;const nr=a.next_request||{},enough=!(a.unknown||[]).length&&a.enough_information===true;$('#acceptAnalysis').classList.remove('hidden');if(enough){$('#nextRequest').classList.add('hidden');$('#detailPhotoActions').classList.add('hidden')}else{$('#nextRequest').textContent=nr.prompt||'Was sollten wir noch klären?';$('#nextRequest').classList.remove('hidden');$('#detailPhotoActions').classList.toggle('hidden',nr.type!=='detail_photo')}show('analysis')}
 $('#acceptAnalysis').onclick=()=>show('ready');$('#talkFirst').onclick=()=>{current.reconstruction=current.reconstruction||{title:current.analysis?.object,summary:current.analysis?.summary};renderRecord();show('record');switchTab('talkPane')};
 let reconstructionBusy=false;
-async function reconstruct(){
+async function reconstruct(){if(cHas(current))return cRefresh();
   if(reconstructionBusy||busy)return;
   const project=current, previous=project.reconstruction;
   reconstructionBusy=true;show('reconstructing');$('#bar2').style.width='35%';
@@ -1247,6 +1247,357 @@ document.addEventListener('click',async e=>{const button=e.target.closest?.('.de
  if(busy){alert('Bitte warte, bis die aktuelle Antwort fertig ist.');return}button.disabled=true;try{await talk({message:'Meine Entscheidung zu „'+d.topic+'“: Ich übernehme folgenden Vorschlag: '+d.recommendation+'. Bitte in der weiteren Planung berücksichtigen.'})}finally{button.disabled=false}
 });
 let cutPlannerNeedsRefresh=false;
+// Authoritative, versioned construction data. No prose is interpreted as geometry here.
+const CONSTRUCTION_VERSION=1;
+const CONSTRUCTION_FAMILIES={board:'Brettkonstruktion',frame:'Rahmenkonstruktion',box:'Kastenkonstruktion'};
+const C_PART_TYPES={sliding_batten:'Gratleiste',end_strip:'Hirnleiste',stop_strip:'Anleimer / Anbauleiste'};
+const C_POSITIONING={plain:'Stumpf verleimt',round:'Rundholzdübel',biscuit:'Flachdübel',domino:'Dominos'};
+const C_EDGES={left:'links · Anfang der Länge',right:'rechts · Ende der Länge',front:'vorn · Anfang der Breite',back:'hinten · Ende der Breite'};
+const C_RULES={version:1,freeEdgeChamfer:3,edgeAngle:45,gratAngle:75,gratDepthRatio:1/3,minGratEdge:50,tenonWidth:60};
+const cCopy=v=>JSON.parse(JSON.stringify(v));
+const cNum=v=>v===null||v===undefined||v===''?null:typeof v==='number'?v:Number(String(v).replace(',','.'));
+const cId=v=>typeof v==='string'&&/^[A-Za-z0-9_-]{1,80}$/.test(v);
+const cText=v=>typeof v==='string'&&v.length<=1200;
+const cEq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+function constructionNew(family='board'){
+ if(!Object.hasOwn(CONSTRUCTION_FAMILIES,family))throw Error('Unbekannte Grundkonstruktion.');
+ return {schemaVersion:1,family,revision:0,ruleVersion:1,title:'',base:{id:'base',length:null,width:null,thickness:null,material:'',grain:'length',stock:'laminated',positioning:'plain',lamellaCount:null,positionerDiameter:null,positionerLength:null,positionerSize:null},parts:[],operations:[{id:'free-edges',type:'edge',target:'*',treatment:'chamfer',value:3}],accessories:[],questions:[],history:[],confirmedRevision:null,viewScale:'auto',deferred:[]};
+}
+const C_PATHS={
+ base:['length','width','thickness','material','grain','stock','positioning','lamellaCount','positionerDiameter','positionerLength','positionerSize'],
+ part:['name','material','type','cross','height','runLength','edge','edgeDistance','endInset','entrySide','mount','direction','span','joint','tenonWidth','wedgeMode','dowelLength','panelInsertion','biscuitSize','endShape','endSize','endPlane'],
+ operation:['target','type','treatment','value','face','diameter','depth','width','offset','u','v','positions','count','run','datum'],
+ accessory:['name','length','width','height','longAxis','insertionAxis','leadingEdge','fullyInside','rimThickness','clearance','floorDatum','targetIds','centered','centerX','centerY','topBelow']
+};
+const C_NUMBER_FIELDS=new Set(['length','width','thickness','lamellaCount','positionerDiameter','positionerLength','positionerSize','cross','height','runLength','edgeDistance','endInset','tenonWidth','dowelLength','panelInsertion','endSize','value','diameter','depth','offset','u','v','count','rimThickness','clearance','centerX','centerY','topBelow']);
+const C_ENUMS={grain:['length','width'],stock:['single','laminated'],positioning:['plain','round','biscuit','domino'],type:['sliding_batten','end_strip','stop_strip','edge','bore','groove','end'],edge:['left','right','front','back'],entrySide:['start','end'],mount:['surface','edge'],direction:['above','below'],span:['body','overall'],joint:['sliding-batten-v1','breadboard-end-v1','glue','round-6','biscuit'],wedgeMode:['side','sawn','plain'],endShape:['none','chamfer','round'],endPlane:['plan','elevation'],treatment:['none','break','chamfer','round'],face:['top','bottom','inner','outer'],run:['through'],datum:['shoulder','part-top'],longAxis:['x','y'],insertionAxis:['x','y'],leadingEdge:['short','long'],floorDatum:['support-bottom']};
+function cClean(key,value){
+ if(C_NUMBER_FIELDS.has(key)){const n=cNum(value);if(n!==null&&(!Number.isFinite(n)||n<0||n>10000))throw Error('Ungültiges Maß: '+key);return n;}
+ if(Object.hasOwn(C_ENUMS,key)){if(value===null||value==='')return null;if(!C_ENUMS[key].includes(value))throw Error('Ungültige Auswahl: '+key);return value;}
+ if(key==='fullyInside'||key==='centered'){if(value===null||typeof value==='boolean')return value;throw Error('Unklare Lage des Zubehörs.');}
+ if(key==='positions'){if(value===null)return null;if(!Array.isArray(value)||value.length>100||value.some(p=>!p||Object.keys(p).some(k=>!['u','v'].includes(k))))throw Error('Ungültige Bohrpositionen.');return value.map(p=>({u:cClean('u',p.u),v:cClean('v',p.v)}));}
+ if(key==='targetIds'){if(!Array.isArray(value)||value.some(v=>!cId(v)))throw Error('Ungültiger Bauteilbezug.');return [...new Set(value)];}
+ if(key==='target'){if(value==='*'||cId(value))return value;throw Error('Ungültiger Bearbeitungsbezug.');}
+ if(!cText(value))throw Error('Ungültiger Text: '+key);return value.trim();
+}
+function cCleanRecord(group,value){if(!value||typeof value!=='object'||Array.isArray(value))throw Error('Bauteilangaben fehlen.');const out={};for(const [k,v]of Object.entries(value)){if(!C_PATHS[group].includes(k))throw Error('Unbekannte Angabe: '+k);out[k]=cClean(k,v);}return out;}
+function constructionValidate(input){
+ if(!input||input.schemaVersion!==1||!Object.hasOwn(CONSTRUCTION_FAMILIES,input.family)||!Number.isSafeInteger(input.revision)||input.revision<0)throw Error('Unbekannter Konstruktionsstand.');
+ const c=cCopy(input);if(!c.base||c.base.id!=='base')throw Error('Grundkörper fehlt.');
+ c.base={id:'base',...cCleanRecord('base',Object.fromEntries(Object.entries(c.base).filter(([k])=>k!=='id')))};
+ if(!['auto','1','2','5','10','20','50','100'].includes(c.viewScale||'auto'))throw Error('Ungültiger Maßstab.');
+ if(!cText(c.title||''))throw Error('Ungültiger Projekttitel.');
+ for(const [key,group,max]of [['parts','part',12],['operations','operation',80],['accessories','accessory',20]]){
+  if(!Array.isArray(c[key])||c[key].length>max)throw Error('Zu viele oder ungültige '+key+'.');
+  for(const r of c[key]){if(!cId(r.id))throw Error('Ungültige Bauteilkennung.');Object.assign(r,cCleanRecord(group,Object.fromEntries(Object.entries(r).filter(([k])=>k!=='id'))));}
+ }
+ const ids=['base',...c.parts.map(x=>x.id),...c.operations.map(x=>x.id),...c.accessories.map(x=>x.id)];if(new Set(ids).size!==ids.length)throw Error('Kennungen müssen eindeutig sein.');
+ if(!Array.isArray(c.history)||!Array.isArray(c.questions))throw Error('Änderungsverlauf fehlt.');
+ return c;
+}
+function constructionSignature(input){const c=constructionValidate(input);return JSON.stringify({family:c.family,title:c.title,base:c.base,parts:c.parts,operations:c.operations,accessories:c.accessories,questions:c.questions,viewScale:c.viewScale||'auto',deferred:c.deferred||[]});}
+function constructionApply(input,commands,{source='form',text='',expectedRevision=input?.revision}={}){
+ const c=constructionValidate(input);if(c.revision!==expectedRevision)throw Error('Der Konstruktionsstand wurde inzwischen geändert. Bitte die Änderung am aktuellen Stand erneut besprechen.');
+ if(!Array.isArray(commands)||commands.length>60)throw Error('Ungültiger Änderungsauftrag.');
+ const before=constructionSignature(c),changes=[];
+ for(const command of commands){
+  if(!command||typeof command!=='object')throw Error('Änderungsauftrag fehlt.');
+  const {action,id,values,field,value}=command;
+  if(action==='set_base'){const patch=cCleanRecord('base',values);for(const [k,v]of Object.entries(patch)){if(!cEq(c.base[k],v)){changes.push({target:'base',field:k,before:c.base[k]??null,after:v});c.base[k]=v;}}}
+  else if(action==='set_title'){if(!cText(value))throw Error('Titel fehlt.');if(c.title!==value){changes.push({target:'project',field:'title',before:c.title,after:value});c.title=value.trim();}}
+  else if(['add_part','update_part','remove_part','add_operation','update_operation','remove_operation','add_accessory','update_accessory','remove_accessory'].includes(action)){
+   const group=action.includes('part')?'part':action.includes('operation')?'operation':'accessory',list=group==='part'?c.parts:group==='operation'?c.operations:c.accessories;
+   if(!cId(id)||id==='base')throw Error('Bauteilkennung fehlt.');const i=list.findIndex(x=>x.id===id);
+   if(action.startsWith('add_')){if(['base',...c.parts.map(x=>x.id),...c.operations.map(x=>x.id),...c.accessories.map(x=>x.id)].includes(id))throw Error('Diese Kennung ist bereits vorhanden.');const item={id,...cCleanRecord(group,values)};list.push(item);changes.push({target:id,field:'added',before:null,after:item});}
+   else if(i<0)throw Error('Die Änderung verweist auf ein unbekanntes Bauteil.');
+   else if(action.startsWith('remove_')){const old=list[i];list.splice(i,1);if(group==='part'){c.operations=c.operations.filter(o=>o.target!==id);for(const a of c.accessories)if(a.targetIds)a.targetIds=a.targetIds.filter(v=>v!==id);}changes.push({target:id,field:'removed',before:old,after:null});}
+   else {const patch=cCleanRecord(group,values);for(const [k,v]of Object.entries(patch))if(!cEq(list[i][k],v)){changes.push({target:id,field:k,before:list[i][k]??null,after:v});list[i][k]=v;}}
+  }
+  else if(action==='set_view'){const v=String(value);if(!['auto','1','2','5','10','20','50','100'].includes(v))throw Error('Ungültiger Maßstab.');changes.push({target:'project',field:'viewScale',before:c.viewScale||'auto',after:v});c.viewScale=v;}
+  else if(action==='defer_question'){if(!cId(id))throw Error('Fragenbezug fehlt.');c.deferred=[...new Set([...(c.deferred||[]),id])];}
+  else if(action==='reopen_question'){c.deferred=(c.deferred||[]).filter(v=>v!==id);}
+  else if(action==='ask'){if(!cId(id)||!cText(value)||!value.trim())throw Error('Klärungsfrage fehlt.');c.questions=c.questions.filter(q=>q.id!==id);c.questions.push({id,text:value.trim()});}
+  else if(action==='resolve_question'){c.questions=c.questions.filter(q=>q.id!==id);}
+  else throw Error('Nicht unterstützter Änderungsauftrag.');
+ }
+ constructionValidate(c);
+ if(before!==constructionSignature(c)){
+  c.revision++;c.confirmedRevision=null;
+  c.history=[...c.history,{revision:c.revision,source,text:String(text).slice(0,4000),changes,at:new Date().toISOString()}].slice(-50);
+ }
+ return {construction:c,changes,changed:c.revision!==input.revision};
+}
+function constructionPartDefaults(type,id){
+ if(!Object.hasOwn(C_PART_TYPES,type))throw Error('Unbekannte Erweiterung.');
+ const p={id,type,name:C_PART_TYPES[type],cross:null,height:null,runLength:null,edge:null,endShape:'none',endSize:null,endPlane:type==='end_strip'?'plan':'elevation'};
+ if(type==='sliding_batten')Object.assign(p,{edgeDistance:50,endInset:null,entrySide:null});
+ if(type==='end_strip')Object.assign(p,{joint:'breadboard-end-v1',tenonWidth:60,wedgeMode:null});
+ if(type==='stop_strip')Object.assign(p,{mount:'surface',direction:null,span:'body',joint:'glue',dowelLength:null,panelInsertion:null,biscuitSize:''});
+ return p;
+}
+function constructionEdge(c,target='base'){return [...c.operations].reverse().find(o=>o.type==='edge'&&o.target===target)||[...c.operations].reverse().find(o=>o.type==='edge'&&o.target==='*')||{treatment:'none',value:null};}
+function constructionMigrate(project){
+ const p=project.woodDrawingDraft||project.woodDrawing?.params;if(!p||p.kind!=='board-assembly-v1')throw Error('Dieser bisherige Zeichenstand kann noch nicht automatisch übernommen werden.');
+ let c=constructionNew();c.title=project.customTitle||project.title||'';
+ Object.assign(c.base,{length:cNum(p.length),width:cNum(p.width),thickness:cNum(p.thickness),grain:p.grain||'length',stock:p.baseConstruction==='edge-glued'?'laminated':'single'});
+ const material=project.reconstruction?.cutlist?.find(x=>/brett|grund/i.test(x.part||''))?.material;c.base.material=material||'';
+ c.operations[0].value=cNum(p.edgeChamfer)??3;if(c.operations[0].value===0)c.operations[0].treatment='none';
+ c.parts=(p.attachments||[]).map((a,i)=>({...constructionPartDefaults(a.kind,a.id||'part-'+i),name:a.name||C_PART_TYPES[a.kind],cross:cNum(a.cross),height:cNum(a.height),runLength:cNum(a.battenLength),edge:a.edge||null,edgeDistance:cNum(a.edgeDistance),endInset:cNum(a.endInset),entrySide:a.entrySide||null,...Object.fromEntries(['mount','direction','span','joint','tenonWidth','wedgeMode','dowelLength','panelInsertion','biscuitSize','endShape','endSize','endPlane'].filter(k=>a[k]!==undefined&&a[k]!==null&&a[k]!=='').map(k=>[k,a[k]]))}));
+ c.revision=1;c.history=[{revision:1,source:'migration',text:'Zeichnungsmaße übernommen; frühere Gesprächs- und Listenangaben bleiben im Archiv zum Abgleich erhalten.',changes:[],at:new Date().toISOString()}];
+ c.questions=[{id:'migration-review',text:'Übernommene Zeichnungsmaße mit den früheren Gesprächsangaben abgleichen. Abweichende frühere Maße werden nicht automatisch überschrieben.'}];
+ return constructionValidate(c);
+}
+function constructionAssistantSchema(){return {actions:['set_base','set_title','defer_question','reopen_question','add_part','update_part','remove_part','add_operation','update_operation','remove_operation','add_accessory','update_accessory','remove_accessory','ask','resolve_question'],fields:C_PATHS,enums:C_ENUMS,partTypes:C_PART_TYPES,positioning:C_POSITIONING,rules:C_RULES};}
+
+function constructionChangesText(c,changes){
+ const labels={length:'Länge',width:'Breite',thickness:'Dicke',material:'Material',grain:'Faserrichtung',stock:'Brettaufbau',positioning:'Positionierung',cross:'Querdicke',height:'Höhe',runLength:'Leistenlänge',edge:'Bezugskante',edgeDistance:'Abstand zur Bezugskante',endInset:'Anfangsabstand',entrySide:'Einschubseite',treatment:'Kantenausführung',value:'Bearbeitungsmaß',diameter:'Bohrdurchmesser',depth:'Tiefe',offset:'Lage',positions:'Bohrungsmitten',longAxis:'Zubehörausrichtung',insertionAxis:'Bewegungsrichtung',title:'Titel',viewScale:'Maßstab',lamellaCount:'Anzahl Bretter',positionerDiameter:'Verbinderdicke',positionerLength:'Verbinderlänge',positionerSize:'Flachdübelgröße',centered:'Mittige Lage',fullyInside:'Vollständiger Einschub',topBelow:'Höhenlage ab Brettunterseite',count:'Anzahl',name:'Bezeichnung'};
+ const values={length:'entlang der Länge',width:'entlang der Breite',single:'Einzelbrett',laminated:'verleimte Brettfläche',plain:'stumpf verleimt',round:'gerundet / Runddübel nach Auswahl',biscuit:'Flachdübel',domino:'Dominos',chamfer:'gefast',none:'ohne Bearbeitung',break:'Kanten gebrochen',top:'Oberseite',bottom:'Unterseite',inner:'Innenseite',x:'X · Brettlänge',y:'Y · Brettbreite',short:'kurze Kante vorn',long:'lange Kante vorn',above:'nach oben',below:'nach unten',start:'Anfangsseite',end:'Endseite',left:'links',right:'rechts',front:'vorn',back:'hinten'};
+ const describe=v=>v===null||v===undefined?'noch offen':typeof v==='boolean'?(v?'ja':'nein'):Array.isArray(v)?v.map(p=>p&&typeof p==='object'?'U '+p.u+' / V '+p.v:String(p)).join('; '):typeof v==='object'?(v.name||C_PART_TYPES[v.type]||({bore:'Sackloch / Bohrbild',groove:'Nut',edge:'Kantenbearbeitung'}[v.type])||'Ergänzung'):values[v]||String(v);
+ return changes.map(x=>{if(x.field==='added')return 'Ergänzt: '+describe(x.after);if(x.field==='removed')return 'Entfernt: '+describe(x.before);const item=c.parts.find(p=>p.id===x.target)||c.accessories.find(a=>a.id===x.target)||c.operations.find(o=>o.id===x.target),target=x.target==='base'?'Grundbrett':x.target==='project'?'Projekt':item?.name||({edge:'Freie Kanten',bore:'Sackloch / Bohrbild',groove:'Nut'}[item?.type])||'Bauteil';return target+' · '+(labels[x.field]||'Angabe')+': '+describe(x.after);}).join('; ');
+}
+
+function constructionNumericField(key){return C_NUMBER_FIELDS.has(key)||key==='biscuitSize';}
+
+// Drawing primitives for shared operations. No product names or project-specific geometry.
+function constructionCornerMarks(tools,{x,y,w,h,size,treatment,corners=[true,true,true,true],hidden=false}){
+ const {n,line}=tools,r=Math.min(size||0,w/2,h/2);if(!r||!['chamfer','round'].includes(treatment))return '';
+ let out='<g data-construction-edge="'+treatment+'"'+(hidden?' class="hidden"':'')+'>';
+ const vertices=[[x,y,1,1],[x+w,y,-1,1],[x+w,y+h,-1,-1],[x,y+h,1,-1]];
+ vertices.forEach(([a,b,dx,dy],i)=>{if(!corners[i])return;out+='<path d="M'+n(a-.3*dx)+','+n(b-.3*dy)+' L'+n(a+(r+.3)*dx)+','+n(b-.3*dy)+' L'+n(a+(r+.3)*dx)+','+n(b+(r+.3)*dy)+' L'+n(a-.3*dx)+','+n(b+(r+.3)*dy)+' Z" style="fill:white;stroke:none"/>';
+  const start=[a+dx*r,b],end=[a,b+dy*r];out+='<path d="M'+n(start[0])+','+n(start[1])+(treatment==='round'?' Q'+n(a)+','+n(b)+' '+n(end[0])+','+n(end[1]):' L'+n(end[0])+','+n(end[1]))+'" style="fill:none;stroke:#111;stroke-width:.3"/>';
+ });return out+'</g>';
+}
+function constructionPartFinish(m,g,tools,P,freeSegments){
+ const finish=m.canonicalFinishes?.[g.id==='panel'?'base':g.id];if(!finish||!['chamfer','round'].includes(finish.treatment)||!(finish.value>0))return '';
+ const {line}=tools,C=finish.value;let out='',x,y,w,h,scale,corners=[true,true,true,true];
+ if(P.view==='plan'){
+  if(g.kind!=='sliding_batten')for(const edge of ['left','right','front','back'])for(const[lo,hi]of freeSegments(m,g,edge,'top')){if(hi-lo<=2*C)continue;const horizontal=['front','back'].includes(edge),at=edge==='left'?g.x+C:edge==='right'?g.x+g.length-C:edge==='front'?g.y+C:g.y+g.width-C;out+=horizontal?line(P.X(lo+C),P.Y(at),P.X(hi-C),P.Y(at)):line(P.X(at),P.Y(lo+C),P.X(at),P.Y(hi-C));}
+  else{const s=Math.abs(P.X(g.x+C)-P.X(g.x));out+='<rect x="'+(P.X(g.x+C))+'" y="'+P.Y(g.y+g.width-C)+'" width="'+Math.abs(P.X(g.x+g.length-C)-P.X(g.x+C))+'" height="'+Math.abs(P.Y(g.y+C)-P.Y(g.y+g.width-C))+'" class="hidden" style="fill:none;stroke:#111;stroke-width:.18"/>';return '<g data-construction-edge="'+finish.treatment+'">'+out+'</g>';}
+  x=P.X(g.x);y=P.Y(g.y+g.width);w=P.X(g.x+g.length)-x;h=P.Y(g.y)-y;scale=Math.abs(P.X(g.x+C)-x)/C;
+  const has=edge=>freeSegments(m,g,edge,'top').length>0;corners=[has('left')&&has('back'),has('right')&&has('back'),has('right')&&has('front'),has('left')&&has('front')];
+ }else if(P.view==='front'){
+  x=P.X(g.x);y=P.Z(g.z+g.thickness);w=P.X(g.x+g.length)-x;h=P.Z(g.z)-y;scale=Math.abs(P.X(g.x+C)-x)/C;
+  if(g.kind==='sliding_batten')corners=[false,false,true,true];
+  else if(g.z>=m.p.thickness)corners=[true,true,false,false];
+  if(g.kind==='sliding_batten')out+=line(x+C*scale,P.Z(g.z+C),x+w-C*scale,P.Z(g.z+C));
+ }else{
+  x=P.SX(g.z);y=P.Y(g.y+g.width);w=P.SX(g.z+g.thickness)-x;h=P.Y(g.y)-y;scale=Math.abs(P.SX(g.z+C)-x)/C;
+  if(g.kind==='sliding_batten')corners=[true,false,false,true];
+  else if(g.z>=m.p.thickness)corners=[false,true,true,false];
+  if(g.kind==='sliding_batten')out+=line(P.SX(g.z+C),P.Y(g.y+C),P.SX(g.z+C),P.Y(g.y+g.width-C));
+ }
+ if(w>0&&h>0)out+=constructionCornerMarks(tools,{x,y,w,h,size:C*scale,treatment:finish.treatment,corners});return out;
+}
+function constructionBattenBody(c){
+ const W=c.cross/2,G=c.gratWidth/2,N=c.neck/2,P=c.projection,pts=[[-W,-P]],hole=c.canonicalBore;
+ if(hole){const R=hole.diameter/2,U=hole.center||0;pts.push([U-R,-P],[U-R,-P+hole.depth],[U+R,-P+hole.depth],[U+R,-P]);}
+ pts.push([W,-P]);const groove=c.canonicalGroove;
+ if(groove&&groove.side==='right')pts.push([W,-groove.offset-groove.width],[W-groove.depth,-groove.offset-groove.width],[W-groove.depth,-groove.offset],[W,-groove.offset]);
+ pts.push([W,0],[N,0],[G,c.depth],[-G,c.depth],[-N,0],[-W,0]);
+ if(groove&&groove.side!=='right')pts.push([-W,-groove.offset],[-W+groove.depth,-groove.offset],[-W+groove.depth,-groove.offset-groove.width],[-W,-groove.offset-groove.width]);
+ return pts;
+}
+function constructionMachining(m,tools,P){
+ if(!m.canonicalOperations)return '';const {n,line,circle,rect,text,f}=tools;let out='<g data-construction-machining="'+P.view+'">';
+ for(const op of m.canonicalOperations){const g=op.g;if(!g)continue;
+  if(op.type==='bore'&&op.positions?.length&&op.diameter>0&&op.depth>0){
+   const seen=new Set();for(const pos of op.positions){if(pos.u===null||pos.v===null)continue;const Xw=g.x+(op.axis==='y'?pos.v:pos.u),Yw=g.y+(op.axis==='y'?pos.u:pos.v),Z=op.face==='bottom'?g.z:g.z+g.thickness,R=op.diameter/2;
+    if(P.view==='plan'){out+=circle(P.X(Xw),P.Y(Yw),Math.abs(P.X(Xw+R)-P.X(Xw)),op.face==='bottom'?'hidden':'body').replace('/>',' style="fill:none;stroke:#111;stroke-width:.18"/>')+line(P.X(Xw-R-1),P.Y(Yw),P.X(Xw+R+1),P.Y(Yw),'axis')+line(P.X(Xw),P.Y(Yw-R-1),P.X(Xw),P.Y(Yw+R+1),'axis');}
+    else{const q=P.view==='front'?Xw:Yw,key=[q,Z,R,op.depth].join('/');if(seen.has(key))continue;seen.add(key);const z2=Z+(op.face==='bottom'?op.depth:-op.depth),points=P.view==='front'?[[P.X(q-R),P.Z(Z)],[P.X(q-R),P.Z(z2)],[P.X(q+R),P.Z(z2)],[P.X(q+R),P.Z(Z)]]:[[P.SX(Z),P.Y(q-R)],[P.SX(z2),P.Y(q-R)],[P.SX(z2),P.Y(q+R)],[P.SX(Z),P.Y(q+R)]];out+='<path class="hidden" d="'+points.map(([x,y],i)=>(i?'L':'M')+n(x)+','+n(y)).join(' ')+'" style="fill:none;stroke:#111;stroke-width:.18"/>';}
+   }
+  }
+  if(op.type==='groove'&&op.face==='inner'&&op.offset!==null&&op.width>0&&op.depth>0){
+   const alongY=op.axis==='y',center=alongY?g.x+g.length/2:g.y+g.width/2,low=center<(alongY?m.body.x+m.body.length/2:m.body.y+m.body.width/2),face=alongY?(low?g.x+g.length:g.x):(low?g.y+g.width:g.y),root=face+(low?-op.depth:op.depth);
+   if(P.view==='plan')out+=alongY?line(P.X(root),P.Y(g.y),P.X(root),P.Y(g.y+g.width),'hidden'):line(P.X(g.x),P.Y(root),P.X(g.x+g.length),P.Y(root),'hidden');
+   else if(P.view==='front'&&alongY){const pts=[[P.X(face),P.Z(-op.offset)],[P.X(root),P.Z(-op.offset)],[P.X(root),P.Z(-op.offset-op.width)],[P.X(face),P.Z(-op.offset-op.width)]];out+='<path class="hidden" d="'+pts.map(([x,y],i)=>(i?'L':'M')+n(x)+','+n(y)).join(' ')+'" style="fill:none;stroke:#111;stroke-width:.18"/>';}
+   else if(P.view==='side'&&!alongY){const pts=[[P.SX(-op.offset),P.Y(face)],[P.SX(-op.offset),P.Y(root)],[P.SX(-op.offset-op.width),P.Y(root)],[P.SX(-op.offset-op.width),P.Y(face)]];out+='<path class="hidden" d="'+pts.map(([x,y],i)=>(i?'L':'M')+n(x)+','+n(y)).join(' ')+'" style="fill:none;stroke:#111;stroke-width:.18"/>';}
+  }
+ }
+ for(const a of m.canonicalAccessories||[]){if(!a.placed)continue;
+  if(P.view==='plan')out+=rect(P.X(a.x0),P.Y(a.y0+a.y),Math.abs(P.X(a.x0+a.x)-P.X(a.x0)),Math.abs(P.Y(a.y0)-P.Y(a.y0+a.y)),'hidden');
+  else if(a.topBelow!==null&&a.height>0){if(P.view==='front')out+=rect(P.X(a.x0),P.Z(-a.topBelow),Math.abs(P.X(a.x0+a.x)-P.X(a.x0)),Math.abs(P.Z(-a.topBelow-a.height)-P.Z(-a.topBelow)),'hidden');else out+=rect(P.SX(-a.topBelow-a.height),P.Y(a.y0+a.y),Math.abs(P.SX(-a.topBelow)-P.SX(-a.topBelow-a.height)),Math.abs(P.Y(a.y0)-P.Y(a.y0+a.y)),'hidden');}
+ }
+ return out+'</g>';
+}
+
+function constructionToDrawing(input){
+ const c=constructionValidate(input),b=c.base;
+ const p={kind:'board-assembly-v1',baseConstruction:b.stock==='laminated'?'edge-glued':'',length:b.length,width:b.width,thickness:b.thickness,grain:b.grain,basis:'tip',edgeChamfer:0,viewScale:c.viewScale||'auto',machine:'',attachments:c.parts.map(a=>({id:a.id,name:a.name||C_PART_TYPES[a.type],kind:a.type,edge:a.edge||'',cross:a.cross,height:a.height,battenLength:a.runLength,edgeDistance:a.edgeDistance,endInset:a.endInset,entrySide:a.entrySide||'',mount:a.mount||'',direction:a.direction||'',span:a.span||'',joint:a.joint||'',tenonWidth:a.tenonWidth,wedgeMode:a.wedgeMode||'',dowelLength:a.dowelLength,panelInsertion:a.panelInsertion,biscuitSize:a.biscuitSize||'',endShape:a.endShape||'none',endSize:a.endSize,endPlane:a.endPlane||(a.type==='end_strip'?'plan':'elevation')}))};
+ for(const op of c.operations.filter(o=>o.type==='end')){const a=p.attachments.find(a=>a.id===op.target);if(a){a.endShape=op.treatment==='round'?'round':'chamfer';a.endSize=op.value;a.endPlane='elevation';}}
+ p.layoutReview=assemblyLayoutSignature(p);return p;
+}
+const cKnown=v=>typeof v==='number'&&Number.isFinite(v)&&v>0;
+const cShort=v=>v===null||v===undefined?'offen':String(v).replace('.',',');
+function constructionCompute(input){
+ const c=constructionValidate(input),b=c.base,errors=[],warnings=[],questions=[],notes=[],steps=[],operations=[],accessories=[];
+ const ask=(id,text)=>questions.push({id,text});
+ if(c.family!=='board'){ask('family-engine','Diese Grundkonstruktionsfamilie wird noch über den bisherigen Zeichenbereich bearbeitet.');return {construction:c,errors,warnings,questions,parts:[],steps,notes,operations,accessories,ready:false,geometryReady:false};}
+ for(const [field,label]of [['length','Länge'],['width','Breite'],['thickness','Dicke']])if(!cKnown(b[field]))ask('base-'+field,'Welche '+label+' soll die Brettfläche haben (mm)?');
+ if(!b.material)ask('base-material','Welche Holzart bzw. welches Material möchtest du verwenden?');
+ if(!b.grain)ask('base-grain','Verlaufen die Fasern entlang der Länge oder der Breite?');
+ if(!b.stock)ask('base-stock','Einzelbrett oder aus mehreren Brettern verleimte Fläche?');
+ if(b.stock==='laminated'&&!b.positioning)ask('base-positioning','Stumpf verleimen oder mit Runddübeln, Flachdübeln oder Dominos positionieren?');
+ if(b.stock==='laminated'&&b.positioning!=='plain'){
+  if(!cKnown(b.lamellaCount)||!Number.isInteger(b.lamellaCount)||b.lamellaCount<2)ask('base-lamellaCount','Aus wie vielen Brettern wird die Fläche verleimt? Diese Angabe wird für die Anzahl der Positionierverbindungen benötigt.');
+  if(b.positioning==='round'){
+   if(!cKnown(b.positionerDiameter))ask('base-positionerDiameter','Welchen Runddübel-Durchmesser möchtest du für die Positionierung verwenden?');
+   if(!cKnown(b.positionerLength))ask('base-positionerLength','Welche Runddübellänge wird verwendet?');
+   if(b.positionerDiameter>b.thickness/2)errors.push('Runddübel-Durchmesser ist größer als die halbe Brettdicke.');
+  }
+  if(b.positioning==='biscuit'&&![0,10,20].includes(b.positionerSize))ask('base-positionerSize','Welche Flachdübelgröße wird verwendet: 0, 10 oder 20?');
+  if(b.positioning==='domino'){
+   if(!cKnown(b.positionerDiameter))ask('base-positionerDiameter','Welche Domino-Dicke wird verwendet?');
+   if(!cKnown(b.positionerLength))ask('base-positionerLength','Welche Domino-Länge wird verwendet?');
+   if(b.positionerDiameter>b.thickness/2)errors.push('Domino-Dicke überschreitet die halbe Brettdicke; Anschluss und Restmaterial prüfen.');
+  }
+  if(cKnown(b.lamellaCount))notes.push('Lamellenanzahl '+b.lamellaCount+'; einzelne Lamellenbreiten und Verbinderachsen sind nicht durch die Anzahl allein festgelegt.');
+ }
+ let model=null;try{model=buildDrawing(constructionToDrawing(c));}catch(e){errors.push(e.message);}
+ for(const a of c.parts){
+  const name=a.name||C_PART_TYPES[a.type]||'Bauteil';
+  if(!Object.hasOwn(C_PART_TYPES,a.type)){errors.push(name+': Bauteilart ist nicht unterstützt.');continue;}
+  for(const [key,label]of [['edge','Bezugskante'],['cross','Querdicke / Breite'],['height','Höhe / Dicke']])if(key==='edge'?!a[key]:!cKnown(a[key]))ask(a.id+'-'+key,name+': '+label+' festlegen.');
+  if(a.type==='sliding_batten'){
+   if(!cKnown(a.runLength))ask(a.id+'-runLength',name+': Wie lang ist die Leiste quer zur Brettfaser?');
+   if(a.endInset===null||a.endInset===undefined)ask(a.id+'-endInset',name+': Abstand des Leistenanfangs ab vorn bzw. links festlegen; 0 ist möglich.');
+   const run=b.grain==='length'?b.width:b.length;if(cKnown(a.runLength)&&a.endInset>0&&a.endInset+a.runLength<run&&!a.entrySide)ask(a.id+'-entrySide',name+': Zu welcher Seite wird die Gratnut zum Einschieben geöffnet?');
+   notes.push(name+': Grattiefe = Brettdicke / 3; Gratwinkel 75°; Gratbreite = Leistendicke.');
+  }
+  if(a.type==='end_strip'&&!a.wedgeMode)ask(a.id+'-wedgeMode',name+': Zapfen ohne Keile, mit seitlichen Keilen oder eingesägten Keilen sichern?');
+  if(a.type==='stop_strip'&&!a.direction)ask(a.id+'-direction',name+': Soll der Anleimer nach oben oder unten überstehen? Für beidseitigen Überstand zwei getrennte Anbauteile festlegen.');
+ }
+ const geometryReady=!!(model?.ok&&assemblyCanOutput(model));
+ if(model?.warnings)warnings.push(...model.warnings);
+ if(model&&!model.ok){for(const s of model.errors)if(!/Wert größer|positiven Wert|eingeben|Faserrichtung|Maßbezug/.test(s))errors.push(s);}
+ if(model?.pending?.length){for(const message of model.pending)if(!/Bewegungsspiel|Befestigung|Leimstellen|Breite quer|Dicke\/Höhe/.test(message)&&!questions.some(q=>message.includes(c.parts.find(a=>q.id.startsWith(a.id))?.name||'__')))ask('geometry-'+questions.length,message);}
+ const geometries=new Map((model?.components||[]).filter(g=>!g.unresolved).map(g=>[g.id==='panel'?'base':g.id,g]));
+ for(const a of c.parts)if(a.type==='end_strip'&&a.wedgeMode==='sawn'){ask(a.id+'-sawn-detail','Die Sägefugen der Keilzapfen müssen vor der Fertigungszeichnung vollständig bemaßt werden; diese Detailfelder sind im neuen Baukasten noch nicht freigegeben.');}
+ for(const raw of c.operations){
+  const op={...raw};
+  if(op.type==='groove'&&(op.offset===null||op.offset===undefined)){const acc=c.accessories.find(a=>a.floorDatum==='support-bottom'&&a.targetIds?.includes(op.target)),part=c.parts.find(a=>a.id===op.target);if(acc&&cKnown(acc.height)&&cKnown(part?.height)&&cKnown(b.thickness))op.offset=part.height-b.thickness/3-acc.height;}
+  if(!['edge','end','bore','groove'].includes(op.type)){errors.push('Unbekannte Bearbeitungsart.');continue;}
+  const targets=op.target==='*'?['base',...c.parts.map(a=>a.id)]:[op.target];
+  if(targets.some(id=>id!=='base'&&!c.parts.some(a=>a.id===id))){errors.push('Bearbeitung '+op.id+' verweist auf ein fehlendes Bauteil.');continue;}
+  if(op.type==='edge'){
+   if(!['none','break','chamfer','round'].includes(op.treatment)){ask(op.id+'-treatment','Kantenausführung festlegen.');continue;}
+   if(['round','chamfer'].includes(op.treatment)&&!cKnown(op.value)){ask(op.id+'-value','Welches Maß bzw. welcher Radius gilt für die Kantenbearbeitung?');continue;}
+   for(const id of targets){const g=geometries.get(id);if(g&&op.value>0&&op.value*2>=Math.min(g.length,g.width,g.thickness))errors.push((id==='base'?'Grundbrett':c.parts.find(a=>a.id===id).name)+': Kantenmaß muss kleiner als die halbe kleinste Bauteilabmessung sein.');}
+   notes.push((op.target==='*'?'Alle freien Kanten':(op.target==='base'?'Grundbrett':c.parts.find(a=>a.id===op.target)?.name))+': '+({none:'ohne Bearbeitung',break:'Kanten brechen',chamfer:'Fase '+cShort(op.value)+' mm × 45°',round:'Rundung R '+cShort(op.value)+' mm'}[op.treatment])+'. Anschluss-, Nut- und Gratpassungen bleiben ausgenommen.');
+  }
+  if(op.type==='end')ask(op.id+'-end-detail','Die Endbearbeitung ist vorgemerkt. Ihre gemeinsame Kontur und Bemaßung müssen vor einer Fertigungsfreigabe noch geprüft werden.');
+  if(op.type==='bore'){
+   if(!['top','bottom'].includes(op.face))ask(op.id+'-face','Bohrung '+op.id+': Ober- oder Unterseite des Bauteils festlegen.');
+   if(!cKnown(op.diameter))ask(op.id+'-diameter','Bohrungsdurchmesser fehlt.');if(!cKnown(op.depth))ask(op.id+'-depth','Sacklochtiefe fehlt.');
+   if(!Array.isArray(op.positions)||!op.positions.length||op.positions.some(p=>p.u===null||p.v===null))ask(op.id+'-positions','Wo liegen die Bohrungsmitten auf '+(op.target==='base'?'dem Grundbrett':c.parts.find(a=>a.id===op.target)?.name)+'? U läuft entlang des Bauteils, V quer dazu.');
+   if(op.count&&op.positions?.length!==op.count)ask(op.id+'-count','Anzahl und festgelegte Bohrpositionen stimmen noch nicht überein.');
+   const g=geometries.get(op.target),a=c.parts.find(a=>a.id===op.target),axis=a&&['left','right'].includes(a.edge)?'y':'x',run=g?(axis==='x'?g.length:g.width):null,cross=g?(axis==='x'?g.width:g.length):null;
+   if(g&&cKnown(op.depth)&&op.depth>=g.thickness)errors.push('Sackloch '+op.id+' würde das Bauteil durchbohren.');
+   if(g&&op.positions?.length&&cKnown(op.diameter)){const R=op.diameter/2;for(const p of op.positions)if(p.u!==null&&p.v!==null&&(p.u<R||p.u+R>run||p.v<R||p.v+R>cross))errors.push('Sackloch '+op.id+' liegt nicht vollständig innerhalb des Bauteils.');}
+   if(g&&a?.type==='sliding_batten'&&op.face==='bottom'&&op.depth>=a.height-b.thickness/3)errors.push('Sackloch reicht in die Gratpassung. Tiefe prüfen.');
+   if(g&&a?.type==='sliding_batten'&&op.face==='top')ask(op.id+'-protected','Die Oberseite dieser Gratleiste ist eine Passfläche. Bohrfläche und Anschluss ausdrücklich klären.');
+   const finish=constructionEdge(c,op.target),C=['chamfer','round'].includes(finish.treatment)?finish.value||0:0;
+   if(g&&C&&op.positions?.length&&op.diameter>0)for(const point of op.positions){const R=op.diameter/2;if(point.u!==null&&point.v!==null&&(point.u-R<C-1e-6||run-point.u-R<C-1e-6||point.v-R<C-1e-6||cross-point.v-R<C-1e-6))errors.push('Die Sacklochmündung überschneidet die Kantenbearbeitung. Bohrposition, Durchmesser oder Kantenmaß gemeinsam abstimmen.');}
+   operations.push({...op,axis,g});notes.push((op.count||op.positions?.length||'Anzahl offen')+' Sacklöcher Ø '+cShort(op.diameter)+' × '+cShort(op.depth)+' mm tief, '+(op.face==='bottom'?'Unterseite':'Oberseite')+'.');
+  }
+  if(op.type==='groove'){
+   if(op.datum&&op.datum!=='shoulder')ask(op.id+'-datum','Der Nutbezug muss auf die Gratschulter umgerechnet werden. Der abweichende Bezug ist gespeichert, aber noch nicht zeichnerisch freigegeben.');
+   for(const [key,label]of [['width','Nutbreite'],['depth','Nuttiefe']])if(!cKnown(op[key]))ask(op.id+'-'+key,label+' fehlt.');
+   if(op.offset===null||op.offset===undefined)ask(op.id+'-offset','Höhenlage der Nut ab Gratschulter fehlt. Eine Höhenbeziehung zum Zubehör kann dieses Maß ableiten.');
+   const a=c.parts.find(a=>a.id===op.target),g=geometries.get(op.target);
+   if(!a||a.type!=='sliding_batten'||op.face!=='inner'||op.run!=='through')ask(op.id+'-supported','Die Nut ist gespeichert. Für die zeichnerische Umsetzung werden derzeit durchgehende Nuten an Gratleisten-Innenseiten unterstützt.');
+   if(a&&op.depth>=a.cross)errors.push('Nut '+op.id+' durchstößt die Gratleiste.');
+   const projection=a?.height-b.thickness/3;if(op.offset<0)errors.push('Das Zubehör passt in der gewählten Höhenbeziehung nicht unter das Brett.');if(a&&op.offset!==null&&op.offset+op.width>=projection)errors.push('Nut '+op.id+' lässt unter der Nut keinen Holzrest.');
+   operations.push({...op,g,axis:a&&['left','right'].includes(a.edge)?'y':'x'});notes.push('Nut '+op.id+': '+cShort(op.width)+' × '+cShort(op.depth)+' mm; Lage '+cShort(op.offset)+' mm ab Gratschulter.');
+  }
+ }
+ for(const item of c.accessories){
+  for(const [key,label]of [['length','Länge'],['width','Breite'],['height','Höhe']])if(!cKnown(item[key]))ask(item.id+'-'+key,item.name+': '+label+' fehlt.');
+  if(cKnown(item.length)&&cKnown(item.width)&&item.length<item.width)errors.push(item.name+': Längere und kürzere Zubehörabmessung eindeutig zuordnen.');
+  if(!item.longAxis)ask(item.id+'-longAxis',item.name+': Wie liegt das Zubehör zur Brettlänge X und Brettbreite Y? Eine kurze Vorderkante legt die Bewegungsrichtung noch nicht allein fest.');
+  if(!item.insertionAxis)ask(item.id+'-insertionAxis',item.name+': Einschub entlang X (Brettlänge) oder Y (Brettbreite)?');
+  if(item.longAxis&&item.insertionAxis&&item.leadingEdge){const shortLeading=item.longAxis===item.insertionAxis;if((item.leadingEdge==='short')!==shortLeading)errors.push(item.name+': Vorderkante und festgelegte Einschubrichtung widersprechen sich.');}
+  for(const target of item.targetIds||[])if(!c.parts.some(p=>p.id===target))ask(item.id+'-target-'+target,item.name+': Der zugeordnete Träger fehlt; Einbaulage neu zuordnen.');
+  if(item.rimThickness>0)for(const groove of operations.filter(op=>op.type==='groove'&&item.targetIds?.includes(op.target)))if(groove.width<item.rimThickness)errors.push(item.name+': Zubehör-Rand ist dicker als die zugeordnete Nut.');
+  const x=item.longAxis==='x'?item.length:item.width,y=item.longAxis==='x'?item.width:item.length,clearance=item.clearance||0;
+  if(item.fullyInside===true&&item.longAxis&&cKnown(x)&&cKnown(y)&&cKnown(b.length)&&cKnown(b.width)&&(x+2*clearance>b.length||y+2*clearance>b.width))errors.push(item.name+': In der festgelegten Orientierung passt das Zubehör nicht vollständig unter die Brettfläche. Brettmaß und Orientierung bleiben unverändert, bis du den Widerspruch auflöst.');
+  const supports=(model?.battenConnections||[]).filter(g=>item.targetIds?.includes(g.child));let topBelow=item.topBelow??null;if(topBelow===null&&item.floorDatum==='support-bottom'&&supports.length&&cKnown(item.height)){const available=Math.min(...supports.map(g=>g.projection));topBelow=available-item.height;if(topBelow<0)errors.push(item.name+': Schalenhöhe ist größer als die freie Höhe unter dem Brett.');}
+  const placed=item.centered===true||(item.centerX!==null&&item.centerX!==undefined&&item.centerY!==null&&item.centerY!==undefined);if(!placed)ask(item.id+'-placement',item.name+': Position unter dem Brett festlegen, beispielsweise ausdrücklich mittig.');if(topBelow===null)ask(item.id+'-topBelow',item.name+': Höhenlage ab Brettunterseite festlegen.');
+  const x0=item.centered===true?(b.length-x)/2:item.centerX-x/2,y0=item.centered===true?(b.width-y)/2:item.centerY-y/2;
+  accessories.push({...item,x,y,x0,y0,placed,topBelow});notes.push(item.name+': '+[item.length,item.width,item.height].map(cShort).join(' × ')+' mm; lange Seite '+(item.longAxis||'noch nicht zugeordnet')+'.');
+ }
+ // Check the physical overlap of independently described machining operations.
+ for(const hole of operations.filter(op=>op.type==='bore'&&op.g&&op.face==='bottom'&&op.depth>0&&op.diameter>0)){
+  for(const groove of operations.filter(op=>op.type==='groove'&&op.target===hole.target&&op.offset!==null&&op.depth>0&&op.width>0)){
+   const g=hole.g,a=c.parts.find(p=>p.id===hole.target),projection=a?.height-b.thickness/3;if(!(projection>0))continue;
+   const lo=-projection,hi=lo+hole.depth,zLo=-groove.offset-groove.width,zHi=-groove.offset;
+   const cross=hole.axis==='y'?g.length:g.width,center=hole.axis==='y'?g.x+g.length/2:g.y+g.width/2,low=center<(hole.axis==='y'?model.body.x+model.body.length/2:model.body.y+model.body.width/2),v0=low?cross-groove.depth:0,v1=low?cross:groove.depth;
+   for(const point of hole.positions||[])if(point.v!==null&&Math.min(hi,zHi)>Math.max(lo,zLo)+1e-6&&point.v+hole.diameter/2>v0&&point.v-hole.diameter/2<v1)errors.push('Sackloch und Nut überschneiden sich im selben Bauteil. Lage und Tiefe gemeinsam prüfen.');
+  }
+ }
+ if(operations.filter(op=>op.type==='bore'&&op.target==='base').length>1)ask('base-bore-groups','Mehrere Bohrgruppen sind gespeichert. Ihre vollständige gemeinsame Detailanordnung ist noch offen.');
+ if(operations.some(op=>op.type==='bore'&&op.target==='base')&&((model?.connections?.length||0)+(model?.battenConnections?.length||0))>0)ask('base-bore-detail','Die zusätzliche Bohrung im Grundbrett ist gespeichert und in den Ansichten sichtbar. Die Kombination ihres Details mit den Verbindungsschnitten auf höchstens zwei Blättern ist noch nicht freigegeben.');
+ for(const part of c.parts)if(part.type==='sliding_batten'&&part.endShape&&part.endShape!=='none')ask(part.id+'-end-profile','Die freie Endbearbeitung der Gratleiste ist aus dem alten Stand gespeichert. Ihre vollständige gemeinsame Konturdarstellung muss noch abgeglichen werden; keine fertige Ausführung bestätigen.');
+ for(const q of c.questions)ask(q.id,q.text);
+ for(const part of ['base',...c.parts.map(a=>a.id)])if(operations.filter(op=>op.type==='bore'&&op.target===part).length>1)ask(part+'-bore-detail-groups','Mehrere Bohrgruppen am selben Bauteil: Die gemeinsame Schnittdarstellung muss noch geklärt werden.');
+ if(operations.some(op=>op.type==='bore')&&model?.connections?.length)ask('machining-joint-layout','Die gemeinsame Detailanordnung aus Bohrbild und Hirnleistenanschluss ist noch offen.');
+ if(operations.some(op=>op.type==='bore'&&op.target==='base'&&(op.diameter>80||b.thickness>90)))ask('large-bore-detail','Der örtliche Bohrungsschnitt benötigt eine gesonderte Blatteinteilung.');
+ if(operations.filter(op=>op.type==='bore').some(op=>op.positions?.length>4))ask('many-bores-detail','Mehr als vier Bohrpositionen je Gruppe benötigen einen gesonderten bemaßten Bohrplan.');
+ if(operations.filter(op=>op.type==='bore').length>2||c.parts.filter(p=>p.type==='sliding_batten').length>2)ask('detail-capacity','Für mehr als zwei Bohrgruppen bzw. Gratleisten ist die gemeinsame Detailanordnung noch nicht freigegeben.');
+ const uniqueQuestions=[...new Map(questions.map(q=>[q.id,q])).values()];
+ const parts=geometryReady?model.parts.map(p=>({...p,name:p.id==='panel'?'Brettfläche':c.parts.find(a=>a.id===p.id)?.name||p.name,material:c.parts.find(a=>a.id===p.id)?.material||b.material||'Material noch offen'})):[];
+ if(cKnown(b.length)&&cKnown(b.width)&&cKnown(b.thickness)){
+  steps.push('Material und Faserrichtung für die Brettfläche '+b.length+' × '+b.width+' × '+b.thickness+' mm festlegen und Werkstücke mit Bearbeitungszugabe vorbereiten.');
+  if(b.stock==='laminated'){
+   steps.push('Bretter anordnen: Kern an Kern, Splint an Splint; rechte und linke Brettseiten wechselweise nach oben. Reihenfolge mit Schreinerdreieck kennzeichnen. Längskanten fugendicht und rechtwinklig fügen.');
+   if(b.positioning!=='plain')steps.push('Positionierung mit '+C_POSITIONING[b.positioning]+' vorbereiten. Verbinderachsen und Werkzeugeinstellungen anhand der tatsächlichen Lamellenaufteilung und der Herstellerangaben festlegen; nicht aus einer unbekannten Lamellenaufteilung erfinden.');
+   steps.push('Längskanten nach Leimherstellerangaben verleimen, eben ausrichten und gleichmäßig pressen. Offene Zeit und Presszeit einhalten. Nach Aushärtung auf die festgelegten Endmaße bearbeiten.');
+  }else steps.push('Das Einzelbrett auf die festgelegten Endmaße bearbeiten.');
+ }
+ for(const a of c.parts)steps.push((a.name||C_PART_TYPES[a.type])+': Maße und Lage aus dem gemeinsamen Stand übernehmen. '+(a.type==='sliding_batten'?'Gratverbindung quer zur Brettfaser nach D/3 und 75° herstellen; Holzbewegung ermöglichen.':a.type==='end_strip'?'Nut/Feder und mittleren Zapfen nach D/3 herstellen; Feder außerhalb des Zapfens leimfrei lassen.':'Gewählte Verbindung und Richtung des Überstands beachten.'));
+ for(const op of c.operations.map(raw=>operations.find(o=>o.id===raw.id)||raw)){if(op.type==='edge'){const edge=op.treatment==='chamfer'?'mit '+cShort(op.value)+' mm × 45° fasen':op.treatment==='round'?'mit R '+cShort(op.value)+' mm runden':op.treatment==='break'?'brechen':'unbearbeitet lassen';steps.push((op.target==='*'?'Freie Kanten aller Holzbauteile':'Freie Kanten am zugeordneten Bauteil')+' '+edge+'. Anschlussflächen und Passungen ausnehmen.');}if(op.type==='bore')steps.push('Sacklöcher nach den festgelegten Mittelpunkten mit Ø '+cShort(op.diameter)+' mm und '+cShort(op.depth)+' mm Tiefe herstellen; Tiefenanschlag einstellen.');if(op.type==='groove')steps.push('Die festgelegte Nut '+cShort(op.width)+' × '+cShort(op.depth)+' mm an der zugeordneten Innenseite herstellen; Höhenlage '+cShort(op.offset)+' mm ab Gratschulter.');}
+ const ready=geometryReady&&!errors.length&&!uniqueQuestions.length;
+ return {construction:c,model,geometryReady,ready,errors:[...new Set(errors)],warnings:[...new Set(warnings)],questions:uniqueQuestions,notes,parts,steps,operations,accessories};
+}
+function constructionSummary(input){const o=constructionCompute(input),c=o.construction,b=c.base;return CONSTRUCTION_FAMILIES[c.family]+' · '+[b.length,b.width,b.thickness].map(cShort).join(' × ')+' mm · '+(b.material||'Material offen')+' · '+c.parts.length+' Erweiterungen · Stand '+c.revision;}
+function constructionAnalysis(input){const o=constructionCompute(input);return {object:input.title||CONSTRUCTION_FAMILIES[input.family],summary:constructionSummary(input),recognized:o.notes,assumptions:[],unknown:[...o.errors,...o.questions.filter(q=>!(input.deferred||[]).includes(q.id)).map(q=>q.text)],safety_notes:o.warnings,stateVersion:2,deferralVersion:1,deferred:o.questions.filter(q=>(input.deferred||[]).includes(q.id)).map(q=>({question:q.text,reason:'Wird später geklärt.',aliases:[]})),revision:input.revision,enough_information:o.ready,next_request:{type:o.ready?'done':'question',prompt:o.errors[0]||o.questions[0]?.text||''}};}
+function constructionPlan(input){const o=constructionCompute(input);return {title:input.title||'Meine Brettkonstruktion',summary:constructionSummary(input),construction:constructionSummary(input)+'\n'+o.notes.join('\n'),materials:o.parts.map(p=>({item:p.name,quantity:p.quantity+' Stück',spec:p.material})),cutlist:o.parts.map(p=>({part:p.name,qty:p.quantity,length_mm:p.length,width_mm:p.width,thickness_mm:p.thickness,material:p.material,direction_basis:'fiber',note:p.note||''})),tools:[],steps:o.steps,open_points:[...o.errors,...o.questions.map(q=>q.text)],safety_notes:o.warnings,decision_support:[],main_dimensions:[o.construction.base.length,o.construction.base.width,o.construction.base.thickness].map(cShort),planSchemaVersion:2,sourceRevision:input.revision,constructionRevision:input.revision};}
+function constructionKnowledge(input){const o=constructionCompute(input);return 'VERBINDLICHER KONSTRUKTIONSSTAND '+input.revision+'\n'+constructionSummary(input)+'\n'+o.notes.join('\n')+'\nOFFEN:\n'+[...o.errors,...o.questions.map(q=>q.text)].join('\n')+'\nFrühere Freitexte sind historische Gesprächsbeiträge, keine zweite Geometrie. Maßänderungen nur durch geprüfte Änderungsaufträge. Werkzeugfragen betreffen die Fertigung, nicht die geometrische Existenz der Konstruktion.';}
+function constructionDrawingModel(input){
+ const o=constructionCompute(input);let m=o.model;
+ if(!m||!m.ok||!assemblyCanOutput(m)){
+  const p=constructionToDrawing(input);p.attachments=[];p.layoutReview=assemblyLayoutSignature(p);m=buildDrawing(p);if(!m.ok||!assemblyCanOutput(m))return {...o,renderModel:null};
+ }
+ m.canonicalFinishes=Object.fromEntries(['base',...input.parts.map(a=>a.id)].map(id=>[id,constructionEdge(input,id)]));
+ m.canonicalOperations=o.operations.filter(op=>(!op.datum||op.datum==='shoulder')&&op.g&&op.depth>0&&(op.type==='bore'?op.diameter>0&&op.positions?.length&&op.positions.every(p=>p.u!==null&&p.v!==null):op.width>0&&op.offset!==null));
+ m.canonicalAccessories=o.accessories.filter(a=>a.placed&&a.longAxis&&a.height>0&&a.x>0&&a.y>0);
+ m.finishingNotes=o.notes.filter(n=>/Kanten|Fase|Rundung|Sackloch|Sacklöcher|Nut /.test(n));
+ for(const c of m.battenConnections||[]){
+  c.canonicalFinish=constructionEdge(input,c.child);
+  const bore=m.canonicalOperations.find(op=>op.type==='bore'&&op.target===c.child&&op.face==='bottom'),groove=m.canonicalOperations.find(op=>op.type==='groove'&&op.target===c.child);
+  if(bore){const pos=bore.positions[0],part=input.parts.find(p=>p.id===c.child),low=['left','front'].includes(part.edge),g=bore.g;const center=(pos.v-c.cross/2)*(low?-1:1);c.canonicalBore={diameter:bore.diameter,depth:bore.depth,center};c.canonicalSectionPoint={x:g.x+(bore.axis==='y'?pos.v:pos.u),y:g.y+(bore.axis==='y'?pos.u:pos.v)};}
+  if(groove)c.canonicalGroove={...groove,side:'left'};
+ }
+ return {...o,renderModel:m};
+}
+function constructionPages(input,{title=input.title||'Brettkonstruktion'}={}){
+ const o=constructionDrawingModel(input);if(!o.renderModel)return [];
+ const status='Stand '+input.revision+' · '+(o.ready?(input.confirmedRevision===input.revision?'Maße bestätigt':'Entwurf · Maße noch bestätigen'):'Entwurf · offene Angaben; unvollständige Bearbeitungen nicht dargestellt');
+ const pages=drawingPages(o.renderModel,{title,status});
+ const {text,line,rect,n,f}=svgTools();
+ // Standalone bore detail on a free second sheet; joint sections are reused for bores in battens.
+ const extra=o.operations.filter(op=>op.type==='bore'&&op.g&&op.positions?.length&&op.target==='base'&&op.diameter>0&&op.depth>0);
+ if(extra.length>1){} // Additional bore groups remain subject to the detail capability check.
+ if(extra.length&&pages.length===1){const op=extra[0],t=input.base.thickness,w=Math.max(45,op.diameter+20),x=28,y=65,R=op.diameter/2,center=x+w/2;
+  const known=o.renderModel.components.filter(g=>!g.unresolved),minX=Math.min(...known.map(g=>g.x)),maxY=Math.max(...known.map(g=>g.y+g.width)),scale=1/(o.renderModel.overviewDenominator||5),point=op.positions[0],px=24+(op.g.x+point.u-minX)*scale,py=58+(maxY-op.g.y-point.v)*scale;
+  pages[0]=pages[0].replace('Blatt 1/1','Blatt 1/2').replace('</svg>',drawingSectionMark(svgTools(),{id:'B1',x1:px-8,y1:py,x2:px+8,y2:py,direction:'down',captionY:py-10})+'</svg>');
+  const path='<g data-section-detail="B1-B1"'+(op.face==='top'?' transform="translate(0 '+(2*y+t)+') scale(1 -1)"':'')+'><path d="M'+x+','+y+' L'+(x+w)+','+y+' L'+(x+w)+','+(y+t)+' L'+(center+R)+','+(y+t)+' L'+(center+R)+','+(y+t-op.depth)+' L'+(center-R)+','+(y+t-op.depth)+' L'+(center-R)+','+(y+t)+' L'+x+','+(y+t)+' Z" style="fill:white;stroke:#111;stroke-width:.35"/></g>';
+  pages.push('<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><style>text{font:2.6px Arial;fill:#111}line,rect{stroke:#111;stroke-width:.2;fill:none}.bold{font-weight:bold}</style><rect width="297" height="210" style="fill:white;stroke:none"/>'+rect(7,7,283,196)+text(12,16,title,'bold')+text(12,25,status)+text(28,43,'B1–B1 · örtlicher Schnitt durch Bohrungsmitte · M 1:1','bold')+path+text(28,y+t+12,'Ø '+f(op.diameter)+' × '+f(op.depth)+' mm tief; '+op.positions.length+' Positionen nach U/V-Liste.')+text(145,43,'Bearbeitungen im gemeinsamen Stand','bold')+o.notes.slice(0,8).flatMap(s=>s.match(/.{1,68}(?:\s|$)/g)||[s]).slice(0,15).map((s,i)=>text(145,53+i*6,s.trim())).join('')+line(28,185,78,185)+text(28,192,'Kontrolle: 50 mm bei 100 % Druck')+text(260,198,'Blatt 2/2')+'</svg>');
+ }
+ const boreNotes=o.operations.filter(op=>op.type==='bore'&&op.positions?.length&&op.positions.every(pt=>pt.u!==null&&pt.v!==null)).map(op=>'Bauteil '+(o.renderModel.components.findIndex(g=>(g.id==='panel'?'base':g.id)===op.target)+1)+' · '+(op.face==='bottom'?'Unterseite':'Oberseite')+' · Ø '+f(op.diameter)+' × '+f(op.depth)+' tief · U/V: '+op.positions.map(pt=>f(pt.u)+'/'+f(pt.v)).join('; ')+' mm');
+ if(boreNotes.length&&pages.length>1&&!(o.renderModel.connections?.length)){const legend=text(24,164,'BOHRMITTEN · U ab Bauteilanfang, V ab linker Querkante; Zuordnung nach Bauteilnummer','small')+boreNotes.slice(0,2).map((note,i)=>text(24,170+i*5,note,'small')).join('');pages[pages.length-1]=pages.at(-1).replace('</svg>',legend+'</svg>');}
+ return pages;
+}
+
 // Section-plane indication shared by drawing families. Coordinates are paper millimetres.
 function drawingSectionMark(tools,{id,x1,y1,x2,y2,direction='down',reference='Blatt 2',labelOffset=0,captionX=null,captionY=null,endLabelSide=-1}){
  const {n,line,text}=tools,[dx,dy]=({down:[0,1],up:[0,-1],left:[-1,0],right:[1,0]})[direction]||[0,1];
@@ -1568,9 +1919,10 @@ function assemblyFreeEdgeSegments(m,g,edge,face){
 }
 function assemblyFinishingSvg(m,tools,P){
  const {n,line}=tools,C=m.p.edgeChamfer||0;
- if(!C&&!m.p.attachments.some(a=>assemblyEndTreatment(m.p,a).shape!=='none'))return '';
+ if(!m.canonicalFinishes&&!C&&!m.p.attachments.some(a=>assemblyEndTreatment(m.p,a).shape!=='none'))return '';
  let out='<g data-finishing-view="'+P.view+'">';
  for(const g of m.components.filter(g=>!g.unresolved)){
+  if(m.canonicalFinishes){out+=constructionPartFinish(m,g,tools,P,assemblyFreeEdgeSegments);continue;}
   const a=m.p.attachments.find(a=>a.id===g.id),rail=g.kind==='stop_strip',horizontal=['front','back'].includes(g.edge),hidden=rail&&a.direction==='below'?'hidden':'';
   const t=assemblyEndTreatment(m.p,a),K=t.shape!=='none'?t.size||0:0;
   if(g.kind==='sliding_batten'){if(C&&P.view==='front')out+=line(P.X(g.x+C),P.Z(g.z+C),P.X(g.x+g.length-C),P.Z(g.z+C));if(C&&P.view==='side')out+=line(P.SX(g.z+C),P.Y(g.y+C),P.SX(g.z+C),P.Y(g.y+g.width-C));continue;}
@@ -1716,14 +2068,14 @@ function assemblyBattenPlan(m,tools,{X,Y}){
  for(const {c,sectionId} of assemblyBattenSectionGroups(m)){
   const g=m.components.find(v=>v.id===c.child),a=m.p.attachments.find(v=>v.id===c.child),low=['left','front'].includes(a.edge),G=c.gratWidth/2;
   const lo=c.center-(low?G+c.edgeDistance+5:G+15),hi=c.center+(low?G+15:G+c.edgeDistance+5);
-  if(c.lengthwise){const yy=g.y+g.width*(a.endShape&&a.endShape!=='none'?.5:.35);out+=drawingSectionMark(tools,{id:sectionId,x1:X(lo),y1:Y(yy),x2:X(hi),y2:Y(yy),direction:low?'down':'up'});}
-  else{const xx=g.x+g.length*(a.endShape&&a.endShape!=='none'?.5:.35);out+=drawingSectionMark(tools,{id:sectionId,x1:X(xx),y1:Y(lo),x2:X(xx),y2:Y(hi),direction:low?'right':'left'});}
+  if(c.lengthwise){const yy=c.canonicalSectionPoint?.y??(g.y+g.width*(a.endShape&&a.endShape!=='none'?.5:.35));out+=drawingSectionMark(tools,{id:sectionId,x1:X(lo),y1:Y(yy),x2:X(hi),y2:Y(yy),direction:low?'down':'up'});}
+  else{const xx=c.canonicalSectionPoint?.x??(g.x+g.length*(a.endShape&&a.endShape!=='none'?.5:.35));out+=drawingSectionMark(tools,{id:sectionId,x1:X(xx),y1:Y(lo),x2:X(xx),y2:Y(hi),direction:low?'right':'left'});}
  }
  return out;
 }
 function assemblyBattenSectionGroups(m){
  const groups=[];
- for(const c of m.battenConnections||[]){const key=JSON.stringify([c.cross,c.height,c.gratWidth,c.edgeDistance]);let g=groups.find(g=>g.key===key);if(g)g.connections.push(c);else groups.push({key,c,connections:[c]});}
+ for(const c of m.battenConnections||[]){const key=JSON.stringify([c.cross,c.height,c.gratWidth,c.edgeDistance,c.canonicalFinish||null,c.canonicalBore||null,c.canonicalGroove?{width:c.canonicalGroove.width,depth:c.canonicalGroove.depth,offset:c.canonicalGroove.offset}:null]);let g=groups.find(g=>g.key===key);if(g)g.connections.push(c);else groups.push({key,c,connections:[c]});}
  return groups.map((g,i)=>({...g,sectionId:'G'+(i+1)}));
 }
 function assemblyBattenDetails(m,svgTools,{mixed=false}={}){
@@ -1739,7 +2091,10 @@ function assemblyBattenDetails(m,svgTools,{mixed=false}={}){
   const numbers=connections.map(c=>m.components.findIndex(g=>g.id===c.child)+1);
   out+='<g data-grat-detail="'+numbers.join(',')+'" data-section-detail="'+sectionId+'-'+sectionId+'">'+text(x-(G+15)*s,y-10,(mixed&&columns===2?'GRAT · ':'GRATLEISTE · ')+numbers.join('/')+' · M 1:'+den,mixed&&columns===2||rows>2?'small':'bold');
   const C=m.p.edgeChamfer||0;out+=poly([[-G-15,D],[R-C,D],[R,D-C],[R,C],[R-C,0],[N,0],[G,c.depth],[-G,c.depth],[-N,0],[-G-15,0]],'url(#grat-board-hatch)');
-  out+=poly([[-W,-c.projection],[W,-c.projection],[W,0],[N,0],[G,c.depth],[-G,c.depth],[-N,0],[-W,0]],'url(#grat-hatch)');
+  out+=poly(c.canonicalFinish||c.canonicalBore||c.canonicalGroove?constructionBattenBody(c):[[-W,-c.projection],[W,-c.projection],[W,0],[N,0],[G,c.depth],[-G,c.depth],[-N,0],[-W,0]],'url(#grat-hatch)');
+  if(c.canonicalFinish)out+=constructionCornerMarks(svgTools(),{x:X(-W),y:Y(0),w:c.cross*s,h:c.projection*s,size:(c.canonicalFinish.value||0)*s,treatment:c.canonicalFinish.treatment,corners:[false,false,true,true]});
+  if(c.canonicalBore)out+=text(X(-W),Y(-c.projection)+21,'Sackloch Ø '+f(c.canonicalBore.diameter)+' × '+f(c.canonicalBore.depth)+' tief','small');
+  if(c.canonicalGroove)out+=text(X(-W),Y(-c.projection)+25,'Nut '+f(c.canonicalGroove.width)+' × '+f(c.canonicalGroove.depth)+'; ab Schulter '+f(c.canonicalGroove.offset),'small');
   out+=dh(X(G),X(R),Y(D),y-4,f(c.edgeDistance))+dh(X(-W),X(W),Y(-c.projection),Y(-c.projection)+6,f(c.cross));
   out+=dv(Y(c.depth),Y(-c.projection),X(-W),X(-G-22),f(c.height));
   out+='<path d="M'+n(X(-G-15))+','+n(Y(D))+' L'+n(X(-G-15))+','+n(Y(0))+'" fill="none" stroke="white" stroke-width="1"/><path class="break" d="M'+n(X(-G-15))+','+n(Y(D))+' Q'+n(X(-G-15)-.8)+','+n(Y(D*.75))+' '+n(X(-G-15))+','+n(Y(D*.5))+' T'+n(X(-G-15))+','+n(Y(0))+'"/>';
@@ -2045,7 +2400,7 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
    // Unassigned edges are listed as components, without inventing a location.
   }
  });
- body+=assemblyFinishingSvg(m,svgTools(),{view:'plan',X,Y})+assemblyBattenPlan(m,svgTools(),{X,Y});
+ body+=constructionMachining(m,svgTools(),{view:'plan',X,Y})+assemblyFinishingSvg(m,svgTools(),{view:'plan',X,Y})+assemblyBattenPlan(m,svgTools(),{X,Y});
  for(const c of m.connections){
   const a=p.attachments.find(a=>a.id===c.child),horizontal=['front','back'].includes(a.edge),center=horizontal?b.x+b.length/2:b.y+b.width/2;
   const map=(u,v)=>a.edge==='left'?[b.x-u,center+v]:a.edge==='right'?[b.x+b.length+u,center+v]:a.edge==='front'?[center+v,b.y-u]:[center+v,b.y+b.width+u];
@@ -2103,7 +2458,7 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
    if(c.type==='round-6'&&c.dowelLength){const low=above?plane-c.panelInsertion:plane-c.railInsertion;side+=rect(SX(low),Y(depth+3),c.dowelLength*es,6*es,'hidden');}
    else if(c.type==='biscuit'&&c.profile)side+='<ellipse class="hidden" cx="'+n(SX(plane))+'" cy="'+n(Y(depth))+'" rx="'+n(c.profile.width*es/2)+'" ry="'+n(c.profile.length*es/2)+'" fill="none" stroke="#111" stroke-width=".17"/>';
   }
-  body+=front+'</g>'+side+'</g>';
+  body+=front+constructionMachining(m,svgTools(),{view:'front',X,Z})+'</g>'+side+constructionMachining(m,svgTools(),{view:'side',SX,Y})+'</g>';
 
 
  }else{
@@ -2421,6 +2776,7 @@ function svgTools(){
  return {f,e,n,line,text,rect,circle,cross,dh,dv,warn};
 }
 function drawingPages(model,{title='Werkzeichnung',status='Entwurf - Maße noch bestätigen'}={}){
+ if(model.canonicalPages)return model.canonicalPages;
  if(isTrayBoard(model))return trayBoardPages(model,{title,status},{svgTools});
  if(isBoardAssembly(model))return boardAssemblyPages(model,{title,status},{svgTools});
  if(isSolidJoint(model))return solidJointPages(model,{title,status},{svgTools});
@@ -2931,6 +3287,8 @@ function biscuitJointDetails(m){
  return b+'</g>';
 }
 
+
+
 // Read only the refreshed factual snapshot and, when current, the structured cut list.
 // No numbers are taken from old dialogue, free-form assumptions or a project photo.
 function drawingImport(project={},kind){
@@ -3086,14 +3444,16 @@ function wdIsCorpus(params){return ['carcass-v1','writing-carcass-v1'].includes(
 // Per-project drafts retain typed values even while other panes refresh.
 function wdFields(params){if(isTrayBoard(params))return TRAY_FIELDS;if(isBoardAssembly(params))return ASSEMBLY_FIELDS;if(isSolidJoint(params))return solidFields(params);return wdIsCorpus(params)?[['jointType','Eckverbindung'],...corpusFields(params)]:params?.kind==='bread-frame-v1'?FRAME_FIELDS:DRAWING_FIELDS}
 function wdModelName(params){if(isTrayBoard(params))return 'Schneidebrett mit Auffangschale';if(isBoardAssembly(params))return 'Bauteilaufbau · Brett und Leisten';if(isSolidJoint(params))return SOLID_MODELS[params.kind].name;return params?.kind==='writing-carcass-v1'?'Schreibkorpus mit Schräge':params?.kind==='carcass-v1'?'Rechteckiger Korpus':params?.kind==='bread-frame-v1'?'Backrahmen':'Gewürzbord'}
-function wdParams(project=current){return project.woodDrawingDraft||project.woodDrawing?.params||null}
+function wdParams(project=current){if(project?.construction)return constructionToDrawing(project.construction);return project.woodDrawingDraft||project.woodDrawing?.params||null}
 function wdCutlistForProject(project=current){
+ if(project?.construction)return constructionPlan(project.construction).cutlist;
  if(!project.woodDrawing||isSolidJoint(project.woodDrawing.params))return project.reconstruction?.cutlist||[];
  if(drawingStatus(project)==='stale')return [];
  const m=buildDrawing(project.woodDrawing.params);if(!m.ok||isBoardAssembly(m)&&!assemblyCanOutput(m))return [];
  return m.parts.map(p=>({part:p.name,qty:p.quantity,length_mm:p.length,width_mm:p.width,thickness_mm:p.thickness,material:p.material||(m.kind==='bread-frame-v1'?'Massive Buche, unbehandelt':'Holzart noch festlegen'),direction_basis:wdIsCorpus(m)?'unknown':'fiber',note:(wdIsCorpus(m)?'Maße aus Korpuszeichnung; Dekor-/Faserrichtung und Belag-Zuschnittspiel prüfen. ':'Maße aus Werkzeichnung; Massivholz, L in Faserrichtung. ')+(p.note||'')+' '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Entwurf: Maße noch bestätigen.')}));
 }
 function wdKnowledge(project){
+ if(project?.construction)return constructionKnowledge(project.construction);
  if(!project.woodDrawing)return project.knowledge||'';
  const m=buildDrawing(project.woodDrawing.params);
  if(!m.ok)return project.knowledge||'';
@@ -3133,6 +3493,7 @@ function wdSelectOptions(key,selected){
   CORPUS_OPTIONS[key].filter(v=>!['Vollholz','Leimholzplatte',...plywood].includes(v)).map(v=>option(v,v==='Holzwerkstoffplatte'?'Holzwerkstoffplatte (allgemein)':v)).join('');
 }
 function wdRender(){
+ if(current?.construction)return cRender();
  const box=$('#woodDrawingBox');if(!box)return;
  let params=current.woodDrawingChoosing?null:wdParams();
  if(params&&(isTrayBoard(params)||isBoardAssembly(params))&&(params.edgeChamfer===undefined||params.edgeChamfer===null||params.edgeChamfer==='')){const inherited=drawingInheritedChamfer(current,params);if(inherited!==null){current.woodDrawingDraft={...params,edgeChamfer:inherited};params=wdParams();}}
@@ -3228,7 +3589,7 @@ function wdFrameKnowledge(project,m){
  const p=m.p,f=drawingFormat;
  return (project.knowledge||'')+'\n\nGespeichertes Werkzeichnungsmodell: offener Backrahmen aus massiver unbehandelter Buche. '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Entwurf, Maße noch bestätigen.')+'\n'+FRAME_FIELDS.map(([k,label])=>label+': '+f(p[k])+' mm.').join('\n')+'\nKurze Rahmenteile laufen über die volle Außenbreite; lange Teile sitzen stumpf dazwischen. Oben und unten offen, kein Boden.\n'+m.parts.map(v=>v.quantity+' '+v.name+': '+[v.length,v.width,v.thickness].map(f).join(' × ')+' mm; L in Faserrichtung.').join('\n')+'\nJe Ecke drei Konfirmatschrauben, insgesamt genau zwölf. Schraubenachse '+f(p.thickness/2)+' mm von der Seitenkante (mittig in der Wandstärke); Höhen '+m.positions.map(f).join(' / ')+' mm ab Oberkante. Gewinde außen Ø '+f(p.screwDiameter)+' mm, Länge '+f(p.screwLength)+' mm, Kopf Ø '+f(p.headDiameter)+' mm. Keine Nenngröße aus dem Gewindeaußendurchmesser erfinden.\nAußenfase '+f(p.chamfer)+' mm bei 45° an allen frei liegenden Außenkanten einschließlich äußerer Ober-/Unterkanten und senkrechter Außenecken. Äußere Stoßkanten erhalten jeweils '+f(p.jointChamfer)+' mm Fase bei 45° und bilden zusammen eine V-Nut mit '+f(2*p.jointChamfer)+' mm Öffnung und '+f(p.jointChamfer)+' mm Tiefe. Innenkanten mit Brotteigkontakt und Innenfugen bleiben ungefast; übrige Kontaktflächen liegen eben an. Fasen vor dem Zusammenbau anbringen.\nPassenden Konfirmat-Stufenbohrer einschließlich Senker verwenden; Bohrstufen und Tiefe nach Schraubenhersteller, am Reststück prüfen. Keine pauschale durchgehende Ø5-mm-Bohrung anweisen. Schrauben in Material- und Einkaufsliste nur einmal mit insgesamt zwölf Stück aufführen. Keine Temperatur- oder Lebensmittelkontaktfreigabe behaupten.\nDiese Zeichnungsmaße und Regeln in Stückliste und Bauanleitung übernehmen. Bei widersprechenden Benutzereingaben gezielt nachfragen; gespeicherte Maße nicht stillschweigend überschreiben. Bereits festgelegte Bezugskanten nicht erneut abfragen.';
 }
-function wdSheetGeometry(project=current){
+function wdSheetGeometry(project=current){if(project?.construction)return '<section class="notice"><h3>Gemeinsamer Konstruktionsstand '+project.construction.revision+'</h3><p>'+esc(constructionSummary(project.construction))+'</p></section>';
  if(isTrayBoard(project.woodDrawing?.params))return wdTraySheet(project);
  if(isBoardAssembly(project.woodDrawing?.params))return wdAssemblySheet(project);
  if(isSolidJoint(project.woodDrawing?.params))return wdSolidSheet(project);
@@ -3300,6 +3661,7 @@ function wdBeginSolid(kind){
  delete current.woodDrawingChoosing;delete current.woodDrawingImportStamp;wdRender();
 }
 function wdSolidGlueNote(project=current){
+ if(project?.construction)return '';
  const p=project.woodDrawing?.params;
  if(p?.baseConstruction==='edge-glued')return '<section class="notice"><h3>Schritt für Schritt · Grundbrett stumpf verleimen</h3><ol>'+BOARD_GLUE_STEPS.map(step=>'<li>'+esc(step)+'</li>').join('')+'</ol></section>';
  if(!isSolidJoint(p)&&!isBoardAssembly(p)&&!['Vollholz','Leimholzplatte'].includes(p?.boardMaterial))return '';
@@ -3520,7 +3882,7 @@ function wdPreviewTray(){
 function wdRenderConstructionChooser(){
  const box=$('#woodDrawingBox');
  box.innerHTML='<h3>Werkzeichnung · Grundkonstruktion wählen</h3><p>Wähle zuerst die Grundkonstruktion. Ergänze danach die benötigten Bauteile und passe die Maße an. Hinterlegte Verbindungsregeln berechnet die App.</p>'+DRAWING_FAMILIES.map(f=>'<section class="notice"><button class="secondary" data-construction-family="'+f.id+'">'+esc(f.name)+'</button><p>'+esc(f.description)+'</p></section>').join('')+'<details><summary>Einzelne Verbindungsdetails</summary><p>Diese Modelle zeigen nur einen Anschluss.</p>'+Object.entries(SOLID_MODELS).map(([kind,def])=>'<button class="ghost" data-solid-model="'+kind+'">'+esc(def.name)+'</button>').join('')+'</details><button id="wdCancelModel" class="ghost">Zur Zeichnung zurück</button>';
- const actions={board:wdBeginBoardAssembly,frame:()=>wdBeginFromProject('bread-frame-v1'),corpus:()=>wdBeginFromProject('carcass-v1'),writing:()=>wdBeginFromProject('writing-carcass-v1'),rack:()=>wdBeginFromProject('spice-rack-v1')};
+ const actions={board:()=>typeof cBeginBoard==='function'?cBeginBoard():wdBeginBoardAssembly(),frame:()=>wdBeginFromProject('bread-frame-v1'),corpus:()=>wdBeginFromProject('carcass-v1'),writing:()=>wdBeginFromProject('writing-carcass-v1'),rack:()=>wdBeginFromProject('spice-rack-v1')};
  box.querySelectorAll('[data-construction-family]').forEach(b=>b.onclick=()=>actions[b.dataset.constructionFamily]());
  box.querySelectorAll('[data-solid-model]').forEach(b=>b.onclick=()=>wdBeginSolid(b.dataset.solidModel));
  $('#wdCancelModel').disabled=!wdParams();$('#wdCancelModel').onclick=()=>{delete current.woodDrawingChoosing;wdRender();};
@@ -3554,7 +3916,132 @@ function wdFinalizeTalkDrawing(project,change){
  if(change.drawing&&project.woodDrawing===change.drawing)change.drawing.source=drawingSource(project);
 }
 
-function renderRecord(){
+const cSaveQueues=new Map();
+function cHas(project=current){return project?.construction?.schemaVersion===1;}
+function cSync(project=current){
+ if(!cHas(project))return;const c=constructionValidate(project.construction),plan=constructionPlan(c);project.construction=c;project.title=c.title||'Meine Brettkonstruktion';project.customTitle=c.title||'';
+ project.analysis=constructionAnalysis(c);project.reconstruction=plan;project.projectDirty=false;
+ project.woodDrawing={schemaVersion:1,type:'board-assembly-v1',params:constructionToDrawing(c),confirmed:c.confirmedRevision===c.revision,constructionRevision:c.revision,source:''};
+ delete project.woodDrawingDraft;project.woodDrawing.source=drawingSource(project);
+ const prior=new Map((project.purchasedParts||[]).map(a=>[a.id,a]));
+ project.purchasedParts=[...(project.purchasedParts||[]).filter(a=>a.source!=='construction'&&!c.accessories.some(b=>b.id===a.id)),...c.accessories.map(a=>({...prior.get(a.id),id:a.id,item:a.name||'Zubehör',quantity:'1 Stück',dimensions:[a.length,a.width,a.height].map(v=>v??'offen').join(' × ')+' mm',use:'Zubehör im gemeinsamen Konstruktionsstand',source:'construction'}))];
+}
+function cArchive(project){if(!project.constructionLegacy)project.constructionLegacy={analysis:project.analysis||null,reconstruction:project.reconstruction||null,woodDrawing:project.woodDrawing||null,woodDrawingDraft:project.woodDrawingDraft||null,purchasedParts:project.purchasedParts||[],at:new Date().toISOString()};}
+async function cPersist(project=current){
+ const snapshot=JSON.parse(JSON.stringify(project)),key=project.id;
+ const next=(cSaveQueues.get(key)||Promise.resolve()).catch(()=>{}).then(()=>dbPutProject(snapshot));cSaveQueues.set(key,next);
+ try{await next;delete project.constructionSaveError;return true;}catch(e){project.constructionSaveError='Der Stand ist noch nicht auf diesem Gerät gespeichert: '+e.message;if(current===project&&$('#cStatus'))$('#cStatus').textContent=project.constructionSaveError;return false;}
+}
+async function cCommit(commands,{project=current,source='form',text=''}={}){
+ try{const result=constructionApply(project.construction,commands,{source,text});project.construction=result.construction;cSync(project);if(current===project)renderRecord();await cPersist(project);return result;}
+ catch(e){if(current===project&&$('#cStatus'))$('#cStatus').textContent=e.message;else alert(e.message);return null;}
+}
+function cBeginBoard(){
+ if(current.woodDrawing&&!cHas())return cOfferMigration(true);
+ if(!current.id)resetProject('develop');cArchive(current);current.construction=constructionNew();current.construction.title=current.customTitle||'Meine Brettkonstruktion';cSync();renderRecord();show('record');switchTab('woodDrawingPane');cPersist();
+}
+function cNewBoard(){resetProject('develop');current.construction=constructionNew();current.construction.title='Meine Brettkonstruktion';cSync();renderRecord();show('record');switchTab('woodDrawingPane');cPersist();}
+function cMigrate(){try{const c=constructionMigrate(current);cArchive(current);current.construction=c;cSync();renderRecord();switchTab('woodDrawingPane');cPersist();}catch(e){alert(e.message);}}
+function cOfferMigration(inDrawing=false){
+ if(cHas()||!isBoardAssembly(current.woodDrawingDraft||current.woodDrawing?.params))return;
+ const html='<section class="notice"><h3>Gemeinsamer Konstruktionsstand</h3><p>Dieser Entwurf stammt aus dem bisherigen Zeichenbereich. Übernimm seine gespeicherten Maße in den allgemeinen Brettbaukasten. Frühere Texte bleiben im Archiv zum Abgleich erhalten.</p><button class="secondary" data-c-migrate>In den Brettbaukasten übernehmen</button></section>';
+ if(inDrawing)$('#woodDrawingBox').innerHTML=html;else if(!$('#cMigration'))$('#overviewBox').insertAdjacentHTML('afterbegin','<div id="cMigration">'+html+'</div>');
+}
+function cInput(key,label,value,{part=null,operation=null,accessory=null,options=null,readonly=false}={}){
+ const attrs=' data-c-field="'+key+'"'+(part?' data-c-part="'+part+'"':'')+(operation?' data-c-operation="'+operation+'"':'')+(accessory?' data-c-accessory="'+accessory+'"':'');
+ return '<label class="wdField"><span>'+esc(label)+'</span>'+(options?'<select'+attrs+'><option value="">Noch offen</option>'+Object.entries(options).map(([k,v])=>'<option value="'+esc(k)+'" '+(String(value??'')===k?'selected':'')+'>'+esc(v)+'</option>').join('')+'</select>':'<input'+attrs+' value="'+esc(value??'')+'" '+(readonly?'readonly':'')+(key==='name'||key==='material'||key==='title'?'':' inputmode="decimal"')+'>')+'</label>';
+}
+function cOrientationSvg(c){const L=c.base.length||0,B=c.base.width||0;return '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="175" viewBox="0 0 470 175" aria-label="Brettachsen X Länge, Y Breite"><rect x="65" y="34" width="310" height="96" rx="3" fill="#fbf6e8" stroke="#624b2f"/><path d="M65 145 H375 l-9 -4 m9 4 l-9 4 M46 130 V34 l-4 9 m4 -9 l4 9" fill="none" stroke="#333" stroke-width="1.6"/><g fill="#222" font-family="Arial" font-size="13"><text x="160" y="166">X · Länge '+esc(L||'offen')+' mm</text><text x="5" y="23">Y · Breite '+esc(B||'offen')+' mm</text><text x="185" y="89">Grundbrett</text><text x="65" y="29">hinten</text><text x="65" y="125">vorn</text><text x="25" y="91">links</text><text x="382" y="91">rechts</text></g></svg>';}
+function cRender(){
+ const c=current.construction,o=constructionCompute(c),b=c.base,edge=c.operations.find(op=>op.id==='free-edges')||c.operations.find(op=>op.type==='edge'&&op.target==='*'),box=$('#woodDrawingBox');
+ const field=(k,label,opts={})=>cInput(k,label,b[k],opts);
+ const qhtml=o.errors.map(t=>'<li class="notice">Widerspruch: '+esc(t)+'</li>').join('')+o.questions.map(q=>'<li>'+esc(q.text)+((c.deferred||[]).includes(q.id)?' <em>· später klären</em>':'')+'</li>').join('');
+ box.innerHTML='<h3>Brettkonstruktion · gemeinsamer Stand '+c.revision+'</h3><p>Grundbrett festlegen, danach im Werkstatt-Talk ausarbeiten. Zeichnung, Materialliste und Anleitung verwenden dieselben Angaben.</p><p id="cStatus" role="status">'+esc(current.constructionSaveError||'Änderungen werden auf diesem Gerät gespeichert.')+'</p><h4>1 · Brettfläche</h4><div class="wdFields">'+field('length','Länge X (mm)')+field('width','Breite Y (mm)')+field('thickness','Dicke Z (mm)')+field('material','Holzart / Material')+field('grain','Faserrichtung',{options:{length:'entlang der Länge X',width:'entlang der Breite Y'}})+field('stock','Aufbau',{options:{single:'Einzelbrett',laminated:'Aus mehreren Brettern verleimt'}})+(b.stock==='laminated'?field('positioning','Verleimung und Positionierung',{options:C_POSITIONING}):'')+'</div>'+
+ (b.stock==='laminated'&&b.positioning!=='plain'?'<div class="wdFields">'+field('lamellaCount','Anzahl der verleimten Bretter')+(b.positioning==='round'||b.positioning==='domino'?field('positionerDiameter',b.positioning==='domino'?'Domino-Dicke (mm)':'Runddübel-Ø (mm)')+field('positionerLength','Verbinderlänge (mm)'):field('positionerSize','Flachdübelgröße',{options:{0:'0',10:'10',20:'20'}}))+'</div><p class="hint">Die genaue Lamellenaufteilung und Verbinderachsen werden erst aus tatsächlichen Einzelmaßen festgelegt. Werkzeugmaße nach Hersteller prüfen.</p>':'')+
+ cOrientationSvg(c)+'<h4>2 · Freie Kanten</h4><div class="wdFields">'+(edge?cInput('treatment','Ausführung',edge.treatment,{operation:edge.id,options:{none:'Ohne Bearbeitung',break:'Kanten brechen',chamfer:'Fasen bei 45°',round:'Runden'}})+(['chamfer','round'].includes(edge.treatment)?cInput('value',edge.treatment==='round'?'Radius R (mm)':'Fasenmaß (mm)',edge.value,{operation:edge.id}):''):'')+'</div><p class="hint">Gemeinsame Vorgabe: 3-mm-Fase. Eine Projektentscheidung ersetzt die Vorgabe. Anschlussflächen und Passungen bleiben ausgenommen.</p><h4>3 · Erweiterungen</h4>'+c.parts.map(p=>cPartHtml(p)).join('')+'<div class="composerActions">'+Object.entries(C_PART_TYPES).map(([k,label])=>'<button class="ghost" data-c-add-part="'+k+'">'+esc(label)+' ergänzen</button>').join('')+'<button class="secondary" data-c-discuss>Passende Erweiterungen besprechen</button></div><h4>4 · Bearbeitungen und Zubehör</h4>'+c.operations.filter(op=>op.type!=='edge'||op.target!=='*').map(op=>cOperationHtml(op,c)).join('')+'<div class="composerActions"><button class="ghost" data-c-add-operation="bore">Sackloch ergänzen</button><button class="ghost" data-c-add-operation="groove">Nut ergänzen</button><button class="ghost" data-c-add-accessory>Zubehör ergänzen</button></div>'+c.accessories.map(a=>cAccessoryHtml(a)).join('')+'<h4>Gemeinsamer Stand prüfen</h4>'+(qhtml?'<ul>'+qhtml+'</ul>':'<p class="ok notice">Maße und unterstützte Bearbeitungen sind vollständig zugeordnet.</p>')+c.questions.map(q=>'<p>'+esc(q.text)+' <button class="ghost" data-c-resolve="'+q.id+'">Als abgeglichen markieren</button></p>').join('')+'<div class="composerActions"><button class="secondary" id="cConfirm" '+(!o.ready?'disabled':'')+'>Stand prüfen und bestätigen</button><button id="cPdf" '+(!o.ready||c.confirmedRevision!==c.revision?'disabled':'')+'>A4-PDF herunterladen</button><button class="ghost" data-c-go-talk>Im Werkstatt-Talk weiterarbeiten</button></div><p class="hint">'+(c.confirmedRevision===c.revision?'Bestätigter Stand '+c.revision:'Entwurf · noch nicht bestätigt')+' · Längen in mm · PDF-Druck 100 % / Originalgröße.</p><label>Maßstab der Gesamtansichten<select id="cScale">'+Object.entries(DRAWING_SCALES).map(([k,v])=>'<option value="'+k+'" '+((c.viewScale||'auto')===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label><div class="wdPreview" id="cPreview"></div><details><summary>Änderungen nachvollziehen</summary>'+c.history.slice(-8).reverse().map(h=>'<p>Stand '+h.revision+' · '+esc(h.source==='talk'?'Werkstatt-Talk':h.source==='choice'?'Vorschlag ausgewählt':h.source==='migration'?'Übernommener Altstand':'Eingabe')+' · '+esc(h.text||constructionChangesText(c,h.changes||[])||'')+'</p>').join('')+'</details>';
+ box.querySelectorAll('[data-c-field]').forEach(el=>el.onchange=()=>{
+  const key=el.dataset.cField;let value=el.value;if(['fullyInside','centered'].includes(key))value=value===''?null:value==='true';
+  const action=el.dataset.cPart?'update_part':el.dataset.cOperation?'update_operation':el.dataset.cAccessory?'update_accessory':'set_base';
+  cCommit([{action,id:el.dataset.cPart||el.dataset.cOperation||el.dataset.cAccessory,values:{[key]:value}}]);
+ });
+ const pages=constructionPages(c);$('#cPreview').innerHTML=pages.length?pages.map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Konstruktionsstand '+c.revision+', Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'<p class="notice">Die Vorschau entsteht, sobald Länge, Breite und Dicke bekannt sind. Fehlende Maße werden nicht geschätzt.</p>';
+ $('#cScale').onchange=()=>cCommit([{action:'set_view',value:$('#cScale').value}]);
+ $('#cConfirm').onclick=async()=>{if(!constructionCompute(current.construction).ready)return;current.construction.confirmedRevision=current.construction.revision;cSync();renderRecord();await cPersist();};
+ $('#cPdf').onclick=cDownloadPdf;
+}
+function cPartHtml(p){const f=(k,l,opts={})=>cInput(k,l,p[k],{part:p.id,...opts});const isBatten=p.type==='sliding_batten';
+ return '<section class="card"><h4>'+esc(p.name||C_PART_TYPES[p.type])+'</h4><div class="wdFields">'+f('name','Bezeichnung')+f('edge','Bezugskante',{options:C_EDGES})+f('cross',isBatten?'Querdicke der Gratleiste (mm)':p.type==='end_strip'?'Hirnleistenbreite ab Schulter (mm)':'Leistenbreite auf der Fläche (mm)')+f('height',isBatten?'Gesamthöhe einschließlich Grat (mm)':p.type==='end_strip'?'Hirnleistendicke (mm)':'Überstand (mm)')+
+ (isBatten?f('runLength','Länge entlang der Leiste (mm)')+f('edgeDistance','Nutbegrenzung bis Bezugskante (mm)')+f('endInset','Anfangsabstand ab vorn/links (mm)')+f('entrySide','Gratnut zum Einschieben öffnen',{options:{start:'zum Anfang · vorn/links',end:'zum Ende · hinten/rechts'}}):p.type==='end_strip'?f('tenonWidth','Mittlerer Zapfen: Breite (mm)')+f('wedgeMode','Zapfensicherung',{options:{plain:'Ohne Keile',side:'Zwei seitliche Keile',sawn:'Eingesägte Keile · weitere Details nötig'}}):f('direction','Überstand',{options:{above:'nach oben',below:'nach unten'}})+f('span','Leistenlänge folgt',{options:{body:'Brettfläche',overall:'Gesamter Kante'}})+f('joint','Positionierung',{options:{glue:'Stumpf verleimt','round-6':'Runddübel Ø 6 mm und verleimt',biscuit:'Flachdübel und verleimt'}})+(p.joint==='round-6'?f('dowelLength','Dübellänge (mm)')+f('panelInsertion','Einstand ins Grundbrett (mm)'):p.joint==='biscuit'?f('biscuitSize','Flachdübelgröße',{options:{0:'0',10:'10',20:'20'}}):''))+'</div><p class="hint">'+(isBatten?'Gratgeometrie wird aus Brettdicke/3, 75° und Leistendicke berechnet.':'Bekannte Anschlussregeln werden wiederverwendet.')+'</p><button class="ghost" data-c-remove-part="'+p.id+'">Dieses Bauteil entfernen</button></section>';
+}
+function cOperationHtml(op,c){const options=Object.fromEntries([['base','Grundbrett'],...c.parts.map(p=>[p.id,p.name||C_PART_TYPES[p.type]])]);const f=(k,l,opts={})=>cInput(k,l,op[k],{operation:op.id,...opts});
+ return '<section class="card"><h4>'+({bore:'Sackloch / Bohrbild',groove:'Nut',edge:'Abweichende Kantenausführung',end:'Endbearbeitung'}[op.type]||'Bearbeitung')+'</h4><div class="wdFields">'+f('target','Bauteil',{options})+
+ (op.type==='bore'?f('face','Fläche',{options:{top:'Oberseite',bottom:'Unterseite'}})+f('diameter','Durchmesser (mm)')+f('depth','Tiefe (mm)')+f('count','Anzahl'):
+ op.type==='groove'?f('face','Fläche',{options:{inner:'Innenseite'}})+f('width','Nutbreite (mm)')+f('depth','Nuttiefe (mm)')+f('offset','Gratschulter bis Nutoberkante (mm)'):
+ f('treatment','Bearbeitung',{options:{chamfer:'Fasen',round:'Runden',break:'Kanten brechen',none:'Ohne'}})+f('value','Maß / Radius (mm)'))+'</div>'+
+ (op.type==='bore'?'<label>Bohrungsmitten U / V in mm, je eine Position pro Zeile<textarea data-c-positions="'+op.id+'" placeholder="20 / 10\n190 / 10">'+esc((op.positions||[]).map(p=>(p.u??'')+' / '+(p.v??'')).join('\n'))+'</textarea></label><p class="hint">U entlang des Bauteils ab seinem Anfang, V quer dazu ab seiner Kante. Nur tatsächlich festgelegte Positionen eintragen.</p>':'')+'<button class="ghost" data-c-remove-operation="'+op.id+'">Bearbeitung entfernen</button></section>';
+}
+function cAccessoryHtml(a){const f=(k,l,opts={})=>cInput(k,l,a[k],{accessory:a.id,...opts});return '<section class="card"><h4>Zubehör · '+esc(a.name||'noch benennen')+'</h4><div class="wdFields">'+f('name','Bezeichnung')+f('length','Längere Abmessung (mm)')+f('width','Kürzere Abmessung (mm)')+f('height','Höhe (mm)')+f('longAxis','Längere Seite liegt entlang',{options:{x:'X · Brettlänge',y:'Y · Brettbreite'}})+f('insertionAxis','Bewegungsrichtung',{options:{x:'X · Brettlänge',y:'Y · Brettbreite'}})+f('leadingEdge','Vordere Kante beim Einschieben',{options:{short:'Kurze Kante vorn',long:'Lange Kante vorn'}})+f('fullyInside','Soll vollständig unter die Brettfläche passen?',{options:{true:'Ja',false:'Überstand ist vorgesehen'}})+f('centered','Position unter dem Brett',{options:{true:'Mittig',false:'Über Mittelpunktsmaße festlegen'}})+(a.centered===false?f('centerX','Mittelpunkt X (mm)')+f('centerY','Mittelpunkt Y (mm)'):'')+f('topBelow','Oberkante unter Brettunterseite (mm)')+'</div><p class="hint">Das Foto liefert bekannte Außenmaße. Richtung, Einbaulage und fehlende Maße werden ausdrücklich geklärt. Die Brettmaße ändern sich dadurch nicht automatisch.</p><button class="ghost" data-c-remove-accessory="'+a.id+'">Zubehör entfernen</button></section>';}
+async function cDownloadPdf(){const project=current,c=project.construction,revision=c.revision;if(!constructionCompute(c).ready||c.confirmedRevision!==revision)return;const pages=constructionPages(c);if(!pages.length)return;
+ try{const model={ok:true,canonicalPages:pages};const blob=await drawingPdfBlob(model,{title:c.title||'Brettkonstruktion',status:'Stand '+revision});if(current!==project||project.construction.revision!==revision)throw Error('Stand wurde geändert. PDF bitte neu erzeugen.');const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=safeProjectFilename(c.title||'Brettkonstruktion')+'-Stand-'+revision+'-A4.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(url),300000);}catch(e){$('#cStatus').textContent='PDF konnte nicht erstellt werden: '+e.message;}}
+function cAfterRecord(){
+ const active=cHas();for(const key of ['addPurchasedPart']){const el=$('#'+key);if(el)el.hidden=false;}const form=document.querySelector('#purchased .purchaseForm');if(form)form.hidden=false;
+ if($('#cAccessoryLink'))$('#cAccessoryLink').hidden=!active;
+ if(!active){cOfferMigration();return;}
+ document.querySelectorAll('.deletePurchasedPart').forEach(b=>{if(current.purchasedParts?.[Number(b.dataset.i)]?.source==='construction')b.hidden=true;});
+ const c=current.construction,o=constructionCompute(c),plan=constructionPlan(c);$('#recordSummary').textContent=constructionSummary(c);
+ $('#overviewBox').innerHTML='<h3>Gemeinsamer Konstruktionsstand '+c.revision+'</h3><p>'+esc(constructionSummary(c))+'</p><p>Zeichnung, Liste und Anleitung verwenden diesen Stand.</p><ul>'+o.notes.map(n=>'<li>'+esc(n)+'</li>').join('')+'</ul>'+((o.errors.length||o.questions.length)?'<h4>Noch offen</h4><ul>'+[...o.errors,...o.questions.map(q=>q.text)].map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>':'<p class="ok notice">Alle für die unterstützte Darstellung nötigen Angaben sind zugeordnet.</p>')+(current.constructionLegacy?'<details><summary>Frühere Projektbeschreibung zum Abgleich</summary><p>Historischer Stand; keine zweite Quelle für aktuelle Zeichnungsmaße.</p><p>'+esc(current.constructionLegacy.reconstruction?.construction||current.constructionLegacy.analysis?.summary||'')+'</p></details>':'');
+ $('#stepsBox').innerHTML='<h3>Arbeitsschritte · Stand '+c.revision+'</h3>'+(!o.ready?'<p class="notice">Planungsstand mit offenen Angaben. Vor den betroffenen Arbeiten die genannten Punkte klären.</p>':'')+o.steps.map((s,i)=>'<div class="step"><div class="stepnum">'+(i+1)+'</div><p>'+esc(s)+'</p></div>').join('');
+ const refresh=$('#refreshProject');if(refresh)refresh.textContent='Gemeinsamen Stand anzeigen';
+ if(!$('#cAccessoryLink'))$('#purchasedPartsList').insertAdjacentHTML('afterend','<p id="cAccessoryLink">Zubehörmaße und Einbaulage werden im gemeinsamen Brettbaukasten bearbeitet. <button class="ghost" data-c-go-drawing>Zum Konstruktionsstand</button></p>');
+ $('#safetyBox').innerHTML=[...o.errors,...o.warnings].map(t=>'<div class="notice">'+esc(t)+'</div>').join('')||'<p>Vor Fertigung Maße, Material und Passungen am Werkstück prüfen.</p>';
+ if(c.proposals?.length){} // Proposals are stored outside the authoritative construction.
+ const proposals=current.constructionProposals||[];
+ if(proposals.length)$('#chatLog').insertAdjacentHTML('beforeend','<section class="notice"><h3>Vorschläge zur Auswahl</h3>'+proposals.map((p,i)=>'<p><strong>'+esc(p.label)+'</strong><br>'+esc(p.reason)+'</p><button class="secondary" data-c-choice="'+i+'">Diesen Vorschlag übernehmen</button>').join('')+'</section>');
+}
+async function cTalk({openAnswers=[],message=null,reopenQuestion=null}={}){
+ if(busy||reconstructionBusy)return;const project=current,text=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];
+ const answers=openAnswers.filter(a=>a.answer?.trim());if(!text&&!pics.length&&!answers.length)return;
+ const q=constructionCompute(project.construction).questions;
+ if(answers.length&&!text&&answers.every(a=>isDeferralAnswer(a.answer))){const commands=answers.map(a=>q.find(item=>item.text===a.question)).filter(Boolean).map(a=>({action:'defer_question',id:a.id}));if(commands.length){await cCommit(commands,{project,source:'talk',text:'Später klären'});project.chat.push({role:'assistant',text:'Die Punkte sind vorgemerkt. Bekannte Maße bleiben erhalten; die betroffenen Arbeiten bleiben bis zur Klärung offen.'});renderRecord();await cPersist(project);return;}}
+ if(reopenQuestion){const question=q.find(item=>item.text===reopenQuestion);if(question)await cCommit([{action:'reopen_question',id:question.id}],{project,source:'talk'});}
+ const userText=[text,...answers.map(a=>a.question+'\nDeine Antwort: '+a.answer)].filter(Boolean).join('\n\n')||(pics.length?'Bitte die bemaßten Bilder auswerten und erkannte Angaben zur Übernahme vorschlagen.':'');
+ if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];}
+ project.chat.push({role:'user',text:userText,photoIds:pics.map(p=>p.id)});if(message===null)$('#chatInput').value='';autoGrowChatInput();
+ const request=JSON.parse(JSON.stringify(project.construction)),revision=request.revision;setTalkBusy(true);renderTalk();
+ try{
+  const response=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({construction:request,images:project.photos.map(p=>p.dataUrl),chat:project.chat.slice(-12),openAnswers:answers,profile:projectProfile(project)})});if(!response.ok)throw Error(await response.text());const d=await response.json();
+  if(d.constructionProtocol!==1)throw Error('Für den gemeinsamen Konstruktionsstand muss auch der Entwickler-Server auf dev38 aktualisiert werden. Die bisherigen Maße bleiben erhalten.');
+  if(project.construction.revision!==revision||d.baseRevision!==revision)throw Error('Der Stand wurde während des Gesprächs geändert. Die Antwort wurde nicht über deine neueren Eingaben geschrieben. Bitte am aktuellen Stand erneut besprechen.');
+  const result=constructionValidate(d.construction);if(result.revision<revision||result.revision>revision+1)throw Error('Ungültiger Änderungsstand in der Antwort.');
+  project.construction=result;project.constructionProposals=Array.isArray(d.proposals)?d.proposals:[];cSync(project);
+  project.chat.push({role:'assistant',text:d.reply||'Stand unverändert.',drawingChange:d.changeStatus==='applied'});
+ }catch(e){project.chat.push({role:'assistant',text:'Nicht übernommen: '+e.message});}
+ finally{await cPersist(project);setTalkBusy(false);if(current===project){renderRecord();switchTab('talkPane');}await updateSaved();}
+}
+async function cRefresh(){cSync();renderRecord();show('record');await cPersist();}
+document.addEventListener('change',e=>{const el=e.target;if(!cHas()||!el.dataset?.cPositions)return;const rows=el.value.trim()?el.value.split(/\n|;/).map(s=>s.trim()).filter(Boolean):[];
+ const positions=[];for(const row of rows){const m=/^\s*(\d+(?:[.,]\d+)?)\s*[/|]\s*(\d+(?:[.,]\d+)?)\s*$/.exec(row);if(!m){$('#cStatus').textContent='Bohrpositionen als U / V eingeben, beispielsweise 20 / 10.';return;}positions.push({u:Number(m[1].replace(',','.')),v:Number(m[2].replace(',','.'))});}
+ cCommit([{action:'update_operation',id:el.dataset.cPositions,values:{positions,count:current.construction.operations.find(op=>op.id===el.dataset.cPositions)?.count??(positions.length||null)}}]);});
+document.addEventListener('click',async e=>{
+ const button=e.target.closest?.('[data-c-migrate],[data-c-new],[data-c-add-part],[data-c-remove-part],[data-c-add-operation],[data-c-remove-operation],[data-c-add-accessory],[data-c-remove-accessory],[data-c-discuss],[data-c-go-talk],[data-c-go-drawing],[data-c-choice],[data-c-resolve]');if(!button)return;
+ if(button.hasAttribute('data-c-new'))return cNewBoard();if(button.hasAttribute('data-c-migrate'))return cMigrate();if(!cHas())return;
+ if(button.dataset.cResolve)return cCommit([{action:'resolve_question',id:button.dataset.cResolve}]);
+ if(button.dataset.cAddPart){const p=constructionPartDefaults(button.dataset.cAddPart,newId());delete p.id;return cCommit([{action:'add_part',id:newId(),values:p}]);}
+ for(const[k,action]of [['cRemovePart','remove_part'],['cRemoveOperation','remove_operation'],['cRemoveAccessory','remove_accessory']])if(button.dataset[k])return cCommit([{action,id:button.dataset[k]}]);
+ if(button.dataset.cAddOperation){const type=button.dataset.cAddOperation;return cCommit([{action:'add_operation',id:newId(),values:{type,target:current.construction.parts[0]?.id||'base',face:type==='bore'?'bottom':'inner',...(type==='groove'?{run:'through',offset:null,width:null,depth:null}:{diameter:null,depth:null,positions:[],count:null})}}]);}
+ if(button.hasAttribute('data-c-add-accessory'))return cCommit([{action:'add_accessory',id:newId(),values:{name:'Zubehör',length:null,width:null,height:null,longAxis:null,insertionAxis:null,leadingEdge:null,fullyInside:null,centered:null,topBelow:null}}]);
+ if(button.hasAttribute('data-c-go-talk')||button.hasAttribute('data-c-discuss')){switchTab('talkPane');if(button.hasAttribute('data-c-discuss'))$('#chatInput').value='Welche Erweiterungen passen zu meiner vorhandenen Brettkonstruktion? Bitte erkläre mir die Möglichkeiten und schlage passende Varianten zur Auswahl vor.';$('#chatInput').focus();return;}
+ if(button.hasAttribute('data-c-go-drawing'))return switchTab('woodDrawingPane');
+ if(button.dataset.cChoice!==undefined){const p=current.constructionProposals?.[Number(button.dataset.cChoice)];if(!p)return;if(p.revision!==current.construction.revision){$('#chatInput').value='Bitte passe deine Vorschläge an meinen aktuellen Konstruktionsstand an.';switchTab('talkPane');return;}
+  const result=await cCommit(p.commands,{source:'choice',text:p.label});if(result){current.constructionProposals=[];current.chat.push({role:'user',text:'Ich übernehme den Vorschlag: '+p.label});current.chat.push({role:'assistant',text:'Übernommen: '+p.label+'. Gemeinsamer Stand '+current.construction.revision+'. Bitte die Vorschau und noch offenen Angaben prüfen.',drawingChange:true});renderRecord();await cPersist();}}
+});
+
+document.addEventListener('click',e=>{const b=e.target.closest?.('[data-c-family-legacy]');if(!b)return;resetProject('develop');renderRecord();show('record');switchTab('woodDrawingPane');wdBeginFromProject(b.dataset.cFamilyLegacy==='frame'?'bread-frame-v1':'carcass-v1');});
+document.addEventListener('click',e=>{if(!cHas()||e.target?.id!=='applyProjectMeta')return;e.preventDefault();e.stopImmediatePropagation();current.customDescription=$('#projectDescriptionEdit').value;cCommit([{action:'set_title',value:$('#projectTitleEdit').value}]);},true);
+
+document.addEventListener('click',e=>{if(!cHas())return;const b=e.target.closest?.('.deletePurchasedPart');if(b&&current.purchasedParts?.[Number(b.dataset.i)]?.source==='construction'){e.stopImmediatePropagation();switchTab('woodDrawingPane');}},true);
+
+function renderRecord(){if(cHas(current))cSync(current);
   const drawingSave=arguments[0]?.drawingSave===true;
   const r=current.reconstruction||{};
   const refreshBtn=$('#refreshProject');
@@ -3598,7 +4085,7 @@ if(refreshBtn){
   $('#toolsBox').innerHTML=(r.tools||[]).map(x=>`<p>• ${escGerman(x)}</p>`).join('')||'<p>Noch keine Angaben.</p>';
   $('#stepsBox').innerHTML=wdSheetGeometry(current)+wdSolidGlueNote(current)+((sheetState(current).current&&!sheetState(current).open.length?(r.steps||[]):[]).map((s,i)=>`<div class="step"><div class="stepnum">${i+1}</div><p>${escGerman(s)}</p></div>`).join('')||'<p>Vor der Bauanleitung bitte die offenen Punkte im Werkstatt-Talk klären und den Entwurf aktualisieren.</p>');
   $('#safetyBox').innerHTML=(r.safety_notes||[]).map(x=>`<div class="notice">${escGerman(x)}</div>`).join('')||'<div class="ok notice">Keine besonderen Hinweise ermittelt.</div>';
-  $('#projectStatus').textContent=`${current.photos.length} Foto${current.photos.length===1?'':'s'} · ${(current.sketches||[]).length} Skizze${(current.sketches||[]).length===1?'':'n'} · ${sheetState(current).open.length} offene Punkte · ${current.chat.length} Talk-Beiträge`;
+  $('#projectStatus').textContent=`${current.photos.length} Foto${current.photos.length===1?'':'s'} · ${(current.sketches||[]).length} Skizze${(current.sketches||[]).length===1?'':'n'} · ${sheetState(current).open.length} offene Punkte · ${current.chat.length} Talk-Beiträge`;cAfterRecord();
 }
 function switchTab(id){if(id==='material'&&cutPlannerNeedsRefresh){renderCutPlanner();cutPlannerNeedsRefresh=false;}$$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.pane===id));$$('.pane').forEach(x=>x.classList.toggle('on',x.id===id));const ww=$('#workWindow');if(!ww)return;if(id==='talkPane'){requestAnimationFrame(()=>{ww.scrollTop=ww.scrollHeight})}else{ww.scrollTo({top:0,behavior:'smooth'})}}document.addEventListener('click',e=>{const t=e.target.closest?.('.tab[data-pane]');if(t) switchTab(t.dataset.pane)});
 function calcView(c){if(!c)return'';if(c.status&&c.status!=='ok')return `<div class="notice">${esc(c.message||'Rechnung bitte prüfen.')}</div>`;if(c.type==='linear_layout')return `<div class="calc"><strong>Werkstattrechnung</strong><br>${esc(c.count)} Plätze · Brettlänge ${esc(c.length_mm)} mm<br>Mitte zu Mitte: ${esc(c.spacing_mm)} mm · freier Zwischenraum: ${esc(c.edge_gap_mm)} mm<br>Freier Endrand: ${esc(c.end_margin_mm)} mm · Mittelpunkte ab links: ${esc(c.positions_mm?.join(' / '))} mm</div>`;if(c.type==='circle_pattern')return `<div class="calc"><strong>Werkstattrechnung</strong><br>Teilkreis Ø ${c.pitch_diameter_mm} mm · Umfang ${c.circumference_mm} mm<br><strong>${c.count} Bohrungen</strong> · tatsächliche Teilung ${c.actual_center_pitch_mm} mm · Winkel ${c.angle_deg}°${c.actual_edge_gap_mm!=null?` · freier Abstand ${c.actual_edge_gap_mm} mm`:''}</div>`;if(c.type==='equal_spacing')return `<div class="calc"><strong>Werkstattrechnung</strong><br>${esc(c.count)} Positionen · Abstand der äußeren Mittelpunkte ${esc(c.length_mm)} mm → ${esc(c.spacing_mm)} mm Mitte zu Mitte${c.mode!=='center_span'?' · Altrechnung: Bezug prüfen':''}</div>`;if(c.type==='rectangle')return `<div class="calc"><strong>Werkstattrechnung</strong><br>Fläche ${c.area_m2} m²${c.volume_l!=null?` · Volumen ${c.volume_l} l`:''}</div>`;return''}
@@ -3719,7 +4206,7 @@ if($('#backFloatBtn'))$('#backFloatBtn').onclick=goBackView;
 let busy=false;
 document.addEventListener('click',e=>{if(e.target?.closest?.('[data-talk-drawing]'))switchTab('woodDrawingPane')});
 function setTalkBusy(on){busy=on;if(on&&speechRecording)stopSpeech();const w=$('#talkWorking'),send=$('#sendChat'),accept=$('#acceptOpenAnswers'),speech=$('#speechBtn'),speechFloat=$('#speechFloatBtn');if(w)w.classList.toggle('on',on);if(send){send.disabled=on;send.textContent=on?'Wird geprüft …':'Beitrag senden'}if(accept)accept.disabled=on;$$('.reopenDeferred,.deferOpen').forEach(el=>el.disabled=on);$$('.openAnswer').forEach(el=>el.readOnly=on);if(speech)speech.disabled=on;if(speechFloat)speechFloat.disabled=on;['talkCameraInput','talkLibraryInput'].forEach(id=>$('#'+id).disabled=on)}
-async function talk({openAnswers=[],message=null,reopenQuestion=null}={}){if(busy||reconstructionBusy)return;const project=current;const t=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];if(!t&&!pics.length&&!openAnswers.length)return alert('Bitte Text, Foto oder Antwort ergänzen.');const photoIds=pics.map(p=>p.id);if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];renderAllPhotos()}captureOpenAnswerDrafts(project);project.projectDirty=true;const answerText=openAnswers.map(x=>x.question+'\nDeine Antwort: '+x.answer).join('\n\n');const userText=[t,answerText].filter(Boolean).join('\n\n')||(pics.length?'Foto als Antwort hinzugefügt.':'Antworten zu offenen Punkten.');project.chat.push({role:'user',text:userText,photoIds});const drawingChange=wdApplyTalkDrawing(project,userText);if(message===null)$('#chatInput').value='';autoGrowChatInput();setTalkBusy(true);renderTalk();setTalkBusy(true);try{const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({images:project.photos.map(p=>p.dataUrl),knowledge:wdKnowledge(project),analysis:project.analysis||{},chat:project.chat,openAnswers,reopenQuestion,profile:projectProfile(project),sketches:sketchContext(),purchasedParts:project.purchasedParts||[]})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.analysis?.stateVersion!==2||d.analysis?.deferralVersion!==1)throw Error('Entwickler-Server benötigt dev17; bisherige Projektdaten bleiben erhalten.');project.stateHistory=[...(project.stateHistory||[]),{analysis:project.analysis,at:new Date().toISOString()}].slice(-10);project.analysis=d.analysis;project.openAnswerDrafts=(project.openAnswerDrafts||[]).filter(draft=>!openAnswers.some(sent=>sent.question===draft.question&&sent.answer===draft.answer.trim()));if(Array.isArray(d.purchased_parts_updates))mergePurchasedParts(d.purchased_parts_updates,project);project.chat.push({role:'assistant',text:d.reply||'Projektstand aktualisiert.',calculation:d.calculation||null});if(project.reconstruction?.decision_support)project.reconstruction.decision_support=[];project.projectDirty=true;if(current===project)switchTab('talkPane')}catch(e){alert('Werkstatt-Talk fehlgeschlagen: '+e.message)}finally{wdFinalizeTalkDrawing(project,drawingChange);if(current===project)renderRecord();try{await dbPutProject(project);await updateSaved()}catch(e){alert('Gespräch konnte nicht gespeichert werden. Bitte erneut speichern.')}setTalkBusy(false)}}
+async function talk({openAnswers=[],message=null,reopenQuestion=null}={}){if(cHas(current))return cTalk({openAnswers,message,reopenQuestion});if(busy||reconstructionBusy)return;const project=current;const t=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];if(!t&&!pics.length&&!openAnswers.length)return alert('Bitte Text, Foto oder Antwort ergänzen.');const photoIds=pics.map(p=>p.id);if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];renderAllPhotos()}captureOpenAnswerDrafts(project);project.projectDirty=true;const answerText=openAnswers.map(x=>x.question+'\nDeine Antwort: '+x.answer).join('\n\n');const userText=[t,answerText].filter(Boolean).join('\n\n')||(pics.length?'Foto als Antwort hinzugefügt.':'Antworten zu offenen Punkten.');project.chat.push({role:'user',text:userText,photoIds});const drawingChange=wdApplyTalkDrawing(project,userText);if(message===null)$('#chatInput').value='';autoGrowChatInput();setTalkBusy(true);renderTalk();setTalkBusy(true);try{const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({images:project.photos.map(p=>p.dataUrl),knowledge:wdKnowledge(project),analysis:project.analysis||{},chat:project.chat,openAnswers,reopenQuestion,profile:projectProfile(project),sketches:sketchContext(),purchasedParts:project.purchasedParts||[]})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.analysis?.stateVersion!==2||d.analysis?.deferralVersion!==1)throw Error('Entwickler-Server benötigt dev17; bisherige Projektdaten bleiben erhalten.');project.stateHistory=[...(project.stateHistory||[]),{analysis:project.analysis,at:new Date().toISOString()}].slice(-10);project.analysis=d.analysis;project.openAnswerDrafts=(project.openAnswerDrafts||[]).filter(draft=>!openAnswers.some(sent=>sent.question===draft.question&&sent.answer===draft.answer.trim()));if(Array.isArray(d.purchased_parts_updates))mergePurchasedParts(d.purchased_parts_updates,project);project.chat.push({role:'assistant',text:d.reply||'Projektstand aktualisiert.',calculation:d.calculation||null});if(project.reconstruction?.decision_support)project.reconstruction.decision_support=[];project.projectDirty=true;if(current===project)switchTab('talkPane')}catch(e){alert('Werkstatt-Talk fehlgeschlagen: '+e.message)}finally{wdFinalizeTalkDrawing(project,drawingChange);if(current===project)renderRecord();try{await dbPutProject(project);await updateSaved()}catch(e){alert('Gespräch konnte nicht gespeichert werden. Bitte erneut speichern.')}setTalkBusy(false)}}
 document.addEventListener('click',e=>{const button=e.target.closest?.('.deferOpen');if(!button||busy||reconstructionBusy)return;const question=current.analysis?.unknown?.[Number(button.dataset.open)];if(question)talk({openAnswers:[{question,answer:'Wird später geklärt.'}],message:''})});
 document.addEventListener('click',e=>{const button=e.target.closest?.('.reopenDeferred');if(!button||busy||reconstructionBusy)return;const item=deferredItems(current.analysis?.deferred)[Number(button.dataset.deferred)];if(item)talk({message:'Ich möchte diesen vorgemerkten Punkt erneut besprechen: '+item.question,reopenQuestion:item.question})});
 $('#sendChat').onclick=()=>talk();document.addEventListener('click',e=>{if(e.target?.id==='acceptOpenAnswers'){const u=(current.analysis?.unknown||[]).slice(0,3);const answers=$$('.openAnswer').map(el=>({question:u[+el.dataset.i],answer:el.value.trim()})).filter(x=>x.answer);talk({openAnswers:answers})}});
