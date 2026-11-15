@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev42</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev43</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev42 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev43 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev42';
+const APP_VERSION='0.9.21-dev43';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1335,8 +1335,8 @@ function buildFrameConstruction(input){
   const hLength=butt&&throughVertical?W-2*V+2*extension:W;
   parts.unshift({id:'vertical',name:'Aufrechtes Rahmenholz',quantity:2,length:vLength,width:V,thickness:D,material:p.material,note:'Längsfaser; '+(butt&&!throughVertical?'Schultermaß '+ff(H-2*B)+' mm; Nutzapfen im Zuschnitt enthalten.':'Außenlänge einschließlich Eckverbindung.')},{id:'horizontal',name:'Waagerechtes Rahmenholz',quantity:2,length:hLength,width:B,thickness:D,material:p.material,note:'Längsfaser; '+(butt&&throughVertical?'Schultermaß '+ff(W-2*V)+' mm; '+(extension?'Nutzapfen im Zuschnitt enthalten.':'stumpfer Anschluss.'):'Außenlänge einschließlich Eckverbindung.')});
  }
- const scale=p.viewScale==='auto'?[1,.5,.2,.1,.05,.02,.01].find(s=>W*s<=165&&H*s<=135):1/Number(p.viewScale);
- if(!scale||W*scale>165||H*scale>135)errors.push('Gesamtansicht passt mit diesem Maßstab nicht auf A4.');
+ const scale=p.viewScale==='auto'?[1,.5,.2,.1,.05,.02,.01].find(s=>(W+D)*s+13<=134&&(H+D)*s+20<=145):1/Number(p.viewScale);
+ if(!scale||(W+D)*scale+13>134||(H+D)*scale+20>145)errors.push('Gesamtansicht passt mit diesem Maßstab nicht auf A4.');
  const notes=frameRuleNotes(p,def,d);
  return {kind:FRAME_KIND,p,def,d,scale,parts,purchased,notes,errors:[...new Set(errors)],pending:[...new Set(pending)],warnings,ok:!errors.length,confirmable:!errors.length&&!pending.length};
 }
@@ -1356,65 +1356,89 @@ function frameRuleNotes(p,def=FRAME_JOINTS[p.joint],d={}){
  return notes;
 }
 function framePlan(m){return {title:'Rahmen · '+m.def?.name,summary:m.notes.join(' '),materials:m.purchased,cutlist:m.parts.map(p=>({part:p.name,qty:p.quantity,length_mm:p.length,width_mm:p.width,thickness_mm:p.thickness,material:p.material,direction_basis:p.id==='loose'?'unknown':'fiber',note:p.note})),steps:['Rahmenhölzer auf eingegebene Maße zuschneiden und Bezugsflächen kennzeichnen.',...m.notes,'Verbindungen zunächst trocken zusammenstecken und Rahmen auf Rechtwinkligkeit prüfen. Erst nach fachlicher Prüfung verleimen.'],open_points:[...m.errors,...m.pending]};}
-// Parametric construction sheets: outlines and structural layer diagrams with explicit labels.
-function frameConstructionPages(m,{title='Rahmenkonstruktion',status='Konstruktionsentwurf · fachlich prüfen'}={}){
- if(!m.ok) return [];
- const {p,def,d}=m,W=p.width,H=p.height,V=p.verticalWidth,B=p.horizontalWidth,D=p.thickness;
- const tx=(x,y,s,cls='')=>`<text x="${x}" y="${y}" class="${cls}">${fe(s)}</text>`;
- const ln=(x,y,X,Y,cls='')=>`<path d="M${x},${y} L${X},${Y}" class="${cls}"/>`;
- const rc=(x,y,w,h,cls='')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`;
- const wrap=(body,n,heading)=>`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><style>text{font:3px Arial;fill:#17261e}path,rect,circle{fill:none;stroke:#233a2d;stroke-width:.3}.wood{fill:#f5eddb}.horizontal{fill:#e1eadf}.connector{fill:#b7c8a7}.hidden{stroke-dasharray:2 1}.small{font-size:2.6px}.title{font-size:4px;font-weight:bold}.dim{stroke:#777;stroke-width:.2}.cut{fill:#fff}.faint{stroke:#aaa;stroke-width:.2}</style><rect width="297" height="210" style="fill:white;stroke:none"/>${rc(6,5,285,200)}${tx(12,13,'look, talk ’n build · '+title,'title')}${tx(12,21,heading)}${ln(6,25,291,25)}${body}${ln(6,196,291,196)}${tx(12,202,status+' · Blatt '+n+'/3 · mm · Druck 100 %','small')}</svg>`;
- const dim=(x,y,X,Y,label)=>ln(x,y,X,Y,'dim')+ln(x-1,y-1,x+1,y+1,'dim')+ln(X-1,Y-1,X+1,Y+1,'dim')+tx((x+X)/2+1,(y+Y)/2-1,label,'small');
- const corner=(x,y,s,layer='front')=>{
-  const vv=V*s,bb=B*s,ext=Math.max(V,B)*s*.65;let out=rc(x,y,vv,bb+ext,'wood')+rc(x+vv,y,ext,bb,'horizontal');
-  let style='';let mode='square';
-  if(def.mitre)mode='mitre';if(p.joint==='lap')mode=layer==='front'?'horizontal':'vertical';
-  if(p.joint==='lap_mitre'&&layer!==(p.mitreFace==='front'?'front':'back'))mode=p.through==='vertical'?'vertical':'horizontal';
-  if(p.joint.startsWith('tenon'))mode=layer==='middle'?(p.through==='vertical'?'horizontal':'vertical'):p.joint==='tenon_mitre'?'mitre':(p.through==='vertical'?'vertical':'horizontal');
-  if(def.butt)mode=p.through==='vertical'?'vertical':'horizontal';
-  if(mode==='mitre')out+=`<path d="M${x},${y} L${x+vv},${y} L${x+vv},${y+bb} Z" class="horizontal"/>`+ln(x,y,x+vv,y+bb,style);
-  if(mode==='vertical'||mode==='square')out+=rc(x,y,vv,bb,'wood')+ln(x+vv,y,x+vv,y+bb);
-  if(mode==='horizontal')out+=rc(x,y,vv,bb,'horizontal')+ln(x,y+bb,x+vv,y+bb);
-  if(def.loose&&layer==='middle'){const c=V*s/2,t=p.looseDepth*s/Math.SQRT2;out+=`<path d="M${x+c-t},${y+c-t} L${x+c+t},${y+c-t} L${x+c-t},${y+c+t} Z" class="connector"/>`;}
-  if(def.connector==='dowel'&&layer==='middle'){
-   const r=p.connectorDiameter*s/2,depth=d.boreDepth*s;
-   for(const a of d.axes){if(def.mitre){const c=a*s/Math.SQRT2;out+=`<g transform="translate(${x+c} ${y+c}) rotate(-45)">${rc(-depth,-r,2*depth,2*r,'hidden')}${rc(-d.insertion*s,-r,2*d.insertion*s,2*r,'connector')}</g>`;}
-   else if(p.through==='vertical')out+=rc(x+vv-depth,y+a*s-r,2*depth,2*r,'hidden')+rc(x+vv-d.insertion*s,y+a*s-r,2*d.insertion*s,2*r,'connector');
-   else out+=rc(x+a*s-r,y+bb-depth,2*r,2*depth,'hidden')+rc(x+a*s-r,y+bb-d.insertion*s,2*r,2*d.insertion*s,'connector');}
-  }
-  if(def.connector==='biscuit'&&layer==='middle'){const c=p.biscuitCenter*s/Math.SQRT2;out+=`<g transform="translate(${x+c} ${y+c}) rotate(45)">${rc(-p.biscuitSlotLength*s/2,-p.biscuitDepth*s,p.biscuitSlotLength*s,2*p.biscuitDepth*s,'hidden')}</g>`;}
-  if(d.profile){const a=d.profile.depth*s;out+=ln(x+vv-a,y+bb,x+vv-a,y+bb+ext,'hidden')+ln(x+vv,y+bb-a,x+vv+ext,y+bb-a,'hidden');}
-  return out;
- };
- const s=m.scale,x=24,y=39,w=W*s,h=H*s;let a=rc(x,y,w,h,'wood')+rc(x+V*s,y+B*s,w-2*V*s,h-2*B*s,'cut');
- for(const [cx,cy,sx,sy]of [[x,y,1,1],[x+w,y,-1,1],[x,y+h,1,-1],[x+w,y+h,-1,-1]]){
-  const mode=p.joint==='lap_mitre'&&p.mitreFace==='back'?(p.through==='vertical'?'vertical':'horizontal'):def.mitre?'mitre':def.butt?(p.through==='vertical'?'vertical':'horizontal'):p.joint==='lap'?'horizontal':p.through==='vertical'?'vertical':'horizontal';
-  a+=mode==='mitre'?ln(cx,cy,cx+sx*V*s,cy+sy*B*s):mode==='vertical'?ln(cx+sx*V*s,cy,cx+sx*V*s,cy+sy*B*s):ln(cx,cy+sy*B*s,cx+sx*V*s,cy+sy*B*s);
+// Approved compact A4 arrangement: overall views, linked cuts and dimension chains.
+function frameConstructionPages(m,{title='Rahmenkonstruktion',status='Konstruktionsentwurf'}={}){
+ if(!m.ok)return [];
+ const {p,def,d}=m,{width:W,height:H,verticalWidth:V,horizontalWidth:B,thickness:D}=p,s=m.scale;
+ const n=v=>Number(v.toFixed(4)),e=fe,f=ff;
+ const line=(x,y,X,Y,cls='')=>`<path d="M${n(x)},${n(y)} L${n(X)},${n(Y)}" class="${cls}"/>`;
+ const rect=(x,y,w,h,cls='')=>`<rect x="${n(x)}" y="${n(y)}" width="${n(w)}" height="${n(h)}" class="${cls}"/>`;
+ const text=(x,y,t,cls='small',anchor='start')=>`<text x="${n(x)}" y="${n(y)}" class="${cls}" text-anchor="${anchor}">${e(t)}</text>`;
+ const dh=(x,X,y,o,label)=>line(x,o,x,y+1,'dim')+line(X,o,X,y+1,'dim')+line(x,y,X,y,'dim')+line(x-1,y-1,x+1,y+1,'dim')+line(X-1,y-1,X+1,y+1,'dim')+text((x+X)/2,y-1.5,label,'measure','middle');
+ const dv=(y,Y,x,o,label)=>line(o,y,x+1,y,'dim')+line(o,Y,x+1,Y,'dim')+line(x,y,x,Y,'dim')+line(x-1,y-1,x+1,y+1,'dim')+line(x-1,Y-1,x+1,Y+1,'dim')+`<text transform="translate(${n(x-1.5)} ${n((y+Y)/2)}) rotate(-90)" class="measure" text-anchor="middle">${e(label)}</text>`;
+ const arrow=(x,y,dx,dy)=>line(x-dx*4,y-dy*4,x,y,'cutmark')+`<path d="M${n(x)},${n(y)} L${n(x-dx*2-dy*.6)},${n(y-dy*2+dx*.6)} L${n(x-dx*2+dy*.6)},${n(y-dy*2-dx*.6)} Z" class="arrow"/>`;
+ const waveH=(x,y,w)=>`<path d="M${n(x-1)},${n(y)} C${n(x+w*.15)},${n(y+1.1)} ${n(x+w*.22)},${n(y-1.1)} ${n(x+w*.35)},${n(y)} S${n(x+w*.62)},${n(y-.8)} ${n(x+w*.75)},${n(y)} S${n(x+w*.92)},${n(y-.7)} ${n(x+w+1)},${n(y)}" class="break"/>`;
+ const waveV=(x,y,h)=>`<path d="M${n(x)},${n(y-1)} C${n(x-1)},${n(y+h*.15)} ${n(x+1)},${n(y+h*.22)} ${n(x)},${n(y+h*.35)} S${n(x+.8)},${n(y+h*.62)} ${n(x)},${n(y+h*.75)} S${n(x+.7)},${n(y+h*.92)} ${n(x)},${n(y+h+1)}" class="break"/>`;
+ // Ownership in the joint for a section through the overlap. Profiles remain reviewable.
+ function owner(x,y,z){
+  let mode=def.mitre?'mitre':p.through==='vertical'?'vertical':'horizontal';
+  if(p.joint==='lap')mode=z<D/2?'horizontal':'vertical';
+  if(p.joint==='lap_mitre'){const front=p.mitreFace==='front';mode=(front?z<D/2:z>D/2)?'mitre':p.through==='vertical'?'vertical':'horizontal';}
+  if(p.joint.startsWith('tenon'))mode=z>D/3&&z<2*D/3?(p.through==='vertical'?'horizontal':'vertical'):p.joint==='tenon_mitre'?'mitre':p.through==='vertical'?'vertical':'horizontal';
+  return mode==='mitre'?(y/B<x/V?'horizontal':'vertical'):mode;
  }
- if(d.profile){const q=d.profile.depth*s;a+=rc(x+V*s-q,y+B*s-q,w-2*V*s+2*q,h-2*B*s+2*q,'hidden');}
- a+=dim(x,y-7,x+w,y-7,ff(W))+dim(x-9,y,x-9,y+h,ff(H))+tx(x,y+h+7,'Lichte Öffnung '+ff(d.openingWidth)+' × '+ff(d.openingHeight)+' mm','small');
- a+=tx(207,39,'Rahmenhölzer','title')+tx(207,48,'Aufrecht: B = '+ff(V))+tx(207,55,'Waagerecht: B = '+ff(B))+tx(207,62,'D = '+ff(D))+tx(207,69,'Material: '+p.material)+tx(207,79,'Fasern längs der Hölzer','small')+tx(207,90,'Verbindung an allen 4 Ecken','small')+tx(207,100,'Gesamtansicht M 1:'+ff(1/s),'small');
- const pages=[wrap(a,1,'Gesamtansicht · Nr. '+def.number+' · '+def.name)];
- const ds=[1,.5,.2,.1,.05].find(v=>Math.max(V,B)*1.65*v<68)||.02;let b='';
- ['front','middle','back'].forEach((layer,i)=>{const xx=18+i*92;b+=tx(xx,35,['Vorderfläche','Verbindungsebene (schematisch)','Rückfläche'][i],'small')+corner(xx,45,ds,layer)+tx(xx,45+Math.max(V,B)*1.65*ds+8,'B aufrecht '+ff(V)+' · B waagerecht '+ff(B),'small');});
- b+=tx(18,144,'Eckdetails M 1:'+ff(1/ds)+' · Farben kennzeichnen die beiden Rahmenhölzer.','small');
- b+=tx(18,151,'Mittlere Ansicht: Verbindungsebene; Tiefen und Dickenaufteilung siehe Blatt 3.','small');
- if(d.profile)b+=tx(18,158,'Gestrichelte Linien: innere Nut- / Falzkanten. Brüstungen anhand Referenzzeichnung prüfen.','small');
- b+=tx(18,174,'Konstruktionsdarstellung zur fachlichen Prüfung; keine ungeprüfte Fertigungsfreigabe.','small');
- pages.push(wrap(b,2,'Eckverbindung · Vorderseite, Verbindungsebene, Rückseite'));
- let c='',yy=35;const lines=[...m.notes,...m.pending.map(v=>'OFFEN: '+v),...m.warnings];
- const split=(text,max=108)=>{const words=text.split(' '),ls=[];let line='';for(const word of words){if((line+' '+word).length>max){ls.push(line);line='';}line+=(line?' ':'')+word;}if(line)ls.push(line);return ls;};
- for(const note of lines)for(const line of split(note)){c+=tx(15,yy,line,'small');yy+=4.3;}
- const sy=Math.max(yy+4,104),cs=[1,.5,.2,.1,.05,.02].find(v=>Math.max(V,B)*v<=44&&D*v<=28)||.01,px=18,py=sy;
- c+=tx(px,py-3,'Querschnitt Rahmenholz · M 1:'+ff(1/cs),'small')+rc(px,py,V*cs,D*cs,'wood');
- if(def.division)for(let i=1;i<def.division;i++)c+=ln(px,py+D*cs*i/def.division,px+V*cs,py+D*cs*i/def.division,'hidden');
- if(d.profile){const pr=d.profile,off=p.profileFace==='front'?pr.offset:D-pr.offset-pr.width;c+=rc(px+(V-pr.depth)*cs,py+off*cs,pr.depth*cs,pr.width*cs,'cut');}
- if(d.rows)for(const z of d.rows)c+=ln(px,py+z*cs,px+V*cs,py+z*cs,'hidden');
- c+=dim(px,py+D*cs+6,px+V*cs,py+D*cs+6,'B = '+ff(V))+dim(px-5,py,px-5,py+D*cs,'D = '+ff(D));
- let ty=sy+2;for(const part of m.parts){c+=tx(92,ty,part.quantity+' × '+part.name+' · '+[part.length,part.width,part.thickness].map(ff).join(' × '),'small');ty+=6;}
- for(const part of m.purchased){for(const line of split(part.quantity+' × '+part.item+' · '+part.spec,70)){c+=tx(92,ty,line,'small');ty+=4.5;}}
- c+=tx(15,187,'Offene Regeln bleiben offen. Konturen und Brüstungen mit den beigefügten Vorlagen abgleichen.','small');
- pages.push(wrap(c,3,'Verbindungsregeln · Querschnitt · Stückliste'));return pages;
+ const x=24,y=44,w=W*s,h=H*s,t=D*s,v=V*s,b=B*s;
+ let a=rect(x,y,w,h,'wood')+rect(x+v,y+b,w-2*v,h-2*b,'white');
+ for(const [cx,cy,sx,sy]of [[x,y,1,1],[x+w,y,-1,1],[x,y+h,1,-1],[x+w,y+h,-1,-1]]){
+  const front=owner(V/2,B/2,.00001),mitre=def.mitre&&!(p.joint==='lap_mitre'&&p.mitreFace==='back');
+  a+=mitre?line(cx,cy,cx+sx*v,cy+sy*b):front==='vertical'?line(cx+sx*v,cy,cx+sx*v,cy+sy*b):line(cx,cy+sy*b,cx+sx*v,cy+sy*b);
+ }
+ if(d.profile){const depth=d.profile.depth*s;a+=rect(x+v-depth,y+b-depth,w-2*v+2*depth,h-2*b+2*depth,'hidden');}
+ a+=dh(x,x+w,35,y,f(W))+dv(y,y+h,15,x,f(H));
+ if(v>=4)a+=dh(x,x+v,40,y,f(V));if(b>=4)a+=dv(y,y+b,x+v+5,x+v,f(B));
+ a+=text(x,y+h+6,'Vorderansicht · M 1:'+f(1/s))+text(x,y+h+t+24,'Lichte Öffnung '+f(W-2*V)+' × '+f(H-2*B));
+ const sideX=x+w+13,belowY=y+h+13;
+ a+=rect(sideX,y,t,h,'white')+rect(x,belowY,w,t,'white');
+ // End zones of the aligned side / top views retain the thickness division.
+ for(const yy of [y,y+h-b]){a+=rect(sideX,yy,t,b,'wood');if(def.division)for(let j=1;j<def.division;j++)a+=line(sideX+t*j/def.division,yy,sideX+t*j/def.division,yy+b,'hidden');}
+ for(const xx of [x,x+w-v])a+=rect(xx,belowY,v,t,'hatched');
+ a+=text(sideX-2,y+h+6,'Seite','tiny')+text(x,belowY+t+5,'Draufsicht · M 1:'+f(1/s),'tiny');
+ // Two cut positions inside opposing corners, with matching labels on the details.
+ const cutX=x+v/2,cutY=y+h-b/2;
+ a+=`<g data-cut-source="1-1">`+line(cutX,y-2,cutX,y+b+2,'section-axis')+arrow(cutX,y-1,-1,0)+arrow(cutX,y+b+1,-1,0)+text(cutX+2,y+b+6,'1','bold')+'</g>';
+ a+=`<g data-cut-source="2-2">`+line(x+w-v-3,cutY,x+w+3,cutY,'section-axis')+arrow(x+w-v-2,cutY,0,1)+arrow(x+w+2,cutY,0,1)+text(x+w+6,cutY+1,'2','bold')+'</g>';
+ let dataY=37;a+=text(172,dataY,'Rahmen und Verbindung','bold');dataY+=7;
+ const data=['Außen '+f(W)+' × '+f(H)+' mm','Aufrecht B = '+f(V)+' · waagerecht B = '+f(B),'D = '+f(D)+' mm · '+p.material,'Faser längs der jeweiligen Rahmenhölzer'];
+ if(def.division)data.push('Dickenteilung D/'+def.division+' = '+f(D/def.division)+' mm');
+ if(p.joint.startsWith('tenon'))data.push('Zapfenlänge '+f(d.receivingWidth)+' · Breite '+f(d.joiningWidth)+' mm');
+ if(d.profile)data.push(d.profile.type==='groove'?'Nut '+f(d.profile.width)+' × '+f(d.profile.depth)+' · Abstand '+f(p.grooveOffset):'Falz a = '+f(d.profile.depth)+' · b = '+f(d.profile.width));
+ if(def.connector==='dowel')data.push('Dübel Ø '+f(p.connectorDiameter)+' × '+f(p.connectorLength)+' · Bohrtiefe '+f(d.boreDepth));
+ if(def.connector==='biscuit')data.push('Lamelle '+p.biscuitSize+' · '+p.biscuitRows+' je Ecke');
+ if(def.loose)data.push('Falscher Zapfen D/3 · Einstecktiefe '+f(p.looseDepth));
+ for(const row of data){a+=text(172,dataY,row);dataY+=4.7;}
+ // Joint sections share one independently selected standard scale.
+ const detailScale=[1,.5,.2,.1,.05,.02,.01].find(q=>D*q<=30&&V*q<=61&&B*q<=61)||.005;
+ const q=detailScale,Z=D*q,Y=B*q,X=V*q,ax=172,ay=94,bx=217,by=121;
+ const bands=[0,D];if(def.division)for(let j=1;j<def.division;j++)bands.push(D*j/def.division);
+ if(d.profile){const pr=d.profile,offset=p.profileFace==='front'?pr.offset:D-pr.offset-pr.width;bands.push(offset,offset+pr.width);}
+ bands.sort((a,b)=>a-b);const zs=[...new Set(bands)];
+ const ys=[0,B/2,B],xs=[0,V/2,V];if(d.profile){ys.push(B-d.profile.depth);xs.push(d.profile.depth);}ys.sort((a,b)=>a-b);xs.sort((a,b)=>a-b);
+ function profileVoid(along,z,total,second){if(!d.profile)return false;const pr=d.profile,offset=p.profileFace==='front'?pr.offset:D-pr.offset-pr.width;return z>offset&&z<offset+pr.width&&(second?along<pr.depth:along>total-pr.depth);}
+ let section1='',section2='';
+ for(let k=0;k<zs.length-1;k++){
+  const z0=zs[k],z1=zs[k+1],z=(z0+z1)/2;
+  for(let j=0;j<ys.length-1;j++){const y0=ys[j],y1=ys[j+1],cy=(y0+y1)/2;const own=owner(V/2,cy,z);section1+=rect(ax+z0*q,ay+y0*q,(z1-z0)*q,(y1-y0)*q,profileVoid(cy,z,B,false)?'white':own==='vertical'?'hatched':'horizontal');}
+  for(let j=0;j<xs.length-1;j++){const x0=xs[j],x1=xs[j+1],cx=(x0+x1)/2,own=owner(cx,B/2,z);section2+=rect(bx+x0*q,by+z0*q,(x1-x0)*q,(z1-z0)*q,profileVoid(cx,z,V,true)?'white':own==='vertical'?'hatched':'horizontal');}
+ }
+ if(def.division)for(let j=1;j<def.division;j++){section1+=line(ax+Z*j/def.division,ay,ax+Z*j/def.division,ay+Y);section2+=line(bx,by+Z*j/def.division,bx+X,by+Z*j/def.division);}
+ // White continuation views are outlines only, with freehand break lines.
+ const ext=16;
+ a+=text(ax,ay-8,'Schnitt 1–1','bold')+text(ax,ay-3,'M 1:'+f(1/q)+' · obere Ecke','tiny');
+ a+=`<g data-cut-detail="1-1">${section1}`+rect(ax,ay,Z,Y)+line(ax,ay+Y,ax,ay+Y+ext)+line(ax+Z,ay+Y,ax+Z,ay+Y+ext)+waveH(ax,ay+Y+ext,Z)+dv(ay,ay+Y,ax-5,ax,'B = '+f(B));
+ if(def.division){for(let j=0;j<def.division;j++)a+=dh(ax+Z*j/def.division,ax+Z*(j+1)/def.division,ay+Y+ext+7,ay+Y,f(D/def.division));}
+ a+=dh(ax,ax+Z,ay+Y+ext+(def.division?15:7),ay+Y,'D = '+f(D))+'</g>';
+ a+=text(bx,by-8,'Schnitt 2–2','bold')+text(bx,by-3,'M 1:'+f(1/q)+' · untere rechte Ecke','tiny');
+ a+=`<g data-cut-detail="2-2">${section2}`+rect(bx,by,X,Z)+line(bx-14,by,bx,by)+line(bx-14,by+Z,bx,by+Z)+waveV(bx-14,by,Z)+dh(bx,bx+X,by+Z+7,by+Z,'B = '+f(V));
+ if(def.division)for(let j=0;j<def.division;j++)a+=dv(by+Z*j/def.division,by+Z*(j+1)/def.division,bx+X+5,bx+X,f(D/def.division));
+ a+=dv(by,by+Z,bx+X+(def.division?11:5),bx+X,'D = '+f(D))+'</g>';
+ // Verbinder details are projected at their actual supplied positions.
+ if(def.connector==='dowel'){
+  for(const row of d.rows)for(const axis of d.axes){if(axis>=0&&axis<=B)a+=rect(ax+(row-p.connectorDiameter/2)*q,ay+(axis-p.connectorDiameter/2)*q,p.connectorDiameter*q,p.connectorDiameter*q,'connector');if(axis>=0&&axis<=V)a+=rect(bx+(axis-p.connectorDiameter/2)*q,by+(row-p.connectorDiameter/2)*q,p.connectorDiameter*q,p.connectorDiameter*q,'connector');}
+ }
+ a+=rect(217,162,3,3,'horizontal')+text(222,164.5,'Waagerechtes Rahmenholz','tiny')+rect(217,168,3,3,'hatched')+text(222,170.5,'Aufrechtes Rahmenholz','tiny');
+ a+=text(216,181,'Rückliegende Hölzer: Kantenlinien,','tiny')+text(216,186,'ohne Schraffur, gewellter Abbruch.','tiny');
+ const profileNote=d.profile?' · Nut/Falz: Brüstungen fachlich prüfen':'';
+ return [`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="Kompakte Rahmenzeichnung"><defs><pattern id="frame-hatch" width="2" height="2" patternUnits="userSpaceOnUse"><path d="M-1,1 L1,-1 M0,2 L2,0 M1,3 L3,1" class="hatchline"/></pattern></defs><style>text{font-family:Arial,sans-serif;fill:#25372e}.small{font-size:2.65px}.tiny{font-size:2.3px}.bold{font-size:3.15px;font-weight:bold}.title{font-size:4px;font-weight:bold}path,rect{stroke:#25372e;stroke-width:.22;fill:none}.wood{fill:#f3eee3}.white{fill:white}.horizontal{fill:#e8eee7;stroke-width:0}.hatched{fill:url(#frame-hatch);stroke-width:0}.hatchline{stroke:#5e6b63;stroke-width:.12}.dim{stroke:#5e6b63;stroke-width:.13}.measure{font-size:2.5px;paint-order:stroke;stroke:white;stroke-width:.5px}.hidden{stroke-dasharray:1.3 1;stroke-width:.12}.section-axis{stroke-dasharray:3 1 .5 1}.cutmark{stroke-width:.35}.arrow{fill:#25372e;stroke:none}.break{stroke-width:.2}.connector{fill:#b9cba8;stroke-width:.15}</style><rect width="297" height="210" style="fill:white;stroke:none"/>${rect(7,6,283,198)}${text(12,14,'look, talk ’n build · '+title,'title')}${text(12,21,'Nr. '+def.number+' · '+def.name)}${line(7,26,290,26)}${a}${line(7,194,290,194)}${text(12,200,'mm · Druck 100 % · Gesamt 1:'+f(1/s)+' · Schnitte 1:'+f(1/q)+profileNote,'tiny')}${text(288,200,status+' · 1/1','tiny','end')}</svg>`];
 }
 
 // Geometry in real millimetres, independent of drawing scale or UI.
@@ -4446,7 +4470,7 @@ function frameRender(p){
  (def?.loose?'<h4>Falscher Zapfen</h4><p>Dreieckig, D/3 dick. Einstecktiefe ausdrücklich vorgeben; kein aus der Vorlage geschätztes Maß.</p><div class="wdFields">'+numeric('looseDepth')+'</div>':'')+
  (def?.connector==='dowel'?'<h4>Rundholzdübel</h4><p>Achsen ab äußerem Fugenende entlang der Anschlussfläche. Einstecklänge je Teil = halbe Dübellänge. Luft kommt je Bohrungsgrund hinzu.</p><div class="wdFields">'+['connectorDiameter','connectorLength','connectorCount','connectorFirst','connectorSpacing','connectorRows','connectorFaceMargin','connectorRowSpacing','glueAir'].map(numeric).join('')+'</div>':'')+
  (def?.connector==='biscuit'?'<h4>Flachdübel · Größe nach verfügbarem Platz in der Rahmenbreite</h4><p>Mehrere Lamellen werden über die Rahmendicke verteilt. Die Fräsmaße stammen von deinem Werkzeug und werden nicht aus D gewählt.</p><div class="wdFields">'+field('biscuitSize','Flachdübelgröße',{'':'Bitte wählen','0':'0','10':'10','20':'20'})+['biscuitDepth','biscuitSlotLength','biscuitCenter','biscuitRows','biscuitFirst','biscuitSpacing'].map(numeric).join('')+'</div>':'')+
- (FRAME_REFERENCE_IMAGES[p.joint]?'<details><summary>Referenzzeichnung dieser Verbindung</summary><img style="display:block;max-width:100%;max-height:420px;object-fit:contain;background:white" src="'+FRAME_REFERENCE_IMAGES[p.joint]+'" alt="Von Tom bereitgestellte Referenzzeichnung"></details>':'')+'<p id="frameDraftStatus" role="status">'+esc(current.frameSaveError||'Eingaben werden auf diesem Gerät gespeichert.')+'</p><button id="frameExample" class="ghost">Beispielmaße für diese Verbindung laden</button><button id="frameRetry" class="ghost">Eingaben erneut sichern</button><p class="hint">Beispielmaße sind ausdrücklich Muster, keine Vorgaben. Der neue Rahmenbereich ist ein Konstruktionsentwurf zur fachlichen Prüfung. Detailkonturen und Brüstungen mit den Referenzen abgleichen.</p><details><summary>Verbindungskatalog und offene Regeln</summary>'+Object.values(FRAME_JOINTS).map(j=>'<p><strong>Nr. '+j.number+' · '+esc(j.name)+'</strong> '+(j.division?'Dickenteilung D/'+j.division+'. ':'')+(j.pending?'Herstellergeometrie offen.':'')+'</p>').join('')+'<p>Gehrungen mit unterschiedlichen Rahmenholzbreiten bleiben vorerst offen. Winkeldübel sind als Variante vorgemerkt. Nut- und Falz-Brüstungen sind vor Fertigung anhand der Vorlagen zu prüfen.</p></details><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Maße und Verbindungsregeln fachlich geprüft.</label><div class="composerActions"><button id="wdSave">Rahmenstand übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="frameTalk" class="ghost">Im Werkstatt-Talk besprechen</button></div><p id="wdSaveStatus" role="status"></p><label>Maßstab der Gesamtansicht<select id="frameScale">'+['auto','1','2','5','10','20','50','100'].map(s=>'<option value="'+s+'" '+(p.viewScale===s?'selected':'')+'>'+(s==='auto'?'Automatisch':'1:'+s)+'</option>').join('')+'</select></label><div id="wdPreview" class="wdPreview"></div>';
+ (FRAME_REFERENCE_IMAGES[p.joint]?'<details><summary>Referenzzeichnung dieser Verbindung</summary><img style="display:block;max-width:100%;max-height:420px;object-fit:contain;background:white" src="'+FRAME_REFERENCE_IMAGES[p.joint]+'" alt="Von Tom bereitgestellte Referenzzeichnung"></details>':'')+'<p id="frameDraftStatus" role="status">'+esc(current.frameSaveError||'Eingaben werden auf diesem Gerät gespeichert.')+'</p><button id="frameExample" class="ghost">Beispielmaße für diese Verbindung laden</button><button id="frameRetry" class="ghost">Eingaben erneut sichern</button><p class="hint">Beispielmaße sind ausdrücklich Muster, keine Vorgaben. Kompakte A4-Zeichnung: Gesamtansichten, bemaßte Schnittdetails und gewellte Abbruchlinien auf einem Blatt. Nut- und Falzbrüstungen anschließend am Ergebnis fachlich prüfen.</p><details><summary>Verbindungskatalog und offene Regeln</summary>'+Object.values(FRAME_JOINTS).map(j=>'<p><strong>Nr. '+j.number+' · '+esc(j.name)+'</strong> '+(j.division?'Dickenteilung D/'+j.division+'. ':'')+(j.pending?'Herstellergeometrie offen.':'')+'</p>').join('')+'<p>Gehrungen mit unterschiedlichen Rahmenholzbreiten bleiben vorerst offen. Winkeldübel sind als Variante vorgemerkt. Nut- und Falz-Brüstungen sind vor Fertigung anhand der Vorlagen zu prüfen.</p></details><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Maße und Verbindungsregeln fachlich geprüft.</label><div class="composerActions"><button id="wdSave">Rahmenstand übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="frameTalk" class="ghost">Im Werkstatt-Talk besprechen</button></div><p id="wdSaveStatus" role="status"></p><label>Maßstab der Gesamtansicht<select id="frameScale">'+['auto','1','2','5','10','20','50','100'].map(s=>'<option value="'+s+'" '+(p.viewScale===s?'selected':'')+'>'+(s==='auto'?'Automatisch':'1:'+s)+'</option>').join('')+'</select></label><div id="wdPreview" class="wdPreview"></div>';
  $('#wdConfirmed').checked=!!current.woodDrawing?.confirmed&&drawingStatus(current)==='checked'&&frameSignature(p)===frameSignature(current.woodDrawing.params);
  const change=(key,value)=>{current.woodDrawingDraft={...wdParams(),[key]:value};$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';framePersistDraft();if(['joint','through','mitreFace','profileFace'].includes(key))frameRender(wdParams());else framePreview();};
  box.querySelectorAll('[data-frame]').forEach(el=>{el.onchange=()=>change(el.dataset.frame,el.value);});
