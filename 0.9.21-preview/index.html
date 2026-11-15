@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev45</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev46</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev45 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev46 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev45';
+const APP_VERSION='0.9.21-dev46';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1278,12 +1278,12 @@ function frameMaterial(m,x,y,z){
  const localX=x<=W/2?x:W-x,localY=y<=H/2?y:H-y;
  return frameCornerMaterial(m,localX,localY,z);
 }
-function frameGeometry(m){
+function frameGeometry(m,clip={}){
  if(m.def.mitre)throw Error('Die rechtwinklige Profilgeometrie ist nicht für Gehrungen bestimmt.');
  const {p,d}=m,W=p.width,H=p.height,V=p.verticalWidth,B=p.horizontalWidth,D=p.thickness,dep=d.profile?.depth||0;
- const xs=uniq([0,V-dep,V,W-V,W-V+dep,W]),ys=uniq([0,B-dep,B,H-B,H-B+dep,H]),zs=uniq([0,D,...(m.def.division?Array.from({length:m.def.division-1},(_,i)=>D*(i+1)/m.def.division):[]),...(frameProfileInterval(m)||[])]);
+ const xs=uniq([0,V-dep,V,W-V,W-V+dep,W,...(clip.xMax!==undefined?[clip.xMax]:[])]),ys=uniq([0,B-dep,B,H-B,H-B+dep,H,...(clip.yMin!==undefined?[clip.yMin]:[])]),zs=uniq([0,D,...(m.def.division?Array.from({length:m.def.division-1},(_,i)=>D*(i+1)/m.def.division):[]),...(frameProfileInterval(m)||[])]);
  const nx=xs.length-1,ny=ys.length-1,nz=zs.length-1,cells=new Map(),at=(i,j,k)=>cells.get(i+','+j+','+k)||null;
- for(let i=0;i<nx;i++)for(let j=0;j<ny;j++)for(let k=0;k<nz;k++){const mat=frameMaterial(m,(xs[i]+xs[i+1])/2,(ys[j]+ys[j+1])/2,(zs[k]+zs[k+1])/2);if(mat)cells.set(i+','+j+','+k,mat);}
+ for(let i=0;i<nx;i++)for(let j=0;j<ny;j++)for(let k=0;k<nz;k++){const mat=frameMaterial(m,(xs[i]+xs[i+1])/2,(ys[j]+ys[j+1])/2,(zs[k]+zs[k+1])/2);if(mat&&(clip.xMax===undefined||(xs[i]+xs[i+1])/2<clip.xMax)&&(clip.yMin===undefined||(ys[j]+ys[j+1])/2>clip.yMin))cells.set(i+','+j+','+k,mat);}
  const groups=new Map(),pointKey=p=>p.map(v=>Number(v.toFixed(8))).join(','),edgeKey=(a,b)=>[pointKey(a),pointKey(b)].sort().join('|');
  function face(axis,plane,a,b,pts){if(a===b)return;const key=[axis,plane,[a||'void',b||'void'].sort().join(':')].join('|');if(!groups.has(key))groups.set(key,new Map());const edges=groups.get(key);for(let i=0;i<4;i++){const p=pts[i],q=pts[(i+1)%4],id=edgeKey(p,q);if(edges.has(id))edges.delete(id);else edges.set(id,{p,q});}}
  for(let i=0;i<=nx;i++)for(let j=0;j<ny;j++)for(let k=0;k<nz;k++)face('x',xs[i],at(i-1,j,k),at(i,j,k),[[xs[i],ys[j],zs[k]],[xs[i],ys[j+1],zs[k]],[xs[i],ys[j+1],zs[k+1]],[xs[i],ys[j],zs[k+1]]]);
@@ -1292,8 +1292,8 @@ function frameGeometry(m){
  const edges=new Map();for(const group of groups.values())for(const edge of group.values())edges.set(edgeKey(edge.p,edge.q),edge);
  return {xs,ys,zs,nx,ny,nz,at,edges:[...edges.values()]};
 }
-function frameProjectedEdges(m,view){
- const g=frameGeometry(m),{p}=m,eps=Math.min(p.thickness,p.verticalWidth,p.horizontalWidth)*1e-5;
+function frameProjectedEdges(m,view,clip={}){
+ const g=frameGeometry(m,clip),{p}=m,eps=Math.min(p.thickness,p.verticalWidth,p.horizontalWidth)*1e-5;
  const index=(a,v)=>{if(v<a[0]||v>a.at(-1))return -1;for(let i=0;i<a.length-1;i++)if(v>=a[i]&&v<a[i+1])return i;return -1;};
  const projection=P=>view==='front'?[P[0],P[1],P[2]]:view==='side'?[P[2],P[1],P[0]]:[P[0],P[2],P[1]];
  function first(u,v){
@@ -1564,98 +1564,111 @@ function frameConstructionPages(m,{title='Rahmenkonstruktion',status='Konstrukti
   }
  }
  a+=text(sideX-2,y+h+6,'Seite','tiny')+text(x,belowY+t+5,'Draufsicht · M 1:'+f(1/s),'tiny');
- // Two cut positions inside opposing corners, with matching labels on the details.
- if(isInsert&&def.mitre){
-  for(const [id,cx,cy,sx,sy]of [['1-1',x,y,1,1],['2-2',x+w,y+h,-1,-1]]){
-   const dx=sx/Math.SQRT2,dy=-sy/Math.SQRT2;
-   a+=`<g data-cut-source="${id}" data-face-normal="true">`+line(cx,cy,cx+sx*v,cy+sy*b,'section-axis')+arrow(cx,cy,dx,dy)+arrow(cx+sx*v,cy+sy*b,dx,dy)+text(cx+sx*v+2,cy+sy*b+5,id[0],'bold')+'</g>';
-  }
- }else if(def.groove&&isInsert){
-  const cut=frameGrooveFaceTiles(m).cut;
-  if(p.through==='vertical')for(const [id,cx,cy,dir]of [['1-1',x+cut*s,y,-1],['2-2',x+w-cut*s,y+h-b,1]])a+=`<g data-cut-source="${id}" data-face-normal="true">`+line(cx,cy-1,cx,cy+b+1,'section-axis')+arrow(cx,cy,dir,0)+arrow(cx,cy+b,dir,0)+text(cx+2,cy+b+5,id[0],'bold')+'</g>';
-  else for(const [id,cx,cy,dir]of [['1-1',x,y+cut*s,-1],['2-2',x+w-v,y+h-cut*s,1]])a+=`<g data-cut-source="${id}" data-face-normal="true">`+line(cx-1,cy,cx+v+1,cy,'section-axis')+arrow(cx,cy,0,dir)+arrow(cx+v,cy,0,dir)+text(cx+v+3,cy+2,id[0],'bold')+'</g>';
- }else{
- const cutX=x+(physicalEdges?frameSectionTiles(m,1).cutX:V/2)*s,cutY=y+h-(physicalEdges?frameSectionTiles(m,2).cutY:B/2)*s;
- a+=`<g data-cut-source="1-1">`+line(cutX,y-2,cutX,y+b+2,'section-axis')+arrow(cutX,y-1,-1,0)+arrow(cutX,y+b+1,-1,0)+text(cutX+2,y+b+6,'1','bold')+'</g>';
- a+=`<g data-cut-source="2-2">`+line(x+w-v-3,cutY,x+w+3,cutY,'section-axis')+arrow(x+w-v-2,cutY,0,1)+arrow(x+w+2,cutY,0,1)+text(x+w+6,cutY+1,'2','bold')+'</g>';
-
+ // Schema 3: cuts in clear stock, looking toward the neighbouring corner.
+ // Offsets position the plane only; they are deliberately not workpiece dimensions.
+ const gapX=Math.min(40,(W-2*V)/4),gapY=Math.min(40,(H-2*B)/4);
+ let cutX=V+gapX,cutY=B+gapY;
+ if(def.connector==='angle'){
+  const far=Math.max(...d.axes)/Math.SQRT2;
+  cutX=Math.max(cutX,Math.min(W/2,(far+p.angleLegHorizontal+p.glueAir+W/2)/2));
+  cutY=Math.max(cutY,Math.min(H/2,(far+p.angleLegVertical+p.glueAir+H/2)/2));
  }
- let dataY=37;a+=text(172,dataY,'Rahmen und Verbindung','bold');dataY+=7;
- const data=['Außen '+f(W)+' × '+f(H)+' mm','Aufrecht B = '+f(V)+' · waagerecht B = '+f(B),'D = '+f(D)+' mm · '+p.material,'Faser längs der jeweiligen Rahmenhölzer'];
+ a+=`<g data-cut-source="1-1" data-cut-x="${n(cutX)}" data-clear-stock="true">`+line(x+cutX*s,y-2,x+cutX*s,y+b+2,'section-axis')+arrow(x+cutX*s,y-1,-1,0)+arrow(x+cutX*s,y+b+1,-1,0)+text(x+cutX*s+2,y+b+6,'1–1','bold')+'</g>';
+ a+=`<g data-cut-source="2-2" data-cut-y="${n(H-cutY)}" data-clear-stock="true">`+line(x+w-v-3,y+h-cutY*s,x+w+3,y+h-cutY*s,'section-axis')+arrow(x+w-v-2,y+h-cutY*s,0,1)+arrow(x+w+2,y+h-cutY*s,0,1)+text(x+w+6,y+h-cutY*s+1,'2–2','bold')+'</g>';
+ const data=['Außen '+f(W)+' × '+f(H)+' mm','Aufrecht B = '+f(V)+' · waagerecht B = '+f(B),'D = '+f(D)+' mm · '+p.material];
  if(def.division)data.push('Dickenteilung D/'+def.division+' = '+f(D/def.division)+' mm');
  if(p.joint.startsWith('tenon'))data.push('Zapfenlänge '+f(d.receivingWidth)+' · Breite '+f(d.joiningWidth)+' mm');
- if(d.profile)data.push(d.profile.type==='groove'?'Nut '+f(d.profile.width)+' × '+f(d.profile.depth)+' · Abstand '+f(p.grooveOffset):'Falz a = '+f(d.profile.depth)+' · b = '+f(d.profile.width));
- if(def.connector==='angle')data.push('Winkeldübel Ø '+f(p.connectorDiameter)+' · Schenkel '+f(p.angleLegHorizontal)+' / '+f(p.angleLegVertical));
+ if(d.profile)data.push(d.profile.type==='groove'?'Nut '+f(d.profile.width)+' × '+f(d.profile.depth)+' · Abstand '+f(p.grooveOffset)+' ab '+(p.profileFace==='front'?'vorn':'hinten'):'Falz a = '+f(d.profile.depth)+' · b = '+f(d.profile.width));
  if(def.connector==='dowel')data.push('Dübel Ø '+f(p.connectorDiameter)+' × '+f(p.connectorLength)+' · Bohrtiefe '+f(d.boreDepth));
- if(def.connector==='biscuit')data.push('Lamelle '+p.biscuitSize+' · '+p.biscuitRows+' je Ecke');
+ if(def.connector==='angle')data.push('Winkeldübel Ø '+f(p.connectorDiameter)+' · Schenkel '+f(p.angleLegHorizontal)+' / '+f(p.angleLegVertical)+' · R '+f(p.angleRadius));
+ if(def.connector==='biscuit')data.push('Lamelle '+p.biscuitSize+' · '+p.biscuitRows+' je Ecke · Fräsung '+f(p.biscuitSlotLength)+' × '+f(p.biscuitDepth));
  if(def.loose)data.push('Falscher Zapfen D/3 · Einstecktiefe '+f(p.looseDepth));
+ if(d.axes)data.push('Dübelachsen: '+d.axes.map(f).join(' / ')+' mm ab äußerem Fugenende');
  if(d.rows)data.push('Achsen ab Vorderfläche: '+d.rows.map(f).join(' / ')+' mm');
- for(const row of data){a+=text(172,dataY,row);dataY+=4.7;}
- // Joint sections share one independently selected standard scale.
- const detailScale=[1,.5,.2,.1,.05,.02,.01].find(q=>D*q<=30&&(isInsert?faceLength:V)*q<=61&&(isInsert?faceLength:B)*q<=61)||.005;
- const q=detailScale,Z=D*q,Y=(isInsert?faceLength:B)*q,X=(isInsert?faceLength:V)*q,ax=172,ay=94,bx=217,by=121;
- const bands=[0,D];if(def.division)for(let j=1;j<def.division;j++)bands.push(D*j/def.division);
- if(d.profile){const pr=d.profile,offset=p.profileFace==='front'?pr.offset:D-pr.offset-pr.width;bands.push(offset,offset+pr.width);}
- bands.sort((a,b)=>a-b);const zs=[...new Set(bands)];
- const ys=[0,B/2,B],xs=[0,V/2,V];if(d.profile){ys.push(B-d.profile.depth);xs.push(d.profile.depth);}ys.sort((a,b)=>a-b);xs.sort((a,b)=>a-b);
- function profileVoid(along,z,total,second){if(!d.profile)return false;const pr=d.profile,offset=p.profileFace==='front'?pr.offset:D-pr.offset-pr.width;return z>offset&&z<offset+pr.width&&(second?along<pr.depth:along>total-pr.depth);}
- let section1='',section2='',tiles1=[],tiles2=[];
- if(physicalEdges){
-  for(const which of [1,2])for(const tile of (def.groove&&isInsert?frameGrooveFaceTiles(m):frameSectionTiles(m,which)).tiles){
-   const along=which===2&&def.groove&&isInsert?d.joiningWidth-tile.along-tile.run:tile.along;
-   const t=which===1?{x:ax+tile.z*q,y:ay+tile.along*q,w:tile.thickness*q,h:tile.run*q}:{x:bx+along*q,y:by+tile.z*q,w:tile.run*q,h:tile.thickness*q};
-   t.cls=!tile.material?'white':tile.material==='vertical'?'hatched':'horizontal';
-   const svg=(tile.nutzapfen?'<g data-feature="nutzapfen">':'')+rect(t.x,t.y,t.w,t.h,tile.nutzapfen?'nutzapfen':t.cls)+(tile.nutzapfen?'</g>':'');
-   if(which===1){tiles1.push(t);section1+=svg;}else{tiles2.push(t);section2+=svg;}
+ let dataY=36;for(const row of data){a+=text(171,dataY,row,'tiny');dataY+=4.4;}
+ const q=[1,.5,.2,.1,.05,.02,.01].find(q=>D*q<=30&&V*q<=61&&B*q<=61)||.005;
+ const ax=155,ay=94,bx=204,by=121,Z=D*q,Y=B*q,X=V*q,ext=16;
+ const ellipse=(cx,cy,rx,ry,cls='hidden')=>`<ellipse cx="${n(cx)}" cy="${n(cy)}" rx="${n(rx)}" ry="${n(ry)}" class="${cls}"/>`;
+ const poly=(pts,cls)=>`<path d="M${pts.map(pt=>pt.map(n).join(',')).join(' L')} Z" class="${cls}"/>`;
+ const interval=frameProfileInterval(m);
+ function cutProfile(which){
+  const total=which===1?B:V,dep=d.profile?.depth||0;
+  if(!interval)return rect(which===1?ax:bx,which===1?ay:by,which===1?Z:X,which===1?Y:Z,'hatched');
+  const [z0,z1]=interval;
+  const points=which===1?[[0,0],[D,0],[D,total],[z1,total],[z1,total-dep],[z0,total-dep],[z0,total],[0,total]]:[[0,0],[total,0],[total,D],[0,D],[0,z1],[dep,z1],[dep,z0],[0,z0]];
+  return poly(points.map(([u,v])=>[which===1?ax+u*q:bx+u*q,which===1?ay+v*q:by+v*q]),'hatched');
+ }
+ let detailDefs='';
+ for(const which of [1,2]){
+  const cx=which===1?ax:bx-ext,cy=which===1?ay:by,cw=which===1?Z:X+ext,ch=which===1?Y+ext:Z;
+  detailDefs+=`<clipPath id="frame-clear-${which}"><rect x="${cx-.15}" y="${cy-.15}" width="${cw+.3}" height="${ch+.3}"/></clipPath>`;
+  a+=text(which===1?ax:bx,which===1?ay-8:by-8,'Schnitt '+which+'–'+which,'bold')+text(which===1?ax:bx,which===1?ay-3:by-3,'M 1:'+f(1/q)+' · freier Rahmenquerschnitt','tiny');
+  a+=`<g data-cut-detail="${which}-${which}" data-clear-stock="true">`+cutProfile(which);
+  a+=`<g clip-path="url(#frame-clear-${which})">`;
+  if(physicalEdges){
+   const edges=frameProjectedEdges(m,which===1?'side':'top',which===1?{xMax:cutX}:{yMin:H-cutY});
+   for(const edge of edges){const project=pt=>which===1?[ax+pt[0]*q,ay+pt[1]*q]:[bx+(pt[0]-W+V)*q,by+pt[1]*q];a+=`<g data-detail-edge="${which}" data-edge-visibility="${edge.visible?'visible':'hidden'}">`+line(...project(edge.a),...project(edge.b),edge.visible?'visible-edge':'hidden')+'</g>';}
+  }else{
+   if(which===1)a+=rect(ax,ay,Z,Y,'visible-edge')+line(ax,ay+Y,ax,ay+Y+ext)+line(ax+Z,ay+Y,ax+Z,ay+Y+ext);
+   else a+=rect(bx,by,X,Z,'visible-edge')+line(bx-ext,by,bx,by)+line(bx-ext,by+Z,bx,by+Z);
+   if(def.division&&!def.loose)for(let j=1;j<def.division;j++)a+=which===1?line(ax+D*j/def.division*q,ay,ax+D*j/def.division*q,ay+Y,'hidden'):line(bx,by+D*j/def.division*q,bx+X,by+D*j/def.division*q,'hidden');
   }
- }else{
- for(let k=0;k<zs.length-1;k++){
-  const z0=zs[k],z1=zs[k+1],z=(z0+z1)/2;
-  for(let j=0;j<ys.length-1;j++){const y0=ys[j],y1=ys[j+1],cy=(y0+y1)/2;const own=owner(V/2,cy,z);const cls=profileVoid(cy,z,B,false)?'white':own==='vertical'?'hatched':'horizontal';tiles1.push({x:ax+z0*q,y:ay+y0*q,w:(z1-z0)*q,h:(y1-y0)*q,cls});section1+=rect(ax+z0*q,ay+y0*q,(z1-z0)*q,(y1-y0)*q,cls);}
-  for(let j=0;j<xs.length-1;j++){const x0=xs[j],x1=xs[j+1],cx=(x0+x1)/2,own=owner(cx,B/2,z);const cls=profileVoid(cx,z,V,true)?'white':own==='vertical'?'hatched':'horizontal';tiles2.push({x:bx+x0*q,y:by+z0*q,w:(x1-x0)*q,h:(z1-z0)*q,cls});section2+=rect(bx+x0*q,by+z0*q,(x1-x0)*q,(z1-z0)*q,cls);}
+  // Projection of a circular cylinder: circle only when the axis is normal to view.
+  function cylinder(center,row,half,normal,radius){
+   const span=half*Math.sqrt(1-normal*normal),cap=radius*Math.abs(normal);
+   if(which===1){const xx=ax+row*q,yy=ay+center*q;if(span<1e-8)return ellipse(xx,yy,radius*q,radius*q);return ellipse(xx,yy-span*q,radius*q,cap*q)+ellipse(xx,yy+span*q,radius*q,cap*q)+line(xx-radius*q,yy-span*q,xx-radius*q,yy+span*q,'hidden')+line(xx+radius*q,yy-span*q,xx+radius*q,yy+span*q,'hidden');}
+   const xx=bx+(V-center)*q,yy=by+row*q;if(span<1e-8)return ellipse(xx,yy,radius*q,radius*q);return ellipse(xx-span*q,yy,cap*q,radius*q)+ellipse(xx+span*q,yy,cap*q,radius*q)+line(xx-span*q,yy-radius*q,xx+span*q,yy-radius*q,'hidden')+line(xx-span*q,yy+radius*q,xx+span*q,yy+radius*q,'hidden');
+  }
+  if(def.connector==='dowel'){
+   a+='<g data-connector="dowel" data-projection="hidden-cylinder">';
+   for(const row of d.rows){
+    if(def.mitre)for(const axis of d.axes)a+=cylinder(axis/Math.SQRT2,row,d.boreDepth,1/Math.SQRT2,p.connectorDiameter/2);
+    else if(which===1&&p.through==='vertical'||which===2&&p.through==='horizontal')for(const axis of d.axes)a+=cylinder(axis,row,0,1,p.connectorDiameter/2);
+    else a+=cylinder(which===1?B:V,row,d.boreDepth,0,p.connectorDiameter/2);
+   }a+='</g>';
+  }
+  if(def.connector==='angle'){
+   a+='<g data-connector="angle" data-projection="hidden-cylinder">';
+   for(const row of d.rows)for(const axis of d.axes){const c=axis/Math.SQRT2,r=p.connectorDiameter/2,L=which===1?p.angleLegVertical:p.angleLegHorizontal;
+    if(which===1){const xx=ax+row*q,yy=ay+c*q;a+=ellipse(xx,yy,r*q,r*q)+line(xx-r*q,yy,xx-r*q,yy+L*q,'hidden')+line(xx+r*q,yy,xx+r*q,yy+L*q,'hidden')+line(xx-r*q,yy+L*q,xx+r*q,yy+L*q,'hidden');}
+    else{const xx=bx+(V-c)*q,yy=by+row*q;a+=ellipse(xx,yy,r*q,r*q)+line(xx,yy-r*q,xx-L*q,yy-r*q,'hidden')+line(xx,yy+r*q,xx-L*q,yy+r*q,'hidden')+line(xx-L*q,yy-r*q,xx-L*q,yy+r*q,'hidden');}
+   }a+='</g>';
+  }
+  if(def.loose||def.connector==='biscuit'){
+   let lo,hi,thick,rows;
+   if(def.loose){const mid=faceLength/2,dep=p.looseDepth,cs=[mid-dep/2,mid+dep/2+dep,mid+dep/2-dep].map(v=>v/Math.SQRT2);lo=Math.min(...cs);hi=Math.max(...cs);thick=D/3;rows=[D/2];}
+   else{const h=p.biscuitSlotLength/2,R=(h*h+p.biscuitDepth**2)/(2*p.biscuitDepth);let span=0;for(let j=0;j<=400;j++){const u=-h+2*h*j/400,norm=Math.sqrt(Math.max(0,R*R-u*u))-(R-p.biscuitDepth);span=Math.max(span,Math.abs((u+norm)/Math.SQRT2),Math.abs((u-norm)/Math.SQRT2));}lo=p.biscuitCenter/Math.SQRT2-span;hi=p.biscuitCenter/Math.SQRT2+span;thick=4;rows=d.rows;}
+   a+=`<g data-connector="${def.loose?'loose-tenon':'biscuit'}" data-projection="hidden">`;
+   for(const row of rows)a+=which===1?rect(ax+(row-thick/2)*q,ay+lo*q,thick*q,(hi-lo)*q,'hidden'):rect(bx+(V-hi)*q,by+(row-thick/2)*q,(hi-lo)*q,thick*q,'hidden');
+   a+='</g>';
+  }
+  a+='</g>'+(which===1?waveH(ax,ay+Y+ext,Z):waveV(bx-ext,by,Z))+'</g>';
  }
-
+ // Dimension the actual section and the joint partition; never dimension cut placement.
+ a+=dv(ay,ay+Y,ax-5,ax,'B = '+f(B))+dh(bx,bx+X,by+Z+7,by+Z,'B = '+f(V));
+ const division=def.division&&!def.loose;
+ if(division){
+  const label=f(D/def.division),group=Z/def.division<Math.max(5,label.length*1.5);
+  if(group){a+='<g data-grouped-division="true">'+dh(ax,ax+Z,ay+Y+ext+7,ay+Y+ext+2,def.division+' × '+label)+dv(by,by+Z,bx+X+5,bx+X,def.division+' × '+label);for(let j=1;j<def.division;j++){a+=line(ax+Z*j/def.division,ay+Y+ext+5,ax+Z*j/def.division,ay+Y+ext+9,'dim')+line(bx+X+3,by+Z*j/def.division,bx+X+7,by+Z*j/def.division,'dim');}a+='</g>';}
+  else for(let j=0;j<def.division;j++)a+=dh(ax+Z*j/def.division,ax+Z*(j+1)/def.division,ay+Y+ext+7,ay+Y+ext+2,label)+dv(by+Z*j/def.division,by+Z*(j+1)/def.division,bx+X+5,bx+X,label);
  }
- function tileEdges(tiles){const edges=new Map();for(const t of tiles){const {x,y,w,h,cls}=t;for(const [ax,ay,bx,by]of [[x,y,x+w,y],[x,y,x,y+h],[x+w,y,x+w,y+h],[x,y+h,x+w,y+h]]){const key=[ax,ay,bx,by].map(n).join(',');if(!edges.has(key))edges.set(key,{pts:[ax,ay,bx,by],classes:[]});edges.get(key).classes.push(cls);}}let out='';for(const edge of edges.values()){if(edge.classes.every(c=>c==='white'))continue;if(edge.classes.length===1||new Set(edge.classes).size>1)out+=line(...edge.pts,'visible-edge');}return out;}
- section1+=tileEdges(tiles1);section2+=tileEdges(tiles2);
- if(isInsert&&!def.groove){section1=rect(ax,ay,Z,Y,'hatched');section2=rect(bx,by,X,Z,'hatched');}
-
- // White continuation views are outlines only, with freehand break lines.
- const ext=16;
- a+=text(ax,ay-8,isInsert?'Fugenansicht 1–1':'Schnitt 1–1','bold')+text(ax,ay-3,'M 1:'+f(1/q)+' · obere Ecke','tiny');
- a+=`<g data-cut-detail="1-1">${section1}`+(isInsert?rect(ax,ay,Z,Y):'')+line(ax,ay+Y,ax,ay+Y+ext)+line(ax+Z,ay+Y,ax+Z,ay+Y+ext)+waveH(ax,ay+Y+ext,Z)+dv(ay,ay+Y,ax-5,ax,(isInsert?'Fuge = ':'B = ')+f(isInsert?faceLength:B));
- if(def.division&&!isInsert){for(let j=0;j<def.division;j++)a+=dh(ax+Z*j/def.division,ax+Z*(j+1)/def.division,ay+Y+ext+7,ay+Y,f(D/def.division));}
- a+=dh(ax,ax+Z,ay+Y+ext+(def.division&&!isInsert?15:7),ay+Y,'D = '+f(D))+'</g>';
- a+=text(bx,by-8,isInsert?'Fugenansicht 2–2':'Schnitt 2–2','bold')+text(bx,by-3,'M 1:'+f(1/q)+' · untere rechte Ecke','tiny');
- a+=`<g data-cut-detail="2-2">${section2}`+(isInsert?rect(bx,by,X,Z):'')+line(bx-14,by,bx,by)+line(bx-14,by+Z,bx,by+Z)+waveV(bx-14,by,Z)+dh(bx,bx+X,by+Z+7,by+Z,(isInsert?'Fuge = ':'B = ')+f(isInsert?faceLength:V));
- if(def.division&&!isInsert)for(let j=0;j<def.division;j++)a+=dv(by+Z*j/def.division,by+Z*(j+1)/def.division,bx+X+5,bx+X,f(D/def.division));
- a+=dv(by,by+Z,bx+X+(def.division&&!isInsert?11:5),bx+X,'D = '+f(D))+'</g>';
- // Round end grain in a plane normal to the connector axis; no square substitutes.
- const circle=(x,y,r,tag)=>`<circle data-connector="${tag}" cx="${n(x)}" cy="${n(y)}" r="${n(r)}" class="connector"/>`;
- if(['dowel','angle'].includes(def.connector))for(const row of d.rows)for(const axis of (d.faceAxes||d.axes)){a+=circle(ax+row*q,ay+axis*q,p.connectorDiameter*q/2,def.connector)+circle(bx+(def.groove?d.joiningWidth-axis:axis)*q,by+row*q,p.connectorDiameter*q/2,def.connector);}
- if(def.connector==='angle'){
-  const tq=[1,.5,.2,.1].find(v=>(Math.max(p.angleLegHorizontal,p.angleLegVertical)+p.connectorDiameter)*v<=27)||.05;
-  a+=text(230,81,'Winkeldübel 90° · M 1:'+f(1/tq),'tiny')+`<g transform="translate(239 87) scale(${tq})"><path data-connector-plan="angle" d="${anglePath(0,p.angleRadius,p.connectorDiameter,p.angleLegHorizontal,p.angleLegVertical)}" class="connector"/></g>`;
+ a+=dh(ax,ax+Z,ay+Y+ext+(division?15:7),ay+Y+ext+2,'D = '+f(D))+dv(by,by+Z,bx+X+(division?11:5),bx+X,'D = '+f(D));
+ if(d.profile){const [z0,z1]=interval,dd=d.profile.depth;
+  a+=dh(bx,bx+dd*q,by+Z+11,by+Z,'a = '+f(dd))+dv(by+z0*q,by+z1*q,289,bx+X,(def.groove?'Nut ':'b = ')+f(z1-z0));
  }
- if(def.connector==='biscuit'){
-  const [length,height]={'0':[47,15],'10':[53,19],'20':[56,23]}[p.biscuitSize];
-  for(const row of d.rows){a+=`<rect data-connector="biscuit" x="${n(ax+(row-2)*q)}" y="${n(ay+(p.biscuitCenter-length/2)*q)}" width="${n(4*q)}" height="${n(length*q)}" rx="${n(1.4*q)}" class="connector"/><rect data-connector="biscuit" x="${n(bx+(p.biscuitCenter-length/2)*q)}" y="${n(by+(row-2)*q)}" width="${n(length*q)}" height="${n(4*q)}" rx="${n(1.4*q)}" class="connector"/>`;}
-  a+=text(230,84,'Lamelle · Draufsicht M 1:1','tiny')+`<ellipse data-connector-plan="biscuit" cx="255" cy="95" rx="${length/2}" ry="${height/2}" class="connector"/>`;
+ // A separately labelled connector plan retains its true form without claiming a cut face.
+ if(def.loose||def.connector==='biscuit'||def.connector==='angle'){
+  let w0,h0,label,shape;
+  if(def.loose){w0=h0=d.looseSide;label='Falscher Zapfen';shape=poly([[0,0],[w0,0],[0,h0]],'connector');}
+  else if(def.connector==='biscuit'){[w0,h0]={'0':[47,15],'10':[53,19],'20':[56,23]}[p.biscuitSize];label='Lamelle '+p.biscuitSize;shape=ellipse(w0/2,h0/2,w0/2,h0/2,'connector');}
+  else{w0=p.angleLegHorizontal+p.connectorDiameter;h0=p.angleLegVertical+p.connectorDiameter;label='Winkeldübel';shape=`<path d="${anglePath(0,p.angleRadius,p.connectorDiameter,p.angleLegHorizontal,p.angleLegVertical)}" class="connector"/>`;}
+  const tq=[1,.5,.2,.1,.05,.02].find(v=>w0*v<=50&&h0*v<=18)||.01;
+  a+=text(220,82,label+' · Draufsicht 1:'+f(1/tq),'tiny')+`<g data-connector-plan="${def.loose?'loose-tenon':def.connector}" transform="translate(230 88) scale(${tq})">${shape}</g>`;
  }
- if(def.loose){const dep=p.looseDepth,lo=(faceLength-dep)/2;
-  a+=`<g data-connector="loose-tenon">`+rect(ax+D*q/3,ay+lo*q,D*q/3,dep*q,'connector')+rect(bx+lo*q,by+D*q/3,dep*q,D*q/3,'connector')+'</g>';
-  const tq=[1,.5,.2,.1,.05].find(v=>2*dep*v<=26)||.02,cx=255,cy=95;
-  a+=text(230,80,'Feder · Draufsicht M 1:'+f(1/tq),'tiny')+`<path data-connector-plan="loose-tenon" d="M${n(cx-dep*tq/2)},${cy} L${n(cx+dep*tq/2)},${n(cy-dep*tq)} L${n(cx+dep*tq/2)},${n(cy+dep*tq)} Z" class="connector"/>`+line(cx-dep*tq/2,cy,cx+dep*tq/2,cy,'axis');
- }
- if(isInsert){a+=text(217,176,'Fugenansichten: Blick normal zur Fuge.','tiny');}
- if(def.groove){
-  a+=text(218,81,'Nutzapfen · angearbeitet','tiny')+text(218,86,'Dicke '+f(p.grooveWidth)+' · Länge '+f(p.grooveDepth)+' mm','tiny');
-  a+=text(218,93,'Nut '+f(p.grooveWidth)+' × '+f(p.grooveDepth)+' mm','tiny')+text(218,98,'Abstand '+f(p.grooveOffset)+' ab '+(p.profileFace==='front'?'Vorderfläche':'Rückfläche'),'tiny')+rect(218,102,3,3,'nutzapfen')+text(223,104.5,'Nutzapfen · keine zusätzliche Trennfuge','tiny');
- }
- a+=rect(217,162,3,3,isInsert?'connector':'horizontal')+text(222,164.5,isInsert?'Verbinder im Querschnitt':'Waagerechtes Rahmenholz','tiny')+rect(217,168,3,3,'hatched')+text(222,170.5,isInsert?'Rahmenholz an der Fuge':'Aufrechtes Rahmenholz','tiny');
- a+=text(216,181,'Rückliegende Hölzer: Kantenlinien,','tiny')+text(216,186,'ohne Schraffur, gewellter Abbruch.','tiny');
+ a+=rect(217,165,4,3,'hatched')+text(224,167.5,'Tatsächlich geschnittenes Holz','tiny')+line(217,173,221,173)+text(224,174,'Sichtbare Kante hinter dem Schnitt','tiny')+line(217,180,221,180,'hidden')+text(224,181,'Verdeckte Verbindungskante','tiny');
+ a+=text(217,188,'Rückliegende Hölzer: ohne Schraffur, gewellter Abbruch.','tiny');
  const profileNote=d.profile?' · Nut/Falz: Brüstungen fachlich prüfen':'';
- return [`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="Kompakte Rahmenzeichnung"><defs><pattern id="frame-hatch" width="2" height="2" patternUnits="userSpaceOnUse"><path d="M-1,1 L1,-1 M0,2 L2,0 M1,3 L3,1" class="hatchline"/></pattern></defs><style>text{font-family:Arial,sans-serif;fill:#25372e}.small{font-size:2.65px}.tiny{font-size:2.3px}.bold{font-size:3.15px;font-weight:bold}.title{font-size:4px;font-weight:bold}path,rect,circle,ellipse{stroke:#25372e;stroke-width:.22;fill:none}.wood{fill:#f3eee3}.white{fill:white}.horizontal{fill:#e8eee7;stroke-width:0}.hatched{fill:url(#frame-hatch);stroke-width:0}.hatchline{stroke:#5e6b63;stroke-width:.12}.dim{stroke:#5e6b63;stroke-width:.13}.measure{font-size:2.5px;paint-order:stroke;stroke:white;stroke-width:.5px}.plan-edges .hidden{stroke-width:${n(.12/s)};stroke-dasharray:${n(1.3/s)} ${n(1/s)}}.plan-edges .axis{stroke-width:${n(.1/s)};stroke-dasharray:${n(3/s)} ${n(1/s)}}.axis{stroke-dasharray:4 1 .5 1;stroke-width:.12}.visible-edge{stroke-width:.22}.hidden{stroke-dasharray:1.3 1;stroke-width:.12}.section-axis{stroke-dasharray:3 1 .5 1}.cutmark{stroke-width:.35}.arrow{fill:#25372e;stroke:none}.break{stroke-width:.2}.nutzapfen{fill:#d8b77c;stroke:none}.connector{fill:#b9cba8;stroke-width:.15}</style><rect width="297" height="210" style="fill:white;stroke:none"/>${rect(7,6,283,198)}${text(12,14,'look, talk ’n build · '+title,'title')}${text(12,21,'Nr. '+def.number+' · '+def.name)}${line(7,26,290,26)}${a}${line(7,194,290,194)}${text(12,200,'mm · Druck 100 % · Gesamt 1:'+f(1/s)+' · Schnitte 1:'+f(1/q)+profileNote,'tiny')}${text(288,200,status+' · 1/1','tiny','end')}</svg>`];
+ return [`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" data-frame-schema="3" aria-label="Rahmenzeichnung mit Schnitten im freien Rahmenholz"><defs><pattern id="frame-hatch" width="2" height="2" patternUnits="userSpaceOnUse"><path d="M-1,1 L1,-1 M0,2 L2,0 M1,3 L3,1" class="hatchline"/></pattern>${detailDefs}</defs><style>text{font-family:Arial,sans-serif;fill:#25372e}.small{font-size:2.65px}.tiny{font-size:2.3px}.bold{font-size:3.15px;font-weight:bold}.title{font-size:4px;font-weight:bold}path,rect,circle,ellipse{stroke:#25372e;stroke-width:.22;fill:none}.wood{fill:#f3eee3}.white{fill:white}.hatched{fill:url(#frame-hatch)}.hatchline{stroke:#5e6b63;stroke-width:.12}.dim{stroke:#5e6b63;stroke-width:.13}.measure{font-size:2.5px;paint-order:stroke;stroke:white;stroke-width:.5px}.plan-edges .hidden{stroke-width:${n(.12/s)};stroke-dasharray:${n(1.3/s)} ${n(1/s)}}.plan-edges .axis{stroke-width:${n(.1/s)};stroke-dasharray:${n(3/s)} ${n(1/s)}}.axis{stroke-dasharray:4 1 .5 1;stroke-width:.12}.visible-edge{stroke-width:.22}.hidden{stroke-dasharray:1.3 1;stroke-width:.12}.section-axis{stroke-dasharray:3 1 .5 1}.cutmark{stroke-width:.35}.arrow{fill:#25372e;stroke:none}.break{stroke-width:.2}.connector{fill:#eef0e9;stroke-width:.18}</style><rect width="297" height="210" style="fill:white;stroke:none"/>${rect(7,6,283,198)}${text(12,14,'look, talk ’n build · '+title,'title')}${text(12,21,'Nr. '+def.number+' · '+def.name)}${line(7,26,290,26)}${a}${line(7,194,290,194)}${text(12,200,'mm · Druck 100 % · Gesamt 1:'+f(1/s)+' · Schnitte 1:'+f(1/q)+profileNote,'tiny')}${text(288,200,status+' · 1/1','tiny','end')}</svg>`];
 }
 // Geometry in real millimetres, independent of drawing scale or UI.
 const BOARD_SHAPES={rectangle:'Rechteck',square:'Quadrat',triangle:'Dreieck',rhombus:'Raute',trapezoid:'Trapez'};
@@ -4687,8 +4700,8 @@ function frameRender(p){
  (def?.loose?'<h4>Falscher Zapfen</h4><p>Dreieckig, D/3 dick. Einstecktiefe ausdrücklich vorgeben; kein aus der Vorlage geschätztes Maß.</p><div class="wdFields">'+numeric('looseDepth')+'</div>':'')+
  (['dowel','angle'].includes(def?.connector)?'<h4>'+ (def.connector==='angle'?'Winkeldübel 90°':'Rundholzdübel')+'</h4><p>Achsen ab äußerem Fugenende entlang der Anschlussfläche. Gerade Dübel: Einstecklänge je Teil = halbe Dübellänge. Winkeldübel: Schenkel ab theoretischem Achsschnittpunkt und Biegeradius eingeben. Luft kommt je Bohrungsgrund hinzu.</p><div class="wdFields">'+field('connectorPlacement','Lage über die Rahmendicke',{centered:'Automatisch mittig (auch bei Dickenänderung)',manual:'Abstand ab Vorderfläche selbst festlegen'})+['connectorDiameter',...(def.connector==='angle'?['angleLegHorizontal','angleLegVertical','angleRadius']:['connectorLength']),'connectorCount','connectorFirst','connectorSpacing','connectorRows','connectorRowSpacing','glueAir'].map(numeric).join('')+(p.connectorPlacement==='manual'?numeric('connectorFaceMargin'):'<p class="hint" id="frameConnectorCenter"></p>')+'</div>':'')+
  (def?.connector==='biscuit'?'<h4>Flachdübel · Größe nach verfügbarem Platz in der Rahmenbreite</h4><p>Mehrere Lamellen werden über die Rahmendicke verteilt. Die Fräsmaße stammen von deinem Werkzeug und werden nicht aus D gewählt.</p><div class="wdFields">'+field('biscuitSize','Flachdübelgröße',{'':'Bitte wählen','0':'0','10':'10','20':'20'})+field('biscuitPlacement','Lage über die Rahmendicke',{centered:'Automatisch mittig (auch bei Dickenänderung)',manual:'Abstand ab Vorderfläche selbst festlegen'})+['biscuitDepth','biscuitSlotLength','biscuitCenter','biscuitRows','biscuitSpacing'].map(numeric).join('')+(p.biscuitPlacement==='manual'?numeric('biscuitFirst'):'<p class="hint" id="frameConnectorCenter"></p>')+'</div>':'')+
- (FRAME_REFERENCE_IMAGES[p.joint]?'<details><summary>Eigene Konstruktionsskizze dieser Verbindung</summary><img style="display:block;max-width:100%;height:auto;object-fit:contain;background:white" src="'+FRAME_REFERENCE_IMAGES[p.joint]+'" alt="Neu aus dem Rahmenmodell erzeugte technische Beispielzeichnung"></details>':'')+'<p id="frameDraftStatus" role="status">'+esc(current.frameSaveError||'Eingaben werden auf diesem Gerät gespeichert.')+'</p><button id="frameExample" class="ghost">Beispielmaße für diese Verbindung laden</button><button id="frameRetry" class="ghost">Eingaben erneut sichern</button><p class="hint">Beispielmaße sind ausdrücklich Muster, keine Vorgaben. Kompakte A4-Zeichnung: Gesamtansichten, bemaßte Schnittdetails und gewellte Abbruchlinien auf einem Blatt. Nut- und Falzbrüstungen anschließend am Ergebnis fachlich prüfen.</p><details><summary>Verbindungskatalog und offene Regeln</summary>'+Object.values(FRAME_JOINTS).map(j=>'<p><strong>Nr. '+j.number+' · '+esc(j.name)+'</strong> '+(j.division?'Dickenteilung D/'+j.division+'. ':'')+(j.pending?'Herstellergeometrie offen.':'')+'</p>').join('')+'<p>Gehrungen mit unterschiedlichen Rahmenholzbreiten bleiben vorerst offen. Winkeldübel verwenden die eingegebenen Schenkellängen und den Achsradius. Nut- und Falz-Brüstungen sind vor Fertigung anhand der Vorlagen zu prüfen.</p></details><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Maße und Verbindungsregeln fachlich geprüft.</label><div class="composerActions"><button id="wdSave">Rahmenstand übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="frameTalk" class="ghost">Im Werkstatt-Talk besprechen</button></div><p id="wdSaveStatus" role="status"></p><label>Maßstab der Gesamtansicht<select id="frameScale">'+['auto','1','2','5','10','20','50','100'].map(s=>'<option value="'+s+'" '+(p.viewScale===s?'selected':'')+'>'+(s==='auto'?'Automatisch':'1:'+s)+'</option>').join('')+'</select></label><div id="wdPreview" class="wdPreview"></div>';
- $('#wdConfirmed').checked=!!current.woodDrawing?.confirmed&&current.woodDrawing.geometryVersion===2&&drawingStatus(current)==='checked'&&frameSignature(p)===frameSignature(current.woodDrawing.params);
+ (FRAME_REFERENCE_IMAGES[p.joint]?'<details><summary>Eigene Konstruktionsskizze dieser Verbindung</summary><img style="display:block;max-width:100%;height:auto;object-fit:contain;background:white" src="'+FRAME_REFERENCE_IMAGES[p.joint]+'" alt="Neu aus dem Rahmenmodell erzeugte technische Beispielzeichnung"></details>':'')+'<p id="frameDraftStatus" role="status">'+esc(current.frameSaveError||'Eingaben werden auf diesem Gerät gespeichert.')+'</p><button id="frameExample" class="ghost">Beispielmaße für diese Verbindung laden</button><button id="frameRetry" class="ghost">Eingaben erneut sichern</button><p class="hint">Beispielmaße sind ausdrücklich Muster, keine Vorgaben. Kompakte A4-Zeichnung: Schnitte im freien Rahmenholz mit bemaßtem Querschnitt, dahinterliegenden Verbindungskanten und gewellten Abbruchlinien. Nut- und Falzbrüstungen anschließend am Ergebnis fachlich prüfen.</p><details><summary>Verbindungskatalog und offene Regeln</summary>'+Object.values(FRAME_JOINTS).map(j=>'<p><strong>Nr. '+j.number+' · '+esc(j.name)+'</strong> '+(j.division?'Dickenteilung D/'+j.division+'. ':'')+(j.pending?'Herstellergeometrie offen.':'')+'</p>').join('')+'<p>Gehrungen mit unterschiedlichen Rahmenholzbreiten bleiben vorerst offen. Winkeldübel verwenden die eingegebenen Schenkellängen und den Achsradius. Nut- und Falz-Brüstungen sind vor Fertigung anhand der Vorlagen zu prüfen.</p></details><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Maße und Verbindungsregeln fachlich geprüft.</label><div class="composerActions"><button id="wdSave">Rahmenstand übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="frameTalk" class="ghost">Im Werkstatt-Talk besprechen</button></div><p id="wdSaveStatus" role="status"></p><label>Maßstab der Gesamtansicht<select id="frameScale">'+['auto','1','2','5','10','20','50','100'].map(s=>'<option value="'+s+'" '+(p.viewScale===s?'selected':'')+'>'+(s==='auto'?'Automatisch':'1:'+s)+'</option>').join('')+'</select></label><div id="wdPreview" class="wdPreview"></div>';
+ $('#wdConfirmed').checked=!!current.woodDrawing?.confirmed&&current.woodDrawing.geometryVersion===3&&drawingStatus(current)==='checked'&&frameSignature(p)===frameSignature(current.woodDrawing.params);
  const change=(key,value)=>{current.woodDrawingDraft={...wdParams(),[key]:value};$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';framePersistDraft();if(['joint','through','mitreFace','profileFace','connectorPlacement','biscuitPlacement'].includes(key))frameRender(wdParams());else framePreview();};
  box.querySelectorAll('[data-frame]').forEach(el=>{el.onchange=()=>change(el.dataset.frame,el.value);});
  $('#frameScale').onchange=e=>change('viewScale',e.target.value);
@@ -4703,8 +4716,8 @@ function framePreview(){
  const m=buildFrameConstruction(wdParams()),saved=current.woodDrawing;
  if($('#frameConnectorCenter'))$('#frameConnectorCenter').textContent='Automatische Achslage ab Vorderfläche: '+(m.d.rows||[]).map(v=>Number(v.toFixed(2)).toLocaleString('de-DE')+' mm').join(' / ');
  $('#wdConfirmed').disabled=!m.confirmable;if(!m.confirmable)$('#wdConfirmed').checked=false;
- const unsaved=!saved||saved.geometryVersion!==2||frameSignature(wdParams())!==frameSignature(saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed,stale=drawingStatus(current)==='stale';
- $('#wdChecks').innerHTML=[...m.errors.map(s=>'<p class="notice">Bitte korrigieren: '+esc(s)+'</p>'),...m.pending.map(s=>'<p class="notice">Offen: '+esc(s)+'</p>'),...m.warnings.map(s=>'<p class="hint">'+esc(s)+'</p>')].join('')+'<p>'+esc(saved&&saved.geometryVersion!==2?'Ansichtsgeometrie aktualisiert · bitte prüfen, übernehmen und neu bestätigen':unsaved?'Entwurf · noch nicht übernommen':wdStateText())+'</p>';
+ const unsaved=!saved||saved.geometryVersion!==3||frameSignature(wdParams())!==frameSignature(saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed,stale=drawingStatus(current)==='stale';
+ $('#wdChecks').innerHTML=[...m.errors.map(s=>'<p class="notice">Bitte korrigieren: '+esc(s)+'</p>'),...m.pending.map(s=>'<p class="notice">Offen: '+esc(s)+'</p>'),...m.warnings.map(s=>'<p class="hint">'+esc(s)+'</p>')].join('')+'<p>'+esc(saved&&saved.geometryVersion!==3?'Ansichtsgeometrie aktualisiert · bitte prüfen, übernehmen und neu bestätigen':unsaved?'Entwurf · noch nicht übernommen':wdStateText())+'</p>';
  $('#wdSave').disabled=!m.ok||wdSaving;
  $('#wdPrint').disabled=!m.confirmable||unsaved||stale||!saved?.confirmed||!!current.frameSaveError;
  $('#wdPreview').innerHTML=m.ok?frameConstructionPages(m,{title:wdTitle(),status:'Konstruktionsentwurf · '+(unsaved?'nicht übernommen':saved?.confirmed?'fachlich bestätigt':'noch nicht bestätigt')}).map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Rahmenkonstruktion Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'<p>Die Vorschau erscheint nach vollständigen, widerspruchsfreien Grundmaßen.</p>';
@@ -4712,7 +4725,7 @@ function framePreview(){
 async function frameSave(){
  if(wdSaving)return;const project=current,m=buildFrameConstruction(wdParams(project));if(!m.ok)return;
  const confirmed=!!$('#wdConfirmed').checked&&m.confirmable,previous=project.woodDrawing,previousPlan=project.reconstruction,previousParts=project.purchasedParts,previousDirty=project.projectDirty;
- wdSaving=true;project.woodDrawing={schemaVersion:1,geometryVersion:2,type:FRAME_KIND,params:m.p,revision:(previous?.revision||0)+1,confirmed,source:'',updatedAt:new Date().toISOString()};
+ wdSaving=true;project.woodDrawing={schemaVersion:1,geometryVersion:3,type:FRAME_KIND,params:m.p,revision:(previous?.revision||0)+1,confirmed,source:'',updatedAt:new Date().toISOString()};
  project.woodDrawingDraft={...m.p};
  project.reconstruction={...framePlan(m),planSchemaVersion:2,sourceRevision:project.analysis?.revision||0,main_dimensions:[m.p.width,m.p.height,m.p.thickness].map(v=>v+' mm')};project.projectDirty=false;
  const old=new Map((project.purchasedParts||[]).filter(p=>p.source==='frame-construction').map(p=>[p.item,p]));
@@ -4722,7 +4735,7 @@ async function frameSave(){
  finally{wdSaving=false;if(current===project)framePreview();}
 }
 async function framePdf(){
- const project=current,saved=project.woodDrawing,m=buildFrameConstruction(wdParams(project));if(!m.confirmable||!saved?.confirmed||saved.geometryVersion!==2||!$('#wdConfirmed').checked||drawingStatus(project)==='stale'||frameSignature(m.p)!==frameSignature(saved.params)||current.frameSaveError)return;
+ const project=current,saved=project.woodDrawing,m=buildFrameConstruction(wdParams(project));if(!m.confirmable||!saved?.confirmed||saved.geometryVersion!==3||!$('#wdConfirmed').checked||drawingStatus(project)==='stale'||frameSignature(m.p)!==frameSignature(saved.params)||current.frameSaveError)return;
  const source=drawingSource(project),button=$('#wdPrint');button.disabled=true;$('#wdSaveStatus').textContent='A4-PDF wird erstellt …';
  try{const blob=await drawingPdfBlob(m,{title:wdTitle(),status:'Konstruktionsentwurf · fachlich bestätigt'});
   if(current!==project||saved!==project.woodDrawing||drawingSource(project)!==source||frameSignature(wdParams(project))!==frameSignature(m.p)||!$('#wdConfirmed').checked)throw Error('Rahmenstand geändert. Bitte erneut übernehmen.');
