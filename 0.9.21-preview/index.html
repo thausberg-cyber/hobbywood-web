@@ -50,7 +50,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev54</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev55</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -176,7 +176,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev54 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev55 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +208,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev54';
+const APP_VERSION='0.9.21-dev55';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -3394,6 +3394,17 @@ function trayBoardPages(m,{title='Schneidebrett mit Auffangschale',status='Entwu
  return [page1,frame(2,'Gratverbindung, Nutmaße und Konstruktionsangaben',detail+'</g>')];
 }
 
+const cabProfileNumber=v=>typeof v==='number'?v:typeof v==='string'&&v.trim()?Number(v.replace(',','.')):NaN;
+function buildCorpusProfile(input){
+ const errors=[],p={};
+ for(const k of ['height','depth','rightDepth','sideTopDepth','kinkHeight']){p[k]=cabProfileNumber(input?.[k]);if(!Number.isFinite(p[k])||p[k]<0||p[k]>10000)errors.push('Seitenprofil: gültige Maße eingeben.');}
+ if(!['hinten','vorne'].includes(input?.referenceEdge))errors.push('Senkrechte Bezugskante wählen.');p.referenceEdge=input?.referenceEdge;
+ if(errors.length)return {ok:false,errors};
+ if(p.height<=0||p.sideTopDepth<=0||p.depth<p.sideTopDepth||p.rightDepth<p.sideTopDepth||p.kinkHeight>=p.height)errors.push('Seitenprofil: Tiefe unten muss mindestens Tiefe oben sein; Knick muss unter der Oberkante liegen.');
+ const side=(depth)=>({bottomDepth:depth,topDepth:p.sideTopDepth,points:[[0,0],[depth,0],[depth,p.kinkHeight],[p.sideTopDepth,p.height],[0,p.height]],angleFromVertical:Math.atan((depth-p.sideTopDepth)/(p.height-p.kinkHeight))*180/Math.PI});
+ return {ok:!errors.length,errors,p,referenceEdge:p.referenceEdge,left:side(p.depth),right:side(p.rightDepth)};
+}
+
 // Deterministic first construction family. No image-derived or AI-invented dimensions.
 const DRAWING_DEFAULTS=Object.freeze({width:386,height:160,depth:90,thickness:18,frontSetback:5,bottomOffset:5,railHeight:70,railTopOffset:20,count:6,pocketDiameter:45,pocketDepth:5,gap:10,minEndMargin:15,dowelDiameter:6,dowelLength:30,dowelEdge:20,faceDepth:12,glueAllowance:2,cordDiameter:6,cordHeight:85,cordFront:12});
 const DRAWING_FIELDS=[['width','Gesamtbreite'],['height','Gesamthöhe'],['depth','Gesamttiefe'],['thickness','Materialdicke'],['frontSetback','Boden: Rücksprung vorn'],['bottomOffset','Boden: Abstand unten'],['railHeight','Rücksteg: Höhe'],['railTopOffset','Rücksteg: Abstand oben'],['count','Anzahl Gläser / Sacklöcher'],['pocketDiameter','Sackloch: Durchmesser'],['pocketDepth','Sackloch: Tiefe'],['gap','Freier Abstand der Sacklöcher'],['minEndMargin','Mindestens freier Endrand'],['dowelDiameter','Dübel: Durchmesser'],['dowelLength','Dübel: Länge'],['dowelEdge','Dübelachse: Abstand zur Bauteilkante'],['faceDepth','Flächenbohrung: Tiefe'],['glueAllowance','Kantenbohrung: Leimzugabe'],['cordDiameter','Stropp: Durchmesser'],['cordHeight','Stroppachse: Höhe ab unten'],['cordFront','Stroppachse: Abstand von vorn']];
@@ -3815,15 +3826,6 @@ function corpusJointDetails(m){if(m.biscuit)return biscuitJointDetails(m)+corpus
 // deliberately not converted into a manufacturing drawing in this first stage.
 const WRITING_FIELDS=[...CORPUS_FIELDS.slice(0,2),['depth','Seitenteil links: Tiefe unten'],['rightDepth','Seitenteil rechts: Tiefe unten'],['topBoardDepth','Oberboden: Tiefe'],['bottomBoardDepth','Unterboden: Tiefe'],['sideTopDepth','Seitenteile: Tiefe oben'],['kinkHeight','Knickhöhe ab Seitenunterkante'],['topOffset','Oberboden: Rücksprung oben'],['bottomOffset','Unterboden: Rücksprung unten'],['referenceEdge','Senkrechte Bezugskante'],...CORPUS_FIELDS.slice(3)];
 const WRITING_DEFAULTS=Object.freeze({...CORPUS_K02,kind:'writing-carcass-v1',width:900,height:650,depth:610,rightDepth:610,topBoardDepth:210,bottomBoardDepth:600,sideTopDepth:210,kinkHeight:40,topOffset:10,bottomOffset:10,referenceEdge:'hinten'});
-function buildCorpusProfile(input){
- const errors=[],p={};
- for(const k of ['height','depth','rightDepth','sideTopDepth','kinkHeight']){p[k]=drawingNumber(input?.[k]);if(!Number.isFinite(p[k])||p[k]<0||p[k]>10000)errors.push('Seitenprofil: gültige Maße eingeben.');}
- if(!['hinten','vorne'].includes(input?.referenceEdge))errors.push('Senkrechte Bezugskante wählen.');p.referenceEdge=input?.referenceEdge;
- if(errors.length)return {ok:false,errors};
- if(p.height<=0||p.sideTopDepth<=0||p.depth<p.sideTopDepth||p.rightDepth<p.sideTopDepth||p.kinkHeight>=p.height)errors.push('Seitenprofil: Tiefe unten muss mindestens Tiefe oben sein; Knick muss unter der Oberkante liegen.');
- const side=(depth)=>({bottomDepth:depth,topDepth:p.sideTopDepth,points:[[0,0],[depth,0],[depth,p.kinkHeight],[p.sideTopDepth,p.height],[0,p.height]],angleFromVertical:Math.atan((depth-p.sideTopDepth)/(p.height-p.kinkHeight))*180/Math.PI});
- return {ok:!errors.length,errors,p,referenceEdge:p.referenceEdge,left:side(p.depth),right:side(p.rightDepth)};
-}
 function corpusProfileDepth(profile,height,side='left'){
  const d=profile[side].bottomDepth,p=profile.p;
  return height<=p.kinkHeight?d:d+(p.sideTopDepth-d)*(height-p.kinkHeight)/(p.height-p.kinkHeight);
@@ -4836,6 +4838,7 @@ async function framePdf(){
 document.addEventListener('click',e=>{if(e.target.closest?.('[data-frame-new]'))frameStartNew();});
 
 // Korpusbaukasten: Eingabemaße sind maßgeblich. Keine Buchabbildungen.
+const CABINET_PANEL_NAMES={none:'ohne',solid:'Konstruktionsboden',rebate:'gefälzt',groove:'genutet'};
 const CABINET_KIND='cabinet-construction-v1';
 const CABINET_CORNERS=Object.freeze({
  nail:{number:'01a',name:'Stumpf · geleimt und genagelt',type:'nail'},
@@ -4848,7 +4851,7 @@ const CABINET_CORNERS=Object.freeze({
  biscuit:{number:'07',name:'Gehrung · einzelne Formfeder',type:'biscuit',mitre:true,single:true},
  biscuits:{number:'08',name:'Gehrung · mehrere Formfedern',type:'biscuit',mitre:true},
  angle_wood:{number:'09',name:'Gehrung · Sperrholz-Winkelfeder',type:'angle_spline',mitre:true},
- angle_plastic:{number:'10',name:'Gehrung · Kunststoff-Winkelfeder',type:'angle_spline',mitre:true}
+ angle_plastic:{number:'10',name:'Gehrung · Häfele 260.18.916 Kunststoff-Winkelfeder',type:'angle_spline',mitre:true}
 });
 const CABINET_INTERNALS=Object.freeze({
  spline:{number:'01a',name:'Eingesetzte Vollholz-/Sperrholzfeder',type:'spline'},
@@ -4878,10 +4881,10 @@ function cabinetJointKeys(def){
  if(def.type==='biscuit')return ['formLength','formWidth','formThickness','slotLength','slotDepth',...row];
  return ['tenonWidth','tenonThickness',...row,...(def.wedged?['wedgeSlotDepth','wedgeSlotWidth','wedgeWidth','wedgeLength']:[]),...(def.tusk?['projection','holeOffset','wedgeWidth','wedgeLength']:[])];
 }
-function cabinetNew(){return {kind:CABINET_KIND,width:'',height:'',depth:'',thickness:'',material:'',through:'vertical',corner:'dowel',cornerData:{},internal:'none',internalJoint:'dowel',internalPosition:'',internalData:{},viewScale:'auto'};}
+function cabinetNew(){return {kind:CABINET_KIND,width:'',height:'',depth:'',thickness:'',material:'',through:'vertical',corner:'dowel',cornerData:{},internal:'none',internalJoint:'dowel',internalPosition:'',internalData:{},viewScale:'auto',shape:'rectangular',boardsEqual:'',sidesEqual:'',backMode:'',bottomMode:'',backData:{},bottomData:{}};}
 function cabinetExample(corner='dowel',internalJoint='dowel',internal='shelf'){
- const joint=def=>{const p={diameter:8,length:30,faceDepth:12,air:1,count:3,first:40,spacing:100,rebateDepth:6,pitch:14,tails:5,pin:10,slope:7,federThickness:6,faceInsertion:6,edgeInsertion:8,leg:10,radius:3,slotLength:55,slotDepth:8,formLength:47,formWidth:15,formThickness:4,tenonWidth:35,tenonThickness:7,projection:32,holeOffset:6,wedgeWidth:8,wedgeLength:40,wedgeSlotDepth:14,wedgeSlotWidth:1};if(def?.type==='nail')Object.assign(p,{diameter:1.6,length:40,nailAngle:10,first:20,count:4,spacing:80});if(def?.type==='tenon')Object.assign(p,{count:2,first:65,spacing:150});if(def?.single)Object.assign(p,{count:1,first:140});if(def?.type==='biscuit'&&!def.single)Object.assign(p,{count:2,first:45,spacing:190});if(def?.type==='angle')Object.assign(p,{diameter:6,leg:10});return {...Object.fromEntries(cabinetJointKeys(def).map(k=>[k,p[k]])),...(def?.type==='nail'?{nailLayout:'auto'}:{})};};
- return {...cabinetNew(),width:600,height:800,depth:280,thickness:21,material:'Buche massiv · Muster',corner,cornerData:joint(CABINET_CORNERS[corner]),internal,internalJoint,internalPosition:380,internalData:joint(CABINET_INTERNALS[internalJoint])};
+ const joint=def=>{const p={diameter:8,length:30,faceDepth:12,air:1,count:3,first:40,spacing:100,rebateDepth:6,pitch:14,tails:5,pin:10,slope:7,federThickness:6,faceInsertion:6,edgeInsertion:8,leg:10,radius:3,slotLength:55,slotDepth:8,formLength:47,formWidth:15,formThickness:4,tenonWidth:35,tenonThickness:7,projection:32,holeOffset:6,wedgeWidth:8,wedgeLength:40,wedgeSlotDepth:14,wedgeSlotWidth:1};if(def?.type==='nail')Object.assign(p,{diameter:1.6,length:40,nailAngle:10,first:20,count:4,spacing:80});if(def?.type==='tenon')Object.assign(p,{count:2,first:65,spacing:150});if(def?.single)Object.assign(p,{count:1,first:140});if(def?.type==='biscuit'&&!def.single)Object.assign(p,{count:2,first:45,spacing:190});if(def?.type==='angle')Object.assign(p,{diameter:6,leg:10});return {...Object.fromEntries(cabinetJointKeys(def).map(k=>[k,p[k]])),...(['dowel','biscuit'].includes(def?.type)?{connectorLayout:'auto'}:{}),...(def?.type==='nail'?{nailLayout:'auto'}:{})};};
+ return {...cabinetNew(),boardsEqual:'yes',sidesEqual:'yes',backMode:'none',bottomMode:'solid',width:600,height:800,depth:280,thickness:21,material:'Buche massiv · Muster',corner,cornerData:joint(CABINET_CORNERS[corner]),internal,internalJoint,internalPosition:380,internalData:joint(CABINET_INTERNALS[internalJoint])};
 }
 const cabNum=v=>typeof v==='number'?v:typeof v==='string'&&v.trim()?Number(v.replace(',','.')):NaN;
 const cabFmt=v=>Number.isFinite(v)?Number(v.toFixed(2)).toLocaleString('de-DE'):'?';
@@ -4895,18 +4898,65 @@ function buildCabinet(input={}){
  if(!p.material?.trim())pending.push('Holzart / Plattenmaterial festlegen.');
  if(p.viewScale!=='auto'&&![2,5,10,20,50,100].includes(Number(p.viewScale)))errors.push('Maßstab wählen.');
  const rows={};
- function validate(def,key,label){
-  if(!def)return;const nailMode=p[key].nailLayout||((p[key].first!==undefined&&p[key].first!=='')?'manual':'auto');p[key]=Object.fromEntries(cabinetJointKeys(def).map(k=>[k,p[key][k]]));const q=p[key];
+ const shape=p.shape||'rectangular',backMode=p.backMode??'none',bottomMode=p.bottomMode??'solid';
+ p.shape=shape;p.backMode=backMode;p.bottomMode=bottomMode;
+ if(!['rectangular','writing'].includes(shape))errors.push('Korpusform wählen.');
+ if(!['none','rebate','groove'].includes(backMode))pending.push('Hat der Kasten eine Rückwand? Ohne, gefälzt oder genutet wählen.');
+ if(!['none','solid','rebate','groove'].includes(bottomMode))pending.push('Hat der Kasten einen Boden? Ohne, Konstruktionsboden, gefälzt oder genutet wählen.');
+ let profile=null,topDepth=Z,bottomDepth=Z;
+ p.boardsEqual=input.boardsEqual??'yes';p.sidesEqual=input.sidesEqual??'yes';
+ for(const k of ['boardsEqual','sidesEqual'])if(!['yes','no'].includes(p[k]))pending.push(k==='boardsEqual'?'Sind beide Böden gleich? Ja / Nein wählen.':'Sind beide Seiten gleich? Ja / Nein wählen.');
+ p.rightDepth=p.sidesEqual==='no'?cabNum(input.rightDepth):Z;
+ if(!Number.isFinite(p.rightDepth)||p.rightDepth<=0)pending.push('Breite / Tiefe der rechten Seite eingeben.');
+ if(p.boardsEqual==='no'){topDepth=cabNum(input.topBoardDepth);bottomDepth=cabNum(input.bottomBoardDepth);}
+ else {topDepth=cabNum(input.boardDepth??input.topBoardDepth??Z);bottomDepth=topDepth;}
+ if(!Number.isFinite(topDepth)||topDepth<=0||!Number.isFinite(bottomDepth)||bottomDepth<=0)pending.push('Breiten / Tiefen der Böden eingeben.');
+ p.topBoardDepth=topDepth;p.bottomBoardDepth=bottomDepth;
+ if(p.boardsEqual==='yes')p.boardDepth=topDepth;
+ if(shape==='rectangular'&&(topDepth>Math.min(Z,p.rightDepth)||bottomDepth>Math.min(Z,p.rightDepth)))errors.push('Bodenbreite / -tiefe überschreitet eine Seite.');
+ if(shape==='writing'){
+  for(const k of ['sideTopDepth','kinkHeight','topOffset','bottomOffset']){p[k]=cabNum(p[k]);if(!Number.isFinite(p[k])||p[k]<0)pending.push('Schreibkasten: '+({sideTopDepth:'Seitentiefe oben',kinkHeight:'Knickhöhe',topOffset:'Abstand Oberboden',bottomOffset:'Abstand Unterboden'}[k]||k)+' eingeben.');}
+  p.referenceEdge=p.referenceEdge||'hinten';profile=buildCorpusProfile(p);
+  errors.push(...profile.errors);topDepth=p.topBoardDepth;bottomDepth=p.bottomBoardDepth;
+  if(p.through!=='vertical'||c?.mitre||['finger','dovetail'].includes(c?.type))errors.push('Schreibkasten: Seiten durchgehend mit stumpfen oder gefälzten Ecken wählen; schräge Gehrungs-/Zinkenanschlüsse sind noch offen.');
+  if(p.referenceEdge!=='hinten')errors.push('Schreibkasten: senkrechte Bezugskante hinten wählen.');
+  if(bottomMode!=='solid')errors.push('Schreibkasten verwendet einen eigenen unteren Konstruktionsboden.');
+  if(profile.ok){
+   const pd=(height,side)=>height<=p.kinkHeight?profile[side].bottomDepth:profile[side].bottomDepth+(p.sideTopDepth-profile[side].bottomDepth)*(height-p.kinkHeight)/(H-p.kinkHeight);
+   for(const side of ['left','right']){if(topDepth>pd(H-p.topOffset,side)+1e-6)errors.push('Oberboden ragt über die schräge Seitenkontur hinaus.');if(bottomDepth>pd(p.bottomOffset+D,side)+1e-6)errors.push('Unterboden ragt über die Seitenkontur hinaus.');}
+   if(p.internal!=='none')errors.push('Schreibkasten: Innenbauteile benötigen eine eigene Tiefe; vorerst Ohne wählen.');
+   if(H-p.topOffset-D<=p.bottomOffset+D)errors.push('Ober- und Unterboden überlagern sich.');
+  }
+ }
+ const panels={};
+ for(const [key,mode] of [['back',backMode],['bottom',bottomMode]]){
+  if(!['rebate','groove'].includes(mode))continue;
+  const q={...input[key+'Data']};p[key+'Data']=q;
+  for(const k of ['thickness','insertion','offset','clearance']){q[k]=cabNum(q[k]);if(!Number.isFinite(q[k])||q[k]<0)pending.push((key==='back'?'Rückwand':'Boden')+': '+({thickness:'Dicke',insertion:'Nut-/Falztiefe',offset:'Abstand von außen',clearance:'Einbauluft'}[k]||k)+' eingeben.');}
+  if(!Object.values(q).filter(v=>typeof v==='number').every(Number.isFinite))continue;
+  if(!(q.thickness>0&&q.insertion>0&&q.insertion<D&&q.clearance<q.insertion))errors.push((key==='back'?'Rückwand':'Boden')+': Dicke, Eingriff und Einbauluft passen nicht.');
+  if(mode==='rebate'&&q.offset!==0)errors.push('Falz beginnt an der Außenkante; Abstand muss 0 mm sein.');
+  if(mode==='groove'&&q.offset<=0)errors.push('Nut benötigt einen positiven Abstand zur Außenkante.');
+  if(q.offset+q.thickness>=(key==='back'?Math.min(topDepth,bottomDepth):H)-D)errors.push('Nut / Falz lässt keine lichte Öffnung.');
+  panels[key]={...q,mode};
+ }
+ if(bottomMode!=='solid'&&p.through!=='vertical')errors.push('Ohne unteren Konstruktionsboden: Seiten durchgehend wählen.');
+ if(bottomMode!=='solid'&&(c?.mitre||['finger','dovetail'].includes(c?.type)))errors.push('Eingesetzter oder fehlender Boden: stumpfe oder gefälzte Korpusecke wählen.');
+ function validate(def,key,label,span=Z){
+  const Z=span;
+  if(!def)return;const connectorMode=p[key].connectorLayout||'auto';const nailMode=p[key].nailLayout||((p[key].first!==undefined&&p[key].first!=='')?'manual':'auto');p[key]=Object.fromEntries(cabinetJointKeys(def).map(k=>[k,p[key][k]]));const q=p[key];
+  if(['dowel','biscuit'].includes(def.type)){q.connectorLayout=connectorMode;if(connectorMode==='auto'&&Number.isFinite(Z)){const n=Math.max(1,Math.ceil((Z-40)/200));q.first=20;q.count=n+1;q.spacing=(Z-40)/n;}if(!['auto','manual'].includes(connectorMode))errors.push(label+': Verbinderverteilung wählen.');}
+  if(def.type==='angle_spline'&&p.corner==='angle_plastic'&&key!=='internalData'){q.federThickness=2;q.leg=15;}
   if(def.type==='nail'){q.nailLayout=nailMode;if(nailMode==='auto'&&Number.isFinite(Z)){const span=Z-40,steps=Math.max(1,Math.round(span/70));q.first=20;q.count=steps+1;q.spacing=span/steps;}}
   for(const k of cabinetJointKeys(def)){q[k]=cabNum(q[k]);if(!Number.isFinite(q[k])||q[k]<0||q[k]>5000)pending.push(label+': '+CABINET_JOINT_FIELDS[k]+' eingeben.');}
   if(cabinetJointKeys(def).some(k=>!Number.isFinite(q[k])||q[k]<0))return;
   const err=s=>errors.push(label+': '+s),delta=1e-6;
   for(const k of cabinetJointKeys(def).filter(k=>!['first','air','radius','holeOffset'].includes(k)))if(q[k]<=0)err(CABINET_JOINT_FIELDS[k]+' muss größer als null sein.');
-  if('count'in q){if(!Number.isSafeInteger(q.count)||q.count<1||q.count>30)err('Anzahl muss ganzzahlig zwischen 1 und 30 sein.');if(def.single&&q.count!==1)err('Einzelne Formfeder benötigt Anzahl 1.');if(['dowel','angle','tenon','nail'].includes(def.type)&&q.count<2)err('Mindestens zwei Verbinder / Zapfen vorsehen.');
+  if('count'in q){if(def.single&&q.count!==1)err('Variante 07 benötigt eine einzelne Formfeder; für mehrere Variante 08 wählen.');if(!Number.isSafeInteger(q.count)||q.count<1||q.count>30)err('Anzahl muss ganzzahlig zwischen 1 und 30 sein.');if(['dowel','angle','tenon','nail'].includes(def.type)&&q.count<2)err('Mindestens zwei Verbinder / Zapfen vorsehen.');
    const a=Array.from({length:Math.min(30,Math.max(0,Math.floor(q.count)))},(_,i)=>q.first+i*q.spacing);rows[key]=a;
    const half=def.type==='biscuit'?q.slotLength/2:def.type==='tenon'?q.tenonWidth/2:q.diameter/2;
    if(a.some(v=>v-half<0||v+half>Z))err('Verbinder / Fräsung überschreitet Vorder- oder Hinterkante.');
-   if(q.count>1&&q.spacing<2*half)err('Verbinder / Fräsungen überlappen.');if(def.type==='dowel'&&q.count>1&&q.spacing>120)err('Dübelachsabstand höchstens 120 mm.');
+   if(q.count>1&&q.spacing<2*half)err('Verbinder / Fräsungen überlappen.');if(['dowel','biscuit'].includes(def.type)){if(q.count>1&&q.spacing>200+delta)err('Verbinderachsabstand höchstens 200 mm.');if(q.first>20+delta||Z-a.at(-1)>20+delta)err('Erste und letzte Verbinderachse höchstens 20 mm von der Außenkante.');if(def.type==='biscuit'&&half>20)err('Flachdübelfräsung benötigt mehr als 20 mm Endabstand bis zur Achse. Kleinere Formfeder wählen oder die Randvorgabe fachlich ändern; Maße werden nicht stillschweigend verschoben.');}
   }
   if(def.type==='dowel'){if(q.diameter>D/2+delta)err('Dübel-Ø höchstens halbe Bauteildicke.');if(q.faceDepth>2*D/3+delta||q.faceDepth<=0)err('Flächenbohrung höchstens ⅔ der Dicke.');if(q.air>2)err('Tiefenspiel höchstens 2 mm gemäß vereinbarter Vorgabe.');if(q.length<=q.faceDepth||q.length-q.faceDepth+q.air>Z)err('Dübellänge und Einstecktiefen passen nicht.');}
   if(def.type==='nail'){if(!['auto','manual'].includes(q.nailLayout))err('Nagelverteilung automatisch oder manuell wählen.');if(q.nailAngle<=0||q.nailAngle>=90)err('Nagelneigung muss zwischen 0° und 90° liegen.');const angle=q.nailAngle*Math.PI/180,penetration=q.length*Math.cos(angle),shift=q.length*Math.sin(angle);if(penetration<=(def.housed?D*2/3:def.rebate?D-q.rebateDepth:D))err('Der geneigte Nagel erreicht das Anschlussbauteil nicht.');if((rows[key]||[]).some((z,i)=>z+(i%2?-1:1)*shift-q.diameter/2<0||z+(i%2?-1:1)*shift+q.diameter/2>Z))err('Geneigte Nagelspitze tritt an Vorder- oder Hinterkante aus.');const last=(rows[key]||[]).at(-1);if(Math.abs(q.first-20)>5||Math.abs(Z-last-20)>5)warnings.push(label+': empfohlen sind etwa 20 mm Abstand an beiden äußeren Brettkanten.');if(q.spacing<60||q.spacing>80)warnings.push(label+': Richtabstand zwischen Nägeln 60–80 mm; bei kurzen Bauteilen gesondert prüfen.');const wall=def.housed?D*2/3:def.rebate?D-q.rebateDepth:D;if(q.length<=wall)err('Nagel erreicht das anstoßende Bauteil nicht.');if(q.length>D+Math.min(W,H)-2*D)err('Nagellänge überschreitet das anstoßende Bauteil.');if(q.diameter>=D/2)err('Nageldurchmesser passt nicht zur Bauteildicke.');if(def.rebate&&(q.rebateDepth>=D||q.rebateDepth<=0))err('Falztiefe muss zwischen 0 und Bauteildicke liegen.');}
@@ -4918,7 +4968,7 @@ function buildCabinet(input={}){
   if(def.type==='biscuit'){if(q.formThickness>=D||q.slotLength<q.formLength||2*q.slotDepth<q.formWidth||q.slotDepth>=D)err('Formfeder passt nicht in Fräslänge, Frästiefe oder Dicke.');if(def.mitre&&q.slotDepth+q.formThickness/2>D/Math.SQRT2)err('Formfederfräsung tritt aus der Gehrung aus.');warnings.push(label+': Fräslänge und Tiefe nach Werkzeug / Formfeder eingeben.');}
   if(def.type==='tenon'){if(q.tenonThickness>D||q.tenonWidth>=Z)err('Zapfen passt nicht zur Bauteildicke / Tiefe.');const a=rows[key]||[];if(a[0]-q.tenonWidth/2<=30||Z-a.at(-1)-q.tenonWidth/2<=30)err('Vorholz vor / hinter den Zapfen jeweils größer als 30 mm.');if(def.wedged&&(q.wedgeSlotDepth>=D||q.wedgeWidth<=q.wedgeSlotWidth||q.wedgeLength<q.wedgeSlotDepth))err('Keil / Keilschlitz passt nicht in den bündigen Zapfen.');if(def.tusk&&(q.holeOffset+q.wedgeWidth>=q.projection||q.wedgeLength<=q.tenonThickness))err('Keilloch / Keil passt nicht zum überstehenden Zapfen.');}
  }
- if(c&&[D,W,H,Z].every(Number.isFinite)){validate(c,'cornerData','Korpusecke');if(p.internal!=='none'){if(!j)errors.push('Innenanschluss wählen.');else validate(j,'internalData','Innenanschluss');p.internalPosition=cabNum(p.internalPosition);const limit=p.internal==='shelf'?H:W;if(!Number.isFinite(p.internalPosition))pending.push('Lage des Innenbauteils eingeben.');else if(p.internalPosition<=D||p.internalPosition+D>=limit-D)errors.push('Innenbauteil liegt außerhalb der lichten Öffnung.');if(j?.housed&&p.internalPosition-D<1.5*D)errors.push('Genuteter Anschluss: Vorholz ab Innenkante mindestens 1,5 × Dicke.');}}
+ if(c&&[D,W,H,Z].every(Number.isFinite)){validate(c,'cornerData','Korpusecke oben',topDepth);p.bottomCornerData={...input.cornerData};if(bottomMode==='solid'){validate(c,'bottomCornerData','Korpusecke unten',bottomDepth);}if(p.internal!=='none'){if(!j)errors.push('Innenanschluss wählen.');else validate(j,'internalData','Innenanschluss');p.internalPosition=cabNum(p.internalPosition);const limit=p.internal==='shelf'?H:W;if(!Number.isFinite(p.internalPosition))pending.push('Lage des Innenbauteils eingeben.');else if(p.internalPosition<=D||p.internalPosition+D>=limit-D)errors.push('Innenbauteil liegt außerhalb der lichten Öffnung.');if(j?.housed&&p.internalPosition-D<1.5*D)errors.push('Genuteter Anschluss: Vorholz ab Innenkante mindestens 1,5 × Dicke.');}}
  const baseOK=![W,H,Z,D].some(v=>!Number.isFinite(v)||v<=0)&&!!c&&W>2*D&&H>2*D&&Z>2*D;
  const insertion=c?.rebate?(Number.isFinite(p.cornerData.rebateDepth)?p.cornerData.rebateDepth:0):['finger','dovetail'].includes(c?.type)||c?.mitre?D:0;
  const throughV=p.through==='vertical';
@@ -4926,12 +4976,32 @@ function buildCabinet(input={}){
   {name:'Seite',quantity:2,length:throughV?H:H-2*D+2*insertion,width:Z,thickness:D,material:p.material,note:!throughV&&c.mitre?'Langes Gehrungsmaß':undefined},
   {name:'Ober-/Unterboden',quantity:2,length:throughV?W-2*D+2*insertion:W,width:Z,thickness:D,material:p.material,note:throughV&&c.mitre?'Langes Gehrungsmaß':undefined}
  ]:[];
+ if(baseOK&&(shape==='writing'||bottomMode!=='solid'||topDepth!==Z||bottomDepth!==Z||p.boardsEqual==='no')){
+  const upper=parts.pop();parts.push({...upper,name:'Oberboden',quantity:1,width:topDepth});
+  if(bottomMode==='solid')parts.push({...upper,name:'Unterboden',quantity:1,width:bottomDepth});
+ }
+ if(baseOK&&shape==='rectangular'&&p.rightDepth!==Z){const side=parts.shift();parts.unshift({...side,name:'Seite links',quantity:1},{...side,name:'Seite rechts',quantity:1,width:p.rightDepth});}
+ if(baseOK&&shape==='writing'&&profile?.ok){parts.splice(0,1,...['left','right'].map((side,i)=>({name:'Seite '+(i?'rechts':'links')+' (Rohrechteck)',quantity:1,length:H,width:profile[side].bottomDepth,thickness:D,material:p.material,note:'Profil nach Zeichnung; Bezugskante hinten.'})));}
+ if(baseOK)for(const [key,q]of Object.entries(panels)){
+  const height=shape==='writing'?H-p.topOffset-p.bottomOffset:H;
+  const a=W-2*D+2*q.insertion-2*q.clearance,b=(key==='back'?height-D-(bottomMode==='solid'?D:0):Z-(panels.back?panels.back.offset+panels.back.thickness:0))-2*q.clearance+(key==='back'?q.insertion+(bottomMode==='solid'?q.insertion:0):0);
+  if(a<=0||b<=0)errors.push('Eingesetztes Bauteil hat keine positive Zuschnittgröße.');
+  parts.push({name:key==='back'?'Rückwand':'Eingesetzter Boden',quantity:1,length:a,width:b,thickness:q.thickness,material:p.material,note:(q.mode==='rebate'?'Falz':'Nut')+' '+q.insertion+' tief × '+q.thickness+' breit; Randluft '+q.clearance+' mm.'});
+ }
  let innerInsertion=0;if(j?.housed)innerInsertion=D/3;else if(j?.type==='tenon')innerInsertion=D+(j.tusk?(Number.isFinite(p.internalData.projection)?p.internalData.projection:0):0);
  if(baseOK&&p.internal!=='none')parts.push({name:p.internal==='shelf'?'Fester Boden':'Mittelseite',quantity:1,length:(p.internal==='shelf'?W:H)-2*D+2*innerInsertion,width:Z,thickness:D,material:p.material});
- const notes=baseOK?[`Außen ${cabFmt(W)} × ${cabFmt(H)} × ${cabFmt(Z)} mm; Dicke ${cabFmt(D)} mm.`,`${throughV?'Seiten':'Ober- und Unterboden'} durchgehend; Korpusecke ${c.number}: ${c.name}.`,p.internal==='none'?'Ohne Innenbauteil.':`${p.internal==='shelf'?'Bodenunterkante ab außen unten':'Mittelseite linke Kante ab außen links'} ${cabFmt(p.internalPosition)} mm; Anschluss ${j?.number||'?'}: ${j?.name||'offen'}.`,'Erster Teststand: ein Innenbauteil, ohne Rückwand. Faserrichtung / Platteneignung vor Fertigung festlegen.']:[];
+ const notes=baseOK?[`Außen ${cabFmt(W)} × ${cabFmt(H)} × ${cabFmt(Z)} mm; Dicke ${cabFmt(D)} mm.`,`${throughV?'Seiten':'Ober- und Unterboden'} durchgehend; Korpusecke ${c.number}: ${c.name}.`,p.internal==='none'?'Ohne Innenbauteil.':`${p.internal==='shelf'?'Bodenunterkante ab außen unten':'Mittelseite linke Kante ab außen links'} ${cabFmt(p.internalPosition)} mm; Anschluss ${j?.number||'?'}: ${j?.name||'offen'}.`,`Rückwand: ${CABINET_PANEL_NAMES[backMode]||'offen'}; Boden: ${CABINET_PANEL_NAMES[bottomMode]||'offen'}. Faserrichtung / Platteneignung vor Fertigung festlegen.`]:[];
  if(j?.tusk&&p.internal!=='none')notes.push('Innenanschluss Nr. 06 bleibt unverleimt und lösbar. Korpusecken entsprechend ihrer eigenen Ausführung verleimt.');
- const hardware=[];for(const [def,key,connections]of [[c,'cornerData',4],[p.internal!=='none'?j:null,'internalData',2]]){if(!def)continue;const q=p[key];if(['dowel','angle','nail','biscuit'].includes(def.type)&&Number.isFinite(q.count))hardware.push({item:def.type==='nail'?'Nägel':def.type==='biscuit'?'Formfedern / Flachdübel':def.type==='angle'?'Kunststoff-Winkeldübel':'Rundholzdübel',quantity:q.count*connections,spec:def.type==='biscuit'?`${q.formLength} × ${q.formWidth} × ${q.formThickness} mm`:`Ø ${q.diameter} mm; ${def.type==='angle'?'Schenkel '+q.leg:q.length} mm`,source:key});if(['spline','angle_spline'].includes(def.type))hardware.push({item:def.type==='spline'?'Lose Feder':p.corner==='angle_plastic'?'Kunststoff-Winkelfeder':'Sperrholz-Winkelfeder',quantity:connections,spec:`Länge ${Z} mm; Dicke ${q.federThickness} mm`,source:key});}
- const m={kind:CABINET_KIND,p,c,j,errors,pending,warnings,rows,parts,hardware,notes,baseOK};m.ok=errors.length===0&&baseOK;m.confirmable=m.ok&&!pending.length;return m;
+ if(shape==='writing')notes.push(`Schreibkasten: Oberboden ${cabFmt(topDepth)}, Unterboden ${cabFmt(bottomDepth)} mm; Seiten oben ${cabFmt(p.sideTopDepth)}; Knickhöhe ${cabFmt(p.kinkHeight)}; Bezug hinten.`);
+ for(const [key,q]of Object.entries(panels))notes.push(`${key==='back'?'Rückwand':'Boden'}: ${q.mode==='groove'?'genutet':'gefälzt'}, ${cabFmt(q.thickness)} mm dick; Eingriff ${cabFmt(q.insertion)}; Abstand außen ${cabFmt(q.offset)}; Randluft ${cabFmt(q.clearance)} mm.`);
+ const hardware=[];for(const [def,key,connections]of [[c,'cornerData',(bottomMode==='solid'?4:2)],[p.internal!=='none'?j:null,'internalData',2]]){if(!def)continue;const q=p[key];if(['dowel','angle','nail','biscuit'].includes(def.type)&&Number.isFinite(q.count))hardware.push({item:def.type==='nail'?'Nägel':def.type==='biscuit'?'Formfedern / Flachdübel':def.type==='angle'?'Kunststoff-Winkeldübel':'Rundholzdübel',quantity:key==='cornerData'?2*((rows.cornerData?.length||0)+(bottomMode==='solid'?(rows.bottomCornerData?.length||0):0)):q.count*connections,spec:def.type==='biscuit'?`${q.formLength} × ${q.formWidth} × ${q.formThickness} mm`:`Ø ${q.diameter} mm; ${def.type==='angle'?'Schenkel '+q.leg:q.length} mm`,source:key});if(['spline','angle_spline'].includes(def.type))hardware.push({item:def.type==='spline'?'Lose Feder':p.corner==='angle_plastic'?'Kunststoff-Winkelfeder':'Sperrholz-Winkelfeder',quantity:connections,spec:`${p.corner==='angle_plastic'?'Häfele 260.18.916; 90°; Schenkel 15 mm; Lieferlänge 1000 mm; ':''}Zuschnitt oben ${topDepth}, unten ${bottomDepth} mm; Dicke ${q.federThickness} mm`,source:key});}
+ if(p.internal==='shelf'&&panels.bottom&&p.internalPosition<panels.bottom.offset+panels.bottom.thickness)errors.push('Innenboden kollidiert mit eingesetztem Boden.');
+ if(panels.back){const q=panels.back;for(const [key,span]of [['cornerData',topDepth],['bottomCornerData',bottomDepth],['internalData',Z]]){
+  const def=key==='internalData'?j:c,js=p[key];if(!rows[key]||!def)continue;
+  const half=def.type==='biscuit'?js.slotLength/2:def.type==='tenon'?js.tenonWidth/2:(js.diameter||0)/2;
+  for(const axis of rows[key]){const z=shape==='writing'?axis:span-axis;if(z+half>q.offset&&z-half<q.offset+q.thickness)errors.push('Verbinder kollidiert mit Rückwandnut / -falz. Lage oder Verbindung anpassen.');}
+ }}
+ const m={kind:CABINET_KIND,p,c,j,errors,pending,warnings,rows,parts,hardware,notes,baseOK,profile,topDepth,bottomDepth,panels};m.ok=errors.length===0&&baseOK;m.confirmable=m.ok&&!pending.length;return m;
 }
 function cabinetPlan(m){return {cutlist:m.parts.map(v=>({part:v.name,qty:v.quantity,length_mm:v.length,width_mm:v.width,thickness_mm:v.thickness,material:v.material,direction_basis:'unknown',note:(v.note||'')+' Maße aus Korpusbaukasten; Faserrichtung prüfen.'})),steps:[{title:'Bauteile vorbereiten',text:'Zuschnitt und Faserrichtung anhand der bestätigten Zeichnung prüfen.'},{title:'Verbindungen herstellen',text:m.notes.join(' ')},{title:'Probeweise zusammenfügen',text:'Passung und Rechtwinkligkeit prüfen. Erst danach verleimen; durchgesteckte Keilzapfen Nr. 06 bleiben unverleimt.'}]};}
 
@@ -4948,17 +5018,17 @@ function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich 
  const dim=(a,b,y,origin,label)=>line(a,origin,a,y+1,'fine')+line(b,origin,b,y+1,'fine')+line(a,y,b,y,'dimension')+line(a-1,y+1,a+1,y-1,'fine')+line(b-1,y+1,b+1,y-1,'fine')+text((a+b)/2,y-1,label,'measure');
  const vdim=(a,b,x,origin,label)=>line(origin,a,x+1,a,'fine')+line(origin,b,x+1,b,'fine')+line(x,a,x,b,'dimension')+line(x-1,a+1,x+1,a-1,'fine')+line(x-1,b+1,x+1,b-1,'fine')+`<text class="measure" transform="translate(${N(x-1)},${N((a+b)/2)}) rotate(-90)">${E(label)}</text>`;
  const breakAt=(x,y,w)=>`<path class="break" d="M${x},${y}q${w/4},-2 ${w/2},0t${w/2},0"/>`;
- const scale=p.viewScale==='auto'?[2,5,10,20,50,100].find(s=>W/s+Z/s+22<=125&&H/s+Z/s+22<=159):Number(p.viewScale);
- const s=scale||100,fw=W/s,fh=H/s,fz=Z/s,t=D/s;
- const fits=fw+fz+22<=125&&fh+fz+22<=159;
+ const scale=p.viewScale==='auto'?[2,5,10,20,50,100].find(s=>W/s+Z/s+22<=125&&H/s+Math.max(Z,p.rightDepth||0)/s+22<=(Object.keys(m.panels).length?139:159)):Number(p.viewScale);
+ const s=scale||100,fw=W/s,fh=H/s,fz=Math.max(Z,p.rightDepth||0)/s,t=D/s;
+ const fits=fw+fz+22<=125&&fh+fz+22<=(Object.keys(m.panels).length?139:159);
  if(!fits)return [`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><text x="15" y="25">Der gewählte Maßstab passt nicht auf A4. Bitte Automatisch wählen.</text></svg>`];
  out+=text(10,12,title,'title')+text(10,18,'Korpus · '+c.number+' '+c.name)+text(10,23,status,'small');
  const fx=17,fy=45;
  // Front elevation: actual panel boundaries, no spurious division lines.
  out+=text(fx,fy-5,'VORDERANSICHT  M 1:'+s,'bold');
- out+=rect(fx,fy,fw,fh,'outline');
+ out+=p.bottomMode==='solid'&&p.shape!=='writing'?rect(fx,fy,fw,fh,'outline'):line(fx,fy+fh,fx,fy)+(p.shape==='writing'?line(fx,fy,fx+t,fy)+line(fx+fw-t,fy,fx+fw,fy):line(fx,fy,fx+fw,fy))+line(fx+fw,fy,fx+fw,fy+fh)+line(fx,fy+fh,fx+t,fy+fh)+line(fx+fw-t,fy+fh,fx+fw,fy+fh);
  if(c.mitre){for(const [x,y,dx,dy]of [[fx,fy,t,t],[fx+fw,fy,-t,t],[fx,fy+fh,t,-t],[fx+fw,fy+fh,-t,-t]])out+=line(x,y,x+dx,y+dy);out+=rect(fx+t,fy+t,fw-2*t,fh-2*t,'outline');}
- else if(p.through==='vertical'){out+=line(fx+t,fy,fx+t,fy+fh)+line(fx+fw-t,fy,fx+fw-t,fy+fh)+line(fx+t,fy+t,fx+fw-t,fy+t)+line(fx+t,fy+fh-t,fx+fw-t,fy+fh-t);}
+ else if(p.through==='vertical'){out+=line(fx+t,fy,fx+t,fy+fh)+line(fx+fw-t,fy,fx+fw-t,fy+fh)+line(fx+t,fy+(p.shape==='writing'?p.topOffset:0)/s,fx+fw-t,fy+(p.shape==='writing'?p.topOffset:0)/s)+line(fx+t,fy+t+(p.topOffset||0)/s,fx+fw-t,fy+t+(p.topOffset||0)/s)+(p.bottomMode==='solid'?line(fx+t,fy+fh-t-(p.bottomOffset||0)/s,fx+fw-t,fy+fh-t-(p.bottomOffset||0)/s)+line(fx+t,fy+fh-(p.bottomOffset||0)/s,fx+fw-t,fy+fh-(p.bottomOffset||0)/s):'');}
  else out+=line(fx,fy+t,fx+fw,fy+t)+line(fx,fy+fh-t,fx+fw,fy+fh-t)+line(fx+t,fy+t,fx+t,fy+fh-t)+line(fx+fw-t,fy+t,fx+fw-t,fy+fh-t);
  if(p.internal==='shelf'&&Number.isFinite(p.internalPosition))out+=rect(fx+t,fy+(H-p.internalPosition-D)/s,fw-2*t,t,'outline');
  if(p.internal==='divider'&&Number.isFinite(p.internalPosition))out+=rect(fx+p.internalPosition/s,fy+t,t,fh-2*t,'outline');
@@ -4970,9 +5040,23 @@ function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich 
  out+=dim(fx,fx+fw,fy-1,fy,cabFmt(W))+vdim(fy,fy+fh,fx-6,fx,cabFmt(H));
  const sy=fy+fh+14,sx=fx+fw+14;
  out+=text(fx,sy-4,'DRAUFSICHT','bold')+rect(fx,sy,fw,fz,'outline');
- out+=text(sx,fy-5,'VON LINKS','bold')+rect(sx,fy,fz,fh,'outline');
+ out+=text(sx,fy-5,'VON LINKS','bold')+(m.profile?.ok?poly(m.profile.left.points.map(([z,h])=>[sx+z/s,fy+(H-h)/s]),'outline'):rect(sx,fy,fz,fh,'outline'));
  if(p.through==='vertical'&&!c.mitre)out+=line(fx+t,sy,fx+t,sy+fz)+line(fx+fw-t,sy,fx+fw-t,sy+fz);else if(!c.mitre)out+=line(sx,fy+t,sx+fz,fy+t,'hidden')+line(sx,fy+fh-t,sx+fz,fy+fh-t,'hidden');
  out+=dim(fx,fx+fw,sy+fz+6,sy+fz,cabFmt(W))+dim(sx,sx+fz,fy+fh+6,fy+fh,cabFmt(Z));
+ if(!m.profile&&p.rightDepth!==Z)out+=rect(sx,fy,p.rightDepth/s,fh,'hidden');
+ if(!m.profile&&(m.topDepth!==Z||m.bottomDepth!==Z)){out+=rect(sx+(Z-m.topDepth)/s,fy,m.topDepth/s,t,'hidden');if(p.bottomMode==='solid')out+=rect(sx+(Z-m.bottomDepth)/s,fy+fh-t,m.bottomDepth/s,t,'hidden');out+=rect(fx+t,sy,fw-2*t,m.topDepth/s,'outline');}
+ if(m.profile?.ok){
+  out+=rect(sx,fy+(p.topOffset||0)/s,m.topDepth/s,t,'hidden')+rect(sx,fy+fh-(p.bottomOffset||0)/s-t,m.bottomDepth/s,t,'hidden');
+  out+=rect(fx+t,sy,fw-2*t,m.topDepth/s,'outline')+rect(fx+t,sy,fw-2*t,m.bottomDepth/s,'hidden');
+  out+=dim(sx,sx+m.topDepth/s,fy-1,fy,cabFmt(m.topDepth))+dim(sx,sx+m.bottomDepth/s,fy+fh+12,fy+fh,cabFmt(m.bottomDepth));
+  if(p.rightDepth!==Z)out+=poly(m.profile.right.points.map(([z,h])=>[sx+z/s,fy+(H-h)/s]),'hidden');
+ }
+ if(m.panels.back){const q=m.panels.back,x=fx+(D-q.insertion+q.clearance)/s,y=fy+(D-q.insertion+q.clearance+(p.topOffset||0))/s;
+  out+=rect(x,y,(W-2*D+2*q.insertion-2*q.clearance)/s,(H-2*D+2*q.insertion-2*q.clearance-(p.topOffset||0)-(p.bottomOffset||0))/s,'hidden');
+  const z=p.shape==='writing'?q.offset:Z-q.offset-q.thickness;out+=rect(sx+z/s,fy+(p.topOffset||0)/s,q.thickness/s,(H-(p.topOffset||0)-(p.bottomOffset||0))/s,'hidden');
+  out+=line(fx,sy+z/s,fx+fw,sy+z/s,'hidden')+line(fx,sy+(z+q.thickness)/s,fx+fw,sy+(z+q.thickness)/s,'hidden');
+ }
+ if(m.panels.bottom){const q=m.panels.bottom;out+=rect(fx+(D-q.insertion+q.clearance)/s,fy+fh-(q.offset+q.thickness)/s,(W-2*D+2*q.insertion-2*q.clearance)/s,q.thickness/s,'outline');out+=rect(sx,fy+fh-(q.offset+q.thickness)/s,fz,q.thickness/s,'hidden');}
  // Finger/tail outlines along the depth on the top and side projections.
  if(['finger','dovetail'].includes(c.type)&&!m.pending.some(v=>v.startsWith('Korpusecke'))){const q=p.cornerData;let intervals=[];if(c.type==='finger'){const n=Math.round(Z/q.pitch);for(let i=0;i<n;i+=2)intervals.push([i*q.pitch,Math.min(Z,(i+1)*q.pitch)]);}else{const cell=Z/q.tails;for(let i=0;i<q.tails;i++){const a=i*cell+q.pin/2,b=(i+1)*cell-q.pin/2;intervals.push([a,b]);}}
   for(const [a,b]of intervals){const k=c.type==='dovetail'?D/q.slope:0;out+=poly([[fx,sy+a/s],[fx+t,sy+(a+k)/s],[fx+t,sy+(b-k)/s],[fx,sy+b/s]],'outline');out+=poly([[fx+fw,sy+a/s],[fx+fw-t,sy+(a+k)/s],[fx+fw-t,sy+(b-k)/s],[fx+fw,sy+b/s]],'outline');}
@@ -4980,7 +5064,7 @@ function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich 
  const projected=(def,key,y)=>{if(!def||!m.rows[key])return;const q=p[key],half=def.type==='biscuit'?q.slotLength/2:def.type==='tenon'?q.tenonWidth/2:q.diameter/2;
   for(const z of m.rows[key]){if(['dowel','angle','nail'].includes(def.type))out+=`<circle cx="${N(sx+z/s)}" cy="${N(y)}" r="${N(q.diameter/2/s)}" class="${def.type==='nail'?'outline':'hidden'}"/>`;else{const height=def.type==='biscuit'?q.formThickness:q.tenonThickness;out+=rect(sx+(z-half)/s,y-height/2/s,2*half/s,height/s,'hidden');}}
  };
- projected(c,'cornerData',fy+t/2);projected(c,'cornerData',fy+fh-t/2);
+ projected(c,'cornerData',fy+t/2+(p.topOffset||0)/s);if(p.bottomMode==='solid')projected(c,'bottomCornerData',fy+fh-t/2-(p.bottomOffset||0)/s);
  if(p.internal==='shelf')projected(j,'internalData',fy+(H-p.internalPosition-D/2)/s);
  if(p.internal==='divider')out+=line(fx+p.internalPosition/s,sy,fx+p.internalPosition/s,sy+fz,'hidden')+line(fx+(p.internalPosition+D)/s,sy,fx+(p.internalPosition+D)/s,sy+fz,'hidden');
  // Section markers refer to enlarged details; offset in free material has no dimension.
@@ -4998,7 +5082,7 @@ function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich 
   if(c.type==='angle'&&q.leg>0){const l=q.leg,r=q.radius;a+=`<path class="angleConnector" stroke-width="${q.diameter}" d="M${join+l},${join}H${join+r}Q${join},${join} ${join},${join+r}V${join+l}"/>`;}
   if(c.type==='spline'&&q.federThickness>0){const v=q.faceInsertion+q.edgeInsertion;a+=`<g transform="translate(${join} ${join}) rotate(-45)">${rect(-q.faceInsertion-q.air,-q.federThickness/2,v+2*q.air,q.federThickness,'bore')}${rect(-q.faceInsertion,-q.federThickness/2,v,q.federThickness,'connector')}</g>`;}
   if(c.type==='biscuit'&&q.formThickness>0)a+=`<g transform="translate(${join} ${join}) rotate(-45)">${rect(-q.slotDepth,-q.formThickness/2,2*q.slotDepth,q.formThickness,'bore')}${rect(-q.formWidth/2,-q.formThickness/2,q.formWidth,q.formThickness,'connector')}</g>`;
-  if(c.type==='angle_spline'&&q.leg>0){const f=q.federThickness,l=q.leg;a+=poly([[join-f/2,join-f/2],[join+l,join-f/2],[join+l,join+f/2],[join+f/2,join+f/2],[join+f/2,join+l],[join-f/2,join+l]],'connector');}
+  if(c.type==='angle_spline'&&q.leg>0){const f=q.federThickness,l=q.leg-f/2;a+=poly([[join-f/2,join-f/2],[join+l,join-f/2],[join+l,join+f/2],[join+f/2,join+f/2],[join+f/2,join+l],[join-f/2,join+l]],'connector');}
   a+=breakAt(0,L,D)+`<g transform="translate(${L} 0) rotate(90)">${breakAt(0,0,D)}</g>`;
   if(p.through==='horizontal')a='<g transform="matrix(0 1 1 0 0 0)">'+a+'</g>';
   a+=dim(0,D,-5,0,cabFmt(D))+vdim(0,D,L+5,L,cabFmt(D));
@@ -5017,9 +5101,11 @@ function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich 
   if(def.type==='angle')lines.push(`Winkeldübel Ø${f(q.diameter)}; Schenkel ${f(q.leg)}`,`Achsradius ${f(q.radius)}; Luft ${f(q.air)}`);
   if(def.type==='spline')lines.push(`Feder ${f(q.federThickness)} dick × ${f(q.faceInsertion+q.edgeInsertion)} breit`,`Einstecklängen ${f(q.faceInsertion)} / ${f(q.edgeInsertion)}`,`Nuttiefen ${f(q.faceInsertion+q.air)} / ${f(q.edgeInsertion+q.air)}; Luft ${f(q.air)}`);
   if(def.type==='biscuit')lines.push(`Formfeder ${f(q.formLength)} × ${f(q.formWidth)} × ${f(q.formThickness)}`,`Fräsung L ${f(q.slotLength)} × T ${f(q.slotDepth)}`,`Nutbreite ${f(q.formThickness)}; Luft gesamt ${f(2*q.slotDepth-q.formWidth)}`);
+  if(def.type==='angle_spline'&&p.corner==='angle_plastic')lines.push('Häfele 260.18.916 · 90°');
   if(def.type==='angle_spline')lines.push(`Winkelfeder ${f(q.federThickness)} dick; Schenkel ${f(q.leg)}`,`Nut ${f(q.leg+q.air)} tief; Luft ${f(q.air)}`);
   if(def.type==='tenon')lines.push(`Zapfen ${f(q.tenonWidth)} breit × ${f(q.tenonThickness)} dick`,`Durchstecklänge ${f(D)}${def.tusk?' + Überstand '+f(q.projection):'; außen bündig'}`,`Rand vorne ${f(q.first-q.tenonWidth/2)}; hinten ${f(Z-(m.rows[key]?.at(-1)||0)-q.tenonWidth/2)}`,...(def.wedged?[`Keilschlitz ${f(q.wedgeSlotWidth)} × ${f(q.wedgeSlotDepth)}`,`Keil ${f(q.wedgeWidth)} breit × ${f(q.wedgeLength)} lang`]:[]),...(def.tusk?[`Keilloch ab außen ${f(q.holeOffset)}; Breite ${f(q.wedgeWidth)}`,`Keil Länge ${f(q.wedgeLength)}; unverleimt / lösbar`]:[]));
-  if('count'in q&&def.type!=='nail')lines.push(`${f(q.count)} Stück je Anschluss; Achsen ab vorn:`,(m.rows[key]||[]).map(f).join(' / ')+' mm');
+  if(key==='cornerData'&&p.shape==='writing')lines.push('Unterboden: '+(m.rows.bottomCornerData||[]).map(f).join(' / ')+' mm');
+  if('count'in q&&def.type!=='nail')lines.push(`${f(q.count)} Stück je ${key==='cornerData'&&p.shape==='writing'?'oberem ':''}Anschluss; ab ${p.shape==='writing'?'hinten':'vorn'}:`,(m.rows[key]||[]).map(f).join(' / ')+' mm');
   if(def.type==='nail')lines.push(`${f(q.count)} Nägel je Anschluss`);return lines;
  }
  const labelLines=(def,q,key,x,y)=>{let a='',i=0;for(const v of spec(def,q,key)){const words=v.split(' ');let row='';for(const word of words){if((row+' '+word).trim().length>35&&row){a+=text(x,y+i++*3.4,row,'small');row=word;}else row=(row+' '+word).trim();}a+=text(x,y+i++*3.4,row,'small');}return a;};
@@ -5070,7 +5156,16 @@ function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich 
    text(x+3,iy+15,'Richtwerte: Enden ca. 20 mm · Nagelabstand 60–80 mm.','small')+
    text(x+3,iy+18.2,'Abstände jeweils bis zur Nagelachse messen.','small')+'</g>';
  }
- out+=line(10,197,287,197,'fine')+text(10,201,'Maße in mm · Schnitte 1:1 · '+(p.through==='vertical'?'Seiten':'Böden')+' durchgehend · ohne Rückwand','small')+text(10,205,'Konstruktionsentwurf · Eingabemaße und Verbindungskonturen vor Fertigung fachlich prüfen.','small');
+ if(Object.keys(m.panels).length){let ix=0;for(const [key,q]of Object.entries(m.panels)){
+  const freeRight=p.internal==='none'&&!nailKey,x=freeRight?180:20+ix*78,y=freeRight?120+ix*36:183,a=q.offset,b=a+q.thickness,entry=D-q.insertion,wallHeight=Math.max(D,b+5),den=(freeRight?[1,2,5,10,20,50,100,200,500]:[2,5,10,20,50,100,200,500]).find(v=>wallHeight/v<=(freeRight?29:13))||500,k=1/den;ix++;
+  const wall=poly([[0,0],[entry,0],...(q.mode==='groove'?[[D,0],[D,a],[entry,a]]:[]),[entry,b],[D,b],[D,wallHeight],[0,wallHeight]],'wood');
+  out+='<g aria-label="Schnitt eingesetztes Bauteil">'+text(x-5,y-6,(key==='back'?'RÜCKWAND':'BODEN')+' · '+(q.mode==='groove'?'NUT':'FALZ')+' M 1:'+den,'bold');
+  out+=`<g transform="translate(${x} ${y}) scale(${k})">${wall}${rect(entry+q.clearance,a,40-entry-q.clearance,q.thickness,'wood2')}</g>`;
+  out+=dim(x+entry*k,x+D*k,y-2,y,cabFmt(q.insertion))+vdim(y+a*k,y+b*k,x+40*k+4,x+40*k,cabFmt(q.thickness));
+  if(q.mode==='groove')out+=vdim(y,y+a*k,x-5,x,cabFmt(q.offset));
+  out+=text(x+(freeRight?52:29),y+3,'Luft je Rand '+cabFmt(q.clearance),'small')+text(x+(freeRight?52:29),y+7,'Dicke '+cabFmt(q.thickness)+' mm','small')+text(x+(freeRight?52:29),y+11,'Eingriff '+cabFmt(q.insertion)+' mm','small')+'</g>';
+ }}
+ out+=line(10,197,287,197,'fine')+text(10,201,'Maße in mm · Eckschnitte 1:1 · '+(p.through==='vertical'?'Seiten':'Böden')+' durchgehend · Rückwand: '+CABINET_PANEL_NAMES[p.backMode]+' · Boden: '+CABINET_PANEL_NAMES[p.bottomMode],'small')+text(10,205,'Konstruktionsentwurf · Eingabemaße und Verbindungskonturen vor Fertigung fachlich prüfen.','small');
  const style=`text{font:3px Arial,sans-serif;fill:#15191b;stroke:none}.title{font-size:4.6px;font-weight:bold}.bold{font-weight:bold;font-size:3px}.small{font-size:2.5px}.measure{font-size:2.7px;text-anchor:middle}path,rect,circle{fill:none;stroke:#19232b;stroke-width:.35;stroke-linejoin:round}.fine,.dimension{stroke-width:.18}.wood{fill:url(#hatch)}.wood2{fill:url(#hatch2)}.outline{fill:none}.hidden{stroke-dasharray:2,1;stroke-width:.2}.axis{stroke-dasharray:4,1,1,1;stroke-width:.18}.bore{fill:white;stroke-dasharray:1.5,.7;stroke-width:.2}.connector{fill:#f4ebd6;stroke:#59482f;stroke-width:.3}.angleConnector{fill:none;stroke:#8a7350;stroke-linejoin:round}.nail{stroke-width:.55}.nailInfoBox{fill:#f5f5f5;stroke:#aaa;stroke-width:.18}.break{stroke-width:.3;fill:none}`;
  return [`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><defs><pattern id="hatch" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M-1,1L1,-1M0,3L3,0M2,4L4,2" stroke="#888" stroke-width=".16"/></pattern><pattern id="hatch2" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0,0L3,3M-1,2L1,4M2,-1L4,1" stroke="#888" stroke-width=".16"/></pattern></defs><style>${style}</style><rect width="297" height="210" style="fill:white;stroke:none"/>${out}</svg>`];
 }
@@ -5078,17 +5173,25 @@ function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich 
 function cabinetStartNew(){resetProject('develop');current.title='Meine Korpuskonstruktion';current.customTitle=current.title;current.woodDrawingDraft=cabinetNew();renderRecord();show('record');switchTab('woodDrawingPane');framePersistDraft();}
 function cabinetBegin(){if(current.construction){alert('Bitte ein neues Korpusprojekt beginnen.');return;}current.woodDrawingDraft=cabinetNew();delete current.woodDrawingChoosing;wdRender();}
 function cabinetRender(p){
+ p={...p,boardsEqual:p.boardsEqual??'yes',sidesEqual:p.sidesEqual??'yes',backMode:p.backMode??'none',bottomMode:p.bottomMode??'solid'};
  const box=$('#woodDrawingBox'),c=CABINET_CORNERS[p.corner],j=CABINET_INTERNALS[p.internalJoint];
  const select=(key,label,options)=>'<label class="wdField"><span>'+esc(label)+'</span><select data-cabinet="'+key+'">'+Object.entries(options).map(([k,v])=>'<option value="'+esc(k)+'" '+(String(p[key])===k?'selected':'')+'>'+esc(v)+'</option>').join('')+'</select></label>';
  const input=(key,label,value,group='')=>'<label class="wdField"><span>'+esc(label)+'</span><input data-cabinet="'+key+'" data-group="'+group+'" value="'+esc(value??'')+'" '+(key==='material'?'':'inputmode="decimal"')+'></label>';
- const group=(def,key)=>{const auto=def?.type==='nail'&&(p[key]?.nailLayout||((p[key]?.first!==undefined&&p[key]?.first!=='')?'manual':'auto'))==='auto';return (def?.type==='nail'?'<p>Richtwerte: etwa 20 mm Endabstand an Vorder- und Hinterkante; 60–80 mm Nagelabstand. Automatisch werden beide Enden gleichmäßig verteilt. Der Winkel ist eine eigene Eingabe; 10° in den Musterwerten ist ein Beispiel.</p><label class="wdField"><span>Nagelverteilung</span><select data-cabinet="nailLayout" data-group="'+key+'"><option value="auto" '+(auto?'selected':'')+'>Automatisch · Enden je 20 mm</option><option value="manual" '+(!auto?'selected':'')+'>Abstände selbst festlegen</option></select></label>':'')+'<div class="wdFields">'+cabinetJointKeys(def).filter(k=>!auto||!['count','first','spacing'].includes(k)).map(k=>input(k,CABINET_JOINT_FIELDS[k]+(k==='nailAngle'?' (°)':['count','tails','slope'].includes(k)?'':' (mm)'),p[key]?.[k],key)).join('')+'</div>';};
- box.innerHTML='<h3>Korpuskonstruktion · erster Teststand</h3><p>Rechteckiger Korpus mit gemeinsamer Bauteildicke, wahlweise einem festen Boden oder einer Mittelseite. Rückwand und mehrere Innenbauteile folgen im nächsten Ausbau. Die Anschlussmaße bleiben deine Eingaben.</p><div class="wdFields">'+input('material','Holzart / Plattenmaterial',p.material)+CABINET_BASE_FIELDS.filter(([k])=>k!=='internalPosition').map(([k,l])=>input(k,l+' (mm)',p[k])).join('')+select('through','Durchgehende Bauteile',{vertical:'Seiten',horizontal:'Ober- und Unterboden'})+select('corner','Korpusecke',Object.fromEntries(Object.entries(CABINET_CORNERS).map(([k,v])=>[k,'Nr. '+v.number+' · '+v.name])))+'</div><h4>Maße der Korpusecken</h4><p>Gleiche Verbindung an allen vier Ecken. Dübel-/Federachsen automatisch mittig in der Bauteildicke. Achsabstände entlang der Korpustiefe ab Vorderkante. Nagelung wechselweise schräg mit selbst festgelegtem Winkel; Richtungsdarstellung direkt bei den Schnitten.</p>'+group(c,'cornerData')+'<h4>Boden / Mittelseite</h4><div class="wdFields">'+select('internal','Innenbauteil',{none:'Ohne',shelf:'Fester Boden · waagerecht',divider:'Mittelseite · senkrecht'})+(p.internal!=='none'?select('internalJoint','Innenanschluss',Object.fromEntries(Object.entries(CABINET_INTERNALS).map(([k,v])=>[k,'Nr. '+v.number+' · '+v.name])))+input('internalPosition',p.internal==='shelf'?'Unterkante ab außen unten (mm)':'Linke Kante ab außen links (mm)',p.internalPosition):'')+'</div>'+(p.internal!=='none'?group(j,'internalData'):'')+'<p id="frameDraftStatus" role="status">'+esc(current.frameSaveError||'')+'</p><button id="cabinetExample" class="ghost">Beispielmaße für diese Auswahl laden</button><button id="cabinetRetry" class="ghost">Eingaben erneut sichern</button><p class="hint">Beispielwerte sind Muster und können geändert werden. Nr. 06 der Innenanschlüsse bleibt unverleimt / lösbar. Kunststoffverbinder und Fräsmaße am gewählten Produkt prüfen. Konstruktionszeichnungen werden aus den Eingaben erzeugt.</p><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Maße und Verbindungskonturen fachlich geprüft.</label><div class="composerActions"><button id="wdSave">Korpusstand übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="cabinetTalk" class="ghost">Im Werkstatt-Talk besprechen</button></div><p id="wdSaveStatus" role="status"></p><div id="cabinetParts"></div><div id="wdPreview" class="wdPreview"></div>';
- const saved=current.woodDrawing;$('#wdConfirmed').checked=!!saved?.confirmed&&saved.geometryVersion===2&&drawingStatus(current)==='checked'&&cabinetSignature(p)===cabinetSignature(saved.params);
- box.querySelectorAll('[data-cabinet]').forEach(el=>{el.oninput=()=>{const key=el.dataset.cabinet,group=el.dataset.group,value=el.value,old=wdParams();current.woodDrawingDraft=group?{...old,[group]:{...old[group],[key]:value}}:{...old,[key]:value};$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';};el.onchange=()=>{const key=el.dataset.cabinet,group=el.dataset.group,value=el.value,old=wdParams();current.woodDrawingDraft=group?{...old,[group]:{...old[group],[key]:value}}:{...old,[key]:value};framePersistDraft();if(['corner','internal','internalJoint','through','nailLayout'].includes(key))cabinetRender(wdParams());else cabinetPreview();};});
- $('#cabinetExample').onclick=()=>{const p=wdParams();current.woodDrawingDraft=cabinetExample(p.corner,p.internalJoint,p.internal);framePersistDraft();cabinetRender(wdParams());};
+ const group=(def,key)=>{const connectorAuto=['dowel','biscuit'].includes(def?.type)&&(p[key]?.connectorLayout||'auto')==='auto';const auto=def?.type==='nail'&&(p[key]?.nailLayout||((p[key]?.first!==undefined&&p[key]?.first!=='')?'manual':'auto'))==='auto';return (['dowel','biscuit'].includes(def?.type)?'<p>Vorgabe 01: äußere Achsen höchstens 20 mm von der Brettkante, Mitte–Mitte höchstens 200 mm. Die App prüft Fräsungen und Kollisionen.</p><label class="wdField"><span>Verbinderverteilung</span><select data-cabinet="connectorLayout" data-group="'+key+'"><option value="auto" '+(connectorAuto?'selected':'')+'>Automatisch · Vorgabe 01</option><option value="manual" '+(!connectorAuto?'selected':'')+'>Manuell · Vorgabe wird geprüft</option></select></label>':'')+(def?.type==='nail'?'<p>Richtwerte: etwa 20 mm Endabstand an Vorder- und Hinterkante; 60–80 mm Nagelabstand. Automatisch werden beide Enden gleichmäßig verteilt. Der Winkel ist eine eigene Eingabe; 10° in den Musterwerten ist ein Beispiel.</p><label class="wdField"><span>Nagelverteilung</span><select data-cabinet="nailLayout" data-group="'+key+'"><option value="auto" '+(auto?'selected':'')+'>Automatisch · Enden je 20 mm</option><option value="manual" '+(!auto?'selected':'')+'>Abstände selbst festlegen</option></select></label>':'')+'<div class="wdFields">'+cabinetJointKeys(def).filter(k=>!(auto||connectorAuto)||!['count','first','spacing'].includes(k)).filter(k=>!(def===CABINET_CORNERS.angle_plastic&&['federThickness','leg'].includes(k))).map(k=>input(k,CABINET_JOINT_FIELDS[k]+(k==='nailAngle'?' (°)':['count','tails','slope'].includes(k)?'':' (mm)'),p[key]?.[k],key)).join('')+'</div>';};
+ const equal={ '':'Bitte wählen',yes:'Ja',no:'Nein'};
+ const dimensions='<h4>Bauteilmaße</h4><div class="wdFields">'+select('shape','Korpusform',{rectangular:'Rechteckiger Kasten',writing:'Schreibkasten · Seitenprofil mit Schräge'})+select('boardsEqual','Sind beide Böden gleich?',equal)+select('sidesEqual','Sind beide Seiten gleich?',equal)+'</div><div class="wdFields">'+
+ (p.boardsEqual==='yes'?input('boardDepth','Gemeinsame Breite / Tiefe beider Böden (mm)',p.boardDepth??p.depth):p.boardsEqual==='no'?input('topBoardDepth','Oberboden: Breite / Tiefe (mm)',p.topBoardDepth)+input('bottomBoardDepth','Unterboden: Breite / Tiefe (mm)',p.bottomBoardDepth):'')+
+ (p.sidesEqual==='no'?input('rightDepth','Rechte Seite: Breite / Tiefe unten (mm)',p.rightDepth):'')+
+ (p.shape==='writing'?input('sideTopDepth','Seiten: Tiefe oben (mm)',p.sideTopDepth)+input('kinkHeight','Knickhöhe (mm)',p.kinkHeight)+input('topOffset','Oberboden: Abstand von oben (mm)',p.topOffset)+input('bottomOffset','Unterboden: Abstand von unten (mm)',p.bottomOffset)+'<p>Bezugskante hinten senkrecht; Profile aus dem Schreibkastenmodell.</p>':'')+'</div>';
+ const panel=(key)=>{const mode=p[key+'Mode'],q=p[key+'Data']||{};return ['rebate','groove'].includes(mode)?'<div class="wdFields">'+input('thickness','Dicke (mm)',q.thickness,key+'Data')+input('insertion',(mode==='groove'?'Nuttiefe':'Falztiefe')+' in die Seiten / Böden (mm)',q.insertion,key+'Data')+(mode==='groove'?input('offset','Abstand der Nut von außen (mm)',q.offset,key+'Data'):'')+input('clearance','Einbauluft je Rand (mm)',q.clearance,key+'Data')+'</div>':'';};
+ const closures='<h4>Rückwand und Boden</h4><div class="wdFields">'+select('backMode','Hat der Kasten eine Rückwand?',{'':'Bitte wählen',none:'Nein',rebate:'Ja · gefälzt',groove:'Ja · genutet'})+'</div>'+panel('back')+'<div class="wdFields">'+select('bottomMode','Hat der Kasten einen Boden?',{'':'Bitte wählen',none:'Nein · unten offen',solid:'Ja · Konstruktionsboden mit gewählter Eckverbindung',rebate:'Ja · eingesetzt und gefälzt',groove:'Ja · eingesetzt und genutet'})+'</div>'+panel('bottom');
+ box.innerHTML='<h3>Korpuskonstruktion</h3><p>Kasten mit Rückwand oder eingesetztem Boden, wahlweise mit einem Innenbauteil. Gleiche Bauteile benötigen nur eine gemeinsame Maßeingabe.</p><div class="wdFields">'+input('material','Holzart / Plattenmaterial',p.material)+CABINET_BASE_FIELDS.filter(([k])=>k!=='internalPosition').map(([k,l])=>input(k,l+' (mm)',p[k])).join('')+select('through','Durchgehende Bauteile',{vertical:'Seiten',horizontal:'Ober- und Unterboden'})+select('corner','Korpusecke',Object.fromEntries(Object.entries(CABINET_CORNERS).map(([k,v])=>[k,'Nr. '+v.number+' · '+v.name])))+'</div>'+dimensions+closures+'<h4>Maße der Korpusecken</h4><p>Gleiche Verbindungsart an den Korpusecken; Verteilung je Bodenbreite separat. Dübel-/Federachsen automatisch mittig in der Bauteildicke. Achsabstände entlang der Korpustiefe ab Vorderkante. Nagelung wechselweise schräg mit selbst festgelegtem Winkel; Richtungsdarstellung direkt bei den Schnitten.</p>'+group(c,'cornerData')+'<h4>Boden / Mittelseite</h4><div class="wdFields">'+select('internal','Innenbauteil',{none:'Ohne',shelf:'Fester Boden · waagerecht',divider:'Mittelseite · senkrecht'})+(p.internal!=='none'?select('internalJoint','Innenanschluss',Object.fromEntries(Object.entries(CABINET_INTERNALS).map(([k,v])=>[k,'Nr. '+v.number+' · '+v.name])))+input('internalPosition',p.internal==='shelf'?'Unterkante ab außen unten (mm)':'Linke Kante ab außen links (mm)',p.internalPosition):'')+'</div>'+(p.internal!=='none'?group(j,'internalData'):'')+'<p id="frameDraftStatus" role="status">'+esc(current.frameSaveError||'')+'</p><button id="cabinetExample" class="ghost">Beispielmaße für diese Auswahl laden</button><button id="cabinetRetry" class="ghost">Eingaben erneut sichern</button><p class="hint">Beispielwerte sind Muster und können geändert werden. Nr. 06 der Innenanschlüsse bleibt unverleimt / lösbar. Kunststoffverbinder und Fräsmaße am gewählten Produkt prüfen. Konstruktionszeichnungen werden aus den Eingaben erzeugt.</p><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Maße und Verbindungskonturen fachlich geprüft.</label><div class="composerActions"><button id="wdSave">Korpusstand übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="cabinetTalk" class="ghost">Im Werkstatt-Talk besprechen</button></div><p id="wdSaveStatus" role="status"></p><div id="cabinetParts"></div><div id="wdPreview" class="wdPreview"></div>';
+ const saved=current.woodDrawing;$('#wdConfirmed').checked=!!saved?.confirmed&&saved.geometryVersion===3&&drawingStatus(current)==='checked'&&cabinetSignature(p)===cabinetSignature(saved.params);
+ box.querySelectorAll('[data-cabinet]').forEach(el=>{el.oninput=()=>{const key=el.dataset.cabinet,group=el.dataset.group,value=el.value,old=wdParams();current.woodDrawingDraft=group?{...old,[group]:{...old[group],[key]:value}}:{...old,[key]:value};$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';};el.onchange=()=>{const key=el.dataset.cabinet,group=el.dataset.group,value=el.value,old=wdParams();current.woodDrawingDraft=group?{...old,[group]:{...old[group],[key]:value}}:{...old,[key]:value};if(['backMode','bottomMode'].includes(key)){const part=key.replace('Mode',''),q=current.woodDrawingDraft[part+'Data']||{};current.woodDrawingDraft[part+'Data']={clearance:0.5,...q,...(value==='rebate'?{offset:0}:{})};}framePersistDraft();if(['corner','internal','internalJoint','through','nailLayout','connectorLayout','shape','boardsEqual','sidesEqual','backMode','bottomMode'].includes(key))cabinetRender(wdParams());else cabinetPreview();};});
+ $('#cabinetExample').onclick=()=>{const p=wdParams();const sample=cabinetExample(p.corner,p.internalJoint,p.shape==='writing'?'none':p.internal);if(p.shape==='writing')Object.assign(sample,{shape:'writing',width:900,height:650,depth:610,boardsEqual:'no',sidesEqual:'yes',topBoardDepth:210,bottomBoardDepth:600,sideTopDepth:210,kinkHeight:40,topOffset:10,bottomOffset:10});current.woodDrawingDraft={...sample,...Object.fromEntries(['shape','boardsEqual','sidesEqual','backMode','bottomMode','backData','bottomData','boardDepth','rightDepth','topBoardDepth','bottomBoardDepth','sideTopDepth','kinkHeight','topOffset','bottomOffset'].filter(k=>p[k]!==undefined&&p[k]!=='').map(k=>[k,p[k]]))};framePersistDraft();cabinetRender(wdParams());};
  $('#cabinetRetry').onclick=()=>framePersistDraft();$('#cabinetTalk').onclick=()=>switchTab('talkPane');$('#wdConfirmed').onchange=cabinetPreview;$('#wdSave').onclick=cabinetSave;$('#wdPrint').onclick=cabinetPdf;cabinetPreview();
 }
-function cabinetReady(project=current){const p=wdParams(project),m=buildCabinet(p),saved=project.woodDrawing;return m.confirmable&&saved?.confirmed&&saved.geometryVersion===2&&drawingStatus(project)==='checked'&&cabinetSignature(p)===cabinetSignature(saved.params)&&!project.frameSaveError;}
+function cabinetReady(project=current){const p=wdParams(project),m=buildCabinet(p),saved=project.woodDrawing;return m.confirmable&&saved?.confirmed&&saved.geometryVersion===3&&drawingStatus(project)==='checked'&&cabinetSignature(p)===cabinetSignature(saved.params)&&!project.frameSaveError;}
 function cabinetPreview(){const m=buildCabinet(wdParams()),saved=current.woodDrawing,unsaved=!saved||cabinetSignature(wdParams())!==cabinetSignature(saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed;
  $('#wdConfirmed').disabled=!m.confirmable;if(!m.confirmable)$('#wdConfirmed').checked=false;
  $('#wdChecks').innerHTML=[...m.errors.map(s=>'Bitte korrigieren: '+s),...m.pending.map(s=>'Offen: '+s),...m.warnings].map(s=>'<p class="notice">'+esc(s)+'</p>').join('')+'<p>'+esc(unsaved?'Entwurf · noch nicht übernommen':wdStateText())+'</p>';
@@ -5100,7 +5203,7 @@ async function cabinetSave(){
  if(wdSaving)return;const project=current,m=buildCabinet(wdParams(project));if(!m.ok)return;
  const previous={woodDrawing:project.woodDrawing,reconstruction:project.reconstruction,purchasedParts:project.purchasedParts,projectDirty:project.projectDirty};
  wdSaving=true;const confirmed=!!$('#wdConfirmed').checked&&m.confirmable;
- project.woodDrawing={schemaVersion:1,geometryVersion:2,type:CABINET_KIND,params:m.p,revision:(previous.woodDrawing?.revision||0)+1,confirmed,source:'',updatedAt:new Date().toISOString()};project.woodDrawingDraft=JSON.parse(JSON.stringify(m.p));
+ project.woodDrawing={schemaVersion:1,geometryVersion:3,type:CABINET_KIND,params:m.p,revision:(previous.woodDrawing?.revision||0)+1,confirmed,source:'',updatedAt:new Date().toISOString()};project.woodDrawingDraft=JSON.parse(JSON.stringify(m.p));
  project.reconstruction={...cabinetPlan(m),planSchemaVersion:2,sourceRevision:project.analysis?.revision||0,main_dimensions:[m.p.width,m.p.height,m.p.depth].map(v=>v+' mm')};project.projectDirty=false;
  const old=new Map((project.purchasedParts||[]).filter(v=>v.source==='cabinet-construction').map(v=>[v.cabinetKey,v]));project.purchasedParts=[...(project.purchasedParts||[]).filter(v=>v.source!=='cabinet-construction'),...m.hardware.map((v,i)=>{const k=v.source+'-'+v.item;return {...old.get(k),id:old.get(k)?.id||newId(),cabinetKey:k,item:v.item,quantity:v.quantity+' Stück',dimensions:v.spec,use:v.source==='cornerData'?'4 Korpusecken':'2 Innenanschlüsse',source:'cabinet-construction'};})];project.woodDrawing.source=drawingSource(project);
  try{if(!await framePersistDraft(project))Object.assign(project,previous);else if(current===project){renderRecord({drawingSave:true});$('#wdSaveStatus').textContent='Korpusstand, Stückliste und Verbindungsmittel gespeichert.';}}
