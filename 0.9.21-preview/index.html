@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev58</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev60</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -79,7 +79,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
   <div class="eyebrow">Eigenes Projekt entwickeln</div><h1>Womit möchtest du beginnen?</h1>
   <div class="grid2">
     <button class="choice" id="developConstruction"><strong>Mit einer Grundkonstruktion beginnen</strong><p>Brett-, Rahmen- oder Korpuskonstruktion auswählen und an deine Vorstellungen anpassen.</p></button>
-    <button class="choice" id="developOwnIdea"><strong>Mit einer eigenen Idee beginnen</strong><p>Dein Vorhaben beschreiben, bei Bedarf Fotos oder Skizzen ergänzen und im Werkstatt-Talk ausarbeiten.</p></button>
+    <button class="choice" id="ensembleNew"><strong>Gesamtprojekt mit mehreren Baugruppen</strong><p>Ein Möbel aus Korpussen, Rahmen, Brettern und eigenen Baugruppen gemeinsam planen.</p></button><button class="choice" id="ensembleExample"><strong>Garderobe als Testprojekt öffnen</strong><p>Den gemeinsam abgestimmten Entwurf mit verknüpften Maßen erproben.</p></button><button class="choice" id="developOwnIdea"><strong>Mit einer eigenen Idee beginnen</strong><p>Dein Vorhaben beschreiben, bei Bedarf Fotos oder Skizzen ergänzen und im Werkstatt-Talk ausarbeiten.</p></button>
   </div>
 </section>
 
@@ -93,7 +93,19 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
   <label class="field">Beschreibe deine Vorstellung</label><textarea id="developText" placeholder="z. B. Ich möchte einen runden Reagenzglas-Halter aus Multiplex bauen …"></textarea>
   <p class="hint">Fotos oder Skizzen sind optional und können auch später im Talk ergänzt werden.</p>
   <div id="developPhotos" class="photos"></div><label class="button secondary" for="developInput">Projektfoto hinzufügen</label><input class="hidden" id="developInput" type="file" accept="image/*" multiple><label class="button ghost" for="sketchInputDevelop">Skizze ergänzen</label><input class="hidden" id="sketchInputDevelop" type="file" accept="image/*">
-  <button class="primary" id="developGo">Projekt starten</button>
+  <button class="primary" id="developGo">Passende Grundkonstruktion finden</button><p class="hint">Du prüfst die Zuordnung und erkannten Angaben vor der Übernahme. Freies Weiterarbeiten im Werkstatt-Talk bleibt möglich.</p>
+</section>
+
+<section id="ideaConstructionReview" class="screen">
+ <div class="eyebrow">Von deiner Idee zur Konstruktion</div><h1>Welche Grundkonstruktion passt?</h1>
+ <p id="ideaFamilyReason" class="lead"></p>
+ <label class="field" for="ideaFamilySelect">Grundkonstruktion</label><select id="ideaFamilySelect"></select>
+ <div id="ideaImportFields" class="card"></div>
+ <p id="ideaReviewStatus" role="status" aria-live="polite"></p>
+ <button id="ideaAdopt" class="primary">Zuordnung und Angaben übernehmen</button>
+ <button id="ideaEnsemble" class="secondary">Als Gesamtprojekt ausarbeiten</button>
+ <button id="ideaContinueFree" class="secondary">Frei im Werkstatt-Talk weiterarbeiten</button>
+ <button id="ideaCancelReview" class="ghost">Zurück zu meiner Idee</button>
 </section>
 
 <section id="ideas" class="screen">
@@ -172,7 +184,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 <section id="ready" class="screen"><h1>Bereit für „Mein Projekt“</h1><div class="ok notice">Du kannst den Projektentwurf jetzt erstellen und anschließend jederzeit im Werkstatt-Talk weiterarbeiten.</div><button class="primary" id="reconstructBtn">Mein Projekt erstellen</button><button class="secondary" id="talkFirst">Erst weiter fachsimpeln</button></section>
 <section id="reconstructing" class="screen"><h1>Mein Projekt wird erstellt …</h1><div class="progress"><i id="bar2"></i></div></section>
 
-<section id="record" class="screen">
+<section id="record" class="screen"><div id="ensembleReturn" class="notice hidden"><strong id="ensembleReturnTitle"></strong><p>Außenmaße und gemeinsames Material werden vom Gesamtprojekt vorgegeben. Konstruktionsdetails bearbeitest du hier.</p><button id="ensembleBack" class="secondary">Zum Gesamtprojekt zurück</button></div>
   <div class="workspace">
     <aside class="side">
       <div class="eyebrow">Mein Projekt</div><h1 id="recordTitle">Projekt</h1><p id="recordSummary"></p>
@@ -185,12 +197,12 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="talkPane" class="pane on"><div class="card"><div id="chatLog"></div><h3>Noch offen</h3><div id="editableOpen"></div></div>
         <div class="talkComposer"><textarea id="chatInput" placeholder="Frag mich etwas, lass etwas berechnen, korrigiere Maße oder diskutiere eine andere Lösung …"></textarea><div id="pendingTalkPhotos" class="photoStrip"></div><div class="composerActions"><button class="secondary small" id="speechBtn" type="button">🎙 Sprechen</button><label class="button secondary small" for="talkCameraInput">Foto aufnehmen</label><input class="hidden" id="talkCameraInput" type="file" accept="image/*" capture="environment" multiple><label class="button secondary small" for="talkLibraryInput">Aus Mediathek auswählen</label><input class="hidden" id="talkLibraryInput" type="file" accept="image/*" multiple><label class="button ghost small" for="talkSketchInput">Skizze ergänzen</label><input class="hidden" id="talkSketchInput" type="file" accept="image/*"><button class="primary small" id="sendChat">Beitrag senden</button></div><div id="speechStatus" class="speechStatus"><span class="speechDot" aria-hidden="true"></span><span id="speechStatusText">Ich höre zu …</span></div><div id="talkWorking" class="talkWorking"><span class="spinner" aria-hidden="true"></span><span>Ich schaue mir das an …</span></div><div class="hint">Sprechen, tippen, Foto oder Skizze – vor dem Senden bleibt alles editierbar.</div></div>
       </div>
-      <div id="overview" class="pane"><div class="card" id="overviewBox"></div><button class="secondary" id="refreshProject">Mein Projekt erstellen</button></div>
+      <div id="overview" class="pane"><details id="ideaBridgeSource" class="notice hidden"><summary>Meine ursprüngliche Idee</summary><p id="ideaBridgeSourceText" style="white-space:pre-wrap"></p></details><div id="ideaBridgeEntry" class="notice hidden"><strong>Deine Idee mit einer Grundkonstruktion ausarbeiten</strong><p id="ideaBridgeSuggestion"></p><button id="ideaBridgeOpen" class="secondary">Grundkonstruktion zuordnen</button></div><div class="card" id="overviewBox"></div><button class="secondary" id="refreshProject">Mein Projekt erstellen</button></div>
       <div id="photosPane" class="pane"><div class="card"><h3 style="margin-top:0">Projektfotos</h3><div id="recordPhotos" class="photos"></div><label class="button secondary" for="recordPhotoInput">Weitere Fotos hinzufügen</label><input class="hidden" id="recordPhotoInput" type="file" accept="image/*" multiple></div></div><div id="sketchPane" class="pane"><div class="card"><h3 style="margin-top:0">Werkstattskizzen</h3><p class="hint">Eine schnelle Handskizze kann Maße und Aufbau oft besser klären als ein weiteres Foto.</p><div id="sketchList"></div><div class="composerActions"><label class="button secondary small" for="recordSketchCamera">Skizze fotografieren</label><input class="hidden" id="recordSketchCamera" type="file" accept="image/*" capture="environment"><label class="button secondary small" for="recordSketchLibrary">Skizze auswählen</label><input class="hidden" id="recordSketchLibrary" type="file" accept="image/*"></div></div></div>
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev58 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev60 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -222,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev58';
+const APP_VERSION='0.9.21-dev60';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -232,7 +244,7 @@ let pendingSketch=null, sketchReturnScreen='record';
 let pendingImport=null;
 let profile={skill:'Fortgeschritten',tools:{}};
 let viewHistory=[];
-const transientScreens=new Set(['analyzing','reconstructing','sketchWorking']);
+const transientScreens=new Set(['analyzing','reconstructing','sketchWorking','ideaConstructionReview']);
 const baseTools=['Handkreissäge','Tischkreissäge','Kappsäge','Stichsäge','Bandsäge','Oberfräse','Domino-Fräse','Flachdübelfräse','Standbohrmaschine','Drechselbank','Abricht-/Dickenhobel','Exzenterschleifer'];
 const newId=()=>crypto.randomUUID?crypto.randomUUID():'p-'+Date.now()+'-'+Math.random().toString(16).slice(2);
 function screenHasSpeechTarget(screen){if(!screen)return false;return [...screen.querySelectorAll('textarea,input')].some(el=>{const type=(el.getAttribute('type')||'text').toLowerCase();return !el.disabled&&!el.classList.contains('hidden')&&!['file','button','submit','checkbox','radio','range','color','date','time'].includes(type)})}
@@ -461,7 +473,7 @@ async function projectForUi(project){
 }
 async function dbWriteProject(project){const db=await openDb(),stored=await projectForStorage(project);return new Promise((resolve,reject)=>{const tx=db.transaction(PROJECT_STORE,'readwrite');tx.objectStore(PROJECT_STORE).put(stored);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{const e=tx.error;db.close();reject(e)}})}
 let projectWriteQueue=Promise.resolve();
-function dbPutProject(project){const snapshot=typeof structuredClone==='function'?structuredClone(project):JSON.parse(JSON.stringify(project));const task=projectWriteQueue.catch(()=>{}).then(()=>dbWriteProject(snapshot));projectWriteQueue=task;return task}
+function dbPutProject(project){if(project.ensembleParent)return ensembleSaveChild(project);const snapshot=typeof structuredClone==='function'?structuredClone(project):JSON.parse(JSON.stringify(project));const task=projectWriteQueue.catch(()=>{}).then(()=>dbWriteProject(snapshot));projectWriteQueue=task;return task}
 async function dbGetProject(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(PROJECT_STORE,'readonly'),req=tx.objectStore(PROJECT_STORE).get(id);req.onsuccess=async()=>{db.close();try{resolve(req.result?await projectForUi(req.result):null)}catch(e){reject(e)}};req.onerror=()=>{const e=req.error;db.close();reject(e)}})}
 async function dbGetProjects(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(PROJECT_STORE,'readonly'),req=tx.objectStore(PROJECT_STORE).getAll();req.onsuccess=()=>{const arr=req.result||[];db.close();arr.sort((a,b)=>new Date(b.updatedAt||0)-new Date(a.updatedAt||0));resolve(arr)};req.onerror=()=>{const e=req.error;db.close();reject(e)}})}
 async function dbDeleteProject(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(PROJECT_STORE,'readwrite');tx.objectStore(PROJECT_STORE).delete(id);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{const e=tx.error;db.close();reject(e)}})}
@@ -552,6 +564,7 @@ async function projectToPortable(project){
   const copy=typeof structuredClone==='function'?structuredClone(project):JSON.parse(JSON.stringify(project));
   copy.photos=await Promise.all((project.photos||[]).map(async p=>({id:p.id,name:p.name,addedAt:p.addedAt,dataUrl:p.dataUrl||(p.blob instanceof Blob?await blobToDataUrl(p.blob):'')})));
   copy.sketches=await Promise.all((project.sketches||[]).map(async s=>({id:s.id,name:s.name,addedAt:s.addedAt,confirmedAt:s.confirmedAt,analysis:s.analysis,drawing:s.drawing,dataUrl:s.dataUrl||(s.blob instanceof Blob?await blobToDataUrl(s.blob):'')})));
+  if(copy.ensemble)for(const m of copy.ensemble.modules)if(m.project)m.project=await projectToPortable(m.project);
   return JSON.parse(JSON.stringify(copy));
 }
 function validatePortableMedia(project){
@@ -561,6 +574,7 @@ function validatePortableMedia(project){
   }
 }
 async function exportProject(project){
+  if(project?.ensembleParent&&ensembleContext)return exportProject(ensembleContext.root);
   if(!project?.id)return alert('Kein Projekt zum Exportieren geöffnet.');
   const portable=await projectToPortable(project);
   const testerId=getTesterId();rememberTesterId(testerId);
@@ -994,7 +1008,7 @@ $('#analyzeBtn').onclick=()=>analyze();$('#developGo').onclick=()=>analyze();
 function renderAnalysis(){const a=current.analysis||{},list=(t,x,c='')=>`<h3>${t}</h3>${(x||[]).map(v=>`<div class="status"><span class="dot ${c}"></span><div>${escGerman(v)}</div></div>`).join('')||'<p>Keine Angaben.</p>'}`;$('#analysisCard').innerHTML=`<h2 style="margin-top:0">${esc(a.object||'Projekt')}</h2><p>${escGerman(a.summary||'')}</p>${list('Erkannt',a.recognized)}${list('Vermutet',a.assumptions,'mid')}${list('Offen',a.unknown,'unknown')}`;const nr=a.next_request||{},enough=!(a.unknown||[]).length&&a.enough_information===true;$('#acceptAnalysis').classList.remove('hidden');if(enough){$('#nextRequest').classList.add('hidden');$('#detailPhotoActions').classList.add('hidden')}else{$('#nextRequest').textContent=nr.prompt||'Was sollten wir noch klären?';$('#nextRequest').classList.remove('hidden');$('#detailPhotoActions').classList.toggle('hidden',nr.type!=='detail_photo')}show('analysis')}
 $('#acceptAnalysis').onclick=()=>show('ready');$('#talkFirst').onclick=()=>{current.reconstruction=current.reconstruction||{title:current.analysis?.object,summary:current.analysis?.summary};renderRecord();show('record');switchTab('talkPane')};
 let reconstructionBusy=false;
-async function reconstruct(){if(cHas(current))return cRefresh();
+async function reconstruct(){if(current.ensemble)return ensembleRefresh();if(cHas(current))return cRefresh();
   if(reconstructionBusy||busy)return;
   const project=current, previous=project.reconstruction;
   reconstructionBusy=true;show('reconstructing');$('#bar2').style.width='35%';
@@ -1237,7 +1251,7 @@ function mergePurchasedParts(parts=[],project=current){
 function inventoryEntries(project=current){
  const entries=[],seen=new Set();
  const add=(x)=>{const item=String(x.item||x.name||'').trim();if(!item||(project.removedPurchasedParts||[]).some(removed=>purchasedPartsMatch(removed,{...x,item})))return;const quantity=String(x.quantity||x.qty||'').trim(),spec=String(x.spec||x.details||x.dimensions||'').trim(),supplier=String(x.supplier||'').trim(),product=String(x.product||'').trim();
-  const key=JSON.stringify([item,quantity,spec,supplier,product].map(purchaseToken));if(seen.has(key))return;seen.add(key);entries.push({item,quantity,spec,supplier,product,key,inStock:project.stockChecks?.[key]===true,stockStatus:project.stockChecks?.[key]===true?'have':project.stockChecks?.[key]==='buy'?'buy':'unchecked'});
+  const key=JSON.stringify([item,quantity,spec,supplier,product].map(purchaseToken));if(seen.has(key))return;seen.add(key);entries.push({item,quantity,spec,supplier,product,key,inStock:(project.stockChecks?.[key]??(x.source==='ensemble'&&x.ensembleStock?true:undefined))===true,stockStatus:(project.stockChecks?.[key]??(x.source==='ensemble'&&x.ensembleStock?true:undefined))===true?'have':project.stockChecks?.[key]==='buy'?'buy':'unchecked'});
  };
  (project.reconstruction?.materials||[]).forEach(add);(project.purchasedParts||[]).forEach(add);return entries;
 }
@@ -4161,6 +4175,7 @@ function wdModelName(params){if(cabinetIs(params))return 'Korpuskonstruktion';if
 function wdParams(project=current){if(project?.construction)return constructionToDrawing(project.construction);return project.woodDrawingDraft||project.woodDrawing?.params||null}
 function wdCutlistForProject(project=current){
  if(cabinetIs(wdParams(project))){const p=wdParams(project),m=buildCabinet(p);return m.confirmable&&project.woodDrawing&&cabinetSignature(p)===cabinetSignature(project.woodDrawing.params)&&drawingStatus(project)!=='stale'?cabinetPlan(m).cutlist:[];}
+ if(project.ensemble)return ensembleAggregate(project.ensemble,enCutlists(project)).rows;
  if(isFrameConstruction(wdParams(project))){const p=wdParams(project),m=buildFrameConstruction(p);return m.ok&&project.woodDrawing&&frameSignature(p)===frameSignature(project.woodDrawing.params)&&drawingStatus(project)!=='stale'?framePlan(m).cutlist:[];}
  if(project?.construction)return constructionPlan(project.construction).cutlist;
  if(!project.woodDrawing||isSolidJoint(project.woodDrawing.params))return project.reconstruction?.cutlist||[];
@@ -4169,6 +4184,8 @@ function wdCutlistForProject(project=current){
  return m.parts.map(p=>({part:p.name,qty:p.quantity,length_mm:p.length,width_mm:p.width,thickness_mm:p.thickness,material:p.material||(m.kind==='bread-frame-v1'?'Massive Buche, unbehandelt':'Holzart noch festlegen'),direction_basis:wdIsCorpus(m)?'unknown':'fiber',note:(wdIsCorpus(m)?'Maße aus Korpuszeichnung; Dekor-/Faserrichtung und Belag-Zuschnittspiel prüfen. ':'Maße aus Werkzeichnung; Massivholz, L in Faserrichtung. ')+(p.note||'')+' '+(project.woodDrawing.confirmed?'Maße bestätigt.':'Entwurf: Maße noch bestätigen.')}));
 }
 function wdKnowledge(project){
+ if(project.ensemble)return ensembleKnowledge(project.ensemble);
+ if(typeof ideaBridgeKnowledge==='function'){const context=ideaBridgeKnowledge(project);if(context)return context;}
  if(project?.construction)return constructionKnowledge(project.construction);
  if(!project.woodDrawing)return project.knowledge||'';
  const m=buildDrawing(project.woodDrawing.params);
@@ -4211,6 +4228,7 @@ function wdSelectOptions(key,selected){
   CORPUS_OPTIONS[key].filter(v=>!['Vollholz','Leimholzplatte',...plywood].includes(v)).map(v=>option(v,v==='Holzwerkstoffplatte'?'Holzwerkstoffplatte (allgemein)':v)).join('');
 }
 function wdRender(){
+ if(current.ensemble)return ensembleRenderDrawing();
  if(current?.construction)return cRender();
  const box=$('#woodDrawingBox');if(!box)return;
  let params=current.woodDrawingChoosing?null:wdParams();
@@ -4802,7 +4820,7 @@ function frameRender(p){
  p={...p,connectorPlacement:framePlacementMode(p),biscuitPlacement:framePlacementMode(p,'biscuit')};
  const field=(k,label,options=null)=>'<label class="wdField"><span>'+esc(label)+'</span>'+(options?'<select data-frame="'+k+'">'+Object.entries(options).map(([v,l])=>'<option value="'+v+'" '+(String(p[k])===v?'selected':'')+'>'+esc(l)+'</option>').join('')+'</select>':'<input data-frame="'+k+'" value="'+esc(p[k]??'')+'" '+(k==='material'?'':'inputmode="decimal"')+'>')+'</label>';
  const numeric=k=>field(k,FCON_FIELDS.find(f=>f[0]===k)[1]+(['connectorCount','connectorRows','biscuitRows'].includes(k)?' (Stück)':' (mm)'));
- box.innerHTML='<h3>Rahmenkonstruktion · Eckverbindungen</h3><p>Rechteckiger Rahmen, paarweise gleiche Hölzer und gemeinsame Dicke. Maße bleiben frei eingebbar; die gewählte Verbindung legt die Proportionen fest.</p><div class="wdFields">'+field('joint','Rahmeneckverbindung',Object.fromEntries(Object.entries(FRAME_JOINTS).map(([id,d])=>[id,'Nr. '+d.number+' · '+d.name])))+field('material','Holzart / Material')+['width','height','verticalWidth','horizontalWidth','thickness'].map(numeric).join('')+field('through','Durchgehende / geschlitzte Rahmenhölzer',{vertical:'Aufrechte Rahmenhölzer',horizontal:'Waagerechte Rahmenhölzer'})+(p.joint==='lap_mitre'?field('mitreFace','Gehrungsseite',{front:'Vorderseite',back:'Rückseite'}):'')+'</div>'+
+ box.innerHTML='<h3>Rahmenkonstruktion · Eckverbindungen</h3><p>Rechteckiger Rahmen, paarweise gleiche Hölzer und gemeinsame Dicke. Maße bleiben frei eingebbar; die gewählte Verbindung legt die Proportionen fest.</p><div class="wdFields">'+field('joint','Rahmeneckverbindung',{'':'Bitte wählen',...Object.fromEntries(Object.entries(FRAME_JOINTS).map(([id,d])=>[id,'Nr. '+d.number+' · '+d.name]))})+field('material','Holzart / Material')+['width','height','verticalWidth','horizontalWidth','thickness'].map(numeric).join('')+field('through','Durchgehende / geschlitzte Rahmenhölzer',{'':'Bitte wählen',vertical:'Aufrechte Rahmenhölzer',horizontal:'Waagerechte Rahmenhölzer'})+(p.joint==='lap_mitre'?field('mitreFace','Gehrungsseite',{front:'Vorderseite',back:'Rückseite'}):'')+'</div>'+
  (def?.groove?'<h4>Innennut und Nutzapfen</h4><div class="wdFields">'+['grooveWidth','grooveDepth','grooveOffset'].map(numeric).join('')+field('profileFace','Nutabstand ab',{front:'Vorderfläche',back:'Rückfläche'})+'</div>':'')+
  (def?.rebate?'<h4>Falz · feste Proportionen</h4><p>a = 2D/3; b = '+(def.rebate===1/3?'D/3':'2D/3')+'.</p><div class="wdFields">'+field('profileFace','Falz offen zur',{front:'Vorderfläche',back:'Rückfläche'})+'</div>':'')+
  (def?.loose?'<h4>Falscher Zapfen</h4><p>Dreieckig, D/3 dick. Einstecktiefe ausdrücklich vorgeben; kein aus der Vorlage geschätztes Maß.</p><div class="wdFields">'+numeric('looseDepth')+'</div>':'')+
@@ -5244,7 +5262,7 @@ function cabinetRender(p){
  (p.shape==='writing'?input('sideTopDepth','Seiten: Tiefe oben (mm)',p.sideTopDepth)+input('kinkHeight','Knickhöhe (mm)',p.kinkHeight)+input('topOffset','Oberboden: Abstand von oben (mm)',p.topOffset)+input('bottomOffset','Unterboden: Abstand von unten (mm)',p.bottomOffset)+'<p>Die gewählte Bezugskante bleibt senkrecht; Profile aus dem Schreibkastenmodell.</p>':'')+'</div>';
  const panel=(key)=>{const mode=p[key+'Mode'],q=p[key+'Data']||{};return ['rebate','groove'].includes(mode)?'<div class="wdFields">'+input('thickness','Dicke (mm)',q.thickness,key+'Data')+input('insertion',(mode==='groove'?'Nuttiefe':'Falztiefe')+' in die Seiten / Böden (mm)',q.insertion,key+'Data')+(mode==='groove'?input('offset','Abstand der Nut von außen (mm)',q.offset,key+'Data'):'')+input('clearance','Einbauluft je Rand (mm)',q.clearance,key+'Data')+'</div>':'';};
  const closures='<h4>Rückwand und Boden</h4><div class="wdFields">'+select('backMode','Hat der Kasten eine Rückwand?',{'':'Bitte wählen',none:'Nein',rebate:'Ja · gefälzt',groove:'Ja · genutet'})+'</div>'+panel('back')+'<div class="wdFields">'+select('bottomMode','Hat der Kasten einen Boden?',{'':'Bitte wählen',none:'Nein · unten offen',solid:'Ja · Konstruktionsboden mit gewählter Eckverbindung',rebate:'Ja · eingesetzt und gefälzt',groove:'Ja · eingesetzt und genutet'})+'</div>'+panel('bottom');
- box.innerHTML='<h3>Korpuskonstruktion</h3><p>Kasten mit Rückwand oder eingesetztem Boden, wahlweise mit einem Innenbauteil. Gleiche Bauteile benötigen nur eine gemeinsame Maßeingabe.</p><div class="wdFields">'+input('material','Holzart / Plattenmaterial',p.material)+CABINET_BASE_FIELDS.filter(([k])=>k!=='internalPosition').map(([k,l])=>input(k,l+' (mm)',p[k])).join('')+select('through','Durchgehende Bauteile',{vertical:'Seiten',horizontal:'Ober- und Unterboden'})+select('corner','Korpusecke',Object.fromEntries(Object.entries(CABINET_CORNERS).map(([k,v])=>[k,'Nr. '+v.number+' · '+v.name])))+'</div>'+dimensions+closures+'<h4>Maße der Korpusecken</h4><p>Gleiche Verbindungsart an den Korpusecken; Verteilung je Bodenbreite separat. Dübel-/Federachsen automatisch mittig in der Bauteildicke. Achsabstände entlang der Korpustiefe ab Vorderkante. Nagelung wechselweise schräg mit selbst festgelegtem Winkel; Richtungsdarstellung direkt bei den Schnitten.</p>'+group(c,'cornerData')+'<h4>Boden / Mittelseite</h4><div class="wdFields">'+select('internal','Innenbauteil',{none:'Ohne',shelf:'Fester Boden · waagerecht',divider:'Mittelseite · senkrecht'})+(p.internal!=='none'?select('internalJoint','Innenanschluss',Object.fromEntries(Object.entries(CABINET_INTERNALS).map(([k,v])=>[k,'Nr. '+v.number+' · '+v.name])))+input('internalPosition',p.internal==='shelf'?'Unterkante ab außen unten (mm)':'Linke Kante ab außen links (mm)',p.internalPosition):'')+'</div>'+(p.internal!=='none'?group(j,'internalData'):'')+'<p id="frameDraftStatus" role="status">'+esc(current.frameSaveError||'')+'</p><button id="cabinetExample" class="ghost">Beispielmaße für diese Auswahl laden</button><button id="cabinetRetry" class="ghost">Eingaben erneut sichern</button><p class="hint">Beispielwerte sind Muster und können geändert werden. Nr. 06 der Innenanschlüsse bleibt unverleimt / lösbar. Kunststoffverbinder und Fräsmaße am gewählten Produkt prüfen. Konstruktionszeichnungen werden aus den Eingaben erzeugt.</p><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Maße und Verbindungskonturen fachlich geprüft.</label><div class="composerActions"><button id="wdSave">Korpusstand übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="cabinetTalk" class="ghost">Im Werkstatt-Talk besprechen</button></div><p id="wdSaveStatus" role="status"></p><div id="cabinetParts"></div><div id="wdPreview" class="wdPreview"></div>';
+ box.innerHTML='<h3>Korpuskonstruktion</h3><p>Kasten mit Rückwand oder eingesetztem Boden, wahlweise mit einem Innenbauteil. Gleiche Bauteile benötigen nur eine gemeinsame Maßeingabe.</p><div class="wdFields">'+input('material','Holzart / Plattenmaterial',p.material)+CABINET_BASE_FIELDS.filter(([k])=>k!=='internalPosition').map(([k,l])=>input(k,l+' (mm)',p[k])).join('')+select('through','Durchgehende Bauteile',{'':'Bitte wählen',vertical:'Seiten',horizontal:'Ober- und Unterboden'})+select('corner','Korpusecke',{'':'Bitte wählen',...Object.fromEntries(Object.entries(CABINET_CORNERS).map(([k,v])=>[k,'Nr. '+v.number+' · '+v.name]))})+'</div>'+dimensions+closures+'<h4>Maße der Korpusecken</h4><p>Gleiche Verbindungsart an den Korpusecken; Verteilung je Bodenbreite separat. Dübel-/Federachsen automatisch mittig in der Bauteildicke. Achsabstände entlang der Korpustiefe ab Vorderkante. Nagelung wechselweise schräg mit selbst festgelegtem Winkel; Richtungsdarstellung direkt bei den Schnitten.</p>'+group(c,'cornerData')+'<h4>Boden / Mittelseite</h4><div class="wdFields">'+select('internal','Innenbauteil',{none:'Ohne',shelf:'Fester Boden · waagerecht',divider:'Mittelseite · senkrecht'})+(p.internal!=='none'?select('internalJoint','Innenanschluss',Object.fromEntries(Object.entries(CABINET_INTERNALS).map(([k,v])=>[k,'Nr. '+v.number+' · '+v.name])))+input('internalPosition',p.internal==='shelf'?'Unterkante ab außen unten (mm)':'Linke Kante ab außen links (mm)',p.internalPosition):'')+'</div>'+(p.internal!=='none'?group(j,'internalData'):'')+'<p id="frameDraftStatus" role="status">'+esc(current.frameSaveError||'')+'</p><button id="cabinetExample" class="ghost">Beispielmaße für diese Auswahl laden</button><button id="cabinetRetry" class="ghost">Eingaben erneut sichern</button><p class="hint">Beispielwerte sind Muster und können geändert werden. Nr. 06 der Innenanschlüsse bleibt unverleimt / lösbar. Kunststoffverbinder und Fräsmaße am gewählten Produkt prüfen. Konstruktionszeichnungen werden aus den Eingaben erzeugt.</p><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Maße und Verbindungskonturen fachlich geprüft.</label><div class="composerActions"><button id="wdSave">Korpusstand übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="cabinetTalk" class="ghost">Im Werkstatt-Talk besprechen</button></div><p id="wdSaveStatus" role="status"></p><div id="cabinetParts"></div><div id="wdPreview" class="wdPreview"></div>';
  const saved=current.woodDrawing;$('#wdConfirmed').checked=!!saved?.confirmed&&saved.geometryVersion===5&&drawingStatus(current)==='checked'&&cabinetSignature(p)===cabinetSignature(saved.params);
  box.querySelectorAll('[data-cabinet]').forEach(el=>{el.oninput=()=>{const key=el.dataset.cabinet,group=el.dataset.group,value=el.value,old=wdParams();current.woodDrawingDraft=group?{...old,[group]:{...old[group],[key]:value}}:{...old,[key]:value};$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';};el.onchange=()=>{const key=el.dataset.cabinet,group=el.dataset.group,value=el.value,old=wdParams();current.woodDrawingDraft=group?{...old,[group]:{...old[group],[key]:value}}:{...old,[key]:value};if(key==='referenceEdge')current.woodDrawingDraft.referenceEdgeChosen=true;if(['backMode','bottomMode'].includes(key)){const part=key.replace('Mode',''),q=current.woodDrawingDraft[part+'Data']||{};current.woodDrawingDraft[part+'Data']={clearance:0.5,...q,...(value==='rebate'?{offset:0}:{})};}framePersistDraft();if(['corner','internal','internalJoint','through','nailLayout','connectorLayout','referenceEdge','shape','boardsEqual','sidesEqual','backMode','bottomMode'].includes(key))cabinetRender(wdParams());else cabinetPreview();};});
  $('#cabinetExample').onclick=()=>{const p=wdParams();const sample=cabinetExample(p.corner,p.internalJoint,p.shape==='writing'?'none':p.internal);if(p.shape==='writing')Object.assign(sample,{shape:'writing',width:900,height:650,depth:610,boardsEqual:'no',sidesEqual:'yes',topBoardDepth:210,bottomBoardDepth:600,sideTopDepth:210,kinkHeight:40,topOffset:10,bottomOffset:10});current.woodDrawingDraft={...sample,...Object.fromEntries(['referenceEdge','referenceEdgeChosen','shape','boardsEqual','sidesEqual','backMode','bottomMode','backData','bottomData','boardDepth','rightDepth','topBoardDepth','bottomBoardDepth','sideTopDepth','kinkHeight','topOffset','bottomOffset'].filter(k=>p[k]!==undefined&&p[k]!=='').map(k=>[k,p[k]]))};framePersistDraft();cabinetRender(wdParams());};
@@ -5277,7 +5295,436 @@ function cabinetKnowledge(project,m){return (project.knowledge||'')+'\n\nVerbind
 function cabinetSheet(project){const m=buildCabinet(project.woodDrawing?.params);if(!m.ok)return '';return '<section class="notice"><h3>Korpus · Angaben aus der Werkzeichnung</h3><p>'+esc(wdStateText(project))+'</p>'+m.notes.map(s=>'<p>'+esc(s)+'</p>').join('')+'</section>';}
 document.addEventListener('click',e=>{if(e.target.closest?.('[data-cabinet-new]'))cabinetStartNew();});
 
-function renderRecord(){if(cHas(current))cSync(current);
+// Local suggestions are proposals only. Geometry is created by the existing family engines.
+const IDEA_FAMILIES={board:'Brettkonstruktion',frame:'Rahmenkonstruktion',cabinet:'Korpuskonstruktion'};
+const IDEA_FIELDS={
+ board:[['length','Brettlänge'],['width','Brettbreite'],['thickness','Brettdicke']],
+ frame:[['width','Außenbreite'],['height','Außenhöhe'],['thickness','Rahmendicke'],['verticalWidth','Breite der aufrechten Hölzer'],['horizontalWidth','Breite der waagerechten Hölzer']],
+ cabinet:[['width','Außenbreite'],['height','Außenhöhe'],['depth','Außentiefe'],['thickness','Bauteildicke']]
+};
+function ideaUserTexts(project={}){
+ return [...new Set([project.knowledge,...(project.chat||[]).filter(m=>m.role==='user').map(m=>m.text)].filter(v=>typeof v==='string'&&v.trim()).map(v=>v.trim()))];
+}
+const ideaUncertain=/\b(?:vielleicht|eventuell|ungefähr|circa|ca|etwa|alternativ|oder|nicht|kein\w*|ohne|statt|könnte|möglicherweise|angenommen)\b/i;
+function ideaClauses(texts){return texts.flatMap(t=>t.replace(/\bca\./ig,'ca').split(/(?:[;\n!?]|\.(?!\d))/)).map(t=>t.trim()).filter(Boolean);}
+function ideaSuggest(project={}){
+ const clauses=ideaClauses(ideaUserTexts(project)).filter(t=>!ideaUncertain.test(t));
+ const patterns={board:/\b(?:Schneidebrett|Servierbrett|Backbrett|Tischplatte|Brettkonstruktion|Brettfläche|Brett)\b/i,frame:/\b(?:Bilderrahmen|Spiegelrahmen|Rahmenkonstruktion|Holzrahmen|Rahmen)\b/i,cabinet:/\b(?:Schrank|Unterschrank|Hängeschrank|Wandschrank|Korpus|Korpuskonstruktion|Kasten|Kästchen|Schublade|Kommode)\b/i};
+ const candidates=Object.keys(patterns).filter(k=>clauses.some(t=>patterns[k].test(t)));
+ return {family:candidates.length===1?candidates[0]:'',candidates,reason:candidates.length===1?'Deine Beschreibung passt zu „'+IDEA_FAMILIES[candidates[0]]+'“. Bitte bestätige die Zuordnung.':candidates.length?'Deine Idee nennt mehrere Grundkonstruktionen. Wähle zuerst den Teil, den du ausarbeiten möchtest.':'Welche Grundkonstruktion passt zu deiner Idee? Du kannst auch frei im Werkstatt-Talk weiterarbeiten.'};
+}
+function ideaExtract(project={},family){
+ if(!IDEA_FAMILIES[family])throw Error('Bitte eine Grundkonstruktion wählen.');
+ const values={},sources={},conflicts=[],found=new Map(),clauses=ideaClauses(ideaUserTexts(project));
+ const add=(key,value,source)=>{if(typeof value==='number'&&(!Number.isFinite(value)||value<=0||value>10000))return;const rows=found.get(key)||[];rows.push({value,source});found.set(key,rows);};
+ const n='(\\d+(?:[.,]\\d+)?)',u='\\s*(mm|cm|m)\\b',conv=(s,unit)=>Number(s.replace(',','.'))*({mm:1,cm:10,m:1000}[unit.toLowerCase()]);
+ const labels={length:'(?:Brettlänge|Länge|Laenge)',width:family==='board'?'(?:Brettbreite|Breite)':'(?:Außenbreite|Aussenbreite|Gesamtbreite|Breite)',height:'(?:Außenhöhe|Aussenhoehe|Gesamthöhe|Höhe|Hoehe)',depth:'(?:Außentiefe|Aussentiefe|Gesamttiefe|Tiefe)',thickness:'(?:Bauteildicke|Materialdicke|Plattendicke|Brettdicke|Rahmendicke|Dicke|Stärke|Staerke)',verticalWidth:'(?:Breite der aufrechten (?:Hölzer|Hoelzer)|Aufrechte Rahmenhölzer)',horizontalWidth:'(?:Breite der waagerechten (?:Hölzer|Hoelzer)|Waagerechte Rahmenhölzer)'};
+ for(const text of clauses){
+  if(ideaUncertain.test(text))continue;
+  const partContext=/\b(?:Rückwand|Rueckwand|Einlegeboden|Oberboden|Unterboden|Gratleiste|Hirnleiste|Anschlagleiste|Leisten|Dübel|Schrauben|Nut|Falz)\b/i.test(text);
+  for(const [key]of IDEA_FIELDS[family]){
+   // Outside dimensions never come from a named sub-part.
+   if(partContext&&!new RegExp('\\b(?:Außen|Aussen|Gesamt|Material|Platten|Brett)'+(key==='width'?'breite':key==='height'?'höhe':key==='depth'?'tiefe':'dicke'),'i').test(text))continue;
+   const label=labels[key];
+   const regex=new RegExp('(?:^|[\\s,:])'+label+'\\s*(?::|=|von|beträgt|ist)?\\s*'+n+u,'ig');
+   for(const m of text.matchAll(regex))add(key,conv(m[1],m[2]),text);
+   if(['length','width','height','depth','thickness'].includes(key)&&!partContext){
+    const adjective={length:'lang',width:'breit',height:'hoch',depth:'tief',thickness:'(?:dick|stark)'}[key];
+    for(const m of text.matchAll(new RegExp('(?:^|[\\s,:])'+n+u+'\\s*'+adjective+'\\b','ig')))add(key,conv(m[1],m[2]),text);
+   }
+  }
+  // A three-number tuple needs an explicit axis order, never a guessed order.
+  const tuple=text.match(new RegExp('\\b'+(family==='board'?'L\\s*[x×/]\\s*B\\s*[x×/]\\s*D':'B\\s*[x×/]\\s*H\\s*[x×/]\\s*T')+'\\s*[:=]\\s*'+n+'\\s*[x×]\\s*'+n+'\\s*[x×]\\s*'+n+u,'i'));
+  if(tuple&&!partContext){const keys=family==='board'?['length','width','thickness']:['width','height','depth'];if(family!=='frame')keys.forEach((k,i)=>add(k,conv(tuple[i+1],tuple[4]),text));}
+  const material=text.match(/\b(?:Material\s*[:=]|aus)\s+(Eiche|Buche|Birke|Ahorn|Esche|Nussbaum|Kiefer|Fichte|Lärche|Multiplex|Sperrholz|Spanplatte|MDF|Leimholz)(?:\b)/i);
+  if(material&&!partContext){
+   const materials=[...text.slice(material.index).matchAll(/\b(Eiche|Buche|Birke|Ahorn|Esche|Nussbaum|Kiefer|Fichte|Lärche|Multiplex|Sperrholz|Spanplatte|MDF|Leimholz)\b/ig)].map(m=>m[1]);
+   for(const value of materials)add('material',value,text);
+  }
+  if(family==='frame'&&/\bSchlitz\s+und\s+Zapfen\b/i.test(text))add('joint','tenon',text);
+  if(family==='frame'&&/\b(?:halbseitige\s+)?Überplattung\b/i.test(text)&&!/Gehrung/i.test(text))add('joint','lap',text);
+  if(/\b(?:Rundholzdübel|Runddübel)\b/i.test(text)&&family!=='board')add(family==='frame'?'joint':'corner',family==='frame'?'dowel_butt':'dowel',text);
+ }
+ for(const [key,rows]of found){const unique=[...new Set(rows.map(r=>r.value))];if(unique.length===1){values[key]=unique[0];sources[key]=rows.map(r=>r.source);}else conflicts.push({key,values:unique,sources:rows.map(r=>r.source)});}
+ return {family,values,sources,conflicts,description:ideaUserTexts(project).join('\n\n')};
+}
+function ideaReviewedValues(family,input={}){
+ if(!IDEA_FAMILIES[family])throw Error('Bitte eine Grundkonstruktion wählen.');
+ const out={};
+ for(const [key,label]of IDEA_FIELDS[family]){const raw=input[key];if(raw===undefined||raw===null||String(raw).trim()==='')continue;const v=Number(String(raw).replace(',','.'));if(!Number.isFinite(v)||v<=0||v>10000)throw Error(label+': Bitte ein Maß über 0 bis 10000 mm eingeben oder offen lassen.');out[key]=v;}
+ if(String(input.material||'').length>300)throw Error('Materialbezeichnung zu lang.');out.material=String(input.material||'').trim();return out;
+}
+function ideaDraftKnowledge(project,model,label){
+ const draft=project.woodDrawingDraft||project.woodDrawing?.params||{};
+ return (project.knowledge||'')+'\n\nVom Nutzer gewählte Grundkonstruktion: '+label+'.\nAktuelle Eingaben (mm), auch unvollständig: '+JSON.stringify(draft)+'\nHinterlegte Konstruktionsregeln: '+(model.notes||[]).join('\n')+'\nGezielt noch klären: '+[...new Set([...(model.errors||[]),...(model.pending||[])])].join('; ')+'\nFrage zuerst nach der ersten offenen Angabe. Unbekannte Felder sind keine Nullmaße. Keine Maße oder Verbindungen erfinden. Änderungen an Geometrie im Konstruktionsbereich eingeben und prüfen; keine erfolgreiche geometrische Übernahme im Gespräch behaupten. Keine Fertigungsfreigabe aus dem Gespräch ableiten.';
+}
+
+let ideaReview=null;
+function ideaHasGeometry(project=current){return !!(project.construction||project.woodDrawing||project.woodDrawingDraft);}
+function ideaOpen(origin='record'){
+ if(ideaHasGeometry()){alert('Dieses Projekt hat bereits eine Konstruktion. Bitte die vorhandene Werkzeichnung weiterbearbeiten.');return;}
+ if(origin==='develop')current.knowledge=$('#developText').value.trim();
+ if(!current.knowledge&&!current.photos?.length&&!current.sketches?.length){alert('Bitte deine Idee beschreiben oder ein Foto bzw. eine Skizze ergänzen.');return;}
+ const suggestion=ideaSuggest(current);ideaReview={projectId:current.id,origin,family:suggestion.family};
+ $('#ideaFamilyReason').textContent=suggestion.reason;
+ $('#ideaFamilySelect').innerHTML='<option value="">Bitte wählen</option>'+Object.entries(IDEA_FAMILIES).map(([k,v])=>'<option value="'+k+'" '+(k===suggestion.family?'selected':'')+'>'+esc(v)+'</option>').join('');
+ ideaRenderReview();show('ideaConstructionReview');
+}
+function ideaRenderReview(){
+ const family=$('#ideaFamilySelect').value;ideaReview.family=family;
+ const box=$('#ideaImportFields');$('#ideaAdopt').disabled=!family;
+ if(!family){box.innerHTML='<p>Wähle eine Grundkonstruktion oder arbeite frei im Werkstatt-Talk weiter.</p>';return;}
+ const proposal=ideaExtract(current,family);ideaReview.proposal=proposal;
+ const field=(key,label)=>'<label class="wdField"><span>'+esc(label)+' (mm)</span><input data-idea-field="'+key+'" inputmode="decimal" value="'+esc(proposal.values[key]??'')+'" placeholder="Noch offen"><small>'+esc(proposal.sources[key]?.join(' · ')||'Keine eindeutige Angabe erkannt.')+'</small></label>';
+ const select=(key,label,options,value='')=>'<label class="wdField"><span>'+esc(label)+'</span><select data-idea-choice="'+key+'">'+Object.entries(options).map(([k,v])=>'<option value="'+esc(k)+'" '+(k===value?'selected':'')+'>'+esc(v)+'</option>').join('')+'</select></label>';
+ const connections=family==='frame'?select('joint','Rahmeneckverbindung',{'':'Noch offen',...Object.fromEntries(Object.entries(FRAME_JOINTS).map(([k,v])=>[k,v.name]))},proposal.values.joint):family==='cabinet'?select('corner','Korpusecke',{'':'Noch offen',...Object.fromEntries(Object.entries(CABINET_CORNERS).map(([k,v])=>[k,v.name]))},proposal.values.corner):'';
+ box.innerHTML='<p>Bitte prüfe die vorgeschlagenen Angaben. Ergänzungen hier gelten für die gewählte Grundkonstruktion. Leere Felder bleiben offen.</p><div class="wdFields">'+IDEA_FIELDS[family].map(([k,l])=>field(k,l)).join('')+'<label class="wdField"><span>Holzart / Material</span><input data-idea-field="material" value="'+esc(proposal.values.material||'')+'" maxlength="300" placeholder="Noch offen"></label>'+connections+
+ (family==='board'?select('stock','Aufbau',{'':'Noch offen',single:'Einzelbrett',laminated:'Aus mehreren Brettern verleimt'})+select('grain','Faserrichtung',{'':'Noch offen',length:'Entlang der Länge',width:'Entlang der Breite'})+select('finish','Freie Kanten (im Baukasten änderbar)',{none:'Zunächst unbearbeitet',break:'Kanten brechen'})+select('shape','Brettform',{'':'Noch offen',rectangle:'Rechteck',square:'Quadrat',triangle:'Dreieck',rhombus:'Raute',trapezoid:'Trapez'}):select('through','Durchgehende Bauteile',{'':'Noch offen',vertical:family==='frame'?'Aufrechte Rahmenhölzer':'Seiten',horizontal:family==='frame'?'Waagerechte Rahmenhölzer':'Ober- und Unterboden'}))+'</div>'+
+ (proposal.conflicts.length?'<div class="notice"><strong>Widersprüchliche Angaben – bitte selbst festlegen</strong><ul>'+proposal.conflicts.map(c=>'<li>'+esc(IDEA_FIELDS[family].find(f=>f[0]===c.key)?.[1]||c.key)+': '+esc(c.values.join(' / '))+'<br>'+esc(c.sources.join(' · '))+'</li>').join('')+'</ul></div>':'')+
+ '<p class="hint">Weitere Bauteile, Leisten, Rückwand, Füllungen und Verbindungsmaße werden anschließend im Baukasten ergänzt. Nicht erkannte Details bleiben in deiner Beschreibung erhalten.</p>';
+ $('#ideaReviewStatus').textContent='';
+}
+function ideaPendingModel(project){
+ if(project.construction){const m=constructionCompute(project.construction);return {notes:m.notes||[],errors:m.errors||[],pending:(m.questions||[]).map(q=>q.text)};}
+ const p=project.woodDrawingDraft||project.woodDrawing?.params;
+ return cabinetIs(p)?buildCabinet(p):isFrameConstruction(p)?buildFrameConstruction(p):{errors:[],pending:[],notes:[]};
+}
+async function ideaAdopt(){
+ if(!ideaReview||ideaReview.projectId!==current.id)return;
+ const family=ideaReview.family,project=current,button=$('#ideaAdopt');
+ try{
+  if(ideaHasGeometry(project))throw Error('Dieses Projekt hat bereits eine Konstruktion. Bitte dort weiterarbeiten.');
+  const input=Object.fromEntries([...$('#ideaImportFields').querySelectorAll('[data-idea-field]')].map(el=>[el.dataset.ideaField,el.value]));
+  const values=ideaReviewedValues(family,input),choices=Object.fromEntries([...$('#ideaImportFields').querySelectorAll('[data-idea-choice]')].map(el=>[el.dataset.ideaChoice,el.value]));
+  const next=JSON.parse(JSON.stringify(project));
+  next.ownIdeaOrigin=next.ownIdeaOrigin||{knowledge:project.knowledge,analysis:project.analysis,reconstruction:project.reconstruction,at:new Date().toISOString()};
+  next.ideaBridge={family,confirmedAt:new Date().toISOString(),imported:values};
+  const title=next.customTitle||next.title||'Mein '+({board:'Brettprojekt',frame:'Rahmenprojekt',cabinet:'Korpusprojekt'}[family]);next.title=title;next.customTitle=title;
+  if(family==='board'){
+   cArchive(next);let c=constructionNew();c.title=title;
+   // No unconfirmed stock, grain, contour or finishing decisions from the template.
+   if(!choices.shape)throw Error('Bitte die Brettform wählen. Weitere Maße können offen bleiben.');
+   c.base.stock=choices.stock||null;c.base.grain=choices.grain||null;c.base.shape=choices.shape;
+   c.operations=[{id:'free-edges',type:'edge',target:'*',treatment:choices.finish||'none',value:0}];
+   const base={...values};
+   if(choices.shape==='square'){
+    if(base.width!==undefined&&(base.length===undefined||base.width!==base.length))throw Error('Beim Quadrat bitte die Seitenlänge als Brettlänge eintragen und die Breite gleich groß wählen oder offen lassen.');
+    delete base.width;
+   }
+   if(['triangle','rhombus','trapezoid'].includes(choices.shape)&&(base.length!==undefined||base.width!==undefined))throw Error('Für Dreieck, Raute und Trapez werden die Kantenmaße im Baukasten erfasst. Bitte lasse Länge und Breite hier offen.');
+   if(['triangle','rhombus','trapezoid'].includes(choices.shape)){delete base.length;delete base.width;}
+   c=constructionApply(c,[{action:'set_base',values:base}],{source:'own-idea-confirmation',text:project.knowledge}).construction;
+   next.construction=c;cSync(next);
+  }else{
+   const draft=family==='cabinet'?cabinetNew():frameNew();Object.assign(draft,values,{through:choices.through||''});
+   if(family==='cabinet')draft.corner=choices.corner||'';else draft.joint=choices.joint||'';
+   next.woodDrawingDraft=draft;next.projectDirty=true;
+   next.reconstruction={title,summary:project.knowledge,construction:IDEA_FAMILIES[family]+' · Entwurf; Angaben im Baukasten ergänzen und prüfen.'};
+  }
+  const model=ideaPendingModel(next),pending=[...new Set([...(model.errors||[]),...(model.pending||[])])];
+  if(family!=='board')next.analysis={...(next.analysis||{}),stateVersion:2,deferralVersion:1,revision:(next.analysis?.revision||0)+1,object:title,summary:project.knowledge,recognized:Object.entries(values).map(([k,v])=>(IDEA_FIELDS[family].find(f=>f[0]===k)?.[1]||k)+': '+v+(typeof v==='number'?' mm':'')),assumptions:[],unknown:pending,enough_information:!pending.length};
+  next.chat=[...(next.chat||[]),...(!next.chat?.some(m=>m.role==='user'&&m.text===project.knowledge)&&project.knowledge?[{role:'user',text:project.knowledge}]:[]),{role:'user',text:'Ich verwende für meine eigene Idee die Grundkonstruktion „'+IDEA_FAMILIES[family]+'“. Die angezeigten Angaben habe ich geprüft.',constructionChoice:true},{role:'assistant',text:'Deine Idee ist jetzt mit der '+IDEA_FAMILIES[family]+' verbunden. Beschreibung, Fotos, Skizzen und Gespräch bleiben erhalten. Weitere Bauteile und Details bitte im Baukasten ergänzen.'+(pending.length?' Als Nächstes: '+pending[0]:' Bitte prüfe jetzt die Konstruktion in der Werkzeichnung.'),constructionChoice:true}];
+  Object.assign(project,next);button.disabled=true;
+  renderRecord();show('record');switchTab('woodDrawingPane');
+  const saved=family==='board'?await cPersist(project):await framePersistDraft(project);
+  if(!saved)alert('Die Konstruktion ist geöffnet, konnte aber noch nicht gespeichert werden. Bitte im Baukasten erneut sichern.');
+  if(ideaReview?.projectId===project.id)ideaReview=null;
+ }catch(e){$('#ideaReviewStatus').textContent=e.message;button.disabled=false;}
+}
+function ideaContinueFree(){
+ if(!ideaReview||ideaReview.projectId!==current.id)return;
+ const origin=ideaReview.origin;ideaReview=null;
+ if(origin==='develop')analyze();else{show('record');switchTab('talkPane');}
+}
+function ideaCancelReview(){if(!ideaReview)return;const origin=ideaReview.origin;ideaReview=null;show(origin==='develop'?'develop':'record');}
+function ideaUpdateEntry(){
+ const source=$('#ideaBridgeSource');if(source){source.classList.toggle('hidden',!current.ideaBridge);$('#ideaBridgeSourceText').textContent=current.ownIdeaOrigin?.knowledge||current.knowledge||'';}
+ const box=$('#ideaBridgeEntry');if(!box)return;
+ const eligible=current.mode==='develop'&&!ideaHasGeometry();box.classList.toggle('hidden',!eligible);
+ if(eligible)$('#ideaBridgeSuggestion').textContent=ideaSuggest(current).reason;
+}
+function ideaBridgeKnowledge(project){
+ if(!project.ideaBridge||project.construction)return null;
+ const p=project.woodDrawingDraft||project.woodDrawing?.params;
+ if(!cabinetIs(p)&&!isFrameConstruction(p))return null;
+ return ideaDraftKnowledge(project,ideaPendingModel(project),IDEA_FAMILIES[project.ideaBridge.family]);
+}
+function ideaInit(){
+$('#developGo').onclick=()=>ideaOpen('develop');
+$('#ideaFamilySelect').onchange=ideaRenderReview;
+$('#ideaAdopt').onclick=ideaAdopt;
+$('#ideaContinueFree').onclick=ideaContinueFree;
+$('#ideaCancelReview').onclick=ideaCancelReview;
+$('#ideaBridgeOpen').onclick=()=>ideaOpen('record');
+
+}
+document.addEventListener('DOMContentLoaded',ideaInit);
+
+// A composition owns shared dimensions. Child constructions remain separate projects.
+// Expressions are a small validated data language; never evaluated as JavaScript.
+const ENSEMBLE_FAMILIES={cabinet:'Korpus',frame:'Rahmen',board:'Brett',custom:'Eigene Baugruppe'};
+const E_AXES=['width','height','depth'],E_POS=['x','y','z'];
+const eCopy=x=>structuredClone(x),eOwn=(o,k)=>Object.hasOwn(o,k),eId=s=>typeof s==='string'&&/^[A-Za-z][A-Za-z0-9_-]{0,49}$/.test(s);
+const eText=(s,max=1200)=>typeof s==='string'&&s.length<=max;
+const eNumber=v=>typeof v==='number'&&Number.isFinite(v)&&Math.abs(v)<=10000;
+const eKeys=(o,allowed)=>{if(!o||typeof o!=='object'||Array.isArray(o)||Object.keys(o).some(k=>!allowed.includes(k)))throw Error('Unbekannte oder ungültige Projektfelder.');};
+
+const ENSEMBLE_SETTINGS={
+ board:['stock','grain','grainReference','grainEdge','positioning','lamellaCount','positionerDiameter','positionerLength','positionerSize'],
+ frame:['joint','through','verticalWidth','horizontalWidth','mitreFace','profileFace','connectorPlacement','biscuitPlacement','grooveWidth','grooveDepth','grooveOffset','looseDepth','connectorDiameter','connectorLength','angleLegHorizontal','angleLegVertical','angleRadius','connectorCount','connectorFirst','connectorSpacing','connectorRows','connectorFaceMargin','connectorRowSpacing','glueAir','biscuitSize','biscuitDepth','biscuitSlotLength','biscuitCenter','biscuitRows','biscuitFirst','biscuitSpacing'],
+ cabinet:['through','corner','cornerData','internal','internalJoint','internalPosition','internalData','shape','referenceEdge','referenceEdgeChosen','boardsEqual','sidesEqual','backMode','bottomMode','backData','bottomData','boardDepth','topBoardDepth','bottomBoardDepth','rightDepth','sideTopDepth','kinkHeight','topOffset','bottomOffset'],custom:[]
+};
+function ensembleSettingsPick(family,params={}){return Object.fromEntries((ENSEMBLE_SETTINGS[family]||[]).filter(k=>params[k]!==undefined).map(k=>[k,eCopy(params[k])]));}
+function eSettings(family,settings={}){
+ eKeys(settings,ENSEMBLE_SETTINGS[family]||[]);
+ const scalar=v=>v===null||typeof v==='boolean'||eNumber(v)||eText(v,100);
+ for(const [k,v]of Object.entries(settings)){
+  if(['cornerData','internalData','backData','bottomData'].includes(k)){
+   eKeys(v,['diameter','length','faceDepth','air','count','first','spacing','connectorLayout','nailLayout','nailAngle','rebateDepth','pitch','tails','pin','slope','leg','radius','federThickness','faceInsertion','edgeInsertion','thickness','insertion','offset','clearance']);
+   if(Object.values(v).some(x=>!scalar(x)))throw Error('Ungültige Anschlussangabe.');
+  }else if(!scalar(v))throw Error('Ungültige Konstruktionsangabe.');
+ }
+ return eCopy(settings);
+}
+function ensembleNew(){return {schemaVersion:1,revision:0,total:{width:null,height:null,depth:null},shared:{material:'',thickness:null},variables:{},modules:[],decisions:[],purchases:[],history:[]};}
+function ensembleExpression(value,depth=0){
+ if(depth>12)throw Error('Maßabhängigkeit zu tief verschachtelt.');if(value===null||eNumber(value))return value;
+ if(!value||typeof value!=='object'||Array.isArray(value))throw Error('Ungültige Maßangabe.');
+ if(eOwn(value,'ref')){eKeys(value,['ref']);if(typeof value.ref!=='string'||!(/^(total\.(width|height|depth)|shared\.thickness|var\.[A-Za-z][A-Za-z0-9_-]{0,49}|module\.[A-Za-z][A-Za-z0-9_-]{0,49}\.(width|height|depth|x|y|z))$/).test(value.ref))throw Error('Ungültiger Maßbezug.');return {ref:value.ref};}
+ eKeys(value,['op','args']);if(!['add','sub','min','max'].includes(value.op)||!Array.isArray(value.args)||value.args.length<2||value.args.length>12)throw Error('Ungültige Maßverknüpfung.');return {op:value.op,args:value.args.map(v=>ensembleExpression(v,depth+1))};
+}
+function eDimensionRecord(obj,keys){eKeys(obj,keys);return Object.fromEntries(keys.map(k=>[k,ensembleExpression(obj[k]??null)]));}
+function ensembleValidate(input){
+ if(!input||input.schemaVersion!==1||!Number.isSafeInteger(input.revision)||input.revision<0)throw Error('Unbekanntes Gesamtprojekt.');
+ const e=eCopy(input);eKeys(e,['schemaVersion','revision','total','shared','variables','modules','decisions','purchases','history']);
+ e.total=eDimensionRecord(e.total,E_AXES);for(const v of Object.values(e.total))if(v!==null&&(!eNumber(v)||v<=0))throw Error('Gesamtmaße müssen Zahlen über 0 bis 10000 mm sein.');
+ eKeys(e.shared,['material','thickness']);if(!eText(e.shared.material,300)||e.shared.thickness!==null&&(!eNumber(e.shared.thickness)||e.shared.thickness<=0))throw Error('Gemeinsames Material oder Dicke ungültig.');
+ if(!e.variables||typeof e.variables!=='object'||Array.isArray(e.variables)||Object.keys(e.variables).length>40)throw Error('Zu viele gemeinsame Parameter.');for(const [k,v]of Object.entries(e.variables)){if(!eId(k))throw Error('Ungültiger Parametername.');e.variables[k]=ensembleExpression(v);}
+ if(!Array.isArray(e.modules)||e.modules.length>40)throw Error('Höchstens 40 Baugruppen sind möglich.');const ids=new Set();
+ for(const m of e.modules){eKeys(m,['id','name','family','size','position','material','thickness','planningOnly','outline','notes','project','parentId','settings']);if(!eId(m.id)||ids.has(m.id)||!eText(m.name,120)||!m.name.trim()||!eOwn(ENSEMBLE_FAMILIES,m.family))throw Error('Baugruppenkennung, Name oder Grundkonstruktion ungültig.');ids.add(m.id);
+  m.settings=eSettings(m.family,m.settings||{});m.size=eDimensionRecord(m.size,E_AXES);m.position=eDimensionRecord(m.position,E_POS);
+  if(m.parentId!==undefined&&m.parentId!==null&&!eId(m.parentId))throw Error('Ungültige übergeordnete Baugruppe.');
+  if(m.material!==undefined&&!eText(m.material,300))throw Error('Materialbezeichnung zu lang.');if(m.thickness!==undefined)m.thickness=ensembleExpression(m.thickness);
+  if(m.planningOnly!==undefined&&typeof m.planningOnly!=='boolean')throw Error('Ungültiger Bearbeitungsstatus.');
+  if(!Array.isArray(m.notes)||m.notes.length>80||m.notes.some(n=>!eText(n)))throw Error('Ungültige Konstruktionsnotizen.');
+  if(m.outline!==undefined){if(!Array.isArray(m.outline)||m.outline.length<3||m.outline.length>20)throw Error('Ungültige Außenkontur.');m.outline=m.outline.map(p=>eDimensionRecord(p,['x','y']));}
+  if(m.project!==undefined&&(!m.project||typeof m.project!=='object'||Array.isArray(m.project)||m.project.ensemble))throw Error('Ungültige Einzelkonstruktion.');
+ }
+ for(const m of e.modules){if(m.parentId&&!ids.has(m.parentId))throw Error('Übergeordnete Baugruppe fehlt.');let seen=new Set([m.id]),parent=m.parentId;while(parent){if(seen.has(parent))throw Error('Zyklische Baugruppenhierarchie.');seen.add(parent);parent=e.modules.find(v=>v.id===parent)?.parentId;}}
+ if(!Array.isArray(e.decisions)||e.decisions.length>200||e.decisions.some(d=>!d||!eId(d.id)||!eText(d.scope,100)||d.scope!=='all'&&!ids.has(d.scope)||!eText(d.label,150)||!eText(d.value,2000)))throw Error('Ungültige Projektentscheidung.');
+ if(new Set(e.decisions.map(d=>d.id)).size!==e.decisions.length)throw Error('Doppelte Projektentscheidung.');
+ if(!Array.isArray(e.purchases)||e.purchases.length>200||e.purchases.some(p=>!p||!eId(p.id)||!eText(p.item,300)||!p.item.trim()||p.scope!=='all'&&!ids.has(p.scope)||!eText(p.spec,1200)||!eText(p.unit,30)||!eNumber(p.quantity)||p.quantity<=0||typeof p.inStock!=='boolean'))throw Error('Ungültige Einkaufseinträge.');
+ if(new Set(e.purchases.map(p=>p.id)).size!==e.purchases.length)throw Error('Doppelte Einkaufskennung.');if(!Array.isArray(e.history))throw Error('Änderungsverlauf fehlt.');return e;
+}
+function ensembleResolve(input){
+ const e=ensembleValidate(input),values=new Map(),active=new Set(),unknown=new Set(),warnings=[];
+ const lookup=key=>{
+  if(values.has(key))return values.get(key);if(active.has(key))throw Error('Zyklische Maßabhängigkeit bei '+key+'.');active.add(key);
+  const bits=key.split('.');let raw;
+  if(bits[0]==='total')raw=e.total[bits[1]];else if(bits[0]==='shared')raw=e.shared[bits[1]];else if(bits[0]==='var'){if(!eOwn(e.variables,bits[1]))throw Error('Unbekannter Parameter: '+key);raw=e.variables[bits[1]];}
+  else{const m=e.modules.find(m=>m.id===bits[1]);if(!m)throw Error('Baugruppe für Maßbezug fehlt: '+key);raw=(E_AXES.includes(bits[2])?m.size:m.position)[bits[2]];}
+  const v=calc(raw);if(v!==null&&!eNumber(v))throw Error('Maß außerhalb des gültigen Bereichs: '+key);active.delete(key);values.set(key,v);if(v===null)unknown.add(key);return v;
+ };
+ const calc=v=>{if(v===null||typeof v==='number')return v;if(v.ref)return lookup(v.ref);const a=v.args.map(calc);if(a.some(v=>v===null))return null;return v.op==='add'?a.reduce((s,v)=>s+v,0):v.op==='sub'?a.slice(1).reduce((s,v)=>s-v,a[0]):Math[v.op](...a);};
+ for(const k of E_AXES)lookup('total.'+k);for(const k of Object.keys(e.variables))lookup('var.'+k);lookup('shared.thickness');
+ const modules=e.modules.map(m=>{
+  const size=Object.fromEntries(E_AXES.map(k=>[k,lookup('module.'+m.id+'.'+k)])),position=Object.fromEntries(E_POS.map(k=>[k,lookup('module.'+m.id+'.'+k)]));
+  for(const[k,v]of Object.entries(size))if(v!==null&&v<=0)throw Error(m.name+': '+k+' muss größer 0 bleiben.');for(const[k,v]of Object.entries(position))if(v!==null&&v<0)throw Error(m.name+': Lage '+k+' liegt außerhalb des Gesamtprojekts.');
+  for(const [axis,pos]of [['width','x'],['height','y'],['depth','z']])if(size[axis]!==null&&position[pos]!==null&&e.total[axis]!==null&&size[axis]+position[pos]>e.total[axis]+.001)throw Error(m.name+' überschreitet das Gesamtmaß '+axis+'.');
+  const outline=m.outline?.map(p=>({x:calc(p.x),y:calc(p.y)}));if(outline?.some(p=>p.x===null||p.y===null))warnings.push(m.name+': Außenkontur noch unvollständig.');
+  if(outline?.some(p=>p.x!==null&&(p.x<0||size.width!==null&&p.x>size.width+.001)||p.y!==null&&(p.y<0||size.height!==null&&p.y>size.height+.001)))throw Error(m.name+': Kontur liegt außerhalb der Baugruppe.');
+  return {...m,size,position,outline,material:m.material||e.shared.material,thickness:m.thickness!==undefined?calc(m.thickness):e.shared.thickness};
+ });
+ for(const m of modules)if(m.planningOnly||m.family==='custom')warnings.push(m.name+': Einzelkonstruktion noch auszuarbeiten.');
+ return {ensemble:e,modules,unknown:[...unknown],warnings,values:Object.fromEntries(values)};
+}
+function ensembleExprText(v){if(v===null||v===undefined)return 'offen';if(typeof v==='number')return String(v);if(v.ref)return v.ref;const symbols={add:' + ',sub:' - ',min:', ',max:', '};return (['min','max'].includes(v.op)?v.op:'')+'('+v.args.map(ensembleExprText).join(symbols[v.op])+')';}
+function ensembleApply(input,commands,{expectedRevision=input.revision,source='manual'}={}){
+ if(input.revision!==expectedRevision)throw Error('Der Vorschlag gehört zu einem älteren Projektstand. Bitte neu anfordern.');if(!Array.isArray(commands)||!commands.length||commands.length>100)throw Error('Ungültiger Änderungsumfang.');const e=ensembleValidate(input);
+ for(const cmd of commands){
+  if(!cmd||typeof cmd!=='object')throw Error('Änderungsauftrag fehlt.');
+  if(cmd.action==='set_total'){eKeys(cmd,['action','values']);eKeys(cmd.values,E_AXES);Object.assign(e.total,cmd.values);}
+  else if(cmd.action==='set_shared'){eKeys(cmd,['action','values']);eKeys(cmd.values,['material','thickness']);Object.assign(e.shared,cmd.values);}
+  else if(cmd.action==='set_variable'){eKeys(cmd,['action','id','value']);if(!eId(cmd.id))throw Error('Ungültiger Parameter.');e.variables[cmd.id]=ensembleExpression(cmd.value);}
+  else if(cmd.action==='add_module'){eKeys(cmd,['action','module']);const m=eCopy(cmd.module);if(m.project)throw Error('Einzelkonstruktionen können nicht aus einem Talk-Vorschlag übernommen werden.');e.modules.push({size:{width:null,height:null,depth:null},position:{x:0,y:0,z:0},notes:[],...m});}
+  else if(cmd.action==='set_module'){eKeys(cmd,['action','id','values']);const m=e.modules.find(m=>m.id===cmd.id);if(!m)throw Error('Baugruppe fehlt.');if(cmd.values?.family&&cmd.values.family!==m.family&&m.project)throw Error('Die Grundkonstruktion einer ausgearbeiteten Baugruppe kann nicht ohne neue Baugruppe gewechselt werden.');eKeys(cmd.values,['name','family','size','position','material','thickness','planningOnly','outline','notes','parentId']);for(const[k,v]of Object.entries(cmd.values))if(k==='size'||k==='position'){eKeys(v,k==='size'?E_AXES:E_POS);m[k]={...m[k],...v};}else m[k]=eCopy(v);}
+  else if(cmd.action==='set_settings'){eKeys(cmd,['action','id','values']);const m=e.modules.find(m=>m.id===cmd.id);if(!m)throw Error('Baugruppe fehlt.');const patch=eSettings(m.family,cmd.values);m.settings={...m.settings,...patch};}
+  else if(cmd.action==='remove_module'){eKeys(cmd,['action','id']);if(!e.modules.some(m=>m.id===cmd.id))throw Error('Baugruppe fehlt.');e.modules=e.modules.filter(m=>m.id!==cmd.id);e.decisions=e.decisions.filter(d=>d.scope!==cmd.id);e.purchases=e.purchases.filter(d=>d.scope!==cmd.id);}
+  else if(cmd.action==='set_decision'){eKeys(cmd,['action','decision']);eKeys(cmd.decision,['id','scope','label','value']);const d=eCopy(cmd.decision),idx=e.decisions.findIndex(v=>v.id===d.id);if(idx<0)e.decisions.push(d);else e.decisions[idx]=d;}
+  else if(cmd.action==='set_purchase'){eKeys(cmd,['action','purchase']);eKeys(cmd.purchase,['id','scope','item','quantity','unit','spec','inStock']);const p=eCopy(cmd.purchase),idx=e.purchases.findIndex(v=>v.id===p.id);if(idx<0)e.purchases.push(p);else e.purchases[idx]=p;}
+  else throw Error('Unbekannter Änderungsauftrag.');
+ }
+ const clean=ensembleValidate(e);ensembleResolve(clean);clean.revision=input.revision+1;clean.history=[...clean.history,{revision:clean.revision,source,commands:eCopy(commands),at:new Date().toISOString()}].slice(-50);return clean;
+}
+function ensembleDiff(before,after){
+ const a=ensembleResolve(before),b=ensembleResolve(after),out=[];
+ for(const k of E_AXES)if(before.total[k]!==after.total[k])out.push('Gesamt'+({width:'breite',height:'höhe',depth:'tiefe'}[k])+': '+(before.total[k]??'offen')+' → '+(after.total[k]??'offen')+' mm');
+ for(const m of b.modules){const old=a.modules.find(v=>v.id===m.id);if(!old){out.push('Neue Baugruppe: '+m.name);continue;}for(const key of [...E_AXES,...E_POS,'thickness','material']){const av=E_AXES.includes(key)?old.size[key]:E_POS.includes(key)?old.position[key]:old[key],bv=E_AXES.includes(key)?m.size[key]:E_POS.includes(key)?m.position[key]:m[key];if(av!==bv)out.push(m.name+' · '+({width:'Breite',height:'Höhe',depth:'Tiefe',x:'Lage ab links',y:'Höhe ab Boden',z:'Lage ab Rückseite',thickness:'Materialdicke',material:'Material'}[key])+': '+(av??'offen')+' → '+(bv??'offen'));}}
+ for(const m of a.modules)if(!b.modules.some(v=>v.id===m.id))out.push('Baugruppe entfernen: '+m.name);
+ for(const m of after.modules){const old=before.modules.find(v=>v.id===m.id);if(JSON.stringify(m.settings||{})!==JSON.stringify(old?.settings||{}))out.push(m.name+' · Einstellungen des Baukastens: '+Object.entries(m.settings||{}).map(([k,v])=>({corner:'Korpusecke',joint:'Rahmenecke',through:'Durchgehende Bauteile',cornerData:'Verbindermaße',verticalWidth:'Aufrechte Rahmenholzbreite',horizontalWidth:'Waagerechte Rahmenholzbreite',biscuitSize:'Flachdübelgröße'}[k]||'Weitere Baukasteneinstellung')+' = '+(typeof v==='object'?Object.values(v||{}).join(' / '):({dowel:'Rundholzdübel',biscuit:'Flachdübel',tenon:'Schlitz und Zapfen',vertical:'Seiten / aufrechte Hölzer',horizontal:'Böden / waagerechte Hölzer'}[v]||v))).join('; '));}
+ for(const d of after.decisions)if(JSON.stringify(d)!==JSON.stringify(before.decisions.find(v=>v.id===d.id)))out.push(d.label+': '+d.value);
+ for(const p of after.purchases)if(JSON.stringify(p)!==JSON.stringify(before.purchases.find(v=>v.id===p.id)))out.push('Einkauf: '+p.quantity+' '+p.unit+' '+p.item+' · '+p.spec);
+ if(!out.length)out.push('Verknüpfungen oder Konstruktionsangaben werden aktualisiert.');return out;
+}
+function ensembleKnowledge(input){const r=ensembleResolve(input);return 'GESAMTPROJEKT Stand '+input.revision+'\n'+JSON.stringify({total:input.total,shared:input.shared,variables:input.variables,modules:r.modules.map(({project,...m})=>({...m,hasConstruction:!!project})),decisions:input.decisions,purchases:input.purchases,open:r.unknown,warnings:r.warnings})+'\nAbgeleitete Maße kommen aus den hinterlegten Verknüpfungen. Vorschläge sind noch keine bestätigten Änderungen. Fehlende Grundkonstruktionen ausdrücklich benennen; keine erfundenen Werkzeichnungen oder Fertigungsfreigaben.';}
+function ensembleAggregate(input,cutlists={},childPurchases={}){
+ const e=ensembleValidate(input),rows=[],groups=new Map(),purchases=new Map(),open=[],unquantifiedPurchases=[];
+ for(const m of e.modules){const list=cutlists[m.id];if(!Array.isArray(list)||!list.length){open.push(m.name+': noch keine bestätigte Stückliste.');continue;}for(const row of list){if(!row||![row.length_mm,row.width_mm,row.thickness_mm,row.qty].every(v=>typeof v==='number'&&Number.isFinite(v)&&v>0)){open.push(m.name+': unvollständige Stücklistenposition.');continue;}const r={...row,part:m.name+' · '+row.part,moduleId:m.id};rows.push(r);const key=JSON.stringify([row.material,row.thickness_mm]);const g=groups.get(key)||{material:row.material,thickness:row.thickness_mm,area:0,volume:0,parts:0};g.area+=row.length_mm*row.width_mm*row.qty/1e6;g.volume+=row.length_mm*row.width_mm*row.thickness_mm*row.qty/1e9;g.parts+=row.qty;groups.set(key,g);}}
+ const allPurchases=[...e.purchases];
+ for(const m of e.modules)for(const [i,p]of (childPurchases[m.id]||[]).entries()){
+  const match=String(p.quantity||'').trim().match(/^(\d+(?:[.,]\d+)?)\s+([^\d].{0,24})$/u);
+  if(!match||!Number.isFinite(Number(match[1].replace(',','.')))||Number(match[1].replace(',','.'))<=0){open.push(m.name+': Einkaufsmenge für '+(p.item||'Zukaufteil')+' noch nicht eindeutig.');unquantifiedPurchases.push({...p,scope:m.id,id:'unknown_'+m.id+'_'+i});continue;}
+  allPurchases.push({id:'child_'+m.id+'_'+i,scope:m.id,item:p.item||'',quantity:Number(match[1].replace(',','.')),unit:match[2],spec:[p.dimensions||p.spec||'',p.supplier||'',p.product||''].filter(Boolean).join(' · '),inStock:!!p.inStock});
+ }
+ for(const p of allPurchases){const key=JSON.stringify([p.item,p.unit,p.spec,p.inStock]);const g=purchases.get(key)||{...p,quantity:0,scopes:[]};g.quantity+=p.quantity;g.scopes.push(p.scope);purchases.set(key,g);}
+ return {rows,materials:[...groups.values()],purchases:[...purchases.values()],unquantifiedPurchases,open,complete:!open.length&&e.modules.length>0};
+}
+function ensembleSvg(input){
+ const r=ensembleResolve(input),W=input.total.width,H=input.total.height;if(!W||!H)return '<p>Gesamtbreite und Gesamthöhe eingeben.</p>';
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const sx=480/W,sy=480/H,s=Math.min(sx,sy),x=70,y=40,bottom=y+H*s;
+ let body='<rect x="'+x+'" y="'+y+'" width="'+W*s+'" height="'+H*s+'" fill="none" stroke="#a5a5a5" stroke-dasharray="3 3"/>';
+ for(const [index,m] of r.modules.entries()){if([m.size.width,m.size.height,m.position.x,m.position.y].some(v=>v===null))continue;const px=x+m.position.x*s,py=bottom-(m.position.y+m.size.height)*s,w=m.size.width*s,h=m.size.height*s,fill=m.family==='frame'?'#dce8ee':m.family==='custom'?'#e5e6e1':'#eee3d0';
+  const shape=m.outline&&!m.outline.some(p=>p.x===null||p.y===null)?'<path d="'+m.outline.map((p,i)=>(i?'L':'M')+(px+p.x*s)+','+(bottom-(m.position.y+p.y)*s)).join(' ')+' Z"': '<rect x="'+px+'" y="'+py+'" width="'+w+'" height="'+h+'"';
+  body+=shape+' fill="'+fill+'" stroke="#333" stroke-width="1.2"/><text x="'+(px+w/2)+'" y="'+(py+Math.min(26,h/2))+'" text-anchor="middle" font-size="12">'+String(index+1)+'</text>';
+ }
+ body+='<path d="M'+x+','+(bottom+24)+' H'+(x+W*s)+' M'+(x-22)+','+y+' V'+bottom+'" stroke="#333" fill="none"/><text x="'+(x+W*s/2)+'" y="'+(bottom+42)+'" text-anchor="middle" font-size="14">'+W+' mm</text><text x="'+(x-30)+'" y="'+(y+H*s/2)+'" text-anchor="middle" transform="rotate(-90 '+(x-30)+' '+(y+H*s/2)+')" font-size="14">'+H+' mm</text>';
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+(x+W*s+30)+' '+(bottom+58)+'" role="img" aria-label="Gesamtansicht mit bestätigten Außenmaßen" style="width:100%;height:auto;background:white;color:#222"><g font-family="Arial" fill="#222">'+body+'</g></svg>';
+}
+
+// The wardrobe is a reviewed design fixture, not a hard-coded planning workflow.
+function ensembleWardrobe(){
+ const ref=ref=>({ref}),sub=(...args)=>({op:'sub',args}),add=(...args)=>({op:'add',args});
+ const e={schemaVersion:1,revision:1,total:{width:1200,height:2100,depth:350},shared:{material:'Kiefer-Dreischichtplatte',thickness:19},variables:{leftWidth:450,openWidth:250,seatHeight:450,cushion:50,doorGap:null,skirtingHeight:70,skirtingProjection:5},history:[],purchases:[],decisions:[],modules:[]};
+ const boardTop=sub(ref('var.seatHeight'),ref('var.cushion')),bodyDepth=sub(ref('total.depth'),ref('shared.thickness'),ref('var.doorGap'));
+ e.modules=[
+  {id:'cabinet',name:'Schrank links geschlossen, rechts offen',family:'cabinet',planningOnly:true,size:{width:add(ref('var.leftWidth'),ref('var.openWidth')),height:ref('total.height'),depth:bodyDepth},position:{x:0,y:0,z:0},outline:[{x:0,y:0},{x:ref('var.leftWidth'),y:0},{x:ref('var.leftWidth'),y:boardTop},{x:add(ref('var.leftWidth'),ref('var.openWidth')),y:boardTop},{x:add(ref('var.leftWidth'),ref('var.openWidth')),y:ref('total.height')},{x:0,y:ref('total.height')}],notes:['Gemeinsamer Oberboden und gemeinsame Mittelseite; abgestufte Unterkante. Bestehender Rechteck-Korpusbaukasten bildet diese Kombination noch nicht vollständig ab.','Seiten durchgehend, Böden dazwischen. Links 4, rechts 3 höhenverstellbare Einlegeböden.','Verleimte Rundholzdübel Ø 8 mm. Nutmaße, Dübellängen, Lochreihen und Bohrbilder offen.','Rückwände Hartfaser 3 mm: links weiß, rechts Kieferdekor. Außen genutet; Mittelseite endet an der Nut, Rückwandstoß auf hintere Kante der Mittelseite geschraubt.','Links rückseitige Aussparung für Wandsockelleiste 70 mm hoch, 5 mm vorstehend; Montagezugabe offen.']},
+  {id:'bench',name:'Schuhbank',family:'cabinet',planningOnly:true,size:{width:sub(ref('total.width'),ref('var.leftWidth')),height:boardTop,depth:ref('total.depth')},position:{x:ref('var.leftWidth'),y:0,z:0},notes:['Nur Oberboden auf Seiten; Unterboden zwischen Seiten. Feste Mittelseite zwischen Böden; je ein höhenverstellbarer Einlegeboden pro Fach.','Rundholzdübel Ø 8 mm, verleimt. Hartfaser-Rückwand 3 mm weiß, eingenutet.','Zwei überlappende 19-mm-Schiebetüren, Hettich SlideLine 55 ohne Dämpfung, Muschelgriffe. Einbaumaße und Überlappung offen.','Asymmetrische obere/untere Korpusverbindung wird vom bisherigen Baukasten noch nicht vollständig abgebildet.','Rückseitige Aussparung für Wandsockelleiste; Wand- und Baugruppenanschlüsse ausarbeiten.']},
+  {id:'panel',name:'Lamellenpaneel',family:'custom',planningOnly:true,size:{width:sub(ref('total.width'),ref('module.cabinet.width')),height:sub(ref('total.height'),ref('var.seatHeight')),depth:18},position:{x:ref('module.cabinet.width'),y:ref('var.seatHeight'),z:0},notes:['BAUHAUS 31783277: FN Neuhofer Acustico Kiefer, Lieferformat 2400 × 572,5 × 18 mm.','3 schwarze Doppelhaken: x=125/375 mm ab linker Paneelkante bei 1700 mm über Boden; x=250 mm bei 1450 mm. An Lamellenraster anpassen.','Unterkonstruktion und tragfähige Wand-/Hakenbefestigung offen.']},
+  {id:'door',name:'Spiegel-Rahmentür',family:'frame',parentId:'cabinet',settings:{joint:'biscuit',verticalWidth:70,horizontalWidth:70,biscuitSize:'20'},size:{width:sub(ref('var.leftWidth'),4),height:sub(ref('total.height'),4),depth:ref('shared.thickness')},position:{x:2,y:2,z:sub(ref('total.depth'),ref('shared.thickness'))},notes:['Aufliegend, links angeschlagen, 3 Topfbänder; Rahmen 70 × 19 mm.','Gehrungsecken mit Flachdübeln Größe 20; Falz mit herausnehmbaren Glasleisten für Spiegel 5 mm.','Fugenbild: 2 mm Rücksprung ringsum zum geschlossenen Bereich. Türmaße mit Topfbandgeometrie abgleichen.','Schwarzer Bügelgriff rechts. Topfbandtyp, Bohrmaße, Falz- und Glasleistenquerschnitt offen.']},
+  {id:'cushion',name:'Loses Sitzpolster',family:'custom',planningOnly:true,material:'Polster',size:{width:ref('module.panel.width'),height:ref('var.cushion'),depth:null},position:{x:ref('module.panel.x'),y:ref('module.bench.height'),z:0},notes:['Nur freier Sitzbereich; 50 mm dick. Tiefe nach Paneel-/Wandanschluss festlegen.']}
+ ];
+ const decision=(id,scope,label,value)=>({id,scope,label,value});
+ e.decisions=[decision('layout','all','Bestätigte Anordnung','Gesamt 1200 × 2100 × maximal 350 mm. Schuhbank ab linker Bereichsgrenze; offener Schrankteil steht auf Bank. Paneel rechts oberhalb Polster.'),decision('finish','all','Oberfläche','Osmo Hartwachs-Öl Original 3062 farblos matt, BAUHAUS 15102336. Holzflächen behandeln; Spiegel, PET-Filz und beschichtete Hartfaser aussparen.'),decision('bodydepth','cabinet','Einheitliche Korpustiefe','Gesamttiefe abzüglich 19-mm-Tür und noch offenem Türabstand. Früherer 300-mm-Rücksprung des offenen Teils entfällt.'),decision('remaining','all','Detailplanung','Dübellängen, Nutmaße, Lochreihen, Topfbänder, Schiebetürmaße, Falz, Glasleisten, Wandanschlüsse und Tragfähigkeit noch ausarbeiten. Keine Fertigungsfreigabe.')];
+ e.purchases=[{id:'panelbuy',scope:'panel',item:'FN Neuhofer Acustico Kiefer',quantity:1,unit:'Stück',spec:'BAUHAUS 31783277; 2400 × 572,5 × 18 mm; Zuschnitt auf Paneelfläche prüfen',inStock:false},{id:'hooks',scope:'panel',item:'Schwarze Doppelhaken',quantity:3,unit:'Stück',spec:'Konkretes Produkt und Schraubbild offen',inStock:false},{id:'hinges',scope:'door',item:'Topfbänder aufliegend, links',quantity:3,unit:'Stück',spec:'Typ und Montageplatten noch auswählen',inStock:false},{id:'handle',scope:'door',item:'Schwarzer Bügelgriff',quantity:1,unit:'Stück',spec:'Bohrabstand noch auswählen',inStock:false}];return e;
+}
+
+let ensembleContext=null,ensembleServerReady=false;
+const enClone=x=>structuredClone(x),enRefLabels={width:'Breite',height:'Höhe',depth:'Tiefe',x:'Lage ab links',y:'Höhe ab Boden',z:'Abstand zur Rückseite'};
+function enLabel(ref,e=current.ensemble){const b=ref.split('.');return b[0]==='total'?'Gesamt'+({width:'breite',height:'höhe',depth:'tiefe'}[b[1]]):b[0]==='shared'?'Materialdicke':b[0]==='var'?({leftWidth:'Breite des linken Bereichs',openWidth:'Breite des offenen Bereichs',seatHeight:'Gesamtsitzhöhe',cushion:'Polsterdicke',doorGap:'Türabstand',skirtingHeight:'Höhe der Wandsockelleiste',skirtingProjection:'Vorsprung der Wandsockelleiste'}[b[1]]||b[1]):(e.modules.find(m=>m.id===b[1])?.name||b[1])+' · '+enRefLabels[b[2]];}
+function enExprLabel(v,e=current.ensemble){if(v===null||v===undefined)return 'offen';if(typeof v==='number')return String(v)+' mm';if(v.ref)return enLabel(v.ref,e);return '('+v.args.map(v=>enExprLabel(v,e)).join({add:' + ',sub:' - ',min:' / Minimum / ',max:' / Maximum / '}[v.op])+')';}
+function ensembleStart({example=false,fromIdea=false}={}){
+ if(busy||reconstructionBusy)return;
+ if(!fromIdea)resetProject('develop');else if(ideaHasGeometry())return alert('Dieses Projekt hat bereits eine Einzelkonstruktion. Bitte ein neues Gesamtprojekt beginnen.');
+ if(fromIdea)current.knowledge=$('#developText').value.trim()||current.knowledge;
+ ensembleContext=null;current.title=current.customTitle=example?'Garderobe · bestätigter Testentwurf':'Mein Gesamtprojekt';
+ current.ensemble=example?ensembleWardrobe():ensembleNew();current.ensembleProposal=null;
+ current.chat=[...(current.chat||[]),...(fromIdea&&current.knowledge?[{role:'user',text:current.knowledge}]:[]),{role:'assistant',text:example?'Der bestätigte Garderobenentwurf ist als Gesamtprojekt geladen. Offene Anschlussdetails sind gekennzeichnet.':'Beschreibe dein Möbel oder zeige ein Bild. Wir legen gemeinsam Gesamtmaße, Baugruppen und Abhängigkeiten fest. Vorschläge prüfst du vor der Übernahme.'}];
+ ensembleSync(current);renderRecord();show('record');switchTab('overview');dbPutProject(current).then(updateSaved).catch(e=>alert('Gesamtprojekt noch nicht gespeichert: '+e.message));
+}
+function enChildExpected(e,id){const m=ensembleResolve(e).modules.find(m=>m.id===id);if(!m)throw Error('Baugruppe fehlt.');return m;}
+function enProjectParams(project){return project.construction?.base||project.woodDrawingDraft||project.woodDrawing?.params||{};}
+function enExpectedFields(m){return m.family==='board'?{length:m.size.width,width:m.size.depth,thickness:m.thickness,material:m.material}:m.family==='frame'?{width:m.size.width,height:m.size.height,thickness:m.thickness,material:m.material}:{width:m.size.width,height:m.size.height,depth:m.size.depth,thickness:m.thickness,material:m.material};}
+function enSyncChild(root,m){
+ const child=m.project;if(!child)return;const r=enChildExpected(root.ensemble,m.id),expected=enExpectedFields(r),params=enProjectParams(child),patch={};
+ for(const[k,v]of Object.entries({...m.settings,...expected}))if(JSON.stringify(params[k]??null)!==JSON.stringify(v??null))patch[k]=v;
+ if(Object.keys(patch).length){
+  if(child.construction){child.construction=constructionApply(child.construction,[{action:'set_base',values:patch}],{source:'ensemble-dimension'}).construction;cSync(child);}
+  else{child.woodDrawingDraft={...params,...Object.fromEntries(Object.entries(patch).map(([k,v])=>[k,v??'']))};if(child.woodDrawing)child.woodDrawing={...child.woodDrawing,confirmed:false};child.projectDirty=true;}
+ }
+ child.ensembleParent={rootId:root.id,moduleId:m.id,revision:root.ensemble.revision};
+ child.knowledge=(root.knowledge||'')+'\n\nBaugruppe: '+m.name+'\n'+m.notes.join('\n')+'\n'+root.ensemble.decisions.filter(d=>d.scope==='all'||d.scope===m.id).map(d=>d.label+': '+d.value).join('\n');
+}
+function enCutlists(root){const lists={};for(const m of root.ensemble.modules){if(!m.project||m.planningOnly||m.family==='custom')continue;try{const child=m.project;if(child.construction){const out=constructionCompute(child.construction);if(child.construction.confirmedRevision===child.construction.revision&&out.ready)lists[m.id]=constructionPlan(child.construction).cutlist||[];}else if(child.woodDrawing?.confirmed&&drawingStatus(child)==='checked')lists[m.id]=wdCutlistForProject(child);}catch{}}
+ return lists;
+}
+function enPurchaseLists(root){const out={};for(const m of root.ensemble.modules)if(m.project){const inventory=inventoryEntries(m.project);out[m.id]=(m.project.purchasedParts||[]).map(p=>({...p,inStock:!!inventory.find(v=>v.item===p.item&&v.quantity===String(p.quantity||'')&&v.spec===String(p.dimensions||p.spec||''))?.inStock}));}return out;}
+function ensembleSync(root){
+ root.ensemble=ensembleValidate(root.ensemble);for(const m of root.ensemble.modules)enSyncChild(root,m);
+ const r=ensembleResolve(root.ensemble),a=ensembleAggregate(root.ensemble,enCutlists(root),enPurchaseLists(root));
+ const open=[...r.unknown.map(k=>enLabel(k,root.ensemble)+' noch offen.'),...r.warnings,...a.open];
+ root.analysis={stateVersion:2,deferralVersion:1,revision:root.ensemble.revision,object:root.customTitle||root.title,summary:root.knowledge||'Mehrere Baugruppen mit gemeinsamen Maßbezügen.',recognized:['Gesamtprojekt mit '+r.modules.length+' Baugruppen.'],assumptions:[],unknown:open,safety_notes:[],enough_information:!open.length};
+ root.reconstruction={title:root.title,summary:root.knowledge||'',construction:'Gesamtprojekt · '+r.modules.length+' Baugruppen · Stand '+root.ensemble.revision,cutlist:a.rows,materials:a.materials.map(g=>({item:g.material+' · '+g.thickness+' mm',quantity:g.area.toLocaleString('de-DE',{maximumFractionDigits:3})+' m² netto',spec:'Summe der bestätigten Teile, ohne Verschnitt; noch keine Anzahl von Einkaufsplatten.'})),steps:[],open_points:open};root.projectDirty=true;
+ const manual=(root.purchasedParts||[]).filter(p=>p.source!=='ensemble');root.purchasedParts=[...manual,...a.purchases.map(p=>({id:'en-'+p.id,item:p.item,quantity:p.quantity+' '+p.unit,dimensions:p.spec,use:p.scopes.map(s=>s==='all'?'Gesamtprojekt':root.ensemble.modules.find(m=>m.id===s)?.name||s).join(', '),source:'ensemble',ensembleStock:p.inStock})),...a.unquantifiedPurchases.map(p=>({...p,id:'en-'+p.id,quantity:p.quantity||'Menge offen',use:root.ensemble.modules.find(m=>m.id===p.scope)?.name||p.scope,source:'ensemble',ensembleStock:p.inStock}))];
+ return {r,a};
+}
+function enProposal(commands,reply='Änderungsvorschlag',project=current){
+ try{const after=ensembleApply(project.ensemble,commands);project.ensembleProposal={baseRevision:project.ensemble.revision,commands:enClone(commands),changes:ensembleDiff(project.ensemble,after),reply};dbPutProject(project).catch(e=>alert('Vorschlag noch nicht gespeichert: '+e.message));renderRecord();switchTab('overview');return true;}catch(e){alert('Vorschlag noch nicht gültig: '+e.message);return false;}
+}
+async function enAdopt(){const project=current,p=project.ensembleProposal;if(!p)return;try{const next=ensembleApply(project.ensemble,p.commands,{expectedRevision:p.baseRevision,source:'confirmed-proposal'});const old=project.ensemble;const working={...project,ensemble:next};ensembleSync(working);await dbPutProject(working);if(project.ensemble!==old)throw Error('Projekt inzwischen geändert. Bitte neu laden.');Object.assign(project,working,{ensembleProposal:null});project.chat.push({role:'assistant',text:'Übernommen: '+p.changes.join('; ')});await dbPutProject(project);if(current===project)renderRecord();await updateSaved();}catch(e){alert('Änderung nicht übernommen: '+e.message);}}
+function enSourceOptions(selected=''){
+ const e=current.ensemble,refs=['total.width','total.height','total.depth','shared.thickness',...Object.keys(e.variables).map(k=>'var.'+k),...e.modules.flatMap(m=>['width','height','depth','x','y','z'].map(k=>'module.'+m.id+'.'+k))];
+ return '<option value="">Festes Maß</option>'+refs.map(r=>'<option value="'+r+'" '+(r===selected?'selected':'')+'>'+esc(enLabel(r))+'</option>').join('');
+}
+function enModuleEditor(id){
+ const e=current.ensemble,m=e.modules.find(m=>m.id===id),r=enChildExpected(e,id),box=$('#enModuleEditor');
+ const input=(key,label,raw,value,group)=>'<label class="wdField"><span>'+label+' (mm)</span><input data-en-edit="'+key+'" data-en-group="'+group+'" value="'+(value??'')+'" inputmode="decimal" placeholder="offen"><small>'+esc(typeof raw==='object'&&raw?'Verknüpft: '+enExprLabel(raw):'Festes Maß')+'</small></label>';
+ box.innerHTML='<h3>'+esc(m.name)+'</h3><label>Name<input id="enEditName" value="'+esc(m.name)+'" maxlength="120"></label><div class="wdFields">'+['width','height','depth'].map(k=>input(k,enRefLabels[k],m.size[k],r.size[k],'size')).join('')+['x','y','z'].map(k=>input(k,enRefLabels[k],m.position[k],r.position[k],'position')).join('')+'</div><p class="hint">Ein geändertes Zahlenfeld ersetzt dessen Verknüpfung nach deiner Bestätigung. Unveränderte Felder behalten ihre Maßbezüge.</p><label>Konstruktionsangaben<textarea id="enEditNotes">'+esc(m.notes.join('\n'))+'</textarea></label><button id="enEditPreview" class="primary">Änderungen prüfen</button>';
+ $('#enEditPreview').onclick=()=>{const patch={name:$('#enEditName').value,notes:$('#enEditNotes').value.split('\n').filter(Boolean)};for(const el of box.querySelectorAll('[data-en-edit]')){const group=el.dataset.enGroup,key=el.dataset.enEdit,raw=el.value.trim(),value=raw===''?null:Number(raw.replace(',','.'));if(value!==r[group][key]){patch[group]??={};patch[group][key]=value;}}enProposal([{action:'set_module',id,values:patch}]);};box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function enOverview(){
+ const e=current.ensemble,{r,a}=ensembleSync(current),p=current.ensembleProposal;
+ const dim=(key,label,value)=>'<label class="wdField"><span>'+label+' (mm)</span><input id="enTotal-'+key+'" value="'+(value??'')+'" inputmode="decimal" placeholder="offen"></label>';
+ const moduleRows=r.modules.map(m=>'<section class="notice"><strong>'+esc(m.name)+'</strong><p>'+esc(ENSEMBLE_FAMILIES[m.family])+' · '+[m.size.width,m.size.height,m.size.depth].map(v=>v??'offen').join(' × ')+' mm<br>Lage: '+[m.position.x,m.position.y,m.position.z].map(v=>v??'offen').join(' / ')+' mm'+(m.parentId?'<br>Unterbaugruppe von '+esc(e.modules.find(v=>v.id===m.parentId)?.name):'')+'</p><button class="secondary small" data-en-edit-module="'+m.id+'">Maße und Angaben</button> '+(!m.planningOnly&&m.family!=='custom'?'<button class="primary small" data-en-open="'+m.id+'">Einzelkonstruktion öffnen</button>':'<span class="hint">Konstruktion noch nicht vollständig im Baukasten abgebildet</span>')+'<details><summary>Konstruktionsentscheidungen</summary>'+m.notes.map(n=>'<p>'+esc(n)+'</p>').join('')+'</details></section>').join('');
+ return '<h3>Gesamtprojekt · Stand '+e.revision+'</h3><button id="enAsk" class="secondary">Aufteilung im Werkstatt-Talk besprechen</button><p>Gemeinsame Maße, getrennte Einzelkonstruktionen. Alle Maße in mm; Lage ab links / Boden / Rückseite.</p>'+
+ (p?'<section class="notice"><strong>Vorschlag zur Übernahme</strong><p>'+esc(p.reply||'')+'</p><ul>'+p.changes.map(v=>'<li>'+esc(v)+'</li>').join('')+'</ul><button class="primary" id="enAdopt">Änderungen übernehmen</button><button class="ghost" id="enDiscard">Vorschlag verwerfen</button></section>':'')+
+ '<div class="wdFields">'+dim('width','Gesamtbreite',e.total.width)+dim('height','Gesamthöhe',e.total.height)+dim('depth','Maximale Gesamttiefe',e.total.depth)+'<label class="wdField"><span>Gemeinsames Material</span><input id="enMaterial" value="'+esc(e.shared.material)+'"></label>'+dim('thickness','Gemeinsame Materialdicke',e.shared.thickness)+'</div><button id="enTotals" class="secondary">Auswirkungen der Maßänderung prüfen</button>'+moduleRows+
+ '<div id="enModuleEditor"></div><details><summary>Baugruppe hinzufügen</summary><label>Name<input id="enNewName" placeholder="z. B. offenes Fach, Tischplatte oder Schublade"></label><label>Grundkonstruktion<select id="enNewFamily">'+Object.entries(ENSEMBLE_FAMILIES).map(([id,name])=>'<option value="'+id+'">'+name+'</option>').join('')+'</select></label><p class="hint">Noch nicht unterstützte Konstruktionen als eigene Baugruppe mit offenen Details anlegen.</p><button id="enAddModule" class="secondary">Baugruppe vorschlagen</button></details>'+
+ '<details><summary>Gemeinsame Parameter</summary>'+Object.entries(e.variables).map(([k,v])=>'<label>'+esc(enLabel('var.'+k))+' (mm)<input data-en-var="'+k+'" inputmode="decimal" value="'+(r.values['var.'+k]??'')+'"><small>'+esc(enExprLabel(v))+'</small></label>').join('')+'<label>Neuer Parametername<input id="enVarName" placeholder="z. B. Sitzhoehe"></label><label>Wert in mm<input id="enVarValue" inputmode="decimal"></label><button id="enVariables" class="secondary">Parameteränderungen prüfen</button></details>'+
+ '<details><summary>Maße miteinander verknüpfen</summary><label>Zielmaß<select id="enLinkTarget">'+e.modules.flatMap(m=>['width','height','depth','x','y','z'].map(k=>'<option value="'+m.id+'.'+k+'">'+esc(m.name+' · '+enRefLabels[k])+'</option>')).join('')+'</select></label><label>Ausgangsmaß<select id="enLinkSource">'+enSourceOptions()+'</select></label><label>Fester Ausgangswert (mm)<input id="enLinkNumber" inputmode="decimal"></label><label>Verknüpfung<select id="enLinkOp"><option value="same">Gleich übernehmen</option><option value="sub">Abzüglich</option><option value="add">Zuzüglich</option></select></label><label>Zweites Maß<select id="enLinkSecond">'+enSourceOptions()+'</select></label><label>Fester Zu- oder Abschlag (mm)<input id="enLinkOffset" inputmode="decimal" value="0"></label><button id="enLink" class="secondary">Verknüpfung prüfen</button></details>'+
+ '<h3>Bestätigte gemeinsame Entscheidungen</h3>'+e.decisions.map(d=>'<p><strong>'+esc(d.label)+'</strong>: '+esc(d.value)+'</p>').join('')+'<p class="notice">'+(a.complete?'Alle Baugruppen tragen bestätigte Stücklisten bei.':'Gemeinsamer Materialbedarf noch unvollständig: '+a.open.map(esc).join(' '))+'</p>';
+}
+function enBindOverview(){
+ $('#enAsk').onclick=()=>{switchTab('talkPane');if(current.knowledge)ensembleTalk({message:'Bitte schlage eine passende Aufteilung und nächste Frage für meine Idee vor: '+current.knowledge});};
+ $('#enAdopt')?.addEventListener('click',enAdopt);$('#enDiscard')?.addEventListener('click',()=>{current.ensembleProposal=null;dbPutProject(current).catch(e=>alert(e.message));renderRecord();});
+ $('#enTotals').onclick=()=>{const number=id=>{const s=$('#'+id).value.trim();return s===''?null:Number(s.replace(',','.'));};enProposal([{action:'set_total',values:Object.fromEntries(['width','height','depth'].map(k=>[k,number('enTotal-'+k)]))},{action:'set_shared',values:{material:$('#enMaterial').value,thickness:number('enTotal-thickness')}}]);};
+ $$('[data-en-edit-module]').forEach(b=>b.onclick=()=>enModuleEditor(b.dataset.enEditModule));$$('[data-en-open]').forEach(b=>b.onclick=()=>enOpenChild(b.dataset.enOpen));
+ $('#enAddModule').onclick=()=>{const family=$('#enNewFamily').value;enProposal([{action:'add_module',module:{id:'part_'+Date.now().toString(36),name:$('#enNewName').value.trim(),family,size:{width:null,height:null,depth:null},position:{x:0,y:0,z:0},notes:[],planningOnly:family==='custom'}}]);};
+ $('#enVariables').onclick=()=>{const commands=[];for(const el of $$('[data-en-var]')){const v=el.value.trim()===''?null:Number(el.value.replace(',','.'));if(v!==ensembleResolve(current.ensemble).values['var.'+el.dataset.enVar])commands.push({action:'set_variable',id:el.dataset.enVar,value:v});}if($('#enVarName').value.trim())commands.push({action:'set_variable',id:$('#enVarName').value.trim(),value:$('#enVarValue').value.trim()===''?null:Number($('#enVarValue').value.replace(',','.'))});enProposal(commands);};
+ $('#enLink').onclick=()=>{const [id,key]=$('#enLinkTarget').value.split('.');if(!id)return;const source=$('#enLinkSource').value,second=$('#enLinkSecond').value,op=$('#enLinkOp').value,raw=$('#enLinkNumber').value.trim(),offset=$('#enLinkOffset').value.trim(),a=source?{ref:source}:raw===''?null:Number(raw.replace(',','.')),b=second?{ref:second}:offset===''?null:Number(offset.replace(',','.'));const value=op==='same'?a:{op,args:[a,b]};enProposal([{action:'set_module',id,values:{[['width','height','depth'].includes(key)?'size':'position']:{[key]:value}}}]);};
+}
+function ensembleRenderDrawing(){const svg=ensembleSvg(current.ensemble);$('#woodDrawingBox').innerHTML='<h3>Gesamtansicht · Planungsstand '+current.ensemble.revision+'</h3><p>Außenkonturen und Lage der Baugruppen, keine Fertigungszeichnung. Unbekannte Tiefen verhindern die Vorderansicht nicht.</p>'+svg+'<ol>'+ensembleResolve(current.ensemble).modules.map(m=>'<li>'+esc(m.name)+' · '+[m.size.width,m.size.height,m.size.depth].map(v=>v??'offen').join(' × ')+' mm</li>').join('')+'</ol><button class="secondary" id="enSvgDownload">Gesamtansicht als SVG herunterladen</button><button class="ghost" id="enPrint">Gesamtansicht drucken / PDF</button>';$('#enSvgDownload').onclick=()=>{const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));const a=document.createElement('a');a.href=url;a.download='Gesamtansicht.svg';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};$('#enPrint').onclick=()=>{const w=window.open('','_blank');if(!w)return alert('Bitte das Druckfenster zulassen.');w.document.write('<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Gesamtansicht</title><style>@page{size:A4;margin:12mm}body{font-family:Arial}svg{max-height:240mm;width:100%}button{padding:10px}@media print{button{display:none}}</style><\/head><body><button onclick="window.print()">Drucken / PDF</button><h2>'+esc(current.title)+'</h2><p>Planungsansicht · Maße in mm · keine Fertigungsfreigabe</p>'+svg+'<\/body><\/html>');w.document.close();};}
+function ensembleAfterRecord(){
+ const back=$('#ensembleReturn');if(back){const child=!!current.ensembleParent;back.classList.toggle('hidden',!child);if(child)$('#ensembleReturnTitle').textContent='Baugruppe im Gesamtprojekt · '+(ensembleContext?.root.title||'');}
+ if(current.ensemble){$('#overviewBox').innerHTML=enOverview();enBindOverview();$('#refreshProject').textContent='Gesamtprojekt prüfen / aktualisieren';return;}
+ enLockDimensions();
+}
+function enLockDimensions(){
+ if(current.ensembleParent){for(const el of $$('[data-cabinet],[data-frame],[data-c-field]')){if(el.hasAttribute('data-c-part')||el.hasAttribute('data-c-operation')||el.hasAttribute('data-c-accessory')||el.dataset.group)continue;const key=el.dataset.cabinet||el.dataset.frame||el.dataset.cField;if(['width','height','depth','length','thickness','material'].includes(key)||current.construction&&key==='shape')el.disabled=true;}}
+}
+function ensembleRefresh(){ensembleSync(current);renderRecord();return dbPutProject(current).catch(e=>alert(e.message));}
+async function enOpenChild(id){
+ if(busy||reconstructionBusy)return;const root=current,m=root.ensemble.modules.find(m=>m.id===id);if(!m||m.planningOnly||m.family==='custom')return;
+ try{if(!m.project){const now=new Date().toISOString();const child={id:root.id+'__'+id,title:m.name,customTitle:m.name,mode:'develop',knowledge:'',photos:[],sketches:[],chat:[],round:0,purchasedParts:[],createdAt:now,updatedAt:now,ideaBridge:{family:m.family==='cabinet'?'cabinet':m.family==='frame'?'frame':'board'}};
+  if(m.family==='board'){child.construction=constructionNew();child.construction.title=m.name;child.construction.base.stock=null;child.construction.base.grain=null;child.construction.operations=[{id:'free-edges',type:'edge',target:'*',treatment:'none',value:0}];}
+  else{child.woodDrawingDraft=m.family==='frame'?frameNew():cabinetNew();if(m.family==='frame')child.woodDrawingDraft.joint='';else child.woodDrawingDraft.corner='';child.woodDrawingDraft.through='';}
+  m.project=child;}
+  enSyncChild(root,m);await dbPutProject(root);ensembleContext={root,moduleId:id};current=m.project;renderRecord();switchTab('woodDrawingPane');
+ }catch(e){alert('Baugruppe konnte nicht geöffnet werden: '+e.message);}
+}
+async function ensembleSaveChild(project){
+ const parent=project.ensembleParent,context=ensembleContext;if(!context||context.root.id!==parent.rootId)throw Error('Gesamtprojekt bitte erneut öffnen, bevor die Baugruppe gespeichert wird.');
+ const root=context.root;if(parent.revision!==root.ensemble.revision)throw Error('Gesamtmaße wurden inzwischen geändert. Bitte Baugruppe vom Gesamtprojekt aus neu öffnen.');const m=root.ensemble.modules.find(m=>m.id===parent.moduleId);if(!m)throw Error('Baugruppe nicht mehr vorhanden.');
+ const expected=enExpectedFields(enChildExpected(root.ensemble,m.id)),actual=enProjectParams(project);
+ for(const[k,v]of Object.entries(expected)){const a=k==='material'?String(actual[k]??''):actual[k]===undefined||actual[k]===null||actual[k]===''?null:Number(actual[k]);if(a!==v)throw Error('Das Maß bzw. Material „'+k+'“ wird vom Gesamtprojekt vorgegeben. Bitte dort ändern und die Auswirkungen bestätigen.');}
+ if(project.construction&&project.construction.base.shape!=='rectangle')throw Error('Die Kontur dieser Brettbaugruppe benötigt eine eigene Maßzuordnung. Bitte vorerst als eigene Baugruppe planen.');
+ const old=m.project,oldSettings=m.settings;m.settings=ensembleSettingsPick(m.family,actual);m.project=enClone(project);try{await dbPutProject(root);if(current===project)m.project=project;return true;}catch(e){m.project=old;m.settings=oldSettings;throw e;}
+}
+async function enReturn(){if(!ensembleContext)return alert('Bitte das Gesamtprojekt aus „Meine Projekte“ öffnen.');try{await dbPutProject(current);const root=ensembleContext.root;current=root;ensembleContext=null;ensembleSync(root);renderRecord();switchTab('overview');}catch(e){alert('Baugruppe noch nicht gesichert: '+e.message);}}
+async function ensembleTalk({openAnswers=[],message=null}={}){
+ if(busy||reconstructionBusy)return;const project=current,text=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];
+ const full=[text,...openAnswers.map(a=>a.question+'\n'+a.answer)].filter(Boolean).join('\n');if(!full&&!pics.length)return;
+ if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];}project.chat.push({role:'user',text:full||'Bitte das Bild in Baugruppen aufteilen.',photoIds:pics.map(p=>p.id)});if(message===null)$('#chatInput').value='';const revision=project.ensemble.revision;setTalkBusy(true);renderTalk();
+ try{if(!ensembleServerReady){const health=await secureFetch(API+'/health');if(!health.ok)throw Error('Der Entwickler-Server ist noch nicht bereit.');const status=await health.json();if(status.ensembleProtocol!==1)throw Error('Der Entwickler-Server benötigt das Backend aus dev60 für den Gesamtprojekt-Talk. Die lokale Planung bleibt verfügbar.');ensembleServerReady=true;}const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ensemble:project.ensemble,chat:project.chat,knowledge:project.knowledge,images:project.photos.map(p=>p.dataUrl),profile:projectProfile(project)})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.ensembleProtocol!==1)throw Error('Der Entwickler-Server benötigt das Backend aus dev60 für den Gesamtprojekt-Talk. Die lokale Planung bleibt verfügbar.');if(project.ensemble.revision!==revision||d.baseRevision!==revision)throw Error('Projektstand wurde inzwischen geändert. Bitte die Frage erneut senden.');project.chat.push({role:'assistant',text:d.reply});if(d.proposal){ensembleApply(project.ensemble,d.proposal.commands,{expectedRevision:d.proposal.baseRevision});project.ensembleProposal={...d.proposal,reply:d.reply};}await dbPutProject(project);if(current===project){renderRecord();if(d.proposal)switchTab('overview');}}
+ catch(e){project.chat.push({role:'assistant',text:'Das Gespräch konnte nicht abgeschlossen werden: '+e.message});try{await dbPutProject(project);}catch{}alert(e.message);}finally{setTalkBusy(false);if(current===project)renderTalk();}
+}
+function ensembleInit(){
+ new MutationObserver(enLockDimensions).observe($('#woodDrawingBox'),{childList:true,subtree:true});
+ $('#ensembleNew').onclick=()=>ensembleStart();$('#ensembleExample').onclick=()=>ensembleStart({example:true});$('#ideaEnsemble').onclick=()=>ensembleStart({fromIdea:true});$('#ensembleBack').onclick=enReturn;
+}
+document.addEventListener('DOMContentLoaded',ensembleInit);
+
+function renderRecord(){if(current.ensemble)ensembleSync(current);if(cHas(current))cSync(current);
+  if(typeof ideaUpdateEntry==='function')ideaUpdateEntry();
   const drawingSave=arguments[0]?.drawingSave===true;
   const r=current.reconstruction||{};
   const refreshBtn=$('#refreshProject');
@@ -5321,7 +5768,7 @@ if(refreshBtn){
   $('#toolsBox').innerHTML=(r.tools||[]).map(x=>`<p>• ${escGerman(x)}</p>`).join('')||'<p>Noch keine Angaben.</p>';
   $('#stepsBox').innerHTML=wdSheetGeometry(current)+wdSolidGlueNote(current)+((sheetState(current).current&&!sheetState(current).open.length?(r.steps||[]):[]).map((s,i)=>`<div class="step"><div class="stepnum">${i+1}</div><p>${escGerman(s)}</p></div>`).join('')||'<p>Vor der Bauanleitung bitte die offenen Punkte im Werkstatt-Talk klären und den Entwurf aktualisieren.</p>');
   $('#safetyBox').innerHTML=(r.safety_notes||[]).map(x=>`<div class="notice">${escGerman(x)}</div>`).join('')||'<div class="ok notice">Keine besonderen Hinweise ermittelt.</div>';
-  $('#projectStatus').textContent=`${current.photos.length} Foto${current.photos.length===1?'':'s'} · ${(current.sketches||[]).length} Skizze${(current.sketches||[]).length===1?'':'n'} · ${sheetState(current).open.length} offene Punkte · ${current.chat.length} Talk-Beiträge`;cAfterRecord();
+  $('#projectStatus').textContent=`${current.photos.length} Foto${current.photos.length===1?'':'s'} · ${(current.sketches||[]).length} Skizze${(current.sketches||[]).length===1?'':'n'} · ${sheetState(current).open.length} offene Punkte · ${current.chat.length} Talk-Beiträge`;cAfterRecord();if(typeof ensembleAfterRecord==='function')ensembleAfterRecord();
 }
 function switchTab(id){if(id==='material'&&cutPlannerNeedsRefresh){renderCutPlanner();cutPlannerNeedsRefresh=false;}$$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.pane===id));$$('.pane').forEach(x=>x.classList.toggle('on',x.id===id));const ww=$('#workWindow');if(!ww)return;if(id==='talkPane'){requestAnimationFrame(()=>{ww.scrollTop=ww.scrollHeight})}else{ww.scrollTo({top:0,behavior:'smooth'})}}document.addEventListener('click',e=>{const t=e.target.closest?.('.tab[data-pane]');if(t) switchTab(t.dataset.pane)});
 function calcView(c){if(!c)return'';if(c.status&&c.status!=='ok')return `<div class="notice">${esc(c.message||'Rechnung bitte prüfen.')}</div>`;if(c.type==='linear_layout')return `<div class="calc"><strong>Werkstattrechnung</strong><br>${esc(c.count)} Plätze · Brettlänge ${esc(c.length_mm)} mm<br>Mitte zu Mitte: ${esc(c.spacing_mm)} mm · freier Zwischenraum: ${esc(c.edge_gap_mm)} mm<br>Freier Endrand: ${esc(c.end_margin_mm)} mm · Mittelpunkte ab links: ${esc(c.positions_mm?.join(' / '))} mm</div>`;if(c.type==='circle_pattern')return `<div class="calc"><strong>Werkstattrechnung</strong><br>Teilkreis Ø ${c.pitch_diameter_mm} mm · Umfang ${c.circumference_mm} mm<br><strong>${c.count} Bohrungen</strong> · tatsächliche Teilung ${c.actual_center_pitch_mm} mm · Winkel ${c.angle_deg}°${c.actual_edge_gap_mm!=null?` · freier Abstand ${c.actual_edge_gap_mm} mm`:''}</div>`;if(c.type==='equal_spacing')return `<div class="calc"><strong>Werkstattrechnung</strong><br>${esc(c.count)} Positionen · Abstand der äußeren Mittelpunkte ${esc(c.length_mm)} mm → ${esc(c.spacing_mm)} mm Mitte zu Mitte${c.mode!=='center_span'?' · Altrechnung: Bezug prüfen':''}</div>`;if(c.type==='rectangle')return `<div class="calc"><strong>Werkstattrechnung</strong><br>Fläche ${c.area_m2} m²${c.volume_l!=null?` · Volumen ${c.volume_l} l`:''}</div>`;return''}
@@ -5442,7 +5889,7 @@ if($('#backFloatBtn'))$('#backFloatBtn').onclick=goBackView;
 let busy=false;
 document.addEventListener('click',e=>{if(e.target?.closest?.('[data-talk-drawing]'))switchTab('woodDrawingPane')});
 function setTalkBusy(on){busy=on;if(on&&speechRecording)stopSpeech();const w=$('#talkWorking'),send=$('#sendChat'),accept=$('#acceptOpenAnswers'),speech=$('#speechBtn'),speechFloat=$('#speechFloatBtn');if(w)w.classList.toggle('on',on);if(send){send.disabled=on;send.textContent=on?'Wird geprüft …':'Beitrag senden'}if(accept)accept.disabled=on;$$('.reopenDeferred,.deferOpen').forEach(el=>el.disabled=on);$$('.openAnswer').forEach(el=>el.readOnly=on);if(speech)speech.disabled=on;if(speechFloat)speechFloat.disabled=on;['talkCameraInput','talkLibraryInput'].forEach(id=>$('#'+id).disabled=on)}
-async function talk({openAnswers=[],message=null,reopenQuestion=null}={}){if(cHas(current))return cTalk({openAnswers,message,reopenQuestion});if(busy||reconstructionBusy)return;const project=current;const t=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];if(!t&&!pics.length&&!openAnswers.length)return alert('Bitte Text, Foto oder Antwort ergänzen.');const photoIds=pics.map(p=>p.id);if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];renderAllPhotos()}captureOpenAnswerDrafts(project);project.projectDirty=true;const answerText=openAnswers.map(x=>x.question+'\nDeine Antwort: '+x.answer).join('\n\n');const userText=[t,answerText].filter(Boolean).join('\n\n')||(pics.length?'Foto als Antwort hinzugefügt.':'Antworten zu offenen Punkten.');project.chat.push({role:'user',text:userText,photoIds});const drawingChange=wdApplyTalkDrawing(project,userText);if(message===null)$('#chatInput').value='';autoGrowChatInput();setTalkBusy(true);renderTalk();setTalkBusy(true);try{const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({images:project.photos.map(p=>p.dataUrl),knowledge:wdKnowledge(project),analysis:project.analysis||{},chat:project.chat,openAnswers,reopenQuestion,profile:projectProfile(project),sketches:sketchContext(),purchasedParts:project.purchasedParts||[]})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.analysis?.stateVersion!==2||d.analysis?.deferralVersion!==1)throw Error('Entwickler-Server benötigt dev17; bisherige Projektdaten bleiben erhalten.');project.stateHistory=[...(project.stateHistory||[]),{analysis:project.analysis,at:new Date().toISOString()}].slice(-10);project.analysis=d.analysis;project.openAnswerDrafts=(project.openAnswerDrafts||[]).filter(draft=>!openAnswers.some(sent=>sent.question===draft.question&&sent.answer===draft.answer.trim()));if(Array.isArray(d.purchased_parts_updates))mergePurchasedParts(d.purchased_parts_updates,project);project.chat.push({role:'assistant',text:d.reply||'Projektstand aktualisiert.',calculation:d.calculation||null});if(project.reconstruction?.decision_support)project.reconstruction.decision_support=[];project.projectDirty=true;if(current===project)switchTab('talkPane')}catch(e){alert('Werkstatt-Talk fehlgeschlagen: '+e.message)}finally{wdFinalizeTalkDrawing(project,drawingChange);if(current===project)renderRecord();try{await dbPutProject(project);await updateSaved()}catch(e){alert('Gespräch konnte nicht gespeichert werden. Bitte erneut speichern.')}setTalkBusy(false)}}
+async function talk({openAnswers=[],message=null,reopenQuestion=null}={}){if(current.ensemble)return ensembleTalk({openAnswers,message});if(cHas(current))return cTalk({openAnswers,message,reopenQuestion});if(busy||reconstructionBusy)return;const project=current;const t=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];if(!t&&!pics.length&&!openAnswers.length)return alert('Bitte Text, Foto oder Antwort ergänzen.');const photoIds=pics.map(p=>p.id);if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];renderAllPhotos()}captureOpenAnswerDrafts(project);project.projectDirty=true;const answerText=openAnswers.map(x=>x.question+'\nDeine Antwort: '+x.answer).join('\n\n');const userText=[t,answerText].filter(Boolean).join('\n\n')||(pics.length?'Foto als Antwort hinzugefügt.':'Antworten zu offenen Punkten.');project.chat.push({role:'user',text:userText,photoIds});const drawingChange=wdApplyTalkDrawing(project,userText);if(message===null)$('#chatInput').value='';autoGrowChatInput();setTalkBusy(true);renderTalk();setTalkBusy(true);try{const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({images:project.photos.map(p=>p.dataUrl),knowledge:wdKnowledge(project),analysis:project.analysis||{},chat:project.chat,openAnswers,reopenQuestion,profile:projectProfile(project),sketches:sketchContext(),purchasedParts:project.purchasedParts||[]})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.analysis?.stateVersion!==2||d.analysis?.deferralVersion!==1)throw Error('Entwickler-Server benötigt dev17; bisherige Projektdaten bleiben erhalten.');project.stateHistory=[...(project.stateHistory||[]),{analysis:project.analysis,at:new Date().toISOString()}].slice(-10);project.analysis=d.analysis;project.openAnswerDrafts=(project.openAnswerDrafts||[]).filter(draft=>!openAnswers.some(sent=>sent.question===draft.question&&sent.answer===draft.answer.trim()));if(Array.isArray(d.purchased_parts_updates))mergePurchasedParts(d.purchased_parts_updates,project);project.chat.push({role:'assistant',text:d.reply||'Projektstand aktualisiert.',calculation:d.calculation||null});if(project.reconstruction?.decision_support)project.reconstruction.decision_support=[];project.projectDirty=true;if(current===project)switchTab('talkPane')}catch(e){alert('Werkstatt-Talk fehlgeschlagen: '+e.message)}finally{wdFinalizeTalkDrawing(project,drawingChange);if(current===project)renderRecord();try{await dbPutProject(project);await updateSaved()}catch(e){alert('Gespräch konnte nicht gespeichert werden. Bitte erneut speichern.')}setTalkBusy(false)}}
 document.addEventListener('click',e=>{const button=e.target.closest?.('.deferOpen');if(!button||busy||reconstructionBusy)return;const question=current.analysis?.unknown?.[Number(button.dataset.open)];if(question)talk({openAnswers:[{question,answer:'Wird später geklärt.'}],message:''})});
 document.addEventListener('click',e=>{const button=e.target.closest?.('.reopenDeferred');if(!button||busy||reconstructionBusy)return;const item=deferredItems(current.analysis?.deferred)[Number(button.dataset.deferred)];if(item)talk({message:'Ich möchte diesen vorgemerkten Punkt erneut besprechen: '+item.question,reopenQuestion:item.question})});
 $('#sendChat').onclick=()=>talk();document.addEventListener('click',e=>{if(e.target?.id==='acceptOpenAnswers'){const u=(current.analysis?.unknown||[]).slice(0,3);const answers=$$('.openAnswer').map(el=>({question:u[+el.dataset.i],answer:el.value.trim()})).filter(x=>x.answer);talk({openAnswers:answers})}});
