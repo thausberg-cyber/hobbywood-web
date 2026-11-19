@@ -19,6 +19,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(247,246,241,.97);backdro
 .brand{white-space:nowrap;font-size:clamp(20px,6vw,30px);font-weight:800;letter-spacing:.015em;line-height:1.05}.claim{font-size:12px;color:var(--muted);margin-top:3px}.by{opacity:.72}
 main{width:100%;max-width:1180px;min-width:0;margin:0 auto;padding:24px 16px calc(90px + env(safe-area-inset-bottom))}.screen{display:none}.screen.active{display:block}
 h1{font-size:clamp(30px,5vw,48px);line-height:1.02;margin:14px 0 10px;letter-spacing:-.03em}h2{font-size:25px;margin:20px 0 10px}h3{font-size:17px;margin:17px 0 8px}p{line-height:1.48;color:#3e4740}.lead{font-size:18px;max-width:760px}.eyebrow{text-transform:uppercase;letter-spacing:.11em;color:var(--muted);font-size:11px;font-weight:800}
+.grid2{display:grid;grid-template-columns:1fr;gap:12px;margin:22px 0}@media(min-width:760px){.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .grid3{display:grid;grid-template-columns:1fr;gap:12px;margin:22px 0}.choice{min-width:0;overflow-wrap:break-word;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;text-align:left;cursor:pointer;box-shadow:var(--shadow);min-height:160px}.choice strong{font-size:20px;display:block;margin-bottom:8px}.choice p{margin:0}.choice:hover{border-color:#aeb9b1}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:var(--shadow)}
 button,.button{appearance:none;border:0;border-radius:13px;padding:13px 15px;font-size:15px;font-weight:760;display:block;width:100%;margin:10px 0;text-align:center;text-decoration:none;cursor:pointer}.primary{background:var(--accent);color:#fff}.secondary{background:var(--accent2);color:var(--ink)}.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}.small{width:auto;display:inline-block;padding:9px 12px;font-size:13px;margin:4px 4px 4px 0}
@@ -50,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev57</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev58</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -59,10 +60,10 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
   <p class="lead">Starte mit einem vorhandenen Objekt, entwickle eine eigene Idee oder lass dir passende Projekte vorschlagen.</p>
   <div class="grid3">
     <button class="choice" id="startCopy"><strong>Objekt nachbauen</strong><p>Fotos zeigen, Konstruktion verstehen, offene Details gemeinsam klären.</p></button>
-    <button class="choice" id="startDevelop"><strong>Eigenes Projekt entwickeln</strong><p>Mit einer groben Vorstellung beginnen und sie im Werkstatt-Talk ausarbeiten.</p></button>
+    <button class="choice" id="startDevelop"><strong>Eigenes Projekt entwickeln</strong><p>Mit einer Grundkonstruktion oder einer eigenen Idee beginnen und im Werkstatt-Talk ausarbeiten.</p></button>
     <button class="choice" id="startIdeas"><strong>Idee finden</strong><p>Noch kein Projekt? Anlass, Person und Rahmen nennen – die App schlägt passende Ideen vor.</p></button>
   </div>
-  <section class="card"><h2>Mit einer Grundkonstruktion beginnen</h2><p>Brettfläche festlegen und im Werkstatt-Talk ausarbeiten. Der gemeinsame Brettbaukasten verbindet Maße, Bearbeitungen und Ausgaben. Rahmen erhalten einen eigenen Baukasten mit auswählbaren Eckverbindungen. Korpuskonstruktionen besitzen einen eigenen Baukasten für Ecken und Innenanschlüsse.</p><button class="primary" data-c-new>Brettkonstruktion</button><button class="ghost" data-frame-new>Rahmenkonstruktion</button><button class="ghost" data-cabinet-new>Korpuskonstruktion</button></section><section class="startProjectsSection" aria-labelledby="recentProjectsTitle"><div style="display:flex;justify-content:space-between;gap:12px;align-items:end;flex-wrap:wrap"><div><div class="eyebrow">Direkt weiterarbeiten</div><h2 id="recentProjectsTitle" style="margin-bottom:4px">Meine letzten Projekte</h2><p id="savedCount" class="hint" style="margin-top:0">Noch keine Projekte gespeichert.</p></div><button class="ghost small" id="showAllProjects">Alle Projekte anzeigen</button></div><div id="startProjectList"></div></section>
+  <section class="startProjectsSection" aria-labelledby="recentProjectsTitle"><div style="display:flex;justify-content:space-between;gap:12px;align-items:end;flex-wrap:wrap"><div><div class="eyebrow">Direkt weiterarbeiten</div><h2 id="recentProjectsTitle" style="margin-bottom:4px">Meine letzten Projekte</h2><p id="savedCount" class="hint" style="margin-top:0">Noch keine Projekte gespeichert.</p></div><button class="ghost small" id="showAllProjects">Alle Projekte anzeigen</button></div><div id="startProjectList"></div></section>
 </section>
 
 <section id="photos" class="screen">
@@ -74,8 +75,21 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
   <button class="primary" id="analyzeBtn">Analysieren & fachsimpeln</button>
 </section>
 
-<section id="develop" class="screen">
+<section id="developStart" class="screen">
   <div class="eyebrow">Eigenes Projekt entwickeln</div><h1>Womit möchtest du beginnen?</h1>
+  <div class="grid2">
+    <button class="choice" id="developConstruction"><strong>Mit einer Grundkonstruktion beginnen</strong><p>Brett-, Rahmen- oder Korpuskonstruktion auswählen und an deine Vorstellungen anpassen.</p></button>
+    <button class="choice" id="developOwnIdea"><strong>Mit einer eigenen Idee beginnen</strong><p>Dein Vorhaben beschreiben, bei Bedarf Fotos oder Skizzen ergänzen und im Werkstatt-Talk ausarbeiten.</p></button>
+  </div>
+</section>
+
+<section id="developConstructionStart" class="screen">
+  <div class="eyebrow">Eigenes Projekt entwickeln</div><h1>Mit einer Grundkonstruktion beginnen</h1>
+  <section class="card"><h2>Wähle deine Grundkonstruktion</h2><p>Brettfläche festlegen und im Werkstatt-Talk ausarbeiten. Der gemeinsame Brettbaukasten verbindet Maße, Bearbeitungen und Ausgaben. Rahmen erhalten einen eigenen Baukasten mit auswählbaren Eckverbindungen. Korpuskonstruktionen besitzen einen eigenen Baukasten für Ecken und Innenanschlüsse.</p><button class="primary" data-c-new>Brettkonstruktion</button><button class="ghost" data-frame-new>Rahmenkonstruktion</button><button class="ghost" data-cabinet-new>Korpuskonstruktion</button></section>
+</section>
+
+<section id="develop" class="screen">
+  <div class="eyebrow">Eigenes Projekt entwickeln</div><h1>Mit einer eigenen Idee beginnen</h1>
   <label class="field">Beschreibe deine Vorstellung</label><textarea id="developText" placeholder="z. B. Ich möchte einen runden Reagenzglas-Halter aus Multiplex bauen …"></textarea>
   <p class="hint">Fotos oder Skizzen sind optional und können auch später im Talk ergänzt werden.</p>
   <div id="developPhotos" class="photos"></div><label class="button secondary" for="developInput">Projektfoto hinzufügen</label><input class="hidden" id="developInput" type="file" accept="image/*" multiple><label class="button ghost" for="sketchInputDevelop">Skizze ergänzen</label><input class="hidden" id="sketchInputDevelop" type="file" accept="image/*">
@@ -176,7 +190,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev57 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev58 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -208,7 +222,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev57';
+const APP_VERSION='0.9.21-dev58';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -664,7 +678,9 @@ function profilePayload(){return profile}
 function projectProfile(project=current){return effectiveProjectProfile(project,profilePayload())}
 
 $('#startCopy').onclick=()=>{resetProject('copy');$('#knowledge').value='';renderAllPhotos();show('photos')};
-$('#startDevelop').onclick=()=>{resetProject('develop');$('#developText').value='';renderAllPhotos();show('develop')};$('#startIdeas').onclick=()=>show('ideas');
+$('#startDevelop').onclick=()=>show('developStart');
+$('#developConstruction').onclick=()=>show('developConstructionStart');
+$('#developOwnIdea').onclick=()=>{resetProject('develop');$('#developText').value='';renderAllPhotos();show('develop')};$('#startIdeas').onclick=()=>show('ideas');
 async function goStart(){
   // Projektzustand bleibt erhalten; gespeicherte Projekte bleiben ohnehin in IndexedDB.
   await renderStartProjects();
