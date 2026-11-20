@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev62</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev63</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -202,7 +202,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev62 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev63 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev62';
+const APP_VERSION='0.9.21-dev63';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1413,6 +1413,53 @@ const FRAME_REFERENCE_IMAGES={"lap":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0ia
 
 // Rules agreed with Thomas Hausberg, 15 November 2026. Dimensions in mm.
 // Own numeric-model illustrations are supplied in Referenzen; DIN verification remains open.
+// Local, deterministic geometry for a rear rebate and a stepped removable bead.
+const FRAME_FILLING_FIELDS=[['frontWeb','Vorderer Holzsteg'],['frontPadding','Einlage vor dem Spiegel'],['mirrorThickness','Spiegeldicke'],['backPadding','Einlage hinter dem Spiegel'],['rebateWidth','Falzbreite ab lichter Rahmenkante'],['sideClearance','Randspiel je Spiegelkante'],['beadInnerThickness','Glasleistendicke im inneren Bereich'],['beadWidth','Gesamte Glasleistenbreite'],['beadOuterWidth','Äußerer Schraubflansch: Breite']];
+const fnum=v=>typeof v==='number'?v:typeof v==='string'&&v.trim()?Number(v.replace(',','.')):NaN;
+function frameFillingSample(){return {kind:'mirror-stepped-v1',frontWeb:5,frontPadding:1,mirrorThickness:5,backPadding:1,rebateWidth:15,sideClearance:2,beadInnerThickness:14,beadWidth:24,beadOuterWidth:12};}
+function frameFillingSignature(input){if(!input)return null;return JSON.stringify([input.kind,...FRAME_FILLING_FIELDS.map(([k])=>Number.isFinite(fnum(input[k]))?fnum(input[k]):String(input[k]??''))]);}
+function frameFillingModel(frame){
+ const raw=frame?.filling,errors=[],p={kind:raw?.kind};
+ if(!raw)return {ok:true,enabled:false,errors};
+ if(raw.kind!=='mirror-stepped-v1')errors.push('Unbekannte Füllungskonstruktion.');
+ const allowed=new Set(['kind',...FRAME_FILLING_FIELDS.map(([k])=>k)]);
+ if(Object.keys(raw).some(k=>!allowed.has(k)))errors.push('Unbekannte Füllungsangabe.');
+ for(const [k,label]of FRAME_FILLING_FIELDS){p[k]=fnum(raw[k]);if(!Number.isFinite(p[k])||p[k]<0||p[k]>1000||!['frontPadding','backPadding','sideClearance'].includes(k)&&p[k]===0)errors.push(label+': gültiges Maß eingeben.');}
+ const D=fnum(frame.thickness),V=fnum(frame.verticalWidth),B=fnum(frame.horizontalWidth),W=fnum(frame.width),H=fnum(frame.height);
+ if([D,V,B,W,H].some(v=>!Number.isFinite(v)||v<=0))errors.push('Zuerst die fünf Rahmengrundmaße eingeben.');
+ if(errors.length)return {ok:false,enabled:true,errors,p};
+ const rebateDepth=D-p.frontWeb,mirrorFront=p.frontWeb+p.frontPadding,mirrorBack=mirrorFront+p.mirrorThickness,beadFront=mirrorBack+p.backPadding,beadBack=beadFront+p.beadInnerThickness,rearProjection=beadBack-D;
+ const beadStart=p.rebateWidth+p.beadOuterWidth-p.beadWidth,mirrorEdge=p.rebateWidth-p.sideClearance,overlap=mirrorEdge-beadStart;
+ const openingWidth=W-2*V,openingHeight=H-2*B,mirrorWidth=openingWidth+2*mirrorEdge,mirrorHeight=openingHeight+2*mirrorEdge;
+ if(rebateDepth<=0)errors.push('Der Holzsteg muss kleiner als die Rahmendicke sein.');
+ if(beadFront>=D)errors.push('Für diese abgesetzte Leiste muss der Spiegel mit Einlagen innerhalb des Rahmenfalzes liegen.');
+ if(rearProjection<=0)errors.push('Für den äußeren Schraubflansch muss ein positiver hinterer Überstand bleiben.');
+ if(p.rebateWidth>=Math.min(V,B)||p.rebateWidth+p.beadOuterWidth>=Math.min(V,B))errors.push('Falz oder äußerer Schraubflansch überschreitet die Rahmenholzbreite.');
+ if(mirrorEdge<=0||overlap<=0)errors.push('Spiegelauflage und Glasleistenüberdeckung müssen positiv sein.');
+ if(beadStart<0)errors.push('Die Glasleiste würde in die lichte Rahmenöffnung ragen.');
+ if(overlap>mirrorEdge)errors.push('Die Glasleistenüberdeckung überschreitet den Spiegeleinstand.');
+ if(openingWidth<=0||openingHeight<=0||mirrorWidth<=0||mirrorHeight<=0)errors.push('Die Füllung benötigt eine positive lichte Rahmenöffnung.');
+ return {ok:!errors.length,enabled:true,errors,p,thickness:D,railWidth:V,rebateDepth,mirrorFront,mirrorBack,beadFront,beadBack,rearProjection,beadStart,mirrorEdge,overlap,openingWidth,openingHeight,mirrorWidth,mirrorHeight};
+}
+function frameFillingSvg(m){
+ if(!m?.ok||!m.enabled)return '';
+ const n=v=>Number(v.toFixed(3)),e=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),p=m.p;
+ const scale=Math.min(3,270/(m.railWidth+15),100/m.beadBack),X=v=>n(65+v*scale),Y=z=>n(65+z*scale);
+ const path=(points,fill)=>'<path d="'+points.map(([x,z],i)=>(i?'L':'M')+X(x)+','+Y(z)).join(' ')+' Z" fill="'+fill+'" stroke="#203c34" stroke-width="1"/>';
+ let svg=path([[0,0],[m.railWidth,0],[m.railWidth,m.thickness],[p.rebateWidth,m.thickness],[p.rebateWidth,p.frontWeb],[0,p.frontWeb]],'#e7d3af');
+ svg+=path([[-12,m.mirrorFront],[m.mirrorEdge,m.mirrorFront],[m.mirrorEdge,m.mirrorBack],[-12,m.mirrorBack]],'#c4e2ef');
+ svg+=path([[0,p.frontWeb],[m.mirrorEdge,p.frontWeb],[m.mirrorEdge,m.mirrorFront],[0,m.mirrorFront]],'#77887f');
+ svg+=path([[m.beadStart,m.mirrorBack],[m.mirrorEdge,m.mirrorBack],[m.mirrorEdge,m.beadFront],[m.beadStart,m.beadFront]],'#77887f');
+ svg+=path([[m.beadStart,m.beadFront],[p.rebateWidth,m.beadFront],[p.rebateWidth,m.thickness],[p.rebateWidth+p.beadOuterWidth,m.thickness],[p.rebateWidth+p.beadOuterWidth,m.beadBack],[m.beadStart,m.beadBack]],'#b7cdb6');
+ const text=(x,y,s)=>'<text x="'+x+'" y="'+y+'">'+e(s)+'</text>';
+ svg+=text(25,25,'Füllungsquerschnitt · mm · Vorderseite oben');
+ const rows=['Rahmendicke: '+n(m.thickness),'Falz von hinten: '+n(m.rebateDepth)+' tief / '+n(p.rebateWidth)+' breit','Spiegelrücksprung: '+n(m.mirrorFront),'Randspiel: '+n(p.sideClearance),'Spiegelüberdeckung: '+n(m.overlap),'Hinterer Überstand: '+n(m.rearProjection),'Spiegelmaß rechnerisch: '+n(m.mirrorWidth)+' × '+n(m.mirrorHeight)];
+ rows.forEach((r,i)=>svg+=text(355,60+i*22,r));
+ svg+=text(25,220,'z = 0 vorn; Rahmenrückseite z = '+n(m.thickness)+'; Leistenrückseite z = '+n(m.beadBack));
+ svg+=text(25,243,'Planungsansicht · Verklotzung und Befestigung noch offen · kein Bestellmaß');
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730 270" role="img" aria-label="Füllungsquerschnitt aus den Eingaben" style="width:100%;height:auto;background:white"><style>text{font:12px Arial;fill:#203c34}</style>'+svg+'</svg>';
+}
+
 const FRAME_KIND='frame-construction-v1';
 const FRAME_JOINTS={
  lap:{number:'1',name:'Halbseitige Überplattung',division:2},
@@ -1443,7 +1490,7 @@ function framePlacementMode(input,type='dowel'){
  if(input?.[key])return input[key];
  return rows===1&&(!Number.isFinite(first)||Math.abs(first-15)<1e-8||Math.abs(first-fn(input?.thickness)/2)<1e-8)?'centered':'manual';
 }
-function frameSignature(input){const p=input||{};return JSON.stringify([FRAME_KIND,...FRAME_TEXT_FIELDS.map(k=>p[k]??''),...FCON_FIELDS.map(([k])=>Number.isFinite(fn(p[k]))?fn(p[k]):String(p[k]??''))]);}
+function frameSignature(input){const p=input||{};return JSON.stringify([FRAME_KIND,...FRAME_TEXT_FIELDS.map(k=>p[k]??''),...FCON_FIELDS.map(([k])=>Number.isFinite(fn(p[k]))?fn(p[k]):String(p[k]??'')),frameFillingSignature(p.filling)]);}
 // Sheet layout changes position and scale only; joint and section geometry stays unchanged.
 function frameSheetRows(p,def,d){
  const f=ff,W=p.width,H=p.height,V=p.verticalWidth,B=p.horizontalWidth,D=p.thickness;
@@ -1489,6 +1536,7 @@ function buildFrameConstruction(input){
  for(const k of FRAME_TEXT_FIELDS)p[k]=String(input?.[k]??'');
  for(const[k]of FCON_FIELDS)p[k]=input?.[k]===undefined?'':input[k];
  p.biscuitSize=String(input?.biscuitSize??'');
+ if(input?.filling)p.filling=JSON.parse(JSON.stringify(input.filling));
  p.connectorPlacement=framePlacementMode(input);p.biscuitPlacement=framePlacementMode(input,'biscuit');
  for(const k of ['connectorPlacement','biscuitPlacement'])if(!['centered','manual'].includes(p[k]))errors.push('Unbekannte Lage der Verbinder.');
  const def=FRAME_JOINTS[p.joint];
@@ -1508,6 +1556,12 @@ function buildFrameConstruction(input){
  const d={division:def?.division||null,layer:def?.division?D/def.division:null,openingWidth:W-2*V,openingHeight:H-2*B,receivingWidth:receiving,joiningWidth:joining};
  if(def?.groove){num('grooveWidth');num('grooveDepth');num('grooveOffset',{zero:true});if(p.grooveOffset+p.grooveWidth>=D||p.grooveOffset<=0)errors.push('Die Nut muss zwischen zwei verbleibenden Rahmenflächen liegen.');if(p.grooveDepth>=Math.min(V,B))errors.push('Die Nuttiefe lässt keine äußere Rahmenkante übrig.');d.profile={type:'groove',width:p.grooveWidth,depth:p.grooveDepth,offset:p.grooveOffset};}
  if(def?.rebate)d.profile={type:'rebate',width:D*def.rebate,depth:D*2/3,offset:0};
+ if(p.filling){
+  const filling=frameFillingModel(p);d.filling=filling;
+  errors.push(...filling.errors);
+  if(!['biscuit','loose_tenon','dowel_mitre','angle_dowel'].includes(p.joint))errors.push('Der freie Spiegelfalz ist bisher nur mit vollständigen Gehrungsecken verbunden.');
+  if(filling.ok){p.filling=filling.p;p.profileFace='back';d.profile={type:'rebate',width:filling.rebateDepth,depth:p.filling.rebateWidth,offset:0};pending.push('Verklotzung sowie Befestigung, Beschläge und mögliche Überschneidungen von Falz und Eckverbindern prüfen.');}
+ }
  if(d.profile&&d.profile.depth>=Math.min(V,B))errors.push('Falztiefe muss kleiner als beide Rahmenholzbreiten sein.');
  if(def?.loose){num('looseDepth');d.looseSide=p.looseDepth*Math.SQRT2;if(d.looseSide>=Math.min(V,B))errors.push('Dreieckiger falscher Zapfen: Einstecktiefe ist für diese Rahmenbreite zu groß.');parts.push({id:'loose',name:'Falscher Zapfen · dreieckig',quantity:4,length:d.looseSide,width:d.looseSide,thickness:D/3,material:p.material,note:'Rechtwinklig-gleichschenkliges Dreieck; Rohquadrat. Hypotenuse auf Gehrung, Fasern quer zur Fuge. Einstecktiefe '+ff(p.looseDepth)+' mm je Teil.'});}
  if(['dowel','angle'].includes(def?.connector)){
@@ -1557,6 +1611,7 @@ function buildFrameConstruction(input){
  const layout=frameDrawingLayout(p,def,d),scale=layout?.scale;
  if(!layout)errors.push('Gesamtansicht passt mit diesem Maßstab und den Schnittdetails nicht auf A4.');
  const notes=frameRuleNotes(p,def,d);
+ if(d.filling?.ok){const f=d.filling;notes.push('Spiegelfalz von hinten '+ff(f.rebateDepth)+' mm tief × '+ff(f.p.rebateWidth)+' mm breit. Spiegelrücksprung '+ff(f.mirrorFront)+' mm; abgesetzte Glasleiste mit '+ff(f.rearProjection)+' mm hinterem Überstand. Rechnerisches Spiegelmaß '+ff(f.mirrorWidth)+' × '+ff(f.mirrorHeight)+' mm; kein Bestellmaß. Verklotzung und Befestigung offen.');}
  return {kind:FRAME_KIND,p,def,d,scale,layout,parts,purchased,notes,errors:[...new Set(errors)],pending:[...new Set(pending)],warnings,ok:!errors.length,confirmable:!errors.length&&!pending.length};
 }
 function frameRuleNotes(p,def=FRAME_JOINTS[p.joint],d={}){
@@ -4820,7 +4875,7 @@ function frameRender(p){
  p={...p,connectorPlacement:framePlacementMode(p),biscuitPlacement:framePlacementMode(p,'biscuit')};
  const field=(k,label,options=null)=>'<label class="wdField"><span>'+esc(label)+'</span>'+(options?'<select data-frame="'+k+'">'+Object.entries(options).map(([v,l])=>'<option value="'+v+'" '+(String(p[k])===v?'selected':'')+'>'+esc(l)+'</option>').join('')+'</select>':'<input data-frame="'+k+'" value="'+esc(p[k]??'')+'" '+(k==='material'?'':'inputmode="decimal"')+'>')+'</label>';
  const numeric=k=>field(k,FCON_FIELDS.find(f=>f[0]===k)[1]+(['connectorCount','connectorRows','biscuitRows'].includes(k)?' (Stück)':' (mm)'));
- box.innerHTML='<h3>Rahmenkonstruktion · Eckverbindungen</h3><p>Rechteckiger Rahmen, paarweise gleiche Hölzer und gemeinsame Dicke. Maße bleiben frei eingebbar; die gewählte Verbindung legt die Proportionen fest.</p><div class="wdFields">'+field('joint','Rahmeneckverbindung',{'':'Bitte wählen',...Object.fromEntries(Object.entries(FRAME_JOINTS).map(([id,d])=>[id,'Nr. '+d.number+' · '+d.name]))})+field('material','Holzart / Material')+['width','height','verticalWidth','horizontalWidth','thickness'].map(numeric).join('')+(frameNeedsThrough(p.joint)?field('through','Durchgehende / geschlitzte Rahmenhölzer',{'':'Bitte wählen',vertical:'Aufrechte Rahmenhölzer',horizontal:'Waagerechte Rahmenhölzer'}):'')+(p.joint==='lap_mitre'?field('mitreFace','Gehrungsseite',{front:'Vorderseite',back:'Rückseite'}):'')+'</div>'+
+ box.innerHTML='<h3>Rahmenkonstruktion · Eckverbindungen</h3><p>Rechteckiger Rahmen, paarweise gleiche Hölzer und gemeinsame Dicke. Maße bleiben frei eingebbar; die gewählte Verbindung legt die Proportionen fest.</p><div class="wdFields">'+field('joint','Rahmeneckverbindung',Object.fromEntries(Object.entries(FRAME_JOINTS).map(([id,d])=>[id,'Nr. '+d.number+' · '+d.name])))+field('material','Holzart / Material')+['width','height','verticalWidth','horizontalWidth','thickness'].map(numeric).join('')+(frameNeedsThrough(p.joint)?field('through','Durchgehende / geschlitzte Rahmenhölzer',{vertical:'Aufrechte Rahmenhölzer',horizontal:'Waagerechte Rahmenhölzer'}):'')+(p.joint==='lap_mitre'?field('mitreFace','Gehrungsseite',{front:'Vorderseite',back:'Rückseite'}):'')+'</div>'+
  (def?.groove?'<h4>Innennut und Nutzapfen</h4><div class="wdFields">'+['grooveWidth','grooveDepth','grooveOffset'].map(numeric).join('')+field('profileFace','Nutabstand ab',{front:'Vorderfläche',back:'Rückfläche'})+'</div>':'')+
  (def?.rebate?'<h4>Falz · feste Proportionen</h4><p>a = 2D/3; b = '+(def.rebate===1/3?'D/3':'2D/3')+'.</p><div class="wdFields">'+field('profileFace','Falz offen zur',{front:'Vorderfläche',back:'Rückfläche'})+'</div>':'')+
  (def?.loose?'<h4>Falscher Zapfen</h4><p>Dreieckig, D/3 dick. Einstecktiefe ausdrücklich vorgeben; kein aus der Vorlage geschätztes Maß.</p><div class="wdFields">'+numeric('looseDepth')+'</div>':'')+
@@ -4836,10 +4891,12 @@ function frameRender(p){
  $('#wdConfirmed').onchange=framePreview;$('#wdSave').onclick=frameSave;
  $('#frameTalk').onclick=()=>switchTab('talkPane');
  $('#wdPrint').onclick=framePdf;
+ if(typeof frameFillingMount==='function')frameFillingMount();
  framePreview();
 }
 function framePreview(){
  const m=buildFrameConstruction(wdParams()),saved=current.woodDrawing;
+ if(typeof frameFillingRefresh==='function')frameFillingRefresh();
  if($('#frameConnectorCenter'))$('#frameConnectorCenter').textContent='Automatische Achslage ab Vorderfläche: '+(m.d.rows||[]).map(v=>Number(v.toFixed(2)).toLocaleString('de-DE')+' mm').join(' / ');
  $('#wdConfirmed').disabled=!m.confirmable;if(!m.confirmable)$('#wdConfirmed').checked=false;
  const unsaved=!saved||saved.geometryVersion!==3||frameSignature(wdParams())!==frameSignature(saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed,stale=drawingStatus(current)==='stale';
@@ -4870,6 +4927,28 @@ async function framePdf(){
  finally{if(current===project)framePreview();}
 }
 document.addEventListener('click',e=>{if(e.target.closest?.('[data-frame-new]'))frameStartNew();});
+
+function frameFillingMount(){
+ const checks=$('#wdChecks');if(!checks)return;
+ const section=document.createElement('section');section.id='frameFillingBox';section.className='notice';checks.before(section);
+ frameFillingEditor();
+}
+function frameFillingEditor(){
+ const box=$('#frameFillingBox');if(!box)return;
+ const p=wdParams(),f=p.filling;
+ box.innerHTML='<h4>Füllung und herausnehmbare Glasleiste</h4><p>Rückseitiger Spiegelfalz mit abgesetzter Glasleiste. Rahmenmaße und Querschnitt ergeben gemeinsam die Füllungsmaße.</p>'+(f?'<div class="wdFields">'+FRAME_FILLING_FIELDS.map(([k,label])=>'<label class="wdField"><span>'+esc(label)+' (mm)</span><input data-filling="'+k+'" inputmode="decimal" value="'+esc(f[k]??'')+'"></label>').join('')+'</div><button id="frameFillingRemove" class="ghost">Füllung entfernen</button>':'<button id="frameFillingSample" class="secondary">Musterquerschnitt 01 einsetzen</button>')+'<p class="hint">Das Muster setzt nur den Füllungsquerschnitt ein. Deine Rahmenmaße und Eckverbindung bleiben erhalten. Verklotzung bleibt ein offener Prüfpunkt.</p><div id="frameFillingPreview"></div>';
+ function update(value){current.woodDrawingDraft={...wdParams()};if(value)current.woodDrawingDraft.filling=value;else delete current.woodDrawingDraft.filling;$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';framePersistDraft();framePreview();}
+ box.querySelectorAll('[data-filling]').forEach(el=>el.onchange=()=>update({...wdParams().filling,[el.dataset.filling]:el.value}));
+ if(f)$('#frameFillingRemove').onclick=()=>{update(null);frameFillingEditor();};
+ else $('#frameFillingSample').onclick=()=>{update(frameFillingSample());frameFillingEditor();};
+ frameFillingRefresh();
+}
+function frameFillingRefresh(){
+ const box=$('#frameFillingPreview');if(!box)return;const m=frameFillingModel(wdParams());
+ box.innerHTML=m.enabled?(m.ok?frameFillingSvg(m):m.errors.map(e=>'<p>Bitte korrigieren: '+esc(e)+'</p>').join('')):'';
+}
+
+
 
 // Korpusbaukasten: Eingabemaße sind maßgeblich. Keine Buchabbildungen.
 const CABINET_PANEL_NAMES={none:'ohne',solid:'Konstruktionsboden',rebate:'gefälzt',groove:'genutet'};
