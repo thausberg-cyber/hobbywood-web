@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev61</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev62</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -202,7 +202,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev61 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev62 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev61';
+const APP_VERSION='0.9.21-dev62';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -5581,14 +5581,34 @@ function ensembleAggregate(input,cutlists={},childPurchases={}){
 }
 function ensembleSvg(input){
  const r=ensembleResolve(input),W=input.total.width,H=input.total.height;if(!W||!H)return '<p>Gesamtbreite und Gesamthöhe eingeben.</p>';
- const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const sx=480/W,sy=480/H,s=Math.min(sx,sy),x=70,y=40,bottom=y+H*s;
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const s=Math.min(480/W,480/H),x=70,y=40,bottom=y+H*s,right=x+W*s;
  let body='<rect x="'+x+'" y="'+y+'" width="'+W*s+'" height="'+H*s+'" fill="none" stroke="#a5a5a5" stroke-dasharray="3 3"/>';
- for(const [index,m] of r.modules.entries()){if([m.size.width,m.size.height,m.position.x,m.position.y].some(v=>v===null))continue;const px=x+m.position.x*s,py=bottom-(m.position.y+m.size.height)*s,w=m.size.width*s,h=m.size.height*s,fill=m.family==='frame'?'#dce8ee':m.family==='custom'?'#e5e6e1':'#eee3d0';
-  const shape=m.outline&&!m.outline.some(p=>p.x===null||p.y===null)?'<path d="'+m.outline.map((p,i)=>(i?'L':'M')+(px+p.x*s)+','+(bottom-(m.position.y+p.y)*s)).join(' ')+' Z"': '<rect x="'+px+'" y="'+py+'" width="'+w+'" height="'+h+'"';
-  body+=shape+' fill="'+fill+'" stroke="#333" stroke-width="1.2"/><text x="'+(px+w/2)+'" y="'+(py+Math.min(26,h/2))+'" text-anchor="middle" font-size="12">'+String(index+1)+'</text>';
+ const labels=[];
+ for(const [index,m] of r.modules.entries()){
+  if([m.size.width,m.size.height,m.position.x,m.position.y].some(v=>v===null))continue;
+  const px=x+m.position.x*s,py=bottom-(m.position.y+m.size.height)*s,w=m.size.width*s,h=m.size.height*s,fill=m.family==='frame'?'#dce8ee':m.family==='custom'?'#e5e6e1':'#eee3d0';
+  const contour=m.outline&&!m.outline.some(p=>p.x===null||p.y===null);
+  const shape=contour?'<path d="'+m.outline.map((p,i)=>(i?'L':'M')+(px+p.x*s)+','+(bottom-(m.position.y+p.y)*s)).join(' ')+' Z"':'<rect x="'+px+'" y="'+py+'" width="'+w+'" height="'+h+'"';
+  body+='<g data-ensemble-module="'+esc(m.id)+'"><title>'+esc(m.name)+'</title>'+shape+' fill="'+fill+'" stroke="#333" stroke-width="1.2"/>';
+  // Show the known frame opening; missing profiles are never guessed.
+  const vw=m.settings?.verticalWidth,hw=m.settings?.horizontalWidth;
+  if(m.family==='frame'&&!contour&&Number.isFinite(vw)&&Number.isFinite(hw)&&vw>0&&hw>0&&2*vw<m.size.width&&2*hw<m.size.height){
+   body+='<rect data-frame-opening="'+esc(m.id)+'" x="'+(px+vw*s)+'" y="'+(py+hw*s)+'" width="'+(w-2*vw*s)+'" height="'+(h-2*hw*s)+'" fill="#f5f9fa" stroke="#607780" stroke-width="0.8"/>';
+   if(['biscuit','loose_tenon','dowel_mitre','angle_dowel'].includes(m.settings.joint)){
+    for(const [cx,cy,ix,iy]of [[px,py,px+vw*s,py+hw*s],[px+w,py,px+w-vw*s,py+hw*s],[px,py+h,px+vw*s,py+h-hw*s],[px+w,py+h,px+w-vw*s,py+h-hw*s]])body+='<path d="M'+cx+','+cy+' L'+ix+','+iy+'" stroke="#607780" stroke-width="0.6"/>';
+   }
+  }
+  body+='</g>';
+  labels.push({id:m.id,n:index+1,ax:px+w,ay:py+h/2});
  }
- body+='<path d="M'+x+','+(bottom+24)+' H'+(x+W*s)+' M'+(x-22)+','+y+' V'+bottom+'" stroke="#333" fill="none"/><text x="'+(x+W*s/2)+'" y="'+(bottom+42)+'" text-anchor="middle" font-size="14">'+W+' mm</text><text x="'+(x-30)+'" y="'+(y+H*s/2)+'" text-anchor="middle" transform="rotate(-90 '+(x-30)+' '+(y+H*s/2)+')" font-size="14">'+H+' mm</text>';
- return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+(x+W*s+30)+' '+(bottom+58)+'" role="img" aria-label="Gesamtansicht mit bestätigten Außenmaßen" style="width:100%;height:auto;background:white;color:#222"><g font-family="Arial" fill="#222">'+body+'</g></svg>';
+ // Draw every identifier after all shapes, outside their overlapping footprints.
+ labels.sort((a,b)=>a.ay-b.ay||a.n-b.n);
+ let last=y-22;
+ for(const l of labels){l.ly=Math.max(l.ay,last+22);last=l.ly;}
+ if(labels.length&&last>bottom){let limit=bottom;for(let i=labels.length-1;i>=0;i--){labels[i].ly=Math.min(labels[i].ly,limit);limit=labels[i].ly-22;}}
+ for(const l of labels)body+='<g data-module-label="'+esc(l.id)+'"><path d="M'+l.ax+','+l.ay+' L'+(right+12)+','+l.ly+' H'+(right+25)+'" stroke="#555" stroke-width="0.7" fill="none"/><circle cx="'+(right+35)+'" cy="'+l.ly+'" r="9" fill="white" stroke="#555" stroke-width="0.7"/><text x="'+(right+35)+'" y="'+(l.ly+4)+'" text-anchor="middle" font-size="12">'+l.n+'</text></g>';
+ body+='<path d="M'+x+','+(bottom+24)+' H'+right+' M'+(x-22)+','+y+' V'+bottom+'" stroke="#333" fill="none"/><text x="'+(x+W*s/2)+'" y="'+(bottom+42)+'" text-anchor="middle" font-size="14">'+W+' mm</text><text x="'+(x-30)+'" y="'+(y+H*s/2)+'" text-anchor="middle" transform="rotate(-90 '+(x-30)+' '+(y+H*s/2)+')" font-size="14">'+H+' mm</text>';
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+(right+55)+' '+(bottom+58)+'" role="img" aria-label="Gesamtansicht mit bestätigten Außenmaßen" style="width:100%;max-height:72vh;height:auto;background:white;color:#222"><g font-family="Arial" fill="#222">'+body+'</g></svg>';
 }
 
 // The wardrobe is a reviewed design fixture, not a hard-coded planning workflow.
