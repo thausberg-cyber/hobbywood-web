@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev63</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev64</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -202,7 +202,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev63 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev64 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev63';
+const APP_VERSION='0.9.21-dev64';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1413,6 +1413,146 @@ const FRAME_REFERENCE_IMAGES={"lap":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0ia
 
 // Rules agreed with Thomas Hausberg, 15 November 2026. Dimensions in mm.
 // Own numeric-model illustrations are supplied in Referenzen; DIN verification remains open.
+// Shared data contract. Research yields proposals, never executable geometry code.
+const HARDWARE_PROTOCOL=1;
+const HW_REQUIRED_CHECKS=['material','attachment','load_quantity','motion','mounting_set'];
+const hwCopy=v=>JSON.parse(JSON.stringify(v));
+const hwNumber=v=>typeof v==='number'&&Number.isFinite(v);
+const hwString=(v,max=2000)=>typeof v==='string'&&v.length<=max;
+function hwUrl(value){try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password&&u.hostname.includes('.')?u.href:null;}catch{return null;}}
+function hwFramePart(p){
+ const {width:W,height:H,thickness:D,verticalWidth:V,horizontalWidth:B}=p;
+ if(![W,H,D,V,B].every(v=>hwNumber(v)&&v>0)||W<=2*V||H<=2*B)throw Error('Rahmengrundmaße zuerst vollständig eingeben.');
+ const voids=[{x:V,y:B,width:W-2*V,height:H-2*B,z:0,depth:D}];
+ if(p.filling){const f=p.filling,F=Number(f.rebateWidth),web=Number(f.frontWeb);if(!hwNumber(F)||!hwNumber(web)||F<=0||F>=Math.min(V,B)||web<=0||web>=D)throw Error('Füllungsquerschnitt zuerst prüfen.');voids.push({x:V-F,y:B-F,width:W-2*(V-F),height:H-2*(B-F),z:web,depth:D-web});}
+ return {id:'frame-front',label:'Rahmentür',width:W,height:H,thickness:D,voids,keepouts:[{x:0,y:0,width:V,height:B},{x:W-V,y:0,width:V,height:B},{x:0,y:H-B,width:V,height:B},{x:W-V,y:H-B,width:V,height:B}]};
+}
+function hwContext(project){
+ const p=project.woodDrawingDraft||project.woodDrawing?.params||{};
+ if(p.kind!=='frame-construction-v1')throw Error('Den ersten Beschlagtest bitte in einer Rahmen-Einzelkonstruktion öffnen.');
+ const numeric={...p};for(const k of ['width','height','thickness','verticalWidth','horizontalWidth'])numeric[k]=typeof p[k]==='number'?p[k]:typeof p[k]==='string'&&p[k].trim()?Number(p[k].replace(',','.')):NaN;
+ if(p.filling)numeric.filling=Object.fromEntries(Object.entries(p.filling).map(([k,v])=>[k,k==='kind'?v:typeof v==='number'?v:typeof v==='string'&&v.trim()?Number(v.replace(',','.')):null]));
+ const part=hwFramePart(numeric);
+ return {protocol:1,projectId:String(project.id),revision:project.hardware?.revision||0,title:String(project.title||'Rahmen'),material:String(p.material||''),parts:[part],parameters:{width:part.width,height:part.height,thickness:part.thickness,verticalWidth:numeric.verticalWidth,horizontalWidth:numeric.horizontalWidth,joint:p.joint||'',filling:numeric.filling||null},decisions:String(project.knowledge||'').slice(-16000),purchaseChoices:[...(project.purchasedParts||[]).filter(p=>p.source!=='hardware-research').map(p=>({id:'p:'+p.id,label:String(p.item||''),quantity:String(p.quantity||'')})),...(project.hardwareParentPurchases||[])],existingOperations:project.hardware?.applied?.flatMap(v=>v.operations)||[]};
+}
+function hwGeometryKey(context){return JSON.stringify({parts:context.parts,parameters:context.parameters,material:context.material});}
+function hwContextKey(context){return JSON.stringify(context);}
+function hwValidateContext(c){
+ if(c?.protocol!==1||!hwString(c.projectId,150)||!hwString(c.title,200)||!hwString(c.material,300)||!hwString(c.decisions,16000)||!Number.isSafeInteger(c.revision)||c.revision<0||!Array.isArray(c.parts)||c.parts.length!==1)throw Error('Ungültiger Beschlag-Projektstand.');
+ const allowed=['protocol','projectId','revision','title','material','parts','parameters','decisions','purchaseChoices','existingOperations'];if(Object.keys(c).some(k=>!allowed.includes(k)))throw Error('Unbekannte Projektangabe.');
+ const expected=hwFramePart(c.parameters||{});if(JSON.stringify(expected)!==JSON.stringify(c.parts[0]))throw Error('Bauteilmaße und Rahmenparameter widersprechen sich.');
+ if(!Array.isArray(c.purchaseChoices)||c.purchaseChoices.length>100||c.purchaseChoices.some(p=>!hwString(p.id,150)||!hwString(p.label,500)||!hwString(p.quantity,100)))throw Error('Ungültige Einkaufseinträge.');
+ if(!Array.isArray(c.existingOperations)||c.existingOperations.length>20)throw Error('Zu viele vorhandene Bearbeitungen.');
+ return hwCopy(c);
+}
+const hwRectOverlap=(a,b)=>a.x<b.x+b.width-1e-6&&a.x+a.width>b.x+1e-6&&a.y<b.y+b.height-1e-6&&a.y+a.height>b.y+1e-6;
+function hwFootprint(o){return o.type==='bore'?{x:o.x-o.diameter/2,y:o.y-o.diameter/2,width:o.diameter,height:o.diameter}:{x:o.x,y:o.y,width:o.width,height:o.height};}
+function hwHitsRect(o,r){if(o.type!=='bore')return hwRectOverlap(hwFootprint(o),r);const x=Math.max(r.x,Math.min(o.x,r.x+r.width)),y=Math.max(r.y,Math.min(o.y,r.y+r.height));return (o.x-x)**2+(o.y-y)**2<(o.diameter/2)**2-1e-6;}
+function hwOperationCheck(o,part){
+ const issues=[];if(!o||!['bore','pocket','slot','cutout'].includes(o.type)||!['front','back'].includes(o.face)||o.partId!==part.id)return ['Bearbeitungsart, Fläche oder Bauteil nicht unterstützt.'];
+ const nums=['x','y','depth',...(o.type==='bore'?['diameter']:['width','height'])];
+ if(nums.some(k=>!hwNumber(o[k]))||o.x<0||o.y<0||o.depth<=0||o.depth>part.thickness||o.type==='bore'&&o.diameter<=0||o.type!=='bore'&&(o.width<=0||o.height<=0))return ['Bearbeitungsmaße unvollständig oder außerhalb der Materialdicke.'];
+ if(o.type==='cutout'&&o.depth!==part.thickness)issues.push('Ein Durchbruch muss die volle Bauteildicke durchdringen.');
+ if(o.type==='slot'&&o.shape!=='rectangular')issues.push('Nur ausdrücklich rechteckige Nuten sind bisher unterstützt.');
+ const r=hwFootprint(o);if(r.x<0||r.y<0||r.x+r.width>part.width||r.y+r.height>part.height)issues.push('Bearbeitung überschreitet die Bauteilkante.');
+ const z=o.face==='back'?part.thickness-o.depth:0;
+ for(const v of part.voids||[])if(z<v.z+v.depth-1e-6&&z+o.depth>v.z+1e-6&&hwHitsRect(o,v))issues.push('Bearbeitung überschneidet Rahmenöffnung oder Falz.');
+ for(const area of part.keepouts||[])if(hwHitsRect(o,area))issues.push('Bearbeitung liegt im freizuhaltenden Bereich einer Rahmenecke.');
+ return issues;
+}
+function hwOperationsCheck(ops,context){
+ if(!Array.isArray(ops)||ops.length>20)return ['Ungültige Anzahl von Bearbeitungen.'];
+ const issues=[];const ids=new Set();for(const o of ops){if(!hwString(o.id,80)||!o.id||ids.has(o.id))issues.push('Bearbeitungskennungen müssen eindeutig sein.');ids.add(o.id);const p=context.parts.find(p=>p.id===o.partId);issues.push(...(p?hwOperationCheck(o,p):['Zielbauteil fehlt.']));}
+ for(let i=0;i<ops.length;i++)for(let j=i+1;j<ops.length;j++){const a=ops[i],b=ops[j];if(a.partId!==b.partId)continue;const p=context.parts.find(p=>p.id===a.partId);if(!p)continue;
+  if(!['x','y','depth'].every(k=>hwNumber(a[k])&&hwNumber(b[k])))continue;
+  const az=a.face==='back'?p.thickness-a.depth:0,bz=b.face==='back'?p.thickness-b.depth:0;
+  if(az>=bz+b.depth-1e-6||bz>=az+a.depth-1e-6)continue;
+  const hit=a.type==='bore'&&b.type==='bore'?(a.x-b.x)**2+(a.y-b.y)**2<((a.diameter+b.diameter)/2)**2-1e-6:a.type==='bore'?hwHitsRect(a,hwFootprint(b)):b.type==='bore'?hwHitsRect(b,hwFootprint(a)):hwRectOverlap(hwFootprint(a),hwFootprint(b));
+  if(hit)issues.push('Bearbeitungen '+a.id+' / '+b.id+' überschneiden sich.');
+ }
+ return [...new Set(issues)];
+}
+function hwReview(candidate,context,allowedUrls){
+ const issues=[];const urls=new Set(allowedUrls.map(hwUrl).filter(Boolean));
+ if(!candidate||!hwString(candidate.id,80)||!candidate.id||!hwString(candidate.label,300)||!hwString(candidate.manufacturer,100)||!hwString(candidate.article,100)||!hwString(candidate.reason)||!Number.isSafeInteger(candidate.quantity)||candidate.quantity<1||candidate.quantity>1000)throw Error('Unvollständige Produktangaben.');
+ if(!Array.isArray(candidate.operations)||candidate.operations.length>20)throw Error('Bearbeitungsbild zu groß oder ungültig.');
+ if(!hwUrl(candidate.productUrl)||!urls.has(hwUrl(candidate.productUrl)))issues.push('Produktquelle wurde in dieser Recherche nicht belegt.');
+ const checks=Array.isArray(candidate.checks)?candidate.checks:[];
+ for(const id of HW_REQUIRED_CHECKS){const check=checks.find(v=>v.id===id);if(check?.status!=='pass'||!urls.has(hwUrl(check?.sourceUrl))||!hwString(check?.detail)||!check.detail)issues.push('Noch prüfen: '+({material:'Materialdicke und Türart',attachment:'Anschlag und Auflage',load_quantity:'Türgewicht und Beschlaganzahl',motion:'Öffnung und Kollisionsraum',mounting_set:'Montageplatten und Befestigungsmittel'}[id]));}
+ if(!Array.isArray(candidate.missing)||candidate.missing.length>30||candidate.missing.some(v=>!hwString(v,500)))throw Error('Ungültige offene Angaben.');
+ issues.push(...candidate.missing);
+ if(candidate.replaces!==undefined&&(!Array.isArray(candidate.replaces)||candidate.replaces.length>20||candidate.replaces.some(id=>!context.purchaseChoices.some(p=>p.id===id))))issues.push('Zu ersetzender Einkaufseintrag fehlt im aktuellen Projekt.');
+ if(!candidate.operations?.length)issues.push('Noch kein vollständiges Bearbeitungsbild vorhanden.');
+ const ops=Array.isArray(candidate.operations)?candidate.operations:[];
+ for(const o of ops){
+  const needed=o.type==='bore'?['diameter','depth']:['width','height','depth'];
+  for(const key of needed){const e=(o.evidence||[]).find(e=>e.fields?.includes(key)&&urls.has(hwUrl(e.url))&&hwString(e.quote,500)&&e.quote.trim()&&hwString(e.locator,200)&&e.locator.trim());if(!e)issues.push('Herstellerbeleg für '+o.id+' / '+key+' fehlt.');
+   else{const numbers=(e.quote.match(/\d+(?:[.,]\d+)?/g)||[]).map(v=>Number(v.replace(',','.')));if(!numbers.some(v=>Math.abs(v-o[key])<1e-7))issues.push('Der Maßbeleg enthält den Wert für '+o.id+' / '+key+' nicht.');if(key==='depth'&&/topftiefe|cup depth/i.test(e.quote)&&!/bohr|boring|drill/i.test(e.quote))issues.push('Topftiefe ist kein Beleg für die Bohrtiefe.');}}
+ }
+ issues.push(...hwOperationsCheck(ops,context),...hwOperationsCheck([...context.existingOperations,...ops],context));
+ return {candidate:hwCopy(candidate),issues:[...new Set(issues)],ready:!issues.length};
+}
+function hwProposal(raw,context,sources,now=new Date().toISOString()){
+ hwValidateContext(context);if(!hwString(raw?.reply,3000)||!hwString(raw.followup,500)||!Array.isArray(raw.candidates)||raw.candidates.length>3)throw Error('Ungültige Rechercheantwort.');
+ const clean=sources.filter(s=>hwUrl(s.url)).map(s=>({url:hwUrl(s.url),title:String(s.title||new URL(s.url).hostname).slice(0,300)}));
+ const candidates=raw.candidates.map(c=>hwReview(c,context,clean.map(s=>s.url)));
+ if(new Set(candidates.map(v=>v.candidate.id)).size!==candidates.length)throw Error('Doppelte Produktkennungen.');
+ return {protocol:1,baseKey:hwContextKey(context),geometryKey:hwGeometryKey(context),at:now,reply:raw.reply,followup:raw.followup,sources:clean,candidates};
+}
+function hwApply(project,proposal,index){
+ const context=hwContext(project);if(proposal?.protocol!==1||proposal.baseKey!==hwContextKey(context))throw Error('Projekt inzwischen geändert. Bitte den Beschlagvorschlag erneut prüfen lassen.');
+ const candidate=proposal.candidates[index]?.candidate;if(!candidate)throw Error('Beschlagvorschlag fehlt.');
+ const reviewed=hwReview(candidate,context,proposal.sources.map(s=>s.url));if(!reviewed.ready)throw Error('Übernahme noch nicht möglich: '+reviewed.issues.join(' '));
+ if(project.hardware?.applied?.some(v=>v.geometryKey!==hwGeometryKey(context)))throw Error('Vorhandene Beschlagbearbeitungen wurden durch Maßänderungen ungültig. Zuerst entfernen und neu recherchieren.');
+ const next=hwCopy(project);next.hardware=next.hardware||{revision:0,applied:[]};
+ if(next.hardware.applied.some(v=>v.manufacturer===candidate.manufacturer&&v.article===candidate.article))throw Error('Dieses Produkt ist bereits übernommen.');
+ const replaceIds=(candidate.replaces||[]).filter(id=>id.startsWith('p:')).map(id=>id.slice(2));
+ const item={...hwCopy(candidate),replacedPurchases:(next.purchasedParts||[]).filter(p=>replaceIds.includes(p.id)),geometryKey:proposal.geometryKey,acceptedAt:new Date().toISOString(),sources:proposal.sources};next.hardware.applied.push(item);next.hardware.revision++;
+ const all=next.hardware.applied.flatMap(v=>v.operations);
+ next.woodDrawingDraft={...(next.woodDrawingDraft||next.woodDrawing.params),hardwareMachining:{geometryKey:proposal.geometryKey,operations:all}};
+ if(next.woodDrawing)next.woodDrawing.confirmed=false;
+ next.purchasedParts=[...(next.purchasedParts||[]).filter(p=>!replaceIds.includes(p.id)),{id:'hardware-'+next.hardware.revision,source:'hardware-research',item:candidate.manufacturer+' '+candidate.label+' · '+candidate.article,quantity:candidate.quantity+' Stück',dimensions:candidate.productUrl,use:next.title}];
+ next.hardwareProposal=null;next.projectDirty=true;return next;
+}
+function hwMachiningCheck(p){
+ if(!p.hardwareMachining)return [];
+ try{const c=hwContext({id:'geometry',title:'geometry',woodDrawingDraft:p});if(p.hardwareMachining.geometryKey!==hwGeometryKey(c))return ['Übernommene Beschlagbearbeitungen passen nicht mehr zum Rahmenstand. Erneut prüfen.'];return hwOperationsCheck(p.hardwareMachining.operations,c);}catch(e){return [e.message];}
+}
+
+function hwRemove(project){
+ const next=hwCopy(project),old=next.hardware||{revision:0,applied:[]};
+ next.hardware={revision:old.revision+1,applied:[],history:[...(old.history||[]),{removedAt:new Date().toISOString(),applied:old.applied}]};
+ next.hardwareProposal=null;next.purchasedParts=(next.purchasedParts||[]).filter(p=>p.source!=='hardware-research');for(const a of old.applied)for(const p of a.replacedPurchases||[])if(!next.purchasedParts.some(v=>v.id===p.id))next.purchasedParts.push(p);
+ if(next.woodDrawingDraft)delete next.woodDrawingDraft.hardwareMachining;
+ if(next.woodDrawing){next.woodDrawing.confirmed=false;next.woodDrawingDraft={...next.woodDrawing.params,...next.woodDrawingDraft};delete next.woodDrawingDraft.hardwareMachining;}
+ next.projectDirty=true;return next;
+}
+
+// Coordinates are always the front-view project axes; hidden rear operations are dashed.
+function hwMachiningSvg(part,ops,{title='Beschlagbearbeitungen',status='Bestätigter Beschlagvorschlag',pageLabel='1/1'}={}){
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),n=v=>Number(v.toFixed(3));
+ const s=[1,.5,.2,.1,.05,.02,.01,.005].find(s=>part.width*s<=90&&part.height*s<=215)||.005;
+ const x=24,y=40,w=part.width*s,h=part.height*s;
+ const tx=(x,y,t,size=2.6)=>'<text x="'+n(x)+'" y="'+n(y)+'" font-size="'+size+'">'+esc(t)+'</text>';
+ let a='<rect x="7" y="6" width="196" height="285" fill="white" stroke="#25372e" stroke-width=".2"/>'+tx(12,15,'look, talk ’n build · '+String(title).slice(0,65),3.5)+tx(12,23,String(status).slice(0,100),2.5);
+ a+='<rect x="'+x+'" y="'+y+'" width="'+n(w)+'" height="'+n(h)+'" fill="#eee3d0" stroke="#25372e" stroke-width=".3"/>';
+ for(const v of part.voids||[])a+='<rect x="'+n(x+v.x*s)+'" y="'+n(y+h-(v.y+v.height)*s)+'" width="'+n(v.width*s)+'" height="'+n(v.height*s)+'" fill="'+(v.z===0?'white':'none')+'" stroke="#758078" stroke-width=".15" '+(v.z>0?'stroke-dasharray="1 1"':'')+'/>';
+ ops.forEach((o,i)=>{const xx=x+o.x*s,yy=y+h-o.y*s,attrs=' fill="none" stroke="#155f8e" stroke-width=".22"'+(o.face==='back'?' stroke-dasharray="1 .5"':'');
+  a+=o.type==='bore'?'<circle cx="'+n(xx)+'" cy="'+n(yy)+'" r="'+n(o.diameter*s/2)+'"'+attrs+'/>':'<rect x="'+n(xx)+'" y="'+n(yy-o.height*s)+'" width="'+n(o.width*s)+'" height="'+n(o.height*s)+'"'+attrs+'/>';
+  a+=tx(xx+2,yy-1,String(i+1),2.4);
+ });
+ a+='<path d="M'+(x-7)+','+y+' V'+n(y+h)+' M'+x+','+n(y+h+7)+' H'+n(x+w)+'" fill="none" stroke="#758078" stroke-width=".15"/>';
+ a+=tx(x,n(y+h+12),part.width+' mm')+'<text transform="translate('+(x-10)+' '+n(y+h/2)+') rotate(-90)" font-size="2.6">'+esc(part.height)+' mm</text>';
+ a+=tx(118,40,'Bearbeitungsmaße in mm',3)+tx(118,46,'Nr. · Typ / Seite · x / y · Größe · Tiefe',2.2);
+ ops.forEach((o,i)=>{
+  const size=o.type==='bore'?'Ø '+n(o.diameter):n(o.width)+' × '+n(o.height);const yy=54+i*9;
+  a+=tx(118,yy,(i+1)+'. '+({bore:'Bohrung',pocket:'Tasche',slot:'Nut',cutout:'Durchbruch'}[o.type])+' '+(o.face==='back'?'hinten':'vorn'),2.4);
+  a+=tx(118,yy+3.6,'x '+n(o.x)+' / y '+n(o.y)+' · '+size+' · t '+n(o.depth),2.2);
+ });
+ a+=tx(12,268,'Ursprung: unten links, Blick von vorn. x nach rechts; y nach oben.',2.5)+tx(12,273,'Hintere Bearbeitungen gestrichelt; keine gespiegelte Rückseitenansicht.',2.5)+tx(12,278,'Rechteck: x/y = untere linke Ecke. Bohrung: x/y = Mittelpunkt.',2.4)+tx(12,285,'Maßstab 1:'+n(1/s)+' · Druck 100 % · Materialdicke '+part.thickness+' mm',2.4)+tx(192,285,pageLabel,2.4);
+ return '<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297" role="img" aria-label="Beschlagbearbeitungen mit Bezugskanten"><style>text{font-family:Arial;fill:#25372e}</style>'+a+'</svg>';
+}
+
 // Local, deterministic geometry for a rear rebate and a stepped removable bead.
 const FRAME_FILLING_FIELDS=[['frontWeb','Vorderer Holzsteg'],['frontPadding','Einlage vor dem Spiegel'],['mirrorThickness','Spiegeldicke'],['backPadding','Einlage hinter dem Spiegel'],['rebateWidth','Falzbreite ab lichter Rahmenkante'],['sideClearance','Randspiel je Spiegelkante'],['beadInnerThickness','Glasleistendicke im inneren Bereich'],['beadWidth','Gesamte Glasleistenbreite'],['beadOuterWidth','Äußerer Schraubflansch: Breite']];
 const fnum=v=>typeof v==='number'?v:typeof v==='string'&&v.trim()?Number(v.replace(',','.')):NaN;
@@ -1490,7 +1630,7 @@ function framePlacementMode(input,type='dowel'){
  if(input?.[key])return input[key];
  return rows===1&&(!Number.isFinite(first)||Math.abs(first-15)<1e-8||Math.abs(first-fn(input?.thickness)/2)<1e-8)?'centered':'manual';
 }
-function frameSignature(input){const p=input||{};return JSON.stringify([FRAME_KIND,...FRAME_TEXT_FIELDS.map(k=>p[k]??''),...FCON_FIELDS.map(([k])=>Number.isFinite(fn(p[k]))?fn(p[k]):String(p[k]??'')),frameFillingSignature(p.filling)]);}
+function frameSignature(input){const p=input||{};return JSON.stringify([FRAME_KIND,...FRAME_TEXT_FIELDS.map(k=>p[k]??''),...FCON_FIELDS.map(([k])=>Number.isFinite(fn(p[k]))?fn(p[k]):String(p[k]??'')),frameFillingSignature(p.filling),p.hardwareMachining||null]);}
 // Sheet layout changes position and scale only; joint and section geometry stays unchanged.
 function frameSheetRows(p,def,d){
  const f=ff,W=p.width,H=p.height,V=p.verticalWidth,B=p.horizontalWidth,D=p.thickness;
@@ -1536,6 +1676,7 @@ function buildFrameConstruction(input){
  for(const k of FRAME_TEXT_FIELDS)p[k]=String(input?.[k]??'');
  for(const[k]of FCON_FIELDS)p[k]=input?.[k]===undefined?'':input[k];
  p.biscuitSize=String(input?.biscuitSize??'');
+ if(input?.hardwareMachining)p.hardwareMachining=JSON.parse(JSON.stringify(input.hardwareMachining));
  if(input?.filling)p.filling=JSON.parse(JSON.stringify(input.filling));
  p.connectorPlacement=framePlacementMode(input);p.biscuitPlacement=framePlacementMode(input,'biscuit');
  for(const k of ['connectorPlacement','biscuitPlacement'])if(!['centered','manual'].includes(p[k]))errors.push('Unbekannte Lage der Verbinder.');
@@ -1608,6 +1749,7 @@ function buildFrameConstruction(input){
   const hLength=butt&&throughVertical?W-2*V+2*extension:W;
   parts.unshift({id:'vertical',name:'Aufrechtes Rahmenholz',quantity:2,length:vLength,width:V,thickness:D,material:p.material,note:'Längsfaser; '+(butt&&!throughVertical?'Schultermaß '+ff(H-2*B)+' mm; Nutzapfen im Zuschnitt enthalten.':'Außenlänge einschließlich Eckverbindung.')},{id:'horizontal',name:'Waagerechtes Rahmenholz',quantity:2,length:hLength,width:B,thickness:D,material:p.material,note:'Längsfaser; '+(butt&&throughVertical?'Schultermaß '+ff(W-2*V)+' mm; '+(extension?'Nutzapfen im Zuschnitt enthalten.':'stumpfer Anschluss.'):'Außenlänge einschließlich Eckverbindung.')});
  }
+ errors.push(...hwMachiningCheck(p));
  const layout=frameDrawingLayout(p,def,d),scale=layout?.scale;
  if(!layout)errors.push('Gesamtansicht passt mit diesem Maßstab und den Schnittdetails nicht auf A4.');
  const notes=frameRuleNotes(p,def,d);
@@ -1835,7 +1977,7 @@ function frameConstructionPages(m,{title='Rahmenkonstruktion',status='Konstrukti
 
  const profileNote=d.profile?' · Nut/Falz: Brüstungen fachlich prüfen':'';
  const main=`<svg xmlns="http://www.w3.org/2000/svg" width="${L.width}mm" height="${L.height}mm" viewBox="0 0 ${L.width} ${L.height}" role="img" data-frame-schema="3" data-frame-layout="${L.id}" aria-label="Rahmenzeichnung mit Schnitten im freien Rahmenholz"><defs><pattern id="frame-hatch" width="2" height="2" patternUnits="userSpaceOnUse"><path d="M-1,1 L1,-1 M0,2 L2,0 M1,3 L3,1" class="hatchline"/></pattern>${detailDefs}</defs><style>text{font-family:Arial,sans-serif;fill:#25372e}.small{font-size:2.65px}.tiny{font-size:2.3px}.bold{font-size:3.15px;font-weight:bold}.title{font-size:4px;font-weight:bold}path,rect,circle,ellipse{stroke:#25372e;stroke-width:.22;fill:none}.wood{fill:#f3eee3}.white{fill:white}.hatched{fill:url(#frame-hatch)}.hatchline{stroke:#5e6b63;stroke-width:.12}.dim{stroke:#5e6b63;stroke-width:.13}.connector-note{font-size:2.25px;paint-order:stroke;stroke:white;stroke-width:.7px}.measure{font-size:2.5px;paint-order:stroke;stroke:white;stroke-width:.5px}.plan-edges .hidden{stroke-width:${n(.12/s)};stroke-dasharray:${n(1.3/s)} ${n(1/s)}}.plan-edges .axis{stroke-width:${n(.1/s)};stroke-dasharray:${n(3/s)} ${n(1/s)}}.axis{stroke-dasharray:4 1 .5 1;stroke-width:.12}.visible-edge{stroke-width:.22}.hidden{stroke-dasharray:1.3 1;stroke-width:.12}.section-axis{stroke-dasharray:3 1 .5 1}.cutmark{stroke-width:.35}.arrow{fill:#25372e;stroke:none}.break{stroke-width:.2}.connector{fill:#eef0e9;stroke-width:.18}</style><rect width="${L.width}" height="${L.height}" style="fill:white;stroke:none"/>${rect(7,6,L.width-14,L.height-12)}${text(12,14,'look, talk ’n build · '+title,'title')}${text(12,21,'Nr. '+def.number+' · '+def.name)}${line(7,26,L.width-7,26)}${a}${d.profile?text(L.id==='tall'?110:12,L.footer-2,'Nut/Falz: Brüstungen fachlich prüfen','tiny'):''}${line(7,L.footer,L.width-7,L.footer)}${text(12,L.footer+6,'mm · Druck 100 % · Gesamt 1:'+f(1/s)+' · Schnitte 1:'+f(1/q),'tiny')}${text(L.width-9,L.footer+6,status+' · 1/1','tiny','end')}</svg>`;
- return [main];
+ return p.hardwareMachining?.operations?.length?[main.replace(' · 1/1',' · 1/2'),hwMachiningSvg(hwFramePart(p),p.hardwareMachining.operations,{title,status,pageLabel:'2/2'})]:[main];
 }
 // Geometry in real millimetres, independent of drawing scale or UI.
 const BOARD_SHAPES={rectangle:'Rechteck',square:'Quadrat',triangle:'Dreieck',rhombus:'Raute',trapezoid:'Trapez'};
@@ -4904,6 +5046,7 @@ function framePreview(){
  $('#wdSave').disabled=!m.ok||wdSaving;
  $('#wdPrint').disabled=!m.confirmable||unsaved||stale||!saved?.confirmed||!!current.frameSaveError;
  $('#wdPreview').innerHTML=m.ok?frameConstructionPages(m,{title:wdTitle(),status:'Konstruktionsentwurf · '+(unsaved?'nicht übernommen':saved?.confirmed?'fachlich bestätigt':'noch nicht bestätigt')}).map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Rahmenkonstruktion Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'<p>Die Vorschau erscheint nach vollständigen, widerspruchsfreien Grundmaßen.</p>';
+ if(typeof hwShowIndependentDrawing==='function')hwShowIndependentDrawing(current,m);
 }
 async function frameSave(){
  if(wdSaving)return;const project=current,m=buildFrameConstruction(wdParams(project));if(!m.ok)return;
@@ -4949,6 +5092,76 @@ function frameFillingRefresh(){
 }
 
 
+
+const hwPendingRequests=new Set();
+function hwScheduleMount(){const project=current;queueMicrotask(()=>{if(current===project)hwMount();});}
+function hwMount(){
+ const host=$('#overviewBox');if(!host||current.ensemble)return;
+ let context;try{context=hwContext(current);}catch{return;}
+ let box=$('#hardwareResearchBox');if(!box){box=document.createElement('section');box.id='hardwareResearchBox';box.className='notice';host.appendChild(box);}
+ const proposal=current.hardwareProposal,working=hwPendingRequests.has(current.id),html=esc;
+ const sourceLink=(url,title)=>hwUrl(url)?'<a href="'+html(hwUrl(url))+'" target="_blank" rel="noopener noreferrer">'+html(title)+'</a>':'';
+ let cards='';
+ if(proposal?.protocol===1){const stale=proposal.baseKey!==hwContextKey(context);
+ cards='<p>'+html(proposal.reply)+'</p>'+(proposal.followup?'<p><strong>'+html(proposal.followup)+'</strong></p>':'')+(stale?'<p>Projekt geändert: Bitte erneut recherchieren, bevor du etwas übernimmst.</p>':'')+
+ proposal.candidates.map((entry,index)=>{
+  const c=entry.candidate;const check=hwReview(c,context,proposal.sources.map(s=>s.url));
+  return '<section class="notice"><h4>'+(index===0?'Empfehlung: ':'Alternative: ')+html(c.manufacturer+' '+c.label)+'</h4><p>Artikel '+html(c.article)+' · '+html(c.quantity)+' Stück</p><p>'+html(c.reason)+'</p>'+sourceLink(c.productUrl,'Herstellerangaben öffnen')+
+  '<p>'+html((c.replaces||[]).length?'Ersetzt im Einkauf: '+c.replaces.map(id=>context.purchaseChoices.find(p=>p.id===id)?.label||id).join(', '):'Neuer Einkaufseintrag')+'</p><ul>'+check.issues.map(s=>'<li>'+html(s)+'</li>').join('')+'</ul><details><summary>Prüfung und Maßquellen</summary>'+(c.checks||[]).map(v=>'<p>'+html(({pass:'Begründet',open:'Offen',fail:'Passt nicht'}[v.status]||'Offen')+': '+v.detail)+' '+sourceLink(v.sourceUrl,'Quelle')+'</p>').join('')+(c.operations||[]).map(o=>'<p>'+html(o.id)+': '+(o.evidence||[]).map(e=>sourceLink(e.url,e.locator)+' · '+html(e.quote)).join('<br>')+'</p>').join('')+'</details>'+
+  (check.ready?'<details><summary>Auswirkung auf die Werkzeichnung ansehen</summary>'+hwMachiningSvg(context.parts[0],c.operations,{title:c.label,status:'Vorschau · noch nicht übernommen'})+'</details>':'<p class="hint">Die offenen Angaben werden vor der Zeichnungsübernahme geklärt.</p>')+
+  '<button class="primary" data-hw-accept="'+index+'" '+(!check.ready||stale||working?'disabled':'')+'>Beschlag und Bearbeitungen übernehmen</button></section>';
+ }).join('')+'<details><summary>Recherchequellen</summary>'+proposal.sources.map(s=>'<p>'+sourceLink(s.url,s.title)+'</p>').join('')+'</details>';
+ }
+ const defaultTask=/spiegel|rahmentür/i.test(current.title||'')?'Finde passende Topfbänder für diese aufliegende, links angeschlagene Spiegel-Rahmentür. Berücksichtige das Gesamtprojekt, die Glasleiste und den vorhandenen Falz. Prüfe die vorgesehene Anzahl, Montageplatten, Befestigung und alle Bearbeitungsmaße.':'Finde einen passenden Beschlag für mein Projekt. Aufgabe: ';
+ const applied=current.hardware?.applied||[];
+ box.innerHTML='<h3>Passende Beschläge finden</h3><p>Beschreibe kurz die Aufgabe. Die KI recherchiert konkrete Produkte und Montageunterlagen. Du siehst den Vorschlag vor der Übernahme.</p><label>Deine Beschlagaufgabe<textarea id="hwQuestion" rows="4">'+html(current.hardwareQuestion||defaultTask)+'</textarea></label><button id="hwResearch" class="primary" '+(working?'disabled':'')+'>'+(working?'Herstellerunterlagen werden geprüft …':'Beschläge recherchieren')+'</button><p id="hwStatus" role="status">'+html(current.hardwareStatus||'')+'</p>'+cards+
+ (applied.length?'<h4>Übernommene Beschläge</h4><button id="hwDownloadDrawing" class="secondary">Beschlagblatt als SVG herunterladen</button><button id="hwRemove" class="ghost">Beschlagübernahme zurücknehmen</button>'+applied.map(v=>'<p>'+html(v.manufacturer+' '+v.label+' · '+v.article)+' '+(v.geometryKey!==hwGeometryKey(context)?'<strong>Rahmenmaße geändert: erneut prüfen.</strong>':'')+'</p>').join(''):'');
+ $('#hwQuestion').oninput=e=>{current.hardwareQuestion=e.target.value;};
+ $('#hwResearch').onclick=hwRunResearch;
+ if(applied.length)$('#hwDownloadDrawing').onclick=()=>hwDownloadAccepted(current);
+ if(applied.length)$('#hwRemove').onclick=async()=>{try{const project=current,next=hwRemove(project);await dbPutProject(next);if(current===project){current=next;renderRecord();}}catch(e){alert(e.message);}};
+ box.querySelectorAll('[data-hw-accept]').forEach(b=>b.onclick=()=>hwAccept(Number(b.dataset.hwAccept)));
+}
+async function hwRunResearch(){
+ const project=current;if(hwPendingRequests.has(project.id))return;
+ const question=$('#hwQuestion').value.trim();let context;try{context=hwContext(project);}catch(e){return alert(e.message);}
+ if(!question)return alert('Bitte die Beschlagaufgabe beschreiben.');
+ project.hardwareQuestion=question;project.hardwareStatus='Recherche läuft. Das Projekt wird erst nach deiner Bestätigung geändert.';hwPendingRequests.add(project.id);hwMount();
+ try{
+  const health=await secureFetch(API+'/health');if(!health.ok||(await health.json()).hardwareProtocol!==1)throw Error('Für die Beschlagrecherche bitte zuerst das Backend aus dev64 einspielen.');
+  const response=await secureFetch(API+'/hardware/research',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({context,question})});
+  const result=await response.json();if(!response.ok)throw Error(result.message||'Beschlagrecherche fehlgeschlagen.');
+  if(result.protocol!==1||result.baseKey!==hwContextKey(context)||hwContextKey(hwContext(project))!==hwContextKey(context))throw Error('Projekt inzwischen geändert. Bitte erneut recherchieren.');
+  if(!Array.isArray(result.sources)||!Array.isArray(result.candidates))throw Error('Unvollständige Rechercheantwort.');
+  for(const entry of result.candidates)hwReview(entry.candidate,context,result.sources.map(s=>s.url));
+  const previous=project.hardwareProposal;project.hardwareProposal=result;
+  try{await dbPutProject(project);}catch(e){project.hardwareProposal=previous;throw Error('Recherche konnte nicht gespeichert werden: '+e.message);}
+  project.hardwareStatus='Recherche bereit. Herstellerbelege und Zeichnungsvorschau stehen beim Vorschlag.';
+ }catch(e){project.hardwareStatus=e.message;}
+ finally{hwPendingRequests.delete(project.id);if(current===project)hwMount();}
+}
+async function hwAccept(index){
+ const project=current;if(hwPendingRequests.has(project.id))return;hwPendingRequests.add(project.id);
+ try{
+  const next=hwApply(project,project.hardwareProposal,index);await dbPutProject(next);
+  if(current===project){current=next;current.hardwareStatus='Beschlag, Bearbeitungen und Einkaufseintrag übernommen. Rahmenzeichnung bitte neu prüfen.';renderRecord();switchTab('woodDrawingPane');}
+ }catch(e){if(current===project){project.hardwareStatus=e.message;hwMount();}}
+ finally{hwPendingRequests.delete(project.id);}
+}
+
+function hwAcceptedDrawing(project){
+ const p=project.woodDrawingDraft||project.woodDrawing?.params||{};
+ if(!p.hardwareMachining||hwMachiningCheck(p).length)return '';
+ const c=hwContext(project);return hwMachiningSvg(c.parts[0],p.hardwareMachining.operations,{title:project.title,status:'Bestätigter Beschlagvorschlag · übrige Konstruktion separat prüfen'});
+}
+function hwShowIndependentDrawing(project,model){
+ if(model.ok)return;const svg=hwAcceptedDrawing(project),host=$('#wdPreview');
+ if(svg&&host)host.innerHTML+='<h4>Übernommene Beschlagbearbeitungen</h4><p>Dieses Blatt bleibt unabhängig von noch offenen Eckverbindungsmaßen sichtbar.</p>'+svg;
+}
+function hwDownloadAccepted(project){
+ const svg=hwAcceptedDrawing(project);if(!svg)return alert('Rahmenmaße geändert. Beschlagbearbeitungen zuerst erneut prüfen.');
+ const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'})),a=document.createElement('a');a.href=url;a.download='Beschlagbearbeitungen.svg';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
 
 // Korpusbaukasten: Eingabemaße sind maßgeblich. Keine Buchabbildungen.
 const CABINET_PANEL_NAMES={none:'ohne',solid:'Konstruktionsboden',rebate:'gefälzt',groove:'genutet'};
@@ -5649,7 +5862,8 @@ function ensembleKnowledge(input){const r=ensembleResolve(input);return 'GESAMTP
 function ensembleAggregate(input,cutlists={},childPurchases={}){
  const e=ensembleValidate(input),rows=[],groups=new Map(),purchases=new Map(),open=[],unquantifiedPurchases=[];
  for(const m of e.modules){const list=cutlists[m.id];if(!Array.isArray(list)||!list.length){open.push(m.name+': noch keine bestätigte Stückliste.');continue;}for(const row of list){if(!row||![row.length_mm,row.width_mm,row.thickness_mm,row.qty].every(v=>typeof v==='number'&&Number.isFinite(v)&&v>0)){open.push(m.name+': unvollständige Stücklistenposition.');continue;}const r={...row,part:m.name+' · '+row.part,moduleId:m.id};rows.push(r);const key=JSON.stringify([row.material,row.thickness_mm]);const g=groups.get(key)||{material:row.material,thickness:row.thickness_mm,area:0,volume:0,parts:0};g.area+=row.length_mm*row.width_mm*row.qty/1e6;g.volume+=row.length_mm*row.width_mm*row.thickness_mm*row.qty/1e9;g.parts+=row.qty;groups.set(key,g);}}
- const allPurchases=[...e.purchases];
+ const replaced=new Set(e.modules.flatMap(m=>(m.project?.hardware?.applied||[]).flatMap(a=>(a.replaces||[]).filter(id=>typeof id==='string'&&id.startsWith('e:')&&e.purchases.some(p=>p.id===id.slice(2)&&p.scope===m.id)).map(id=>id.slice(2)))));
+ const allPurchases=e.purchases.filter(p=>!replaced.has(p.id));
  for(const m of e.modules)for(const [i,p]of (childPurchases[m.id]||[]).entries()){
   const match=String(p.quantity||'').trim().match(/^(\d+(?:[.,]\d+)?)\s+([^\d].{0,24})$/u);
   if(!match||!Number.isFinite(Number(match[1].replace(',','.')))||Number(match[1].replace(',','.'))<=0){open.push(m.name+': Einkaufsmenge für '+(p.item||'Zukaufteil')+' noch nicht eindeutig.');unquantifiedPurchases.push({...p,scope:m.id,id:'unknown_'+m.id+'_'+i});continue;}
@@ -5730,6 +5944,7 @@ function enSyncChild(root,m){
   if(child.construction){child.construction=constructionApply(child.construction,[{action:'set_base',values:patch}],{source:'ensemble-dimension'}).construction;cSync(child);}
   else{child.woodDrawingDraft={...params,...Object.fromEntries(Object.entries(patch).map(([k,v])=>[k,v??'']))};if(child.woodDrawing)child.woodDrawing={...child.woodDrawing,confirmed:false};child.projectDirty=true;}
  }
+ child.hardwareParentPurchases=(root.ensemble.purchases||[]).filter(p=>p.scope===m.id).map(p=>({id:'e:'+p.id,label:p.item,quantity:p.quantity+' '+p.unit}));
  child.ensembleParent={rootId:root.id,moduleId:m.id,revision:root.ensemble.revision};
  child.knowledge=(root.knowledge||'')+'\n\nBaugruppe: '+m.name+'\n'+m.notes.join('\n')+'\n'+root.ensemble.decisions.filter(d=>d.scope==='all'||d.scope===m.id).map(d=>d.label+': '+d.value).join('\n');
 }
@@ -5822,7 +6037,7 @@ function ensembleInit(){
 }
 document.addEventListener('DOMContentLoaded',ensembleInit);
 
-function renderRecord(){if(current.ensemble)ensembleSync(current);if(cHas(current))cSync(current);
+function renderRecord(){if(typeof hwScheduleMount==='function')hwScheduleMount();if(current.ensemble)ensembleSync(current);if(cHas(current))cSync(current);
   if(typeof ideaUpdateEntry==='function')ideaUpdateEntry();
   const drawingSave=arguments[0]?.drawingSave===true;
   const r=current.reconstruction||{};
