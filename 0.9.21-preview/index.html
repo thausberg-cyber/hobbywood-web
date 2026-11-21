@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev64</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev65</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -202,7 +202,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev64 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev65 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev64';
+const APP_VERSION='0.9.21-dev65';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -5752,6 +5752,111 @@ $('#ideaBridgeOpen').onclick=()=>ideaOpen('record');
 }
 document.addEventListener('DOMContentLoaded',ideaInit);
 
+// A drawer is an optional, independently reviewable subassembly of an ensemble.
+// Region dimensions are planning bounds, never a substitute for clear installation dimensions.
+const DRAWER_RUNNER=Object.freeze({id:'hettich-ka4532-300',label:'Hettich KA 4532 Silent System · 300 mm',article:'9114271',length:300,minimumDepth:304,sideSpace:12.7,height:46,travel:290,loadClass:35,
+ url:'https://shop.hettich.com/ch_DE/F%C3%BChrungssysteme/Kugelausz%C3%BCge/Seitliche-Montage/Kugelauszug-KA-4532-Silent-System%2C-Seitenmontage%2C-Abmessungen-%28H-x-B%29-46-x-12%2C7-mm%2C-300/p/9114271',
+ source:'Hettich, Artikel 9114271; Herstellerkatalog Führungssysteme für Holzschubkästen, KA 4532. Recherche 20.11.2026. Einbaubreite 12,7 mm je Seite, Mindestkorpustiefe 304 mm. Keine Bohrkoordinaten aus Artikelmaßen ableiten.'});
+const drClone=v=>structuredClone(v),drFinite=v=>typeof v==='number'&&Number.isFinite(v),drEsc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const drKeys=(o,keys)=>{if(!o||typeof o!=='object'||Array.isArray(o)||Object.keys(o).some(k=>!keys.includes(k)))throw Error('Unbekannte Schubkastenangabe.');};
+const DR_NUMBERS=['frontHeight','frontThickness','frontGap','boxHeight','sideThickness','bottomThickness','grooveDepth','grooveBottom','grooveClearance','bottomPlay','boxLift','shelfThickness','dowelDiameter','tails','divisions'];
+function drawerPlanNew({id='drawer',parentId,region,material='',frontMaterial=material,shelfThickness=19}={}){
+ return {id,parentId,name:'Schubkasten im offenen Fach',region:drClone(region||{x:null,y:null,z:null,width:null,depth:null}),openingWidth:null,openingOffset:null,usableDepth:null,
+ frontHeight:150,frontThickness:shelfThickness,frontGap:2,boxHeight:100,sideThickness:15,bottomThickness:3,grooveDepth:5,grooveBottom:8,grooveClearance:.2,bottomPlay:.5,boxLift:10,
+ shelfThickness,dowelDiameter:8,joinery:'dovetail',tails:3,divisions:7,material:material||'Massivholz · Holzart noch offen',frontMaterial,runner:'suggested',dimensionsConfirmed:false,confirmationKey:null,replacesLowestShelf:true,frontMaterialFromShared:true,thicknessFromShared:true};
+}
+function drawerPlanValidate(input,expression=v=>v){
+ drKeys(input,['id','parentId','name','region','openingWidth','openingOffset','usableDepth',...DR_NUMBERS,'joinery','material','frontMaterial','runner','dimensionsConfirmed','confirmationKey','replacesLowestShelf','frontMaterialFromShared','thicknessFromShared']);
+ const p=drClone(input),id=v=>typeof v==='string'&&/^[A-Za-z][A-Za-z0-9_-]{0,49}$/.test(v);
+ if(!id(p.id)||!id(p.parentId)||typeof p.name!=='string'||!p.name.trim()||p.name.length>120)throw Error('Schubkastenkennung oder übergeordneter Korpus fehlt.');
+ if(p.confirmationKey!==null&&p.confirmationKey!==undefined&&(typeof p.confirmationKey!=='string'||p.confirmationKey.length>10000))throw Error('Ungültige Maßbestätigung.');if(['replacesLowestShelf','frontMaterialFromShared','thicknessFromShared'].some(k=>typeof p[k]!=='boolean'))throw Error('Fachbodenzuordnung fehlt.');
+ drKeys(p.region,['x','y','z','width','depth']);for(const k of ['x','y','z','width','depth'])p.region[k]=expression(p.region[k]??null);
+ for(const k of ['openingWidth','openingOffset','usableDepth']){p[k]??=null;if(p[k]!==null&&(!drFinite(p[k])||p[k]<0||p[k]>10000))throw Error('Ungültiges Einbaumaß: '+k);}
+ for(const k of DR_NUMBERS)if(!drFinite(p[k])||p[k]<0||p[k]>10000)throw Error('Ungültiges Schubkastenmaß: '+k);
+ if(!['dovetail','finger'].includes(p.joinery)||!['suggested','selected','none'].includes(p.runner)||typeof p.dimensionsConfirmed!=='boolean')throw Error('Ungültige Schubkastenauswahl.');
+ for(const k of ['material','frontMaterial'])if(typeof p[k]!=='string'||p[k].length>300)throw Error('Materialbezeichnung ungültig.');
+ return p;
+}
+function drawerPlanResolve(input,lookup,shared={}){
+ const value=v=>v===null||typeof v==='number'?v:v.ref?lookup(v.ref):(()=>{const a=v.args.map(value);return a.includes(null)?null:v.op==='add'?a.reduce((s,x)=>s+x,0):v.op==='sub'?a.slice(1).reduce((s,x)=>s-x,a[0]):Math[v.op](...a);})();
+ const p={...drClone(input),region:Object.fromEntries(Object.entries(input.region).map(([k,v])=>[k,value(v)]))};if(p.frontMaterialFromShared)p.frontMaterial=shared.material||p.frontMaterial;if(p.thicknessFromShared&&drFinite(shared.thickness)&&shared.thickness>0)p.frontThickness=p.shelfThickness=shared.thickness;return p;
+}
+function drawerPlanModel(p){
+ const errors=[],pending=[],r=p.region,runner=p.runner==='none'?null:DRAWER_RUNNER;
+ const positive=(v,label,optional=false)=>{if(v===null&&optional)return;if(!drFinite(v)||v<=0)errors.push(label+' muss größer als 0 sein.');};
+ for(const k of ['frontHeight','frontThickness','boxHeight','sideThickness','bottomThickness','grooveDepth','shelfThickness','dowelDiameter'])positive(p[k],k);
+ for(const k of ['width','depth'])positive(r[k],'Planungsbereich '+k,true);
+ if(p.openingWidth!==null)positive(p.openingWidth,'Lichte Fachbreite');
+ if(p.usableDepth!==null)positive(p.usableDepth,'Nutzbare Einbautiefe');
+ if(p.sideThickness<8||p.sideThickness>30)errors.push('Kastenwanddicke: 8 bis 30 mm.');
+ if(p.grooveDepth>=p.sideThickness)errors.push('Die Bodennut durchbricht die Kastenwand.');
+ if(p.grooveBottom<3||p.grooveBottom+p.bottomThickness+p.grooveClearance>=p.boxHeight)errors.push('Bodennut liegt außerhalb des Kastens oder lässt zu wenig Holz darunter.');
+ if(p.boxLift+p.boxHeight>p.frontHeight)errors.push('Kastenhöhe und Höhenlage passen nicht hinter die Front.');
+ if(p.frontGap<0||p.bottomPlay<0||p.grooveClearance<0)errors.push('Spielmaße dürfen nicht negativ sein.');
+ if(p.bottomPlay>=2*p.grooveDepth)errors.push('Bodenspiel lässt keine ausreichende Nutauflage.');
+ if(p.dowelDiameter>p.shelfThickness/2)errors.push('Dübeldurchmesser größer als die halbe Fachbodendicke.');
+ if(p.joinery==='dovetail'&&(!Number.isSafeInteger(p.tails)||p.tails<1||p.tails>30||p.boxHeight/(3*p.tails+1)-2*p.sideThickness/7<=0))errors.push('Schwalbenanzahl und Neigung 1:7 ergeben keine positive Zinkenbreite.');
+ if(p.joinery==='finger'&&(!Number.isSafeInteger(p.divisions)||p.divisions<3||p.divisions>101||p.divisions%2!==1))errors.push('Fingerzinken benötigen eine ungerade Teilungszahl von 3 bis 101.');
+ if([r.x,r.y,r.z,r.width,r.depth].some(v=>v===null))pending.push('Lage oder Tiefe des Planungsbereichs noch offen.');
+ if(p.openingWidth===null)pending.push('Lichte Fachbreite ergänzen.');
+ if(p.usableDepth===null)pending.push('Nutzbare Einbautiefe bis zur Rückwand prüfen.');
+ const offset=p.openingOffset!==null?p.openingOffset:r.width!==null&&p.openingWidth!==null?(r.width-p.openingWidth)/2:null;
+ if(offset!==null&&offset<0)errors.push('Die lichte Fachbreite überschreitet den Planungsbereich.');
+ if(r.width!==null&&p.openingWidth!==null&&offset+p.openingWidth>r.width+.001)errors.push('Fachöffnung liegt außerhalb des Planungsbereichs.');
+ if(r.depth!==null&&p.usableDepth!==null&&p.usableDepth+p.frontThickness>r.depth+.001)errors.push('Einbautiefe und Frontdicke überschreiten die Baugruppentiefe.');
+ if(r.width!==null&&r.width<=2*p.frontGap)errors.push('Das Frontfugenbild lässt keine Frontbreite übrig.');
+ if(runner&&p.usableDepth!==null&&p.usableDepth<runner.minimumDepth)errors.push('Der 300-mm-Auszug benötigt mindestens 304 mm nutzbare Einbautiefe.');
+ if(runner&&p.boxHeight<runner.height)errors.push('Die Kastenhöhe ist kleiner als die Führungshöhe von 46 mm.');
+ if(!runner)pending.push('Schubkastenführung auswählen.');else if(p.runner!=='selected')pending.push('Vorgeschlagenen Auszug bestätigen.');
+ const width=runner&&p.openingWidth!==null?p.openingWidth-2*runner.sideSpace:null,length=runner?.length??null,frontWidth=r.width!==null?r.width-2*p.frontGap:null;
+ if(width!==null&&width<=2*p.sideThickness)errors.push('Nach Abzug der Führungen bleibt kein nutzbarer Schubkasteninnenraum.');
+ if(length!==null&&length<=2*p.sideThickness)errors.push('Kastenlänge zu klein.');
+ if(!p.material.trim()||/noch offen/.test(p.material))pending.push('Holzart des gezinkten Kastens auswählen.');
+ if(!p.frontMaterial.trim())pending.push('Front- und Fachbodenmaterial ergänzen.');
+ const {dimensionsConfirmed,confirmationKey,...geometry}=p,geometryKey=JSON.stringify({...geometry,runner:p.runner==='none'?'none':DRAWER_RUNNER.id});
+ if(!p.dimensionsConfirmed||p.confirmationKey!==geometryKey)pending.push(p.dimensionsConfirmed?'Maße inzwischen geändert; Einbaumaße erneut bestätigen.':'Einbaumaße und Kastenaufbau sind noch ein Vorschlag.');
+ const row=(part,qty,length_mm,width_mm,thickness_mm,material)=>({part,qty,length_mm,width_mm,thickness_mm,material});
+ const cutlist=[];if(!errors.length&&width!==null&&length!==null&&frontWidth!==null&&p.usableDepth!==null){
+  cutlist.push(row('Kastenseite · Zinken über volle Länge',2,length,p.boxHeight,p.sideThickness,p.material),row('Kastenvorder-/hinterstück · Zinken über volle Breite',2,width,p.boxHeight,p.sideThickness,p.material),
+   row('Sperrholzboden · in vierseitiger Nut',1,length-2*p.sideThickness+2*p.grooveDepth-p.bottomPlay,width-2*p.sideThickness+2*p.grooveDepth-p.bottomPlay,p.bottomThickness,'Sperrholz'),
+   row('Frontaufdoppelung',1,frontWidth,p.frontHeight,p.frontThickness,p.frontMaterial),row('Fachboden · fest verdübelt',1,p.openingWidth,p.usableDepth,p.shelfThickness,p.frontMaterial));
+ }
+ const machiningPending=['Bohrbild und Schrauben der Führung nach Montageunterlage festlegen.','Dübellänge, Einstecktiefen und Positionen des festen Fachbodens festlegen.','Frontbefestigung sowie Freigang zum Fachboden und zum Nachbarbauteil prüfen.','Bodennuten an den gezinkten Ecken gestoppt ausführen; Enden und Einsetzfolge prüfen.'];
+ return {p,errors,pending,ok:!errors.length,ready:!errors.length&&!pending.length,cutlist,width,length,frontWidth,offset,shelfY:r.y===null?null:r.y+p.frontGap+p.frontHeight+p.frontGap,
+  runner,geometryKey,signature:JSON.stringify(p),machiningPending,fabricationReady:false};
+}
+function drawerPlanOverlay(p,{s,x,bottom}){
+ const r=p.region;if([r.x,r.y,r.width].some(v=>v===null))return '';
+ const xx=x+(r.x+p.frontGap)*s,yy=bottom-(r.y+p.frontGap+p.frontHeight)*s,w=(r.width-2*p.frontGap)*s;
+ if(w<=0)return '';
+ const shelfY=yy-(p.frontGap+p.shelfThickness)*s,offset=drawerPlanModel(p).offset??0;
+ return '<g data-drawer-plan="'+drEsc(p.id)+'"><title>'+drEsc(p.name)+' · Frontaufdoppelung und fester Fachboden · Planung</title><rect x="'+xx+'" y="'+yy+'" width="'+w+'" height="'+p.frontHeight*s+'" fill="#e1cfad" stroke="#333" stroke-width=".9"/>'+
+ '<path d="M'+(xx+w*.3)+','+(yy+p.frontHeight*s*.45)+' h'+w*.4+'" stroke="#555"/>'+
+ '<rect x="'+(x+(r.x+offset)*s)+'" y="'+shelfY+'" width="'+(p.openingWidth??r.width)*s+'" height="'+p.shelfThickness*s+'" fill="#bca47b" stroke="#333" stroke-width=".7" '+(p.openingWidth===null?'stroke-dasharray="2 1"':'')+'/></g>';
+}
+function drawerPlanSvg(m){
+ const p=m.p,e=drEsc,f=v=>v===null?'offen':Number(v.toFixed(2)).toLocaleString('de-DE'),text=(x,y,v,cls='')=>'<text x="'+x+'" y="'+y+'" class="'+cls+'">'+e(v)+'</text>',rect=(x,y,w,h,fill='none')=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+fill+'"/>';
+ let b=text(12,16,'look, talk ’n build · Schubkasten und fester Fachboden','title')+text(12,25,p.name)+text(12,32,'Planungszeichnung · '+(m.ready?'Einbaumaße bestätigt':'Maße / Auswahl teilweise offen')+' · keine Fertigungsfreigabe');
+ if(!m.ok)return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 297 210">'+text(12,20,m.errors.join(' · '))+'</svg>';
+ // All three projections use one scale. Unknown dimensions have no surrogate geometry.
+ const dims=[p.region.width,p.frontHeight,p.usableDepth,m.width,m.length].filter(v=>v!==null),s=Math.min(.35,62/Math.max(...dims));
+ const fw=m.frontWidth,top=62,frontX=22;
+ b+=text(12,47,'Vorderansicht · Frontaufdoppelung','bold');
+ if(fw!==null){b+=rect(frontX,top,fw*s,p.frontHeight*s,'#eee3d0')+rect(frontX+((m.offset??0)-p.frontGap)*s,top-(p.frontGap+p.shelfThickness)*s,(p.openingWidth??p.region.width)*s,p.shelfThickness*s,'#bca47b')+text(frontX,top+p.frontHeight*s+8,f(fw)+' × '+f(p.frontHeight)+' × '+f(p.frontThickness));}
+ else b+=text(16,66,'Frontbreite noch offen.');
+ b+=text(127,47,'Draufsicht · Kasten ohne Front','bold');
+ if(m.width!==null&&m.length!==null){const x=135,y=top,w=m.width*s,l=m.length*s,t=p.sideThickness*s;b+=rect(x,y,w,l,'#eee3d0')+rect(x+t,y+t,w-2*t,l-2*t,'#f5f7f8')+text(x,y+l+8,'Außen '+f(m.width)+' × '+f(m.length)+' mm')+text(x,y+l+14,'Seiten '+f(p.sideThickness)+' mm · gezinkt');}
+ else b+=text(127,66,'Kastenbreite folgt aus lichter Fachbreite.')+text(127,73,'Kein Ersatzmaß aus der Bereichsbreite.');
+ b+=text(12,145,'Bodenanschluss · Schnitt an einer Kastenwand','bold');
+ const sx=22,sy=152,S=1.2,T=p.sideThickness*S,G=p.grooveDepth*S,B=(p.bottomThickness+p.grooveClearance)*S,Y=sy+25;
+ b+='<path d="M'+sx+','+sy+' h'+T+' v'+(25-(p.grooveBottom+p.bottomThickness+p.grooveClearance)*S)+' h'+(-G)+' v'+B+' h'+G+' V'+Y+' H'+sx+' Z" fill="#eee3d0" stroke="#333" stroke-width=".3"/>';
+ b+=rect(sx+T-G+p.bottomPlay*S/2,Y-(p.grooveBottom+p.bottomThickness)*S,25,p.bottomThickness*S,'#d9e5eb')+
+ text(65,155,'Boden '+f(p.bottomThickness)+' mm · Nutbreite '+f(p.bottomThickness+p.grooveClearance)+' mm')+text(65,162,'Nuttiefe '+f(p.grooveDepth)+' mm · Unterkante Nut '+f(p.grooveBottom)+' mm ab Kastenunterkante')+text(65,169,'Bodenspiel '+f(p.bottomPlay)+' mm insgesamt je Richtung')+text(65,176,'Fachboden '+f(p.shelfThickness)+' mm · Rundholzdübel Ø '+f(p.dowelDiameter)+' mm');
+ b+=text(12,188,(p.joinery==='dovetail'?'Offene Schwalbenschwänze 1:7 · '+p.tails+' Schwalben':'Fingerzinken · '+p.divisions+' Abschnitte')+' · Zinkendetail auf Zusatzblatt')+text(12,195,'Auszug: '+(p.runner==='none'?'offen':DRAWER_RUNNER.label+' · Einbauraum je Seite 12,7 mm'))+
+ text(12,202,'Maße in mm · Darstellung angepasst · Bohrbilder, Befestigung und Montagefreigang noch prüfen');
+ return '<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="Schubkasten mit Bodenquerschnitt"><style>text{font:3px Arial;fill:#222}.title{font-size:4px;font-weight:bold}.bold{font-weight:bold}rect{stroke:#333;stroke-width:.3}</style>'+b+'</svg>';
+}
+
 // A composition owns shared dimensions. Child constructions remain separate projects.
 // Expressions are a small validated data language; never evaluated as JavaScript.
 const ENSEMBLE_FAMILIES={cabinet:'Korpus',frame:'Rahmen',board:'Brett',custom:'Eigene Baugruppe'};
@@ -5788,7 +5893,7 @@ function ensembleExpression(value,depth=0){
 function eDimensionRecord(obj,keys){eKeys(obj,keys);return Object.fromEntries(keys.map(k=>[k,ensembleExpression(obj[k]??null)]));}
 function ensembleValidate(input){
  if(!input||input.schemaVersion!==1||!Number.isSafeInteger(input.revision)||input.revision<0)throw Error('Unbekanntes Gesamtprojekt.');
- const e=eCopy(input);eKeys(e,['schemaVersion','revision','total','shared','variables','modules','decisions','purchases','history']);
+ const e=eCopy(input);eKeys(e,['schemaVersion','revision','total','shared','variables','modules','decisions','purchases','history','drawers']);
  e.total=eDimensionRecord(e.total,E_AXES);for(const v of Object.values(e.total))if(v!==null&&(!eNumber(v)||v<=0))throw Error('Gesamtmaße müssen Zahlen über 0 bis 10000 mm sein.');
  eKeys(e.shared,['material','thickness']);if(!eText(e.shared.material,300)||e.shared.thickness!==null&&(!eNumber(e.shared.thickness)||e.shared.thickness<=0))throw Error('Gemeinsames Material oder Dicke ungültig.');
  if(!e.variables||typeof e.variables!=='object'||Array.isArray(e.variables)||Object.keys(e.variables).length>40)throw Error('Zu viele gemeinsame Parameter.');for(const [k,v]of Object.entries(e.variables)){if(!eId(k))throw Error('Ungültiger Parametername.');e.variables[k]=ensembleExpression(v);}
@@ -5802,6 +5907,7 @@ function ensembleValidate(input){
   if(m.outline!==undefined){if(!Array.isArray(m.outline)||m.outline.length<3||m.outline.length>20)throw Error('Ungültige Außenkontur.');m.outline=m.outline.map(p=>eDimensionRecord(p,['x','y']));}
   if(m.project!==undefined&&(!m.project||typeof m.project!=='object'||Array.isArray(m.project)||m.project.ensemble))throw Error('Ungültige Einzelkonstruktion.');
  }
+ const drawerIds=new Set();if(e.drawers!==undefined){if(!Array.isArray(e.drawers)||e.drawers.length>20)throw Error('Höchstens 20 Schubkästen möglich.');e.drawers=e.drawers.map(p=>{const d=drawerPlanValidate(p,ensembleExpression);if(drawerIds.has(d.id)||!e.modules.some(m=>m.id===d.parentId&&m.family==='cabinet'))throw Error('Schubkasten benötigt einen eindeutigen Namen und einen vorhandenen Korpus.');drawerIds.add(d.id);return d;});}
  for(const m of e.modules){if(m.parentId&&!ids.has(m.parentId))throw Error('Übergeordnete Baugruppe fehlt.');let seen=new Set([m.id]),parent=m.parentId;while(parent){if(seen.has(parent))throw Error('Zyklische Baugruppenhierarchie.');seen.add(parent);parent=e.modules.find(v=>v.id===parent)?.parentId;}}
  if(!Array.isArray(e.decisions)||e.decisions.length>200||e.decisions.some(d=>!d||!eId(d.id)||!eText(d.scope,100)||d.scope!=='all'&&!ids.has(d.scope)||!eText(d.label,150)||!eText(d.value,2000)))throw Error('Ungültige Projektentscheidung.');
  if(new Set(e.decisions.map(d=>d.id)).size!==e.decisions.length)throw Error('Doppelte Projektentscheidung.');
@@ -5828,7 +5934,15 @@ function ensembleResolve(input){
   return {...m,size,position,outline,material:m.material||e.shared.material,thickness:m.thickness!==undefined?calc(m.thickness):e.shared.thickness};
  });
  for(const m of modules)if(m.planningOnly||m.family==='custom')warnings.push(m.name+': Einzelkonstruktion noch auszuarbeiten.');
- return {ensemble:e,modules,unknown:[...unknown],warnings,values:Object.fromEntries(values)};
+ const drawers=(e.drawers||[]).map(p=>{
+  const d=drawerPlanResolve(p,lookup,e.shared),parent=modules.find(m=>m.id===d.parentId),model=drawerPlanModel(d);
+  if(!model.ok)throw Error(d.name+': '+model.errors.join(' '));
+  for(const [size,pos]of [['width','x'],['depth','z']])if(d.region[pos]!==null&&d.region[size]!==null){if(d.region[pos]<0||e.total[size]!==null&&d.region[pos]+d.region[size]>e.total[size]+.001||parent.position[pos]!==null&&d.region[pos]<parent.position[pos]-.001||parent.position[pos]!==null&&parent.size[size]!==null&&d.region[pos]+d.region[size]>parent.position[pos]+parent.size[size]+.001)throw Error(d.name+': Planungsbereich liegt außerhalb des Korpus.');}
+  if(d.region.y!==null&&(d.region.y<0||e.total.height!==null&&model.shelfY+d.shelfThickness>e.total.height+.001||parent.position.y!==null&&d.region.y<parent.position.y-.001||parent.position.y!==null&&parent.size.height!==null&&model.shelfY+d.shelfThickness>parent.position.y+parent.size.height+.001))throw Error(d.name+': Fachboden liegt außerhalb der Baugruppenhöhe.');
+  return d;
+ });
+ for(let i=0;i<drawers.length;i++)for(let j=i+1;j<drawers.length;j++){const a=drawers[i],b=drawers[j];if(a.parentId===b.parentId&&[a.region.x,a.region.y,a.region.width,b.region.x,b.region.y,b.region.width].every(v=>v!==null)&&a.region.x<b.region.x+b.region.width-.001&&b.region.x<a.region.x+a.region.width-.001&&a.region.y<b.region.y+2*b.frontGap+b.frontHeight+b.shelfThickness-.001&&b.region.y<a.region.y+2*a.frontGap+a.frontHeight+a.shelfThickness-.001)throw Error('Schubkastenbereiche überschneiden sich. Lage der Erweiterung anpassen.');}
+ return {ensemble:e,modules,drawers,unknown:[...unknown],warnings,values:Object.fromEntries(values)};
 }
 function ensembleExprText(v){if(v===null||v===undefined)return 'offen';if(typeof v==='number')return String(v);if(v.ref)return v.ref;const symbols={add:' + ',sub:' - ',min:', ',max:', '};return (['min','max'].includes(v.op)?v.op:'')+'('+v.args.map(ensembleExprText).join(symbols[v.op])+')';}
 function ensembleApply(input,commands,{expectedRevision=input.revision,source='manual'}={}){
@@ -5841,6 +5955,8 @@ function ensembleApply(input,commands,{expectedRevision=input.revision,source='m
   else if(cmd.action==='add_module'){eKeys(cmd,['action','module']);const m=eCopy(cmd.module);if(m.project)throw Error('Einzelkonstruktionen können nicht aus einem Talk-Vorschlag übernommen werden.');e.modules.push({size:{width:null,height:null,depth:null},position:{x:0,y:0,z:0},notes:[],...m});}
   else if(cmd.action==='set_module'){eKeys(cmd,['action','id','values']);const m=e.modules.find(m=>m.id===cmd.id);if(!m)throw Error('Baugruppe fehlt.');if(cmd.values?.family&&cmd.values.family!==m.family&&m.project)throw Error('Die Grundkonstruktion einer ausgearbeiteten Baugruppe kann nicht ohne neue Baugruppe gewechselt werden.');eKeys(cmd.values,['name','family','size','position','material','thickness','planningOnly','outline','notes','parentId']);for(const[k,v]of Object.entries(cmd.values))if(k==='size'||k==='position'){eKeys(v,k==='size'?E_AXES:E_POS);m[k]={...m[k],...v};}else m[k]=eCopy(v);}
   else if(cmd.action==='set_settings'){eKeys(cmd,['action','id','values']);const m=e.modules.find(m=>m.id===cmd.id);if(!m)throw Error('Baugruppe fehlt.');const patch=eSettings(m.family,cmd.values);m.settings={...m.settings,...patch};}
+  else if(cmd.action==='set_drawer'){eKeys(cmd,['action','drawer']);const d=drawerPlanValidate(cmd.drawer,ensembleExpression);e.drawers??=[];const i=e.drawers.findIndex(p=>p.id===d.id);if(i<0)e.drawers.push(d);else e.drawers[i]=d;}
+  else if(cmd.action==='remove_drawer'){eKeys(cmd,['action','id']);if(!(e.drawers||[]).some(d=>d.id===cmd.id))throw Error('Schubkasten fehlt.');e.drawers=e.drawers.filter(d=>d.id!==cmd.id);}
   else if(cmd.action==='remove_module'){eKeys(cmd,['action','id']);if(!e.modules.some(m=>m.id===cmd.id))throw Error('Baugruppe fehlt.');e.modules=e.modules.filter(m=>m.id!==cmd.id);e.decisions=e.decisions.filter(d=>d.scope!==cmd.id);e.purchases=e.purchases.filter(d=>d.scope!==cmd.id);}
   else if(cmd.action==='set_decision'){eKeys(cmd,['action','decision']);eKeys(cmd.decision,['id','scope','label','value']);const d=eCopy(cmd.decision),idx=e.decisions.findIndex(v=>v.id===d.id);if(idx<0)e.decisions.push(d);else e.decisions[idx]=d;}
   else if(cmd.action==='set_purchase'){eKeys(cmd,['action','purchase']);eKeys(cmd.purchase,['id','scope','item','quantity','unit','spec','inStock']);const p=eCopy(cmd.purchase),idx=e.purchases.findIndex(v=>v.id===p.id);if(idx<0)e.purchases.push(p);else e.purchases[idx]=p;}
@@ -5856,14 +5972,19 @@ function ensembleDiff(before,after){
  for(const m of after.modules){const old=before.modules.find(v=>v.id===m.id);if(JSON.stringify(m.settings||{})!==JSON.stringify(old?.settings||{}))out.push(m.name+' · Einstellungen des Baukastens: '+Object.entries(m.settings||{}).map(([k,v])=>({corner:'Korpusecke',joint:'Rahmenecke',through:'Durchgehende Bauteile',cornerData:'Verbindermaße',verticalWidth:'Aufrechte Rahmenholzbreite',horizontalWidth:'Waagerechte Rahmenholzbreite',biscuitSize:'Flachdübelgröße'}[k]||'Weitere Baukasteneinstellung')+' = '+(typeof v==='object'?Object.values(v||{}).join(' / '):({dowel:'Rundholzdübel',biscuit:'Flachdübel',tenon:'Schlitz und Zapfen',vertical:'Seiten / aufrechte Hölzer',horizontal:'Böden / waagerechte Hölzer'}[v]||v))).join('; '));}
  for(const d of after.decisions)if(JSON.stringify(d)!==JSON.stringify(before.decisions.find(v=>v.id===d.id)))out.push(d.label+': '+d.value);
  for(const p of after.purchases)if(JSON.stringify(p)!==JSON.stringify(before.purchases.find(v=>v.id===p.id)))out.push('Einkauf: '+p.quantity+' '+p.unit+' '+p.item+' · '+p.spec);
+ for(const d of after.drawers||[])if(JSON.stringify(d)!==JSON.stringify((before.drawers||[]).find(v=>v.id===d.id)))out.push(d.name+': fester Fachboden, '+d.frontHeight+'-mm-Front, gezinkter Kasten, '+d.bottomThickness+'-mm-Sperrholzboden; Auszug '+({selected:'gewählt',suggested:'vorgeschlagen',none:'offen'}[d.runner])+'.');
+ for(const d of after.drawers||[]){const old=(before.drawers||[]).find(v=>v.id===d.id);if(old)for(const [k,v]of Object.entries(d))if(!['confirmationKey'].includes(k)&&JSON.stringify(v)!==JSON.stringify(old[k]))out.push(d.name+' · '+({openingWidth:'Lichte Fachbreite',openingOffset:'Fachöffnung ab links',usableDepth:'Nutzbare Tiefe',frontHeight:'Fronthöhe',sideThickness:'Kastenwanddicke',boxHeight:'Kastenhöhe',material:'Kastenholz',frontMaterial:'Frontmaterial',region:'Planungsbereich',joinery:'Zinkung',runner:'Auszug',dimensionsConfirmed:'Einbaumaße bestätigt'}[k]||k)+': '+JSON.stringify(old[k])+' → '+JSON.stringify(v));}
+ for(const d of before.drawers||[])if(!(after.drawers||[]).some(v=>v.id===d.id))out.push('Schubkasten entfernen: '+d.name);
  if(!out.length)out.push('Verknüpfungen oder Konstruktionsangaben werden aktualisiert.');return out;
 }
-function ensembleKnowledge(input){const r=ensembleResolve(input);return 'GESAMTPROJEKT Stand '+input.revision+'\n'+JSON.stringify({total:input.total,shared:input.shared,variables:input.variables,modules:r.modules.map(({project,...m})=>({...m,hasConstruction:!!project})),decisions:input.decisions,purchases:input.purchases,open:r.unknown,warnings:r.warnings})+'\nAbgeleitete Maße kommen aus den hinterlegten Verknüpfungen. Vorschläge sind noch keine bestätigten Änderungen. Fehlende Grundkonstruktionen ausdrücklich benennen; keine erfundenen Werkzeichnungen oder Fertigungsfreigaben.';}
+function ensembleKnowledge(input){const r=ensembleResolve(input);return 'GESAMTPROJEKT Stand '+input.revision+'\n'+JSON.stringify({total:input.total,shared:input.shared,variables:input.variables,modules:r.modules.map(({project,...m})=>({...m,hasConstruction:!!project})),decisions:input.decisions,purchases:input.purchases,drawers:r.drawers,open:r.unknown,warnings:r.warnings})+'\nEin Eintrag in drawers mit replacesLowestShelf:true ersetzt im gewählten Bereich die frühere verstellbare Fachbodenangabe; die übrigen Fachböden bleiben bestehen. Abgeleitete Maße kommen aus den hinterlegten Verknüpfungen. Vorschläge sind noch keine bestätigten Änderungen. Fehlende Grundkonstruktionen ausdrücklich benennen; keine erfundenen Werkzeichnungen oder Fertigungsfreigaben.';}
 function ensembleAggregate(input,cutlists={},childPurchases={}){
  const e=ensembleValidate(input),rows=[],groups=new Map(),purchases=new Map(),open=[],unquantifiedPurchases=[];
- for(const m of e.modules){const list=cutlists[m.id];if(!Array.isArray(list)||!list.length){open.push(m.name+': noch keine bestätigte Stückliste.');continue;}for(const row of list){if(!row||![row.length_mm,row.width_mm,row.thickness_mm,row.qty].every(v=>typeof v==='number'&&Number.isFinite(v)&&v>0)){open.push(m.name+': unvollständige Stücklistenposition.');continue;}const r={...row,part:m.name+' · '+row.part,moduleId:m.id};rows.push(r);const key=JSON.stringify([row.material,row.thickness_mm]);const g=groups.get(key)||{material:row.material,thickness:row.thickness_mm,area:0,volume:0,parts:0};g.area+=row.length_mm*row.width_mm*row.qty/1e6;g.volume+=row.length_mm*row.width_mm*row.thickness_mm*row.qty/1e9;g.parts+=row.qty;groups.set(key,g);}}
+ const resolvedDrawers=ensembleResolve(e).drawers;
+ for(const m of [...e.modules,...resolvedDrawers.map(d=>({id:'drawer_'+d.id,name:d.name,drawer:d}))]){const dm=m.drawer?drawerPlanModel(m.drawer):null,list=dm?(dm.ready?dm.cutlist:[]):cutlists[m.id];if(!Array.isArray(list)||!list.length){open.push(m.name+': noch keine bestätigte Stückliste.');continue;}for(const row of list){if(!row||![row.length_mm,row.width_mm,row.thickness_mm,row.qty].every(v=>typeof v==='number'&&Number.isFinite(v)&&v>0)){open.push(m.name+': unvollständige Stücklistenposition.');continue;}const r={...row,part:m.name+' · '+row.part,moduleId:m.id};rows.push(r);const key=JSON.stringify([row.material,row.thickness_mm]);const g=groups.get(key)||{material:row.material,thickness:row.thickness_mm,area:0,volume:0,parts:0};g.area+=row.length_mm*row.width_mm*row.qty/1e6;g.volume+=row.length_mm*row.width_mm*row.thickness_mm*row.qty/1e9;g.parts+=row.qty;groups.set(key,g);}}
  const replaced=new Set(e.modules.flatMap(m=>(m.project?.hardware?.applied||[]).flatMap(a=>(a.replaces||[]).filter(id=>typeof id==='string'&&id.startsWith('e:')&&e.purchases.some(p=>p.id===id.slice(2)&&p.scope===m.id)).map(id=>id.slice(2)))));
  const allPurchases=e.purchases.filter(p=>!replaced.has(p.id));
+ for(const d of ensembleResolve(e).drawers){const m=drawerPlanModel(d);if(d.runner==='selected')allPurchases.push({id:'drawer_'+d.id,scope:d.parentId,item:DRAWER_RUNNER.label,quantity:1,unit:'Garnitur',spec:'Artikel '+DRAWER_RUNNER.article+' · links / rechts · '+(m.ready?'Einbaumaße bestätigt':'Einbau noch prüfen'),inStock:false});if(m.pending.length)open.push(d.name+': Einbaumaße / Auswahl noch offen. Details in der Schubkastenplanung.');open.push(d.name+': Montagebearbeitungen noch prüfen (Führung, Dübel und Frontbefestigung).');}
  for(const m of e.modules)for(const [i,p]of (childPurchases[m.id]||[]).entries()){
   const match=String(p.quantity||'').trim().match(/^(\d+(?:[.,]\d+)?)\s+([^\d].{0,24})$/u);
   if(!match||!Number.isFinite(Number(match[1].replace(',','.')))||Number(match[1].replace(',','.'))<=0){open.push(m.name+': Einkaufsmenge für '+(p.item||'Zukaufteil')+' noch nicht eindeutig.');unquantifiedPurchases.push({...p,scope:m.id,id:'unknown_'+m.id+'_'+i});continue;}
@@ -5894,6 +6015,7 @@ function ensembleSvg(input){
   body+='</g>';
   labels.push({id:m.id,n:index+1,ax:px+w,ay:py+h/2});
  }
+ for(const d of r.drawers)body+=drawerPlanOverlay(d,{s,x,bottom});
  // Draw every identifier after all shapes, outside their overlapping footprints.
  labels.sort((a,b)=>a.ay-b.ay||a.n-b.n);
  let last=y-22;
@@ -5903,7 +6025,6 @@ function ensembleSvg(input){
  body+='<path d="M'+x+','+(bottom+24)+' H'+right+' M'+(x-22)+','+y+' V'+bottom+'" stroke="#333" fill="none"/><text x="'+(x+W*s/2)+'" y="'+(bottom+42)+'" text-anchor="middle" font-size="14">'+W+' mm</text><text x="'+(x-30)+'" y="'+(y+H*s/2)+'" text-anchor="middle" transform="rotate(-90 '+(x-30)+' '+(y+H*s/2)+')" font-size="14">'+H+' mm</text>';
  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+(right+55)+' '+(bottom+58)+'" role="img" aria-label="Gesamtansicht mit bestätigten Außenmaßen" style="width:100%;max-height:72vh;height:auto;background:white;color:#222"><g font-family="Arial" fill="#222">'+body+'</g></svg>';
 }
-
 // The wardrobe is a reviewed design fixture, not a hard-coded planning workflow.
 function ensembleWardrobe(){
  const ref=ref=>({ref}),sub=(...args)=>({op:'sub',args}),add=(...args)=>({op:'add',args});
@@ -5921,7 +6042,7 @@ function ensembleWardrobe(){
  e.purchases=[{id:'panelbuy',scope:'panel',item:'FN Neuhofer Acustico Kiefer',quantity:1,unit:'Stück',spec:'BAUHAUS 31783277; 2400 × 572,5 × 18 mm; Zuschnitt auf Paneelfläche prüfen',inStock:false},{id:'hooks',scope:'panel',item:'Schwarze Doppelhaken',quantity:3,unit:'Stück',spec:'Konkretes Produkt und Schraubbild offen',inStock:false},{id:'hinges',scope:'door',item:'Topfbänder aufliegend, links',quantity:3,unit:'Stück',spec:'Typ und Montageplatten noch auswählen',inStock:false},{id:'handle',scope:'door',item:'Schwarzer Bügelgriff',quantity:1,unit:'Stück',spec:'Bohrabstand noch auswählen',inStock:false}];return e;
 }
 
-let ensembleContext=null,ensembleServerReady=false;
+let ensembleContext=null,ensembleServerReady=false,ensembleDrawerReady=false;
 const enClone=x=>structuredClone(x),enRefLabels={width:'Breite',height:'Höhe',depth:'Tiefe',x:'Lage ab links',y:'Höhe ab Boden',z:'Abstand zur Rückseite'};
 function enLabel(ref,e=current.ensemble){const b=ref.split('.');return b[0]==='total'?'Gesamt'+({width:'breite',height:'höhe',depth:'tiefe'}[b[1]]):b[0]==='shared'?'Materialdicke':b[0]==='var'?({leftWidth:'Breite des linken Bereichs',openWidth:'Breite des offenen Bereichs',seatHeight:'Gesamtsitzhöhe',cushion:'Polsterdicke',doorGap:'Türabstand',skirtingHeight:'Höhe der Wandsockelleiste',skirtingProjection:'Vorsprung der Wandsockelleiste'}[b[1]]||b[1]):(e.modules.find(m=>m.id===b[1])?.name||b[1])+' · '+enRefLabels[b[2]];}
 function enExprLabel(v,e=current.ensemble){if(v===null||v===undefined)return 'offen';if(typeof v==='number')return String(v)+' mm';if(v.ref)return enLabel(v.ref,e);return '('+v.args.map(v=>enExprLabel(v,e)).join({add:' + ',sub:' - ',min:' / Minimum / ',max:' / Maximum / '}[v.op])+')';}
@@ -5947,6 +6068,7 @@ function enSyncChild(root,m){
  child.hardwareParentPurchases=(root.ensemble.purchases||[]).filter(p=>p.scope===m.id).map(p=>({id:'e:'+p.id,label:p.item,quantity:p.quantity+' '+p.unit}));
  child.ensembleParent={rootId:root.id,moduleId:m.id,revision:root.ensemble.revision};
  child.knowledge=(root.knowledge||'')+'\n\nBaugruppe: '+m.name+'\n'+m.notes.join('\n')+'\n'+root.ensemble.decisions.filter(d=>d.scope==='all'||d.scope===m.id).map(d=>d.label+': '+d.value).join('\n');
+ const drawerContext=ensembleResolve(root.ensemble).drawers.filter(d=>d.parentId===m.id);if(drawerContext.length)child.knowledge+='\nAktuelle Schubkasten-Erweiterungen: '+JSON.stringify(drawerContext)+'\nreplacesLowestShelf:true ersetzt im gewählten Bereich die frühere verstellbare Fachbodenangabe. Maße mit dimensionsConfirmed:false sind Vorschläge.';
 }
 function enCutlists(root){const lists={};for(const m of root.ensemble.modules){if(!m.project||m.planningOnly||m.family==='custom')continue;try{const child=m.project;if(child.construction){const out=constructionCompute(child.construction);if(child.construction.confirmedRevision===child.construction.revision&&out.ready)lists[m.id]=constructionPlan(child.construction).cutlist||[];}else if(child.woodDrawing?.confirmed&&drawingStatus(child)==='checked')lists[m.id]=wdCutlistForProject(child);}catch{}}
  return lists;
@@ -5978,16 +6100,17 @@ function enModuleEditor(id){
 function enOverview(){
  const e=current.ensemble,{r,a}=ensembleSync(current),p=current.ensembleProposal;
  const dim=(key,label,value)=>'<label class="wdField"><span>'+label+' (mm)</span><input id="enTotal-'+key+'" value="'+(value??'')+'" inputmode="decimal" placeholder="offen"></label>';
- const moduleRows=r.modules.map(m=>'<section class="notice"><strong>'+esc(m.name)+'</strong><p>'+esc(ENSEMBLE_FAMILIES[m.family])+' · '+[m.size.width,m.size.height,m.size.depth].map(v=>v??'offen').join(' × ')+' mm<br>Lage: '+[m.position.x,m.position.y,m.position.z].map(v=>v??'offen').join(' / ')+' mm'+(m.parentId?'<br>Unterbaugruppe von '+esc(e.modules.find(v=>v.id===m.parentId)?.name):'')+'</p><button class="secondary small" data-en-edit-module="'+m.id+'">Maße und Angaben</button> '+(!m.planningOnly&&m.family!=='custom'?'<button class="primary small" data-en-open="'+m.id+'">Einzelkonstruktion öffnen</button>':'<span class="hint">Konstruktion noch nicht vollständig im Baukasten abgebildet</span>')+'<details><summary>Konstruktionsentscheidungen</summary>'+m.notes.map(n=>'<p>'+esc(n)+'</p>').join('')+'</details></section>').join('');
+ const moduleRows=r.modules.map(m=>'<section class="notice"><strong>'+esc(m.name)+'</strong><p>'+esc(ENSEMBLE_FAMILIES[m.family])+' · '+[m.size.width,m.size.height,m.size.depth].map(v=>v??'offen').join(' × ')+' mm<br>Lage: '+[m.position.x,m.position.y,m.position.z].map(v=>v??'offen').join(' / ')+' mm'+(m.parentId?'<br>Unterbaugruppe von '+esc(e.modules.find(v=>v.id===m.parentId)?.name):'')+'</p><button class="secondary small" data-en-edit-module="'+m.id+'">Maße und Angaben</button> '+(!m.planningOnly&&m.family!=='custom'?'<button class="primary small" data-en-open="'+m.id+'">Einzelkonstruktion öffnen</button>':'<span class="hint">Konstruktion noch nicht vollständig im Baukasten abgebildet</span>')+'<details><summary>Konstruktionsentscheidungen</summary>'+((e.drawers||[]).some(d=>d.parentId===m.id&&d.replacesLowestShelf)?'<p>Aktuelle Erweiterung: Der unterste Fachboden im gewählten Bereich wird fest verdübelt; der Schubkasten sitzt darunter. Diese Festlegung ersetzt dort die frühere Einlegebodenangabe.</p>':'')+m.notes.map(n=>'<p>'+esc(n)+'</p>').join('')+'</details></section>').join('');
  return '<h3>Gesamtprojekt · Stand '+e.revision+'</h3><button id="enAsk" class="secondary">Aufteilung im Werkstatt-Talk besprechen</button><p>Gemeinsame Maße, getrennte Einzelkonstruktionen. Alle Maße in mm; Lage ab links / Boden / Rückseite.</p>'+
  (p?'<section class="notice"><strong>Vorschlag zur Übernahme</strong><p>'+esc(p.reply||'')+'</p><ul>'+p.changes.map(v=>'<li>'+esc(v)+'</li>').join('')+'</ul><button class="primary" id="enAdopt">Änderungen übernehmen</button><button class="ghost" id="enDiscard">Vorschlag verwerfen</button></section>':'')+
- '<div class="wdFields">'+dim('width','Gesamtbreite',e.total.width)+dim('height','Gesamthöhe',e.total.height)+dim('depth','Maximale Gesamttiefe',e.total.depth)+'<label class="wdField"><span>Gemeinsames Material</span><input id="enMaterial" value="'+esc(e.shared.material)+'"></label>'+dim('thickness','Gemeinsame Materialdicke',e.shared.thickness)+'</div><button id="enTotals" class="secondary">Auswirkungen der Maßänderung prüfen</button>'+moduleRows+
+ '<div class="wdFields">'+dim('width','Gesamtbreite',e.total.width)+dim('height','Gesamthöhe',e.total.height)+dim('depth','Maximale Gesamttiefe',e.total.depth)+'<label class="wdField"><span>Gemeinsames Material</span><input id="enMaterial" value="'+esc(e.shared.material)+'"></label>'+dim('thickness','Gemeinsame Materialdicke',e.shared.thickness)+'</div><button id="enTotals" class="secondary">Auswirkungen der Maßänderung prüfen</button>'+(typeof drSection==='function'?drSection(e):'')+moduleRows+
  '<div id="enModuleEditor"></div><details><summary>Baugruppe hinzufügen</summary><label>Name<input id="enNewName" placeholder="z. B. offenes Fach, Tischplatte oder Schublade"></label><label>Grundkonstruktion<select id="enNewFamily">'+Object.entries(ENSEMBLE_FAMILIES).map(([id,name])=>'<option value="'+id+'">'+name+'</option>').join('')+'</select></label><p class="hint">Noch nicht unterstützte Konstruktionen als eigene Baugruppe mit offenen Details anlegen.</p><button id="enAddModule" class="secondary">Baugruppe vorschlagen</button></details>'+
  '<details><summary>Gemeinsame Parameter</summary>'+Object.entries(e.variables).map(([k,v])=>'<label>'+esc(enLabel('var.'+k))+' (mm)<input data-en-var="'+k+'" inputmode="decimal" value="'+(r.values['var.'+k]??'')+'"><small>'+esc(enExprLabel(v))+'</small></label>').join('')+'<label>Neuer Parametername<input id="enVarName" placeholder="z. B. Sitzhoehe"></label><label>Wert in mm<input id="enVarValue" inputmode="decimal"></label><button id="enVariables" class="secondary">Parameteränderungen prüfen</button></details>'+
  '<details><summary>Maße miteinander verknüpfen</summary><label>Zielmaß<select id="enLinkTarget">'+e.modules.flatMap(m=>['width','height','depth','x','y','z'].map(k=>'<option value="'+m.id+'.'+k+'">'+esc(m.name+' · '+enRefLabels[k])+'</option>')).join('')+'</select></label><label>Ausgangsmaß<select id="enLinkSource">'+enSourceOptions()+'</select></label><label>Fester Ausgangswert (mm)<input id="enLinkNumber" inputmode="decimal"></label><label>Verknüpfung<select id="enLinkOp"><option value="same">Gleich übernehmen</option><option value="sub">Abzüglich</option><option value="add">Zuzüglich</option></select></label><label>Zweites Maß<select id="enLinkSecond">'+enSourceOptions()+'</select></label><label>Fester Zu- oder Abschlag (mm)<input id="enLinkOffset" inputmode="decimal" value="0"></label><button id="enLink" class="secondary">Verknüpfung prüfen</button></details>'+
  '<h3>Bestätigte gemeinsame Entscheidungen</h3>'+e.decisions.map(d=>'<p><strong>'+esc(d.label)+'</strong>: '+esc(d.value)+'</p>').join('')+'<p class="notice">'+(a.complete?'Alle Baugruppen tragen bestätigte Stücklisten bei.':'Gemeinsamer Materialbedarf noch unvollständig: '+a.open.map(esc).join(' '))+'</p>';
 }
 function enBindOverview(){
+ if(typeof drBind==='function')drBind();
  $('#enAsk').onclick=()=>{switchTab('talkPane');if(current.knowledge)ensembleTalk({message:'Bitte schlage eine passende Aufteilung und nächste Frage für meine Idee vor: '+current.knowledge});};
  $('#enAdopt')?.addEventListener('click',enAdopt);$('#enDiscard')?.addEventListener('click',()=>{current.ensembleProposal=null;dbPutProject(current).catch(e=>alert(e.message));renderRecord();});
  $('#enTotals').onclick=()=>{const number=id=>{const s=$('#'+id).value.trim();return s===''?null:Number(s.replace(',','.'));};enProposal([{action:'set_total',values:Object.fromEntries(['width','height','depth'].map(k=>[k,number('enTotal-'+k)]))},{action:'set_shared',values:{material:$('#enMaterial').value,thickness:number('enTotal-thickness')}}]);};
@@ -5996,7 +6119,7 @@ function enBindOverview(){
  $('#enVariables').onclick=()=>{const commands=[];for(const el of $$('[data-en-var]')){const v=el.value.trim()===''?null:Number(el.value.replace(',','.'));if(v!==ensembleResolve(current.ensemble).values['var.'+el.dataset.enVar])commands.push({action:'set_variable',id:el.dataset.enVar,value:v});}if($('#enVarName').value.trim())commands.push({action:'set_variable',id:$('#enVarName').value.trim(),value:$('#enVarValue').value.trim()===''?null:Number($('#enVarValue').value.replace(',','.'))});enProposal(commands);};
  $('#enLink').onclick=()=>{const [id,key]=$('#enLinkTarget').value.split('.');if(!id)return;const source=$('#enLinkSource').value,second=$('#enLinkSecond').value,op=$('#enLinkOp').value,raw=$('#enLinkNumber').value.trim(),offset=$('#enLinkOffset').value.trim(),a=source?{ref:source}:raw===''?null:Number(raw.replace(',','.')),b=second?{ref:second}:offset===''?null:Number(offset.replace(',','.'));const value=op==='same'?a:{op,args:[a,b]};enProposal([{action:'set_module',id,values:{[['width','height','depth'].includes(key)?'size':'position']:{[key]:value}}}]);};
 }
-function ensembleRenderDrawing(){const svg=ensembleSvg(current.ensemble);$('#woodDrawingBox').innerHTML='<h3>Gesamtansicht · Planungsstand '+current.ensemble.revision+'</h3><p>Außenkonturen und Lage der Baugruppen, keine Fertigungszeichnung. Unbekannte Tiefen verhindern die Vorderansicht nicht.</p>'+svg+'<ol>'+ensembleResolve(current.ensemble).modules.map(m=>'<li>'+esc(m.name)+' · '+[m.size.width,m.size.height,m.size.depth].map(v=>v??'offen').join(' × ')+' mm</li>').join('')+'</ol><button class="secondary" id="enSvgDownload">Gesamtansicht als SVG herunterladen</button><button class="ghost" id="enPrint">Gesamtansicht drucken / PDF</button>';$('#enSvgDownload').onclick=()=>{const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));const a=document.createElement('a');a.href=url;a.download='Gesamtansicht.svg';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};$('#enPrint').onclick=()=>{const w=window.open('','_blank');if(!w)return alert('Bitte das Druckfenster zulassen.');w.document.write('<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Gesamtansicht</title><style>@page{size:A4;margin:12mm}body{font-family:Arial}svg{max-height:240mm;width:100%}button{padding:10px}@media print{button{display:none}}</style><\/head><body><button onclick="window.print()">Drucken / PDF</button><h2>'+esc(current.title)+'</h2><p>Planungsansicht · Maße in mm · keine Fertigungsfreigabe</p>'+svg+'<\/body><\/html>');w.document.close();};}
+function ensembleRenderDrawing(){const svg=ensembleSvg(current.ensemble);$('#woodDrawingBox').innerHTML='<h3>Gesamtansicht · Planungsstand '+current.ensemble.revision+'</h3><p>Außenkonturen und Lage der Baugruppen, keine Fertigungszeichnung. Unbekannte Tiefen verhindern die Vorderansicht nicht.</p>'+svg+'<ol>'+ensembleResolve(current.ensemble).modules.map(m=>'<li>'+esc(m.name)+' · '+[m.size.width,m.size.height,m.size.depth].map(v=>v??'offen').join(' × ')+' mm</li>').join('')+'</ol>'+(typeof drDrawingSection==='function'?drDrawingSection(current.ensemble):'')+'<button class="secondary" id="enSvgDownload">Gesamtansicht als SVG herunterladen</button><button class="ghost" id="enPrint">Gesamtansicht drucken / PDF</button>';if(typeof drBindDrawing==='function')drBindDrawing();$('#enSvgDownload').onclick=()=>{const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));const a=document.createElement('a');a.href=url;a.download='Gesamtansicht.svg';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};$('#enPrint').onclick=()=>{const w=window.open('','_blank');if(!w)return alert('Bitte das Druckfenster zulassen.');w.document.write('<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Gesamtansicht</title><style>@page{size:A4;margin:12mm}body{font-family:Arial}svg{max-height:240mm;width:100%}button{padding:10px}@media print{button{display:none}}</style><\/head><body><button onclick="window.print()">Drucken / PDF</button><h2>'+esc(current.title)+'</h2><p>Planungsansicht · Maße in mm · keine Fertigungsfreigabe</p>'+svg+(typeof drPrintPages==='function'?drPrintPages(current.ensemble):'')+'<\/body><\/html>');w.document.close();};}
 function ensembleAfterRecord(){
  const back=$('#ensembleReturn');if(back){const child=!!current.ensembleParent;back.classList.toggle('hidden',!child);if(child)$('#ensembleReturnTitle').textContent='Baugruppe im Gesamtprojekt · '+(ensembleContext?.root.title||'');}
  if(current.ensemble){$('#overviewBox').innerHTML=enOverview();enBindOverview();$('#refreshProject').textContent='Gesamtprojekt prüfen / aktualisieren';return;}
@@ -6028,7 +6151,7 @@ async function ensembleTalk({openAnswers=[],message=null}={}){
  if(busy||reconstructionBusy)return;const project=current,text=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];
  const full=[text,...openAnswers.map(a=>a.question+'\n'+a.answer)].filter(Boolean).join('\n');if(!full&&!pics.length)return;
  if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];}project.chat.push({role:'user',text:full||'Bitte das Bild in Baugruppen aufteilen.',photoIds:pics.map(p=>p.id)});if(message===null)$('#chatInput').value='';const revision=project.ensemble.revision;setTalkBusy(true);renderTalk();
- try{if(!ensembleServerReady){const health=await secureFetch(API+'/health');if(!health.ok)throw Error('Der Entwickler-Server ist noch nicht bereit.');const status=await health.json();if(status.ensembleProtocol!==1)throw Error('Der Entwickler-Server benötigt das Backend aus dev60 für den Gesamtprojekt-Talk. Die lokale Planung bleibt verfügbar.');ensembleServerReady=true;}const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ensemble:project.ensemble,chat:project.chat,knowledge:project.knowledge,images:project.photos.map(p=>p.dataUrl),profile:projectProfile(project)})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.ensembleProtocol!==1)throw Error('Der Entwickler-Server benötigt das Backend aus dev60 für den Gesamtprojekt-Talk. Die lokale Planung bleibt verfügbar.');if(project.ensemble.revision!==revision||d.baseRevision!==revision)throw Error('Projektstand wurde inzwischen geändert. Bitte die Frage erneut senden.');project.chat.push({role:'assistant',text:d.reply});if(d.proposal){ensembleApply(project.ensemble,d.proposal.commands,{expectedRevision:d.proposal.baseRevision});project.ensembleProposal={...d.proposal,reply:d.reply};}await dbPutProject(project);if(current===project){renderRecord();if(d.proposal)switchTab('overview');}}
+ try{if(!ensembleServerReady||(project.ensemble.drawers?.length&&!ensembleDrawerReady)){const health=await secureFetch(API+'/health');if(!health.ok)throw Error('Der Entwickler-Server ist noch nicht bereit.');const status=await health.json();if(status.ensembleProtocol!==1)throw Error('Der Entwickler-Server benötigt das Backend aus dev60 für den Gesamtprojekt-Talk. Die lokale Planung bleibt verfügbar.');if(project.ensemble.drawers?.length&&status.drawerProtocol!==1)throw Error('Für den Werkstatt-Talk mit Schubkästen bitte das Backend aus dev65 einspielen. Die lokale Planung bleibt verfügbar.');ensembleDrawerReady=status.drawerProtocol===1;ensembleServerReady=true;}const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ensemble:project.ensemble,chat:project.chat,knowledge:project.knowledge,images:project.photos.map(p=>p.dataUrl),profile:projectProfile(project)})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.ensembleProtocol!==1)throw Error('Der Entwickler-Server benötigt das Backend aus dev60 für den Gesamtprojekt-Talk. Die lokale Planung bleibt verfügbar.');if(project.ensemble.revision!==revision||d.baseRevision!==revision)throw Error('Projektstand wurde inzwischen geändert. Bitte die Frage erneut senden.');project.chat.push({role:'assistant',text:d.reply});if(d.proposal){ensembleApply(project.ensemble,d.proposal.commands,{expectedRevision:d.proposal.baseRevision});project.ensembleProposal={...d.proposal,reply:d.reply};}await dbPutProject(project);if(current===project){renderRecord();if(d.proposal)switchTab('overview');}}
  catch(e){project.chat.push({role:'assistant',text:'Das Gespräch konnte nicht abgeschlossen werden: '+e.message});try{await dbPutProject(project);}catch{}alert(e.message);}finally{setTalkBusy(false);if(current===project)renderTalk();}
 }
 function ensembleInit(){
@@ -6036,6 +6159,89 @@ function ensembleInit(){
  $('#ensembleNew').onclick=()=>ensembleStart();$('#ensembleExample').onclick=()=>ensembleStart({example:true});$('#ideaEnsemble').onclick=()=>ensembleStart({fromIdea:true});$('#ensembleBack').onclick=enReturn;
 }
 document.addEventListener('DOMContentLoaded',ensembleInit);
+
+// One compact entry. Optional construction fields stay collapsed.
+let drawerEditorState=null;
+function drSection(e){
+ const plans=e.drawers||[];
+ return '<section class="notice"><strong>Schubkasten und fester Fachboden</strong>'+plans.map(d=>'<p>'+esc(d.name)+' · '+d.frontHeight+' mm Fronthöhe · '+({selected:'Auszug gewählt',suggested:'Auszug vorgeschlagen',none:'Auszug offen'}[d.runner])+' <button class="secondary small" data-dr-edit="'+esc(d.id)+'">Planung öffnen</button></p>').join('')+
+ '<button class="secondary small" id="drAdd">Schubkasten ergänzen</button></section>';
+}
+function drBind(){
+ $('#drAdd')?.addEventListener('click',()=>drBegin());
+ $$('[data-dr-edit]').forEach(b=>b.onclick=()=>drBegin(b.dataset.drEdit));
+}
+function drBegin(id=null,parentId=null){
+ const e=current.ensemble,existing=(e.drawers||[]).find(d=>d.id===id),parent=e.modules.find(m=>m.id===(parentId||existing?.parentId)&&m.family==='cabinet')||e.modules.find(m=>m.family==='cabinet');
+ if(!parent)return alert('Zuerst einen Korpus als übergeordnete Baugruppe anlegen.');
+ const ref=ref=>({ref}),wardrobe=parent.id==='cabinet'&&e.modules.some(m=>m.id==='bench')&&Object.hasOwn(e.variables,'openWidth')&&Object.hasOwn(e.variables,'leftWidth');
+ const r={x:ref('module.'+parent.id+'.x'),y:ref('module.'+parent.id+'.y'),z:ref('module.'+parent.id+'.z'),width:ref('module.'+parent.id+'.width'),depth:ref('module.'+parent.id+'.depth')};
+ if(wardrobe){r.x=ref('var.leftWidth');r.y=ref('module.bench.height');r.width=ref('var.openWidth');}
+ const p=existing?enClone(existing):drawerPlanNew({id:'drawer_'+Date.now().toString(36),parentId:parent.id,region:r,material:/Kiefer/i.test(e.shared.material)?'Kiefer Massivholz':'',frontMaterial:e.shared.material,shelfThickness:e.shared.thickness||19});
+ const resolved=existing?ensembleResolve(e).drawers.find(d=>d.id===id):drawerPlanResolve(p,key=>ensembleResolve(e).values[key]??null,e.shared);
+ drawerEditorState={project:current,id,baseRevision:e.revision,original:p,resolved};drRenderEditor();
+}
+function drRenderEditor(){
+ const st=drawerEditorState,p={...st.original,frontThickness:st.resolved.frontThickness,shelfThickness:st.resolved.shelfThickness,frontMaterial:st.resolved.frontMaterial},d=st.resolved,model=drawerPlanModel(d),box=$('#enModuleEditor');
+ const field=(key,label,value,hint='')=>'<label class="wdField"><span>'+esc(label)+' (mm)</span><input data-dr-field="'+key+'" inputmode="decimal" value="'+(value??'')+'" placeholder="noch offen">'+(hint?'<small>'+esc(hint)+'</small>':'')+'</label>';
+ box.innerHTML='<section class="notice" id="drEditor"><h3>'+esc(p.name)+'</h3><p>Fachboden fest verdübelt, Schubkasten darunter: gezinkter Kasten, 3-mm-Sperrholzboden in Nut und separate Frontaufdoppelung. Die Vorbelegung ist ein Vorschlag.</p>'+
+ '<label>Korpus<select id="drParent">'+current.ensemble.modules.filter(m=>m.family==='cabinet').map(m=>'<option value="'+esc(m.id)+'" '+(m.id===p.parentId?'selected':'')+'>'+esc(m.name)+'</option>').join('')+'</select></label>'+
+ '<div class="wdFields">'+field('frontHeight','Fronthöhe',p.frontHeight)+'</div>'+
+ '<p>Vorgeschlagener Beschlag: <strong>'+esc(DRAWER_RUNNER.label)+'</strong>. Seitlich befestigt, gedämpft; 300 mm Kastenlänge, 290 mm Auszugsweg. <a href="'+DRAWER_RUNNER.url+'" target="_blank" rel="noopener noreferrer">Herstellerangaben</a></p>'+
+ '<label>Beschlag<select id="drRunner"><option value="suggested" '+(p.runner==='suggested'?'selected':'')+'>Als Vorschlag behalten</option><option value="selected" '+(p.runner==='selected'?'selected':'')+'>Diesen Auszug wählen</option><option value="none" '+(p.runner==='none'?'selected':'')+'>Beschlag noch offen lassen</option></select></label>'+
+ '<details><summary>Einbaumaße und Kastenaufbau</summary><p class="hint">Bereichsbreite '+(d.region.width??'offen')+' mm ist kein lichtes Fachmaß. Unbekannte Maße dürfen offen bleiben. Die nutzbare Tiefe wird ab Rückseite der Aufdoppelung bis zum hinteren Hindernis gemessen.</p><div class="wdFields">'+
+ field('openingWidth','Lichte Fachbreite',p.openingWidth)+field('usableDepth','Nutzbare Einbautiefe',p.usableDepth,'Für diesen Auszug mindestens 304 mm.')+field('openingOffset','Fachöffnung ab Bereich links',p.openingOffset,'Leer: mittig im Planungsbereich vorgeschlagen; bei asymmetrischer Mittelseite korrigieren.')+
+ field('boxHeight','Kastenhöhe',p.boxHeight)+field('sideThickness','Kastenwanddicke',p.sideThickness)+field('frontThickness','Frontdicke',p.frontThickness)+field('frontGap','Frontfuge ringsum',p.frontGap)+field('boxLift','Kastenunterkante über Frontunterkante',p.boxLift)+
+ field('shelfThickness','Fachbodendicke',p.shelfThickness,'Front- und Fachbodendicke folgen dem gemeinsamen Material; abweichende Eingabe löst diesen Bezug.')+field('dowelDiameter','Fachboden-Dübeldurchmesser',p.dowelDiameter)+field('grooveDepth','Bodennuttiefe',p.grooveDepth)+field('grooveBottom','Nutunterkante ab Kastenunterkante',p.grooveBottom)+field('grooveClearance','Nutbreitenzugabe zum 3-mm-Boden',p.grooveClearance)+field('bottomPlay','Bodenspiel insgesamt je Richtung',p.bottomPlay)+'</div>'+
+ '<label>Kastenholz<input id="drMaterial" value="'+esc(p.material)+'"></label><label>Front- und Fachbodenmaterial<input id="drFrontMaterial" value="'+esc(p.frontMaterial)+'"></label>'+
+ '<label>Zinkung<select id="drJoint"><option value="dovetail" '+(p.joinery==='dovetail'?'selected':'')+'>Offene Schwalbenschwänze · 1:7</option><option value="finger" '+(p.joinery==='finger'?'selected':'')+'>Fingerzinken</option></select></label><div class="wdFields">'+field('tails','Schwalbenanzahl',p.tails)+field('divisions','Fingerzinken-Teilungszahl',p.divisions)+'</div>'+
+ '<details><summary>Lage im Gesamtmöbel</summary><p>Planungsbereich ab links / Boden / Rückseite. Unveränderte Felder behalten ihre Maßbezüge.</p><div class="wdFields">'+['x','y','z','width','depth'].map(k=>field('region-'+k,{x:'Bereich ab links',y:'Bereich ab Boden',z:'Bereich ab Rückseite',width:'Bereichsbreite',depth:'Bereichstiefe'}[k],d.region[k])).join('')+'</div></details>'+
+ '<label><input type="checkbox" id="drReplaceShelf" '+(p.replacesLowestShelf?'checked':'')+'> Untersten Einlegeboden durch diesen festen Fachboden ersetzen.</label><label><input type="checkbox" id="drConfirm" '+(p.dimensionsConfirmed&&model.ready?'checked':'')+'> Einbaumaße und Kastenaufbau bestätigen (keine Freigabe von Bohrbildern).</label></details>'+
+ '<p class="hint">Die Front sitzt mit dem eingestellten Fugenbild innerhalb des Planungsbereichs. Der feste Fachboden liegt unmittelbar darüber. Der 3-mm-Boden hat eine eigene Tragfähigkeitsprüfung; die 35-kg-Lastklasse des Auszugs gilt nicht automatisch für den Kasten.</p>'+
+ '<button class="primary" id="drPreview">Vorschlag prüfen</button><button class="ghost" id="drClose">Schließen</button>'+(st.id?'<button class="ghost" id="drRemove">Erweiterung entfernen …</button>':'')+'<div id="drPreviewBox">'+drawerPlanSvg(model)+'</div></section>';
+ $('#drParent').disabled=!!st.id;
+ $('#drParent').onchange=()=>drBegin(null,$('#drParent').value);
+ $('#drPreview').onclick=drPreview;
+ $('#drClose').onclick=()=>{drawerEditorState=null;box.innerHTML='';};
+ $('#drRemove')?.addEventListener('click',()=>enProposal([{action:'remove_drawer',id:p.id}],'Schubkasten und festen Fachboden aus dieser Erweiterung entfernen.'));
+ box.scrollIntoView?.({behavior:'smooth',block:'start'});
+}
+function drReadEditor(){
+ const st=drawerEditorState,p=enClone(st.original);
+ if(current!==st.project||current.ensemble.revision!==st.baseRevision)throw Error('Projekt inzwischen geändert. Schubkastenplanung erneut öffnen.');
+ for(const el of $$('[data-dr-field]')){const key=el.dataset.drField,s=el.value.trim(),v=s===''?null:Number(s.replace(',','.'));if(v!==null&&!Number.isFinite(v))throw Error('Bitte eine gültige Zahl eingeben.');
+  if(key.startsWith('region-')){const k=key.slice(7);if(v!==st.resolved.region[k])p.region[k]=v;}else p[key]=v;}
+ if(p.frontThickness!==st.resolved.frontThickness||p.shelfThickness!==st.resolved.shelfThickness)p.thicknessFromShared=false;
+ p.runner=$('#drRunner').value;p.joinery=$('#drJoint').value;p.material=$('#drMaterial').value.trim();p.frontMaterial=$('#drFrontMaterial').value.trim();if(p.frontMaterial!==st.resolved.frontMaterial)p.frontMaterialFromShared=false;p.dimensionsConfirmed=false;p.confirmationKey=null;p.replacesLowestShelf=$('#drReplaceShelf').checked;
+ drawerPlanValidate(p,ensembleExpression);
+ let d=drawerPlanResolve(p,key=>ensembleResolve(current.ensemble).values[key]??null,current.ensemble.shared),m=drawerPlanModel(d);if(!m.ok)throw Error(m.errors.join('\n'));
+ if($('#drConfirm').checked){if(p.openingWidth===null||p.usableDepth===null||p.runner!=='selected'||!p.material||/noch offen/.test(p.material)||!p.frontMaterial)throw Error('Für bestätigte Einbaumaße werden lichte Breite, nutzbare Tiefe, Kastenholz und eine gewählte Führung benötigt. Die Planung kann auch ohne Bestätigung übernommen werden.');const unresolved=m.pending.filter(v=>!v.includes('Einbaumaße und Kastenaufbau sind noch ein Vorschlag'));if(unresolved.length)throw Error(unresolved.join(' ')+' Planung vorerst ohne Einbaumaßbestätigung übernehmen.');p.dimensionsConfirmed=true;p.confirmationKey=m.geometryKey;}
+ return p;
+}
+function drPreview(){
+ try{const p=drReadEditor();enProposal([{action:'set_drawer',drawer:p}],p.name+': fester Fachboden über gezinktem Kasten mit 3-mm-Sperrholzboden und Frontaufdoppelung. '+(p.dimensionsConfirmed?'Einbaumaße bestätigt; Montagebearbeitungen noch offen.':'Planungsstand, unbekannte Einbaumaße bleiben offen.'));}catch(e){alert(e.message);}
+}
+function drDrawingSection(e){
+ const r=ensembleResolve(e);return r.drawers.map(d=>{
+  const m=drawerPlanModel(d),rows=m.cutlist.map(v=>'<tr><td>'+esc(v.part)+'</td><td>'+v.qty+'</td><td>'+[v.length_mm,v.width_mm,v.thickness_mm].map(x=>drawingFormat(x)).join(' × ')+'</td><td>'+esc(v.material)+'</td></tr>').join('');
+  return '<section class="notice"><h3>'+esc(d.name)+'</h3>'+drawerPlanSvg(m)+'<p>'+esc(m.pending.slice(0,2).join(' ')||'Einbaumaße bestätigt. Bohrbilder und Montageanschlüsse bleiben separat zu prüfen.')+'</p><details><summary>Zuschnitt und Konstruktionsdetails</summary>'+(rows?'<p>Zuschnitt'+(m.ready?' nach bestätigten Einbaumaßen':'vorschlag')+' · Fertigmaße, ohne Bearbeitungszugaben</p><table><thead><tr><th>Teil</th><th>Stück</th><th>L × B × D (mm)</th><th>Material</th></tr></thead><tbody>'+rows+'</tbody></table>':'<p>Zuschnitt folgt aus lichter Fachbreite und nutzbarer Einbautiefe.</p>')+'<ul>'+m.machiningPending.map(v=>'<li>'+esc(v)+'</li>').join('')+'</ul></details>'+drJointDrawing(d)+'<button class="secondary" data-dr-download="'+esc(d.id)+'">Schubkastenzeichnung als SVG</button></section>';
+ }).join('');
+}
+function drJointDrawing(d){
+ const p={kind:d.joinery==='dovetail'?'dovetail-joint-v1':'finger-joint-v1',width:d.boxHeight,thickness:d.sideThickness,tails:d.tails,divisions:d.divisions},m=buildSolidJoint(p,{drawingNumber,drawingFormat});
+ return m.ok?'<details><summary>Zinkendetail ansehen</summary><p>Schwalben an den Kastenseiten, Zinken am Vorder- und Hinterstück. Detail als Vorschlag; Bodennuten an den Ecken gestoppt.</p>'+solidJointPages(m,{title:d.name,status:'Konstruktionsvorschlag · keine Fertigungsfreigabe'},{svgTools}).join('')+'</details>':'';
+}
+function drBindDrawing(){
+ $$('[data-dr-download]').forEach(b=>b.onclick=()=>{const d=ensembleResolve(current.ensemble).drawers.find(d=>d.id===b.dataset.drDownload);if(!d)return;const url=URL.createObjectURL(new Blob([drawerPlanSvg(drawerPlanModel(d))],{type:'image/svg+xml'})),a=document.createElement('a');a.href=url;a.download='Schubkasten_'+d.id+'.svg';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);});
+}
+
+function drPrintPages(e){
+ return ensembleResolve(e).drawers.map(d=>{
+  const m=drawerPlanModel(d),p={kind:d.joinery==='dovetail'?'dovetail-joint-v1':'finger-joint-v1',width:d.boxHeight,thickness:d.sideThickness,tails:d.tails,divisions:d.divisions},j=buildSolidJoint(p,{drawingNumber,drawingFormat});
+  const pages=[drawerPlanSvg(m),...(j.ok?solidJointPages(j,{title:d.name,status:'Konstruktionsvorschlag · keine Fertigungsfreigabe'},{svgTools}):[])];
+  return pages.map(svg=>'<section style="break-before:page;page-break-before:always">'+svg+'</section>').join('');
+ }).join('');
+}
 
 function renderRecord(){if(typeof hwScheduleMount==='function')hwScheduleMount();if(current.ensemble)ensembleSync(current);if(cHas(current))cSync(current);
   if(typeof ideaUpdateEntry==='function')ideaUpdateEntry();
