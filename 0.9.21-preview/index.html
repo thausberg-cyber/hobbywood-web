@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev65</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev65.1</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -202,7 +202,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev65 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev65.1 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev65';
+const APP_VERSION='0.9.21-dev65.1';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -4326,8 +4326,8 @@ function drawingImport(project={},kind){
 function drawingImportSource(project){return drawingSource(project);}
 
 // Offline PDF packaging. Each A4 page contains one 300-dpi drawing image.
-function drawingPdfBytes(images){
- if(!Array.isArray(images)||!images.length||images.length>3)throw Error('Eine bis drei Zeichnungsseiten erforderlich.');
+function drawingPdfBytes(images,maxPages=3){
+ if(!Array.isArray(images)||!images.length||images.length>maxPages)throw Error('Ungültige Anzahl Zeichnungsseiten.');
  const encoder=new TextEncoder(),chunks=[],offsets=[0];let length=0;
  const add=value=>{const bytes=typeof value==='string'?encoder.encode(value):value;chunks.push(bytes);length+=bytes.length;};
  const object=(id,value)=>{offsets[id]=length;add(`${id} 0 obj\n`);add(value);add('\nendobj\n');};
@@ -4349,8 +4349,12 @@ function drawingPdfBytes(images){
  const result=new Uint8Array(length);let cursor=0;for(const chunk of chunks){result.set(chunk,cursor);cursor+=chunk.length;}return result;
 }
 async function drawingPdfBlob(model,options={}){
+ return drawingSvgPagesPdfBlob(drawingPages(model,options));
+}
+async function drawingSvgPagesPdfBlob(pages,maxPages=3){
+ if(!Array.isArray(pages)||!pages.length||pages.length>maxPages)throw Error('Ungültige Anzahl Zeichnungsseiten.');
  const images=[];
- for(const svg of drawingPages(model,options)){
+ for(const svg of pages){
   const img=new Image();
   await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Zeichnung konnte nicht rechtzeitig geladen werden.')),20000);img.onload=()=>{clearTimeout(timer);resolve()};img.onerror=()=>{clearTimeout(timer);reject(Error('Zeichnung konnte nicht geladen werden.'))};img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);});
   const canvas=document.createElement('canvas');const box=svg.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/),portrait=box?Number(box[2])>Number(box[1]):img.naturalHeight>img.naturalWidth;canvas.width=portrait?2480:3508;canvas.height=portrait?3508:2480;
@@ -4362,7 +4366,7 @@ async function drawingPdfBlob(model,options={}){
    images.push({bytes,width:canvas.width,height:canvas.height});
   }finally{canvas.width=0;canvas.height=0;img.src='';}
  }
- return new Blob([drawingPdfBytes(images)],{type:'application/pdf'});
+ return new Blob([drawingPdfBytes(images,maxPages)],{type:'application/pdf'});
 }
 
 function wdIsCorpus(params){return ['carcass-v1','writing-carcass-v1'].includes(params?.kind)}
@@ -6119,7 +6123,40 @@ function enBindOverview(){
  $('#enVariables').onclick=()=>{const commands=[];for(const el of $$('[data-en-var]')){const v=el.value.trim()===''?null:Number(el.value.replace(',','.'));if(v!==ensembleResolve(current.ensemble).values['var.'+el.dataset.enVar])commands.push({action:'set_variable',id:el.dataset.enVar,value:v});}if($('#enVarName').value.trim())commands.push({action:'set_variable',id:$('#enVarName').value.trim(),value:$('#enVarValue').value.trim()===''?null:Number($('#enVarValue').value.replace(',','.'))});enProposal(commands);};
  $('#enLink').onclick=()=>{const [id,key]=$('#enLinkTarget').value.split('.');if(!id)return;const source=$('#enLinkSource').value,second=$('#enLinkSecond').value,op=$('#enLinkOp').value,raw=$('#enLinkNumber').value.trim(),offset=$('#enLinkOffset').value.trim(),a=source?{ref:source}:raw===''?null:Number(raw.replace(',','.')),b=second?{ref:second}:offset===''?null:Number(offset.replace(',','.'));const value=op==='same'?a:{op,args:[a,b]};enProposal([{action:'set_module',id,values:{[['width','height','depth'].includes(key)?'size':'position']:{[key]:value}}}]);};
 }
-function ensembleRenderDrawing(){const svg=ensembleSvg(current.ensemble);$('#woodDrawingBox').innerHTML='<h3>Gesamtansicht · Planungsstand '+current.ensemble.revision+'</h3><p>Außenkonturen und Lage der Baugruppen, keine Fertigungszeichnung. Unbekannte Tiefen verhindern die Vorderansicht nicht.</p>'+svg+'<ol>'+ensembleResolve(current.ensemble).modules.map(m=>'<li>'+esc(m.name)+' · '+[m.size.width,m.size.height,m.size.depth].map(v=>v??'offen').join(' × ')+' mm</li>').join('')+'</ol>'+(typeof drDrawingSection==='function'?drDrawingSection(current.ensemble):'')+'<button class="secondary" id="enSvgDownload">Gesamtansicht als SVG herunterladen</button><button class="ghost" id="enPrint">Gesamtansicht drucken / PDF</button>';if(typeof drBindDrawing==='function')drBindDrawing();$('#enSvgDownload').onclick=()=>{const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));const a=document.createElement('a');a.href=url;a.download='Gesamtansicht.svg';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};$('#enPrint').onclick=()=>{const w=window.open('','_blank');if(!w)return alert('Bitte das Druckfenster zulassen.');w.document.write('<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Gesamtansicht</title><style>@page{size:A4;margin:12mm}body{font-family:Arial}svg{max-height:240mm;width:100%}button{padding:10px}@media print{button{display:none}}</style><\/head><body><button onclick="window.print()">Drucken / PDF</button><h2>'+esc(current.title)+'</h2><p>Planungsansicht · Maße in mm · keine Fertigungsfreigabe</p>'+svg+(typeof drPrintPages==='function'?drPrintPages(current.ensemble):'')+'<\/body><\/html>');w.document.close();};}
+function ensembleRenderDrawing(){const svg=ensembleSvg(current.ensemble);$('#woodDrawingBox').innerHTML='<h3>Gesamtansicht · Planungsstand '+current.ensemble.revision+'</h3><p>Außenkonturen und Lage der Baugruppen, keine Fertigungszeichnung. Unbekannte Tiefen verhindern die Vorderansicht nicht.</p>'+svg+'<ol>'+ensembleResolve(current.ensemble).modules.map(m=>'<li>'+esc(m.name)+' · '+[m.size.width,m.size.height,m.size.depth].map(v=>v??'offen').join(' × ')+' mm</li>').join('')+'</ol>'+(typeof drDrawingSection==='function'?drDrawingSection(current.ensemble):'')+'<button class="secondary" id="enSvgDownload">Gesamtansicht als SVG herunterladen</button><button class="ghost" id="enPrint">Gesamtansicht als PDF herunterladen</button>';if(typeof drBindDrawing==='function')drBindDrawing();$('#enSvgDownload').onclick=()=>{const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));const a=document.createElement('a');a.href=url;a.download='Gesamtansicht.svg';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};$('#enPrint').onclick=ensembleDownloadPdf;}
+
+// Direct file export avoids the Safari popup print path. No project writes.
+function ensemblePdfPages(project){
+ const overview=ensembleSvg(project.ensemble);
+ if(!overview.startsWith('<svg'))throw Error('Gesamtbreite und Gesamthöhe eingeben.');
+ const box=overview.match(/viewBox="([^"]+)"/);
+ if(!box)throw Error('Gesamtansicht hat keinen Zeichenbereich.');
+ const values=box[1].trim().split(/\s+/).map(Number),w=values[2],h=values[3];
+ if(!(w>0&&h>0))throw Error('Ungültiger Zeichenbereich.');
+ const scale=Math.min(186/w,249/h),x=(210-w*scale)/2,y=32+(249-h*scale)/2;
+ const inner=overview.replace(/^<svg[^>]*>/,'').replace(/<\/svg>\s*$/,'');
+ const page='<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297"><rect width="210" height="297" fill="white"/><text x="12" y="12" font-family="Arial" font-size="3.5">look, talk ’n build · Gesamtansicht</text><text x="12" y="19" font-family="Arial" font-size="3">'+esc(project.title)+'</text><text x="12" y="25" font-family="Arial" font-size="2.5">Planungsstand '+project.ensemble.revision+' · Maße in mm · keine Fertigungsfreigabe</text><g transform="translate('+x+' '+y+') scale('+scale+')">'+inner+'</g></svg>';
+ const pages=[page];
+ for(const d of ensembleResolve(project.ensemble).drawers){
+  pages.push(drawerPlanSvg(drawerPlanModel(d)));
+  const j=buildSolidJoint({kind:d.joinery==='dovetail'?'dovetail-joint-v1':'finger-joint-v1',width:d.boxHeight,thickness:d.sideThickness,tails:d.tails,divisions:d.divisions},{drawingNumber,drawingFormat});
+  if(j.ok)pages.push(...solidJointPages(j,{title:d.name,status:'Konstruktionsvorschlag · keine Fertigungsfreigabe'},{svgTools}));
+ }
+ return pages;
+}
+async function ensembleDownloadPdf(){
+ const button=$('#enPrint'),label=button.textContent;
+ button.disabled=true;button.textContent='PDF wird erstellt …';
+ try{
+  const snapshot={title:current.title,ensemble:JSON.parse(JSON.stringify(current.ensemble))};
+  const blob=await drawingSvgPagesPdfBlob(ensemblePdfPages(snapshot),100);
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='Gesamtansicht_dev65_1.pdf';document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+ }catch(e){alert('PDF konnte nicht erstellt werden: '+e.message);}
+ finally{button.disabled=false;button.textContent=label;}
+}
+
 function ensembleAfterRecord(){
  const back=$('#ensembleReturn');if(back){const child=!!current.ensembleParent;back.classList.toggle('hidden',!child);if(child)$('#ensembleReturnTitle').textContent='Baugruppe im Gesamtprojekt · '+(ensembleContext?.root.title||'');}
  if(current.ensemble){$('#overviewBox').innerHTML=enOverview();enBindOverview();$('#refreshProject').textContent='Gesamtprojekt prüfen / aktualisieren';return;}
