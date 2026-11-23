@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.12</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.13</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev66.12';
+const APP_VERSION='0.9.21-dev66.13';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -2256,25 +2256,32 @@ function circularContourSvg(o,cuts,{X,Y,n,line}){
 
 function boardContourScale(c,o){const T=c.base.thickness;return drawingOverviewScale(c.viewScale,Math.min(170/(o.length+T+20),100/(o.width+T),90/o.width,20/T));}
 function boardContourPages(c,o,{title,status,paperLayout=null},tools){
- if(!o.ready||!(c.base.thickness>0))return [];const choice=paperLayout?{ok:true,denominator:paperLayout.denominator,scale:1/paperLayout.denominator}:boardContourScale(c,o);if(!choice.ok)return [];const {text,line,rect,n,f,dh,dv}=tools,s=choice.scale,T=c.base.thickness,X=x=>28+x*s,Y=y=>58+(o.width-y)*s,frontY=paperLayout?.elevations?62:58+o.width*s+23;
+ if(!o.ready||!(c.base.thickness>0))return [];const choice=paperLayout?{ok:true,denominator:paperLayout.denominator,scale:1/paperLayout.denominator}:boardContourScale(c,o);if(!choice.ok)return [];const {text,line,rect,n,f,dh,dv}=tools,s=choice.scale,T=c.base.thickness;
  const split=paperLayout?.elevations;
- const sideX=split?.length===2?28:28+o.length*s+14;
+ const viewRight=paperLayout?.below?paperLayout.width-12:212;
+ const viewBottom=paperLayout?.below?paperLayout.height-54:197;
+ const centerOnSheet=paperLayout&&!split;
+ const planX=28+(centerOnSheet?Math.max(0,viewRight-55-(o.length+T)*s)/2:0);
+ const planY=58+(centerOnSheet?Math.max(0,viewBottom-93-(o.width+T)*s)/2:0);
+ const X=x=>planX+x*s,Y=y=>planY+(o.width-y)*s;
+ const frontY=split?62:planY+o.width*s+23;
+ const sideX=split?.length===2?28:planX+o.length*s+14;
  const finishText=op=>op.treatment==='chamfer'?'Fase '+f(op.value)+' × 45°':op.treatment==='round'?'R '+f(op.value):op.treatment==='break'?'Kanten brechen':'unbearbeitet';
  const groups=[];for(const edge of o.edges){const finish=boardEdgeFinish(c,edge.id);if(!['chamfer','round'].includes(finish.treatment)||!(finish.value>0))continue;const key=finish.treatment+'/'+finish.value;let group=groups.find(g=>g.key===key);if(!group){group={key,finish,edges:[],id:'F'+(groups.length+1)};groups.push(group);}group.edges.push(edge);}
  const circular=boardCircularCuts(c,o),cuts=circular.cuts;
  const profiles=groups.length&&T<=90&&(groups.length<=2||T<=40);
  const frame=(body,page,paper,subtitle=o.name)=>'<svg xmlns="http://www.w3.org/2000/svg" width="'+(paper?.width||297)+'mm" height="'+(paper?.height||210)+'mm" viewBox="0 0 '+(paper?.width||297)+' '+(paper?.height||210)+'"><style>text{font:2.5px Arial;fill:#111;stroke:none}.bold{font-weight:bold;font-size:3px}text.small{font-size:2.15px}line,path,rect{stroke:#111;stroke-width:.22;fill:none}.axis{stroke-dasharray:4 1 1 1}.hidden{stroke-dasharray:1 .6}.body{stroke-width:.4}.measure{paint-order:stroke;stroke:white;stroke-width:.9;fill:#111}</style>'+rect(6,6,(paper?.width||297)-12,(paper?.height||210)-12)+text(12,15,"look, talk ’n build",'bold')+text(12,25,title+' · '+subtitle,'bold')+text((paper?.width||297)-37,15,'Blatt '+page+'/'+(profiles||cuts.length?2:1),'small')+line(6,30,(paper?.width||297)-6,30)+text(12,37,status,'small')+body+(paper&&split?line(paper.width-124,14,paper.width-74,14)+text(paper.width-124,19,'Kontrolle: 50 mm auf Papier','small'):line((paper?.width||297)-75,43,(paper?.width||297)-25,43)+text((paper?.width||297)-75,48,'Kontrolle: 50 mm auf Papier','small'))+text(12,(paper?.height||210)-9,'Alle Maße mm · Druck 100 % / Originalgröße · DIN-919-Abgleich offen','small')+'</svg>';
- let body=text(28,46,'DRAUFSICHT · M 1:'+f(choice.denominator),'bold')+'<path data-board-outline="'+o.shape+'" class="body" d="'+o.points.map((p,i)=>(i?'L':'M')+n(X(p.x))+','+n(Y(p.y))).join(' ')+' Z"/>';
- if(cuts.length)body=text(28,46,'DRAUFSICHT · M 1:'+f(choice.denominator),'bold')+circularContourSvg(o,cuts,{X,Y,n,line});
+ let body=text(planX,planY-12,'DRAUFSICHT · M 1:'+f(choice.denominator),'bold')+'<path data-board-outline="'+o.shape+'" class="body" d="'+o.points.map((p,i)=>(i?'L':'M')+n(X(p.x))+','+n(Y(p.y))).join(' ')+' Z"/>';
+ if(cuts.length)body=text(planX,planY-12,'DRAUFSICHT · M 1:'+f(choice.denominator),'bold')+circularContourSvg(o,cuts,{X,Y,n,line});
  for(const e of o.edges){const x1=X(e.p.x),y1=Y(e.p.y),x2=X(e.q.x),y2=Y(e.q.y),dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),nx=-dy/L,ny=dx/L,d=7;
   const a={x:x1+nx*d,y:y1+ny*d},b={x:x2+nx*d,y:y2+ny*d};body+='<g data-contour-edge="'+e.id+'" data-real-length="'+n(e.length)+'">'+line(x1,y1,a.x+nx*2,a.y+ny*2)+line(x2,y2,b.x+nx*2,b.y+ny*2)+line(a.x,a.y,b.x,b.y)+text((a.x+b.x)/2+nx*2,(a.y+b.y)/2+ny*2,e.id+' = '+f(e.length),'measure','middle')+'</g>';
   const op=boardEdgeFinish(c,e.id),offsets=Object.fromEntries(o.edges.map(edge=>{const f=boardEdgeFinish(c,edge.id);return [edge.id,['chamfer','round'].includes(f.treatment)?f.value||0:0];}));if(offsets[e.id]>0){const inset=boardInsetEdge(o,e,offsets);if(inset)body+='<g data-edge-finish="'+e.id+'" data-treatment="'+op.treatment+'">'+cutLinePieces(inset.p,inset.q,cuts).map(part=>line(X(part.p.x),Y(part.p.y),X(part.q.x),Y(part.q.y))).join('')+'</g>';}
  }
  for(const h of cuts){const r=h.r;body+='<g data-hole-center="'+h.label+'">'+line(X(h.x-r-2),Y(h.y),X(h.x+r+2),Y(h.y),'axis')+line(X(h.x),Y(h.y-r-2),X(h.x),Y(h.y+r+2),'axis')+text(X(h.x)+3,Y(h.y)-3,h.label+' · Ø '+f(h.diameter),'measure')+'</g>';}
- let frontBody=text(28,frontY-4,'VORDERANSICHT · M 1:'+f(choice.denominator),'bold')+rect(X(0),frontY,o.length*s,T*s)+dh(X(0),X(o.length),frontY+T*s,frontY+T*s+7,f(o.length))+dv(frontY,frontY+T*s,X(o.length),X(o.length)+7,f(T));
+ let frontBody=text(planX,frontY-4,'VORDERANSICHT · M 1:'+f(choice.denominator),'bold')+rect(X(0),frontY,o.length*s,T*s)+dh(X(0),X(o.length),frontY+T*s,frontY+T*s+7,f(o.length))+dv(frontY,frontY+T*s,X(o.length),X(o.length)+7,f(T));
  const envelope=(axis,value)=>{const values=[];for(const e of o.edges){const a=axis==='x'?e.p.x:e.p.y,b=axis==='x'?e.q.x:e.q.y,v=axis==='x'?e.p.y:e.p.x,w=axis==='x'?e.q.y:e.q.x;if(Math.abs(a-b)<1e-9){if(Math.abs(value-a)<1e-9)values.push(v,w);}else{const t=(value-a)/(b-a);if(t>=-1e-9&&t<=1+1e-9)values.push(v+t*(w-v));}}return Math.min(...values);};
  for(const x of [...new Set(o.points.map(p=>p.x))])if(x>1e-6&&x<o.length-1e-6){const front=envelope('x',x),visible=o.points.some(p=>Math.abs(p.x-x)<1e-6&&Math.abs(p.y-front)<1e-6);frontBody+=line(X(x),frontY,X(x),frontY+T*s,visible?'':'hidden');}
- let sideBody=(split?text(sideX,48,'SEITENANSICHT · M 1:'+f(choice.denominator),'bold'):'')+text(sideX,52,'VON LINKS','small')+rect(sideX,Y(o.width),T*s,o.width*s);
+ let sideBody=(split?text(sideX,48,'SEITENANSICHT · M 1:'+f(choice.denominator),'bold'):'')+text(sideX,planY-6,'VON LINKS','small')+rect(sideX,Y(o.width),T*s,o.width*s);
  for(const y of [...new Set(o.points.map(p=>p.y))])if(y>1e-6&&y<o.width-1e-6)sideBody+=line(sideX,Y(y),sideX+T*s,Y(y));
  for(const h of cuts){
   frontBody+=line(X(Math.max(0,h.x-h.r)),frontY,X(Math.max(0,h.x-h.r)),frontY+T*s,'hidden')+line(X(Math.min(o.length,h.x+h.r)),frontY,X(Math.min(o.length,h.x+h.r)),frontY+T*s,'hidden');
@@ -2839,7 +2846,9 @@ function constructionPages(input,{title=input.title||'Brettkonstruktion',paperLa
  const extra=o.operations.filter(op=>op.type==='bore'&&op.g&&op.positions?.length&&op.target==='base'&&op.diameter>0&&op.depth>0);
  if(extra.length>1){} // Additional bore groups remain subject to the detail capability check.
  if(extra.length&&(pages.length===1||paperLayout?.elevations)&&extra[0].diameter<=80&&input.base.thickness<=90){const op=extra[0],t=input.base.thickness,w=Math.max(45,op.diameter+20),x=28,y=65,R=op.diameter/2,center=x+w/2;
-  const known=o.renderModel.components.filter(g=>!g.unresolved),minX=Math.min(...known.map(g=>g.x)),maxY=Math.max(...known.map(g=>g.y+g.width)),scale=1/(o.renderModel.overviewDenominator||5),point=op.positions[0],px=24+(op.g.x+point.u-minX)*scale,py=58+(maxY-op.g.y-point.v)*scale;
+  const known=o.renderModel.components.filter(g=>!g.unresolved),minX=Math.min(...known.map(g=>g.x)),maxY=Math.max(...known.map(g=>g.y+g.width)),scale=1/(o.renderModel.overviewDenominator||5),point=op.positions[0];
+  const [ox,oy]=constructionPlanOrigin(pages[0]);
+  const px=ox+(op.g.x+point.u-minX)*scale,py=oy+(maxY-op.g.y-point.v)*scale;
   pages[0]=pages[0].replace('</svg>',drawingSectionMark(svgTools(),{id:'B1',reference:'Blatt '+(pages.length+1),x1:px-8,y1:py,x2:px+8,y2:py,direction:'down',captionY:py-10})+'</svg>');
   const path='<g data-section-detail="B1-B1"'+(op.face==='top'?' transform="translate(0 '+(2*y+t)+') scale(1 -1)"':'')+'><path d="M'+x+','+y+' L'+(x+w)+','+y+' L'+(x+w)+','+(y+t)+' L'+(center+R)+','+(y+t)+' L'+(center+R)+','+(y+t-op.depth)+' L'+(center-R)+','+(y+t-op.depth)+' L'+(center-R)+','+(y+t)+' L'+x+','+(y+t)+' Z" style="fill:white;stroke:#111;stroke-width:.35"/></g>';
   pages.push('<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><style>text{font:2.6px Arial;fill:#111}line,rect{stroke:#111;stroke-width:.2;fill:none}.bold{font-weight:bold}</style><rect width="297" height="210" style="fill:white;stroke:none"/>'+rect(7,7,283,196)+text(12,16,title,'bold')+text(12,25,status)+text(28,43,'B1–B1 · örtlicher Schnitt durch Bohrungsmitte · M 1:1','bold')+path+text(28,y+t+12,'Ø '+f(op.diameter)+' × '+f(op.depth)+' mm tief; '+op.positions.length+' Positionen nach U/V-Liste.')+text(145,43,'Bearbeitungen im gemeinsamen Stand','bold')+o.notes.slice(0,8).flatMap(s=>s.match(/.{1,68}(?:\s|$)/g)||[s]).slice(0,15).map((s,i)=>text(145,53+i*6,s.trim())).join('')+line(28,185,78,185)+text(28,192,'Kontrolle: 50 mm bei 100 % Druck')+text(260,198,'Blatt 2/2')+'</svg>');
@@ -2850,12 +2859,18 @@ function constructionPages(input,{title=input.title||'Brettkonstruktion',paperLa
  return finalPages.map((page,index)=>page.replace(/Blatt \d+\/\d+/, 'Blatt '+(index+1)+'/'+finalPages.length));
 }
 
+function constructionPlanOrigin(svg){
+ const origin=svg.match(/<g data-view="plan"[^>]*data-origin-x="([^"]+)" data-origin-y="([^"]+)"/);
+ return origin?[Number(origin[1]),Number(origin[2])]:[24,58];
+}
+
 function constructionBoardLabels(pages,input,m,tools){
  if(!pages.length||!m?.body)return pages;
  const {text,line,f,n}=tools,tag=pages[0].match(/<g data-view="plan"[^>]*data-scale="([^"]+)"/);
  if(!tag)return pages;
  const scale=m.paperLayout?1/m.paperLayout.denominator:Number(tag[1]),known=m.components.filter(g=>!g.unresolved),minX=Math.min(...known.map(g=>g.x)),maxY=Math.max(...known.map(g=>g.y+g.width)),b=m.body;
- const X=x=>24+(x-minX)*scale,Y=y=>58+(maxY-y)*scale;
+ const [ox,oy]=constructionPlanOrigin(pages[0]);
+ const X=x=>ox+(x-minX)*scale,Y=y=>oy+(maxY-y)*scale;
  const edges={A:{native:'front',x1:b.x,y1:b.y,x2:b.x+b.length,y2:b.y,tx:X(b.x+b.length/2),ty:Y(b.y)-2},B:{native:'right',x1:b.x+b.length,y1:b.y,x2:b.x+b.length,y2:b.y+b.width,tx:X(b.x+b.length)-3,ty:Y(b.y+b.width/2)},C:{native:'back',x1:b.x+b.length,y1:b.y+b.width,x2:b.x,y2:b.y+b.width,tx:X(b.x+b.length/2),ty:Y(b.y+b.width)+4},D:{native:'left',x1:b.x,y1:b.y+b.width,x2:b.x,y2:b.y,tx:X(b.x)+3,ty:Y(b.y+b.width/2)}};
  let marks='<g data-board-edge-labels="A-B-C-D">';
  for(const [id,e]of Object.entries(edges)){
@@ -3658,13 +3673,19 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
  const W=maxX-minX,T=maxY-minY,H=z1-z0;
  // Fold the side projection about its depth axis; depth shares the plan Y coordinate.
  const denominator=m.overviewDenominator??assemblyOverviewScale(m).denominator;
- const scale=1/denominator,X=x=>24+(x-minX)*scale,Y=y=>58+(maxY-y)*scale;
+ const scale=1/denominator;
  const paper=m.paperLayout,split=paper?.elevations;
- const frontTop=split?62:58+T*scale+10;
- const sideX=split?.length===2?24:24+W*scale+16;
+ const viewRight=paper?.below?paper.width-12:216;
+ const viewBottom=paper?.below?paper.height-54:192;
+ const centerOnSheet=paper&&!split&&m.geometryReady;
+ const planX=24+(centerOnSheet?Math.max(0,viewRight-54-(W+H)*scale)/2:0);
+ const planY=58+(centerOnSheet?Math.max(0,viewBottom-82-(T+H)*scale)/2:0);
+ const X=x=>planX+(x-minX)*scale,Y=y=>planY+(maxY-y)*scale;
+ const frontTop=split?62:planY+T*scale+10;
+ const sideX=split?.length===2?24:planX+W*scale+16;
  let frontBody='',sideBody='';
 
- let body='<g data-view="plan" data-scale="'+n(scale)+'" data-origin-x="24" data-origin-y="58">'+text(24,40,'DRAUFSICHT · '+(m.geometryReady?'M 1:'+f(1/scale):'Anordnung teilweise schematisch'),'bold');
+ let body='<g data-view="plan" data-scale="'+n(scale)+'" data-origin-x="'+n(planX)+'" data-origin-y="'+n(planY)+'">'+text(planX,planY-18,'DRAUFSICHT · '+(m.geometryReady?'M 1:'+f(1/scale):'Anordnung teilweise schematisch'),'bold');
  body+=rect(X(b.x),Y(b.y+b.width),b.length*scale,b.width*scale)+text(m.battenConnections.length?X(b.x+b.length/2):X(b.x)+3,Y(b.y+b.width)+Math.min(14,b.width*scale/2),'1 · Grundbrett','bold',m.battenConnections.length?'middle':'start');
  body+=dh(X(b.x),X(b.x+b.length),Y(b.y+b.width),Y(b.y+b.width)-6,f(m.geometryReady?b.length:p.length))+dv(Y(b.y+b.width),Y(b.y),X(b.x),X(b.x)-(m.connections.some(c=>c.wedge?.mode&&c.wedge.mode!=='plain')?16:8),f(m.geometryReady?b.width:p.width));
  m.components.slice(1).forEach((g,i)=>{
@@ -3732,8 +3753,8 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
  if(m.geometryReady){
   body+=dh(X(minX),X(maxX),Y(maxY),Y(maxY)-14,f(maxX-minX)+' gesamt');
   const es=scale,Z=z=>frontTop+(z1-z)*es,SX=z=>sideX+(z-z0)*es;
-  let front='<g data-view="front" data-scale="'+n(es)+'" data-origin-x="24" data-origin-y="'+n(frontTop)+'">'+text(24,frontTop-4,'VORDERANSICHT · M 1:'+f(denominator),'bold');
-  let side='<g data-view="side" data-scale="'+n(es)+'" data-origin-x="'+n(sideX)+'" data-origin-y="58" data-projection="folded-depth">'+text(sideX,48,'SEITENANSICHT','bold')+text(sideX,52,'VON LINKS · M 1:'+f(denominator),'small');
+  let front='<g data-view="front" data-scale="'+n(es)+'" data-origin-x="'+n(planX)+'" data-origin-y="'+n(frontTop)+'">'+text(planX,frontTop-4,'VORDERANSICHT · M 1:'+f(denominator),'bold');
+  let side='<g data-view="side" data-scale="'+n(es)+'" data-origin-x="'+n(sideX)+'" data-origin-y="'+n(planY)+'" data-projection="folded-depth">'+text(sideX,planY-10,'SEITENANSICHT','bold')+text(sideX,planY-6,'VON LINKS · M 1:'+f(denominator),'small');
   for(const g of [...known].sort((a,b)=>b.y-a.y))front+=g.kind==='sliding_batten'&&p.grain==='length'?assemblyBattenSection(g,m.battenConnections.find(c=>c.child===g.id),svgTools(),{view:'front',X,Z}):['front','back'].includes(g.edge)&&assemblyEndTreatment(p,p.attachments.find(a=>a.id===g.id)).plane==='elevation'&&assemblyEndTreatment(p,p.attachments.find(a=>a.id===g.id)).shape!=='none'?assemblyRailElevation(m,g,svgTools(),{view:'front',X,Z}):rect(X(g.x),Z(g.z+g.thickness),g.length*es,g.thickness*es);
   for(const g of [...known].sort((a,b)=>b.x-a.x))side+=g.kind==='sliding_batten'&&p.grain==='width'?assemblyBattenSection(g,m.battenConnections.find(c=>c.child===g.id),svgTools(),{view:'side',SX,Y}):['left','right'].includes(g.edge)&&assemblyEndTreatment(p,p.attachments.find(a=>a.id===g.id)).plane==='elevation'&&assemblyEndTreatment(p,p.attachments.find(a=>a.id===g.id)).shape!=='none'?assemblyRailElevation(m,g,svgTools(),{view:'side',SX,Y}):rect(SX(g.z),Y(g.y+g.width),g.thickness*es,g.width*es);
   front+=assemblyFinishingSvg(m,svgTools(),{view:'front',X,Z});side+=assemblyFinishingSvg(m,svgTools(),{view:'side',SX,Y});
@@ -5515,7 +5536,8 @@ function cBoardDrawingSettings(project){
   if(layout)choices.set(String(denominator),{...layout,denominator});
  }
  if(!choices.size)return {print,computed,paperLayout:null,scales,selected:'auto'};
- const automatic=choices.values().next().value;
+ // Prefer all main views on one sheet. Detail sheets are laid out separately.
+ const automatic=[...choices.values()].find(layout=>!layout.elevations)||choices.values().next().value;
  for(const denominator of standardScales){
   const key=String(denominator);
   scales[key]=DRAWING_SCALES[key]+(choices.has(key)?'':' · A4-Teilblätter');
