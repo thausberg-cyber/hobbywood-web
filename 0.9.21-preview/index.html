@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.2</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.4</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -202,7 +202,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev66.2 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev66.4 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev66.2';
+const APP_VERSION='0.9.21-dev66.4';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1553,33 +1553,72 @@ function hwMachiningSvg(part,ops,{title='Beschlagbearbeitungen',status='Bestäti
  return '<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297" role="img" aria-label="Beschlagbearbeitungen mit Bezugskanten"><style>text{font-family:Arial;fill:#25372e}</style>'+a+'</svg>';
 }
 
-// Local, deterministic geometry for a rear rebate and a stepped removable bead.
+// Rear rebate with a rectangular or rebated retaining bead. Existing mirror
+// projects keep their numeric parameters and stepped shape on import.
 const FRAME_FILLING_FIELDS=[['frontWeb','Vorderer Holzsteg'],['frontPadding','Einlage vor dem Spiegel'],['mirrorThickness','Spiegeldicke'],['backPadding','Einlage hinter dem Spiegel'],['rebateWidth','Falzbreite ab lichter Rahmenkante'],['sideClearance','Randspiel je Spiegelkante'],['beadInnerThickness','Glasleistendicke im inneren Bereich'],['beadWidth','Gesamte Glasleistenbreite'],['beadOuterWidth','Äußere Befestigungsauflage der Glasleiste: Breite']];
 const fnum=v=>typeof v==='number'?v:typeof v==='string'&&v.trim()?Number(v.replace(',','.')):NaN;
 function frameFillingSample(){return {kind:'mirror-stepped-v1',frontWeb:5,frontPadding:1,mirrorThickness:5,backPadding:1,rebateWidth:15,sideClearance:2,beadInnerThickness:14,beadWidth:24,beadOuterWidth:12};}
-function frameFillingSignature(input){if(!input)return null;return JSON.stringify([input.kind,...FRAME_FILLING_FIELDS.map(([k])=>Number.isFinite(fnum(input[k]))?fnum(input[k]):String(input[k]??''))]);}
+function frameBeadType(input){return input?.kind==='mirror-stepped-v1'?'rebated':input?.beadType||'plain';}
+function frameFillingType(input){return input?.kind==='mirror-stepped-v1'?'mirror':input?.fillingType||'panel';}
+function frameFillingFields(input){
+ const plain=frameBeadType(input)==='plain',mirror=frameFillingType(input)==='mirror';
+ return FRAME_FILLING_FIELDS.filter(([k])=>!plain||k!=='beadOuterWidth').map(([k,label])=>[k,({beadWidth:plain?'Leistenbreite':'Gesamte Leistenbreite',beadInnerThickness:plain?'Leistendicke':'Leistendicke im Falz',mirrorThickness:mirror?'Spiegeldicke':'Füllungsdicke',frontPadding:mirror?'Einlage vor dem Spiegel':'Einlage vor der Füllung',backPadding:mirror?'Einlage hinter dem Spiegel':'Einlage hinter der Füllung'})[k]||label]);
+}
+function frameFillingNew(frame){
+ const D=fnum(frame?.thickness),ratio=frame?.joint==='tenon_rebate1'?1/3:2/3;
+ return {kind:'frame-retained-v1',fillingType:'panel',beadType:'plain',panelMaterial:'',frontWeb:Number.isFinite(D)?(ratio===1/3?D*2/3:D/3):'',rebateWidth:Number.isFinite(D)?D*2/3:'',frontPadding:0,backPadding:0,sideClearance:'',mirrorThickness:'',beadWidth:'',beadInnerThickness:''};
+}
+function frameFillingSelect(input,field,value){
+ const result={...input,kind:'frame-retained-v1',beadType:frameBeadType(input),fillingType:frameFillingType(input),[field]:value};
+ return result;
+}
+function frameFillingSignature(input){if(!input)return null;const values=[input.kind,...FRAME_FILLING_FIELDS.map(([k])=>Number.isFinite(fnum(input[k]))?fnum(input[k]):String(input[k]??''))];if(input.kind==='frame-retained-v1')values.push(frameBeadType(input),frameFillingType(input),input.panelMaterial??'');return JSON.stringify(values);}
 function frameFillingModel(frame){
  const raw=frame?.filling,errors=[],p={kind:raw?.kind};
  if(!raw)return {ok:true,enabled:false,errors};
- if(raw.kind!=='mirror-stepped-v1')errors.push('Unbekannte Füllungskonstruktion.');
- const allowed=new Set(['kind',...FRAME_FILLING_FIELDS.map(([k])=>k)]);
+ const legacy=raw.kind==='mirror-stepped-v1',beadType=frameBeadType(raw),fillingType=frameFillingType(raw),plain=beadType==='plain';
+ if(!legacy&&raw.kind!=='frame-retained-v1')errors.push('Unbekannte Füllungskonstruktion.');
+ if(!['plain','rebated'].includes(beadType))errors.push('Leistenform einfach oder überfälzt wählen.');
+ if(!['mirror','glass','panel'].includes(fillingType))errors.push('Füllung auswählen.');
+ if(!legacy){p.beadType=beadType;p.fillingType=fillingType;p.panelMaterial=String(raw.panelMaterial??'');if(p.panelMaterial.length>150)errors.push('Materialbezeichnung zu lang.');}
+ const allowed=new Set(['kind',...FRAME_FILLING_FIELDS.map(([k])=>k),...(!legacy?['beadType','fillingType','panelMaterial']:[])]);
  if(Object.keys(raw).some(k=>!allowed.has(k)))errors.push('Unbekannte Füllungsangabe.');
- for(const [k,label]of FRAME_FILLING_FIELDS){p[k]=fnum(raw[k]);if(!Number.isFinite(p[k])||p[k]<0||p[k]>1000||!['frontPadding','backPadding','sideClearance'].includes(k)&&p[k]===0)errors.push(label+': gültiges Maß eingeben.');}
+ for(const [k,label]of FRAME_FILLING_FIELDS){
+  if(plain&&k==='beadOuterWidth'){if(raw[k]!==undefined){p[k]=raw[k]===''?'':fnum(raw[k]);if(p[k]!==''&&(!Number.isFinite(p[k])||p[k]<0||p[k]>1000))errors.push(label+': gültiges Maß eingeben.');}continue;}
+  p[k]=fnum(raw[k]);if(!Number.isFinite(p[k])||p[k]<0||p[k]>1000||!['frontPadding','backPadding','sideClearance'].includes(k)&&p[k]===0)errors.push(label+': gültiges Maß eingeben.');
+ }
  const D=fnum(frame.thickness),V=fnum(frame.verticalWidth),B=fnum(frame.horizontalWidth),W=fnum(frame.width),H=fnum(frame.height);
  if([D,V,B,W,H].some(v=>!Number.isFinite(v)||v<=0))errors.push('Zuerst die fünf Rahmengrundmaße eingeben.');
  if(errors.length)return {ok:false,enabled:true,errors,p};
  const rebateDepth=D-p.frontWeb,mirrorFront=p.frontWeb+p.frontPadding,mirrorBack=mirrorFront+p.mirrorThickness,beadFront=mirrorBack+p.backPadding,beadBack=beadFront+p.beadInnerThickness,rearProjection=beadBack-D;
- const beadStart=p.rebateWidth+p.beadOuterWidth-p.beadWidth,mirrorEdge=p.rebateWidth-p.sideClearance,overlap=mirrorEdge-beadStart;
+ const beadOuter=plain?p.rebateWidth:p.rebateWidth+p.beadOuterWidth,beadStart=beadOuter-p.beadWidth,mirrorEdge=p.rebateWidth-p.sideClearance,overlap=mirrorEdge-beadStart;
  const openingWidth=W-2*V,openingHeight=H-2*B,mirrorWidth=openingWidth+2*mirrorEdge,mirrorHeight=openingHeight+2*mirrorEdge;
  if(rebateDepth<=0)errors.push('Der Holzsteg muss kleiner als die Rahmendicke sein.');
- if(beadFront>=D)errors.push('Für diese abgesetzte Leiste muss der Spiegel mit Einlagen innerhalb des Rahmenfalzes liegen.');
- if(rearProjection<=0)errors.push('Für die abgesetzte Glasleiste muss ein positiver hinterer Überstand bleiben.');
- if(p.rebateWidth>=Math.min(V,B)||p.rebateWidth+p.beadOuterWidth>=Math.min(V,B))errors.push('Falz oder äußere Befestigungsauflage überschreitet die Rahmenholzbreite.');
- if(mirrorEdge<=0||overlap<=0)errors.push('Spiegelauflage und Glasleistenüberdeckung müssen positiv sein.');
- if(beadStart<0)errors.push('Die Glasleiste würde in die lichte Rahmenöffnung ragen.');
- if(overlap>mirrorEdge)errors.push('Die Glasleistenüberdeckung überschreitet den Spiegeleinstand.');
+ if(beadFront>=D)errors.push('Füllung und Einlagen lassen im Falz keinen Platz für die Halteleiste.');
+ if(!plain&&rearProjection<=0)errors.push('Für die überfälzte Leiste muss eine positive Dicke auf der Rahmenrückseite bleiben.');
+ if(p.rebateWidth>=Math.min(V,B)||beadOuter>=Math.min(V,B))errors.push('Falz oder äußere Befestigungsauflage überschreitet die Rahmenholzbreite.');
+ if(plain&&p.beadWidth>p.rebateWidth)errors.push('Die einfache Leiste ist breiter als der Falz. Bitte die Leistenbreite passend eingeben.');
+ if(mirrorEdge<=0||overlap<=0)errors.push('Füllungsauflage und Überdeckung durch die Halteleiste müssen positiv sein.');
+ if(beadStart<0)errors.push('Die Halteleiste würde in die lichte Rahmenöffnung ragen.');
+ if(overlap>mirrorEdge)errors.push('Die Leistenüberdeckung überschreitet den Füllungseinstand.');
  if(openingWidth<=0||openingHeight<=0||mirrorWidth<=0||mirrorHeight<=0)errors.push('Die Füllung benötigt eine positive lichte Rahmenöffnung.');
- return {ok:!errors.length,enabled:true,errors,p,thickness:D,railWidth:V,frameWidth:W,frameHeight:H,verticalWidth:V,horizontalWidth:B,joint:frame.joint,through:frame.through,beadJoint:'mitre',rebateDepth,mirrorFront,mirrorBack,beadFront,beadBack,rearProjection,beadStart,mirrorEdge,overlap,openingWidth,openingHeight,mirrorWidth,mirrorHeight};
+ const fillingLabel=({mirror:'Spiegel',glass:'Glasfüllung',panel:'Füllung'})[fillingType];
+ return {ok:!errors.length,enabled:true,errors,p,beadType,fillingType,fillingLabel,beadOuter,thickness:D,railWidth:V,frameWidth:W,frameHeight:H,verticalWidth:V,horizontalWidth:B,joint:frame.joint,through:frame.through,beadJoint:'mitre',rebateDepth,mirrorFront,mirrorBack,beadFront,beadBack,rearProjection,beadStart,mirrorEdge,overlap,openingWidth,openingHeight,mirrorWidth,mirrorHeight};
+}
+// One set of physical contours feeds the section preview and the work drawing.
+// u measures from the clear opening into the rail; z measures from the front.
+function frameFillingAssembly(m){
+ if(!m?.ok||!m.enabled)return null;
+ const p=m.p,W=m.frameWidth,H=m.frameHeight,V=m.verticalWidth,B=m.horizontalWidth;
+ const out=m.beadOuter,ox=V-out,oy=B-out,ix=V-m.beadStart,iy=B-m.beadStart;
+ const beads=[
+  {id:'top',points:[[ox,oy],[W-ox,oy],[W-ix,iy],[ix,iy]]},
+  {id:'right',points:[[W-ox,oy],[W-ox,H-oy],[W-ix,H-iy],[W-ix,iy]]},
+  {id:'bottom',points:[[W-ox,H-oy],[ox,H-oy],[ix,H-iy],[W-ix,H-iy]]},
+  {id:'left',points:[[ox,H-oy],[ox,oy],[ix,iy],[ix,H-iy]]}
+ ];
+ const beadSection=m.beadType==='plain'?[[m.beadStart,m.beadFront],[out,m.beadFront],[out,m.beadBack],[m.beadStart,m.beadBack]]:[[m.beadStart,m.beadFront],[p.rebateWidth,m.beadFront],[p.rebateWidth,m.thickness],[out,m.thickness],[out,m.beadBack],[m.beadStart,m.beadBack]];
+ return {mirror:{x:V-m.mirrorEdge,y:B-m.mirrorEdge,width:m.mirrorWidth,height:m.mirrorHeight,z0:m.mirrorFront,z1:m.mirrorBack},beads,beadSection,outerInset:{x:ox,y:oy},innerInset:{x:ix,y:iy},outerWidth:W-2*ox,outerHeight:H-2*oy};
 }
 function frameFillingSvg(m){
  if(!m?.ok||!m.enabled)return '';
@@ -1587,18 +1626,18 @@ function frameFillingSvg(m){
  const scale=Math.min(3,270/(m.railWidth+15),100/m.beadBack),X=v=>n(65+v*scale),Y=z=>n(65+z*scale);
  const path=(points,fill)=>'<path d="'+points.map(([x,z],i)=>(i?'L':'M')+X(x)+','+Y(z)).join(' ')+' Z" fill="'+fill+'" stroke="#203c34" stroke-width="1"/>';
  let svg=path([[0,0],[m.railWidth,0],[m.railWidth,m.thickness],[p.rebateWidth,m.thickness],[p.rebateWidth,p.frontWeb],[0,p.frontWeb]],'#e7d3af');
- svg+=path([[-12,m.mirrorFront],[m.mirrorEdge,m.mirrorFront],[m.mirrorEdge,m.mirrorBack],[-12,m.mirrorBack]],'#c4e2ef');
+ svg+=path([[-12,m.mirrorFront],[m.mirrorEdge,m.mirrorFront],[m.mirrorEdge,m.mirrorBack],[-12,m.mirrorBack]],m.fillingType==='panel'?'#eadcc0':'#c4e2ef');
  svg+=path([[0,p.frontWeb],[m.mirrorEdge,p.frontWeb],[m.mirrorEdge,m.mirrorFront],[0,m.mirrorFront]],'#77887f');
  svg+=path([[m.beadStart,m.mirrorBack],[m.mirrorEdge,m.mirrorBack],[m.mirrorEdge,m.beadFront],[m.beadStart,m.beadFront]],'#77887f');
- svg+=path([[m.beadStart,m.beadFront],[p.rebateWidth,m.beadFront],[p.rebateWidth,m.thickness],[p.rebateWidth+p.beadOuterWidth,m.thickness],[p.rebateWidth+p.beadOuterWidth,m.beadBack],[m.beadStart,m.beadBack]],'#b7cdb6');
+ svg+=path(frameFillingAssembly(m).beadSection,'#b7cdb6');
  const text=(x,y,s)=>'<text x="'+x+'" y="'+y+'">'+e(s)+'</text>';
  svg+=text(25,25,'Füllungsquerschnitt · mm · Vorderseite oben');
- const rows=['Rahmendicke: '+n(m.thickness),'Falz von hinten: '+n(m.rebateDepth)+' tief / '+n(p.rebateWidth)+' breit','Spiegelrücksprung: '+n(m.mirrorFront),'Randspiel: '+n(p.sideClearance),'Spiegelüberdeckung: '+n(m.overlap),'Hinterer Überstand: '+n(m.rearProjection),'Spiegelmaß rechnerisch: '+n(m.mirrorWidth)+' × '+n(m.mirrorHeight)];
- rows.forEach((r,i)=>svg+=text(355,60+i*22,r));
+ const rows=['Rahmendicke: '+n(m.thickness),'Falz von hinten: '+n(m.rebateDepth)+' tief / '+n(p.rebateWidth)+' breit',m.fillingLabel+' · Rücksprung: '+n(m.mirrorFront),'Randspiel: '+n(p.sideClearance),'Leistenüberdeckung: '+n(m.overlap),m.rearProjection<0?'Leistenrücksprung hinten: '+n(-m.rearProjection):m.rearProjection===0?'Leiste hinten bündig':'Leistenüberstand hinten: '+n(m.rearProjection),m.fillingLabel+' rechnerisch: '+n(m.mirrorWidth)+' × '+n(m.mirrorHeight), 'Leiste: '+(m.beadType==='plain'?'einfach, rechteckig':'überfälzt')];
+ rows.forEach((r,i)=>svg+=text(355,60+i*20,r));
  svg+=text(25,220,'z = 0 vorn; Rahmenrückseite z = '+n(m.thickness)+'; Leistenrückseite z = '+n(m.beadBack));
  svg+=text(25,243,'Planungsansicht · Verklotzung und Befestigung noch offen · kein Bestellmaß');
  svg+=frameFillingRearView(m);
- return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730 590" role="img" aria-label="Spiegel im Rahmen: Querschnitt und Rückansicht mit vier Glasleisten auf Gehrung" style="width:100%;height:auto;background:white"><style>text{font:12px Arial;fill:#203c34}</style>'+svg+'</svg>';
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730 590" role="img" aria-label="Füllung und Halteleisten im Rahmen, mit Querschnitt und Rückansicht" style="width:100%;height:auto;background:white"><style>text{font:12px Arial;fill:#203c34}</style>'+svg+'</svg>';
 }
 // The bead ring is independent of the frame corner joint. Both ends of each
 // bead are cut at 45 degrees, including frames with mortise-and-tenon corners.
@@ -1607,20 +1646,34 @@ function frameFillingRearView(m){
  const n=v=>Number(v.toFixed(3)),p=m.p,W=m.frameWidth,H=m.frameHeight,V=m.verticalWidth,B=m.horizontalWidth;
  const s=Math.min(275/W,255/H),X=x=>n(45+x*s),Y=y=>n(305+y*s);
  const rect=(x,y,w,h,fill)=>'<rect x="'+X(x)+'" y="'+Y(y)+'" width="'+n(w*s)+'" height="'+n(h*s)+'" fill="'+fill+'" stroke="#203c34" stroke-width="1"/>';
- let a='<g data-bead-joint="mitre-45"><text x="25" y="282">Rückansicht · vier Glasleisten mit 45°-Gehrungen</text>';
+ let a='<g data-bead-joint="mitre-45"><text x="25" y="282">Rückansicht · vier Halteleisten mit 45°-Gehrungen</text>';
  const rx=V-p.rebateWidth,ry=B-p.rebateWidth;
- a+=rect(0,0,W,H,'#e7d3af')+rect(rx,ry,W-2*rx,H-2*ry,'white')+rect(V-m.mirrorEdge,B-m.mirrorEdge,m.mirrorWidth,m.mirrorHeight,'#c4e2ef');
+ a+=rect(0,0,W,H,'#e7d3af')+rect(rx,ry,W-2*rx,H-2*ry,'white')+rect(V-m.mirrorEdge,B-m.mirrorEdge,m.mirrorWidth,m.mirrorHeight,m.fillingType==='panel'?'#eadcc0':'#c4e2ef');
  if(['tenon','tenon_rebate1','tenon_rebate2'].includes(m.joint)){
   const seams=m.through==='horizontal'?[[0,ry,rx,ry],[W-rx,ry,W,ry],[0,H-ry,rx,H-ry],[W-rx,H-ry,W,H-ry]]:[[rx,0,rx,ry],[W-rx,0,W-rx,ry],[rx,H-ry,rx,H],[W-rx,H-ry,W-rx,H]];
   for(const [x,y,u,v]of seams)a+='<path d="M'+X(x)+','+Y(y)+' L'+X(u)+','+Y(v)+'" stroke="#203c34" fill="none"/>';
  }else if(['biscuit','loose_tenon','dowel_mitre','angle_dowel'].includes(m.joint)){
   for(const [x,y,u,v]of [[0,0,V,B],[W,0,W-V,B],[0,H,V,H-B],[W,H,W-V,H-B]])a+='<path d="M'+X(x)+','+Y(y)+' L'+X(u)+','+Y(v)+'" stroke="#203c34" fill="none"/>';
  }
- const out=p.rebateWidth+p.beadOuterWidth,ox=V-out,oy=B-out,ix=ox+p.beadWidth,iy=oy+p.beadWidth;
- const polys=[[[ox,oy],[W-ox,oy],[W-ix,iy],[ix,iy]],[[W-ox,oy],[W-ox,H-oy],[W-ix,H-iy],[W-ix,iy]],[[W-ox,H-oy],[ox,H-oy],[ix,H-iy],[W-ix,H-iy]],[[ox,H-oy],[ox,oy],[ix,iy],[ix,H-iy]]];
- polys.forEach((points,i)=>{a+='<path data-bead="'+i+'" d="'+points.map(([x,y],j)=>(j?'L':'M')+X(x)+','+Y(y)).join(' ')+' Z" fill="#b7cdb6" stroke="#203c34" stroke-width="1"/>';});
- a+='<text x="355" y="325">Rahmen: '+(['tenon','tenon_rebate1','tenon_rebate2'].includes(m.joint)?'Schlitz und Zapfen':'Gehrung')+'</text><text x="355" y="350">Glasleisten: alle vier Ecken auf Gehrung</text><text x="355" y="375">Grün: Glasleisten · Blau: Spiegel</text><text x="355" y="400">Befestigungspunkte noch nicht eingezeichnet</text>';
+ frameFillingAssembly(m).beads.forEach(({points},i)=>{a+='<path data-bead="'+i+'" d="'+points.map(([x,y],j)=>(j?'L':'M')+X(x)+','+Y(y)).join(' ')+' Z" fill="#b7cdb6" stroke="#203c34" stroke-width="1"/>';});
+ a+='<text x="355" y="325">Rahmen: '+(['tenon','tenon_rebate1','tenon_rebate2'].includes(m.joint)?'Schlitz und Zapfen':'Gehrung')+'</text><text x="355" y="350">Halteleisten: alle vier Ecken auf Gehrung</text><text x="355" y="375">Grün: Halteleisten · Innenfläche: Füllung</text><text x="355" y="400">Befestigungspunkte noch nicht eingezeichnet</text>';
  return a+'</g>';
+}
+
+function frameGeometryVersion(params){return params?.filling?.kind==='frame-retained-v1'?5:params?.filling?4:3;}
+
+function frameFillingSectionDrawing(m,which,{ax,ay,bx,by,q,ext}){
+ const f=m.d.filling;if(!f?.ok||!f.enabled)return '';
+ const assembly=frameFillingAssembly(f),p=f.p,B=m.p.horizontalWidth,n=v=>Number(v.toFixed(4));
+ const project=([u,z])=>which===1?[ax+z*q,ay+(B-u)*q]:[bx+u*q,by+z*q];
+ const path=(points,cls,id)=>'<path data-filling-part="'+id+'" d="M'+points.map(pt=>project(pt).map(n).join(',')).join(' L')+' Z" class="'+cls+'"/>';
+ const box=(u0,u1,z0,z1,cls,id)=>path([[u0,z0],[u1,z0],[u1,z1],[u0,z1]],cls,id);
+ let svg='<g data-filling-section="'+which+'-'+which+'" data-bead-profile="'+f.beadType+'" data-glass-thickness="'+n(p.mirrorThickness)+'" data-bead-width="'+n(p.beadWidth)+'" data-bead-thickness="'+n(p.beadInnerThickness)+'" data-rear-projection="'+n(f.rearProjection)+'">';
+ if(p.frontPadding>0)svg+=box(0,f.mirrorEdge,p.frontWeb,f.mirrorFront,'filling-padding','front-padding');
+ svg+=box(-ext,f.mirrorEdge,f.mirrorFront,f.mirrorBack,f.fillingType==='panel'?'filling-panel':'filling-glass','mirror');
+ if(p.backPadding>0)svg+=box(f.beadStart,f.mirrorEdge,f.mirrorBack,f.beadFront,'filling-padding','back-padding');
+ svg+=path(assembly.beadSection,'filling-bead','bead');
+ return svg+'</g>';
 }
 
 const FRAME_KIND='frame-construction-v1';
@@ -1661,6 +1714,7 @@ function frameSheetRows(p,def,d){
  if(def?.division)rows.push('Dickenteilung D/'+def.division+' = '+f(D/def.division)+' mm');
  if(p.joint.startsWith('tenon'))rows.push('Zapfenlänge '+f(d.receivingWidth)+' · Breite '+f(d.joiningWidth)+' mm');
  if(d.profile)rows.push(d.profile.type==='groove'?'Nut '+f(d.profile.width)+' × '+f(d.profile.depth)+' · Abstand '+f(p.grooveOffset)+' ab '+(p.profileFace==='front'?'vorn':'hinten'):'Falz a = '+f(d.profile.depth)+' · b = '+f(d.profile.width));
+ if(d.filling?.ok&&d.filling.enabled){const g=d.filling;rows.push(g.fillingLabel+' '+f(g.mirrorWidth)+' × '+f(g.mirrorHeight)+' × '+f(g.p.mirrorThickness),(g.beadType==='plain'?'Leiste einfach ':'Leiste überfälzt ')+f(g.p.beadWidth)+' × '+f(g.p.beadInnerThickness)+' · 45°',g.beadType==='rebated'?'Auflage '+f(g.p.beadOuterWidth)+' × '+f(g.rearProjection):g.rearProjection>0?'Leiste hinten +'+f(g.rearProjection):g.rearProjection<0?'Leiste hinten zurück '+f(-g.rearProjection):'Leiste hinten bündig');}
  return rows;
 }
 function frameWrappedRows(rows,width){
@@ -1673,7 +1727,7 @@ function frameWrappedRows(rows,width){
  return out;
 }
 function frameDrawingLayout(p,def,d){
- const W=p.width,H=p.height,D=p.thickness,V=p.verticalWidth,B=p.horizontalWidth;
+ const W=p.width,H=p.height,D=Math.max(p.thickness,d.filling?.beadBack||0),V=p.verticalWidth,B=p.horizontalWidth;
  if(![W,H,D,V,B].every(Number.isFinite))return null;
  const scales=p.viewScale==='auto'?[1,.5,.2,.1,.05,.02,.01]:[1/Number(p.viewScale)],rows=frameSheetRows(p,def,d);
  for(const s of scales){
@@ -1776,7 +1830,11 @@ function buildFrameConstruction(input){
  const layout=frameDrawingLayout(p,def,d),scale=layout?.scale;
  if(!layout)errors.push('Gesamtansicht passt mit diesem Maßstab und den Schnittdetails nicht auf A4.');
  const notes=frameRuleNotes(p,def,d);
- if(d.filling?.ok){const f=d.filling;notes.push('Spiegelfalz von hinten '+ff(f.rebateDepth)+' mm tief × '+ff(f.p.rebateWidth)+' mm breit. Spiegelrücksprung '+ff(f.mirrorFront)+' mm; abgesetzte Glasleiste mit '+ff(f.rearProjection)+' mm hinterem Überstand. Rechnerisches Spiegelmaß '+ff(f.mirrorWidth)+' × '+ff(f.mirrorHeight)+' mm; kein Bestellmaß. Vier Glasleisten, an beiden Enden 45° auf Gehrung; ihre Gehrungen sind unabhängig von der Rahmeneckverbindung. Verklotzung und Befestigung offen.');}
+ if(d.filling?.ok&&d.filling.enabled){
+  const f=d.filling,a=frameFillingAssembly(f),beadLabel=f.fillingType==='panel'?'Halteleiste':'Glasleiste',note='Beide Enden 45° auf Gehrung; Länge an der langen Außenkante. '+(f.beadType==='plain'?'Einfacher Rechteckquerschnitt '+ff(f.p.beadWidth)+' × '+ff(f.p.beadInnerThickness)+' mm.':'Überfälzt: innere Dicke '+ff(f.p.beadInnerThickness)+' mm, äußere Auflage '+ff(f.p.beadOuterWidth)+' mm breit × '+ff(f.rearProjection)+' mm dick.')+' Entwurfsmaß.';
+  parts.push({id:'bead-horizontal',name:beadLabel+' waagerecht · auf Gehrung',quantity:2,length:a.outerWidth,width:f.p.beadWidth,thickness:f.p.beadInnerThickness,material:p.material,note},{id:'bead-vertical',name:beadLabel+' aufrecht · auf Gehrung',quantity:2,length:a.outerHeight,width:f.p.beadWidth,thickness:f.p.beadInnerThickness,material:p.material,note},{id:'mirror',name:(f.fillingType==='mirror'?'Spiegelglas':f.fillingLabel)+' · Entwurfsmaß',quantity:1,length:f.mirrorHeight,width:f.mirrorWidth,thickness:f.p.mirrorThickness,material:f.fillingType==='panel'?(f.p.panelMaterial.trim()||'Material offen'):f.fillingType==='glass'?'Glas':'Spiegelglas',note:'Mit eingegebenem Randspiel; vor Zuschnitt oder Bestellung am fertigen Rahmen prüfen.'});
+ }
+ if(d.filling?.ok){const f=d.filling;if(f.fillingType==='panel'&&!f.p.panelMaterial.trim())pending.push('Material der Füllung festlegen.');notes.push('Rückseitiger Falz '+ff(f.rebateDepth)+' mm tief × '+ff(f.p.rebateWidth)+' mm breit. '+f.fillingLabel+': Rücksprung '+ff(f.mirrorFront)+' mm. Halteleisten '+(f.beadType==='plain'?'einfach, rechteckig':'überfälzt')+'; '+(f.rearProjection<0?'hinten '+ff(-f.rearProjection)+' mm zurückliegend':f.rearProjection===0?'hinten bündig':ff(f.rearProjection)+' mm hinterer Überstand')+'. Rechnerisches Füllungsmaß '+ff(f.mirrorWidth)+' × '+ff(f.mirrorHeight)+' mm; vor Zuschnitt prüfen. Vier Halteleisten, an beiden Enden 45° auf Gehrung; die Rahmeneckverbindung bleibt erhalten. Auflage und Befestigung offen.');}
  return {kind:FRAME_KIND,p,def,d,scale,layout,parts,purchased,notes,errors:[...new Set(errors)],pending:[...new Set(pending)],warnings,ok:!errors.length,confirmable:!errors.length&&!pending.length};
 }
 function frameRuleNotes(p,def=FRAME_JOINTS[p.joint],d={}){
@@ -1789,14 +1847,14 @@ function frameRuleNotes(p,def=FRAME_JOINTS[p.joint],d={}){
  if(p.joint.startsWith('tenon'))notes.push('Durchgehendes / geschlitztes Teil: '+(p.through==='vertical'?'aufrechte':'waagerechte')+' Hölzer. Zapfenlänge bis äußere Rahmenkante.');
  if(def.groove)notes.push('Innennut '+ff(p.grooveWidth)+' breit × '+ff(p.grooveDepth)+' tief; Abstand '+ff(p.grooveOffset)+' ab '+(p.profileFace==='front'?'Vorder':'Rück')+'fläche. Nutzapfen passend zur Nut; am Rahmenholz angearbeitet.');
  if(def.rebate&&!d.filling?.enabled)notes.push('Falztiefe a = 2D/3 = '+ff(p.thickness*2/3)+'; Falzhöhe b = '+(def.rebate===1/3?'D/3':'2D/3')+' = '+ff(p.thickness*def.rebate)+' mm. Brüstungen folgen dem Falz.');
- if(d.filling?.ok&&p.joint.startsWith('tenon'))notes.push('Der Spiegelquerschnitt bestimmt den rückseitigen Falz statt der Standardproportionen. Die Brüstungen von Schlitz und Zapfen folgen diesem Falz; Dickenteilung D/3 bleibt erhalten.');
+ if(d.filling?.ok&&p.joint.startsWith('tenon'))notes.push('Der Füllungsquerschnitt bestimmt den rückseitigen Falz statt der Standardproportionen. Die Brüstungen von Schlitz und Zapfen folgen diesem Falz; Dickenteilung D/3 bleibt erhalten.');
  if(def.loose)notes.push('Dreieckiger falscher Zapfen, D/3 dick; Einstecktiefe je Teil '+ff(p.looseDepth)+' mm, quer zur Gehrungsfuge gemessen.');
  if(def.connector==='dowel')notes.push('Gleiche Einstecktiefe je Teil '+ff(p.connectorLength/2)+' mm; Bohrtiefe '+ff(d.boreDepth)+' mm einschließlich '+ff(p.glueAir)+' mm Luft. Achsen ab äußerem Fugenende: '+(d.axes||[]).map(ff).join(' / ')+' mm.');
  if(def.connector==='angle')notes.push('Winkeldübel 90°: Schenkel ab theoretischem Achsschnittpunkt '+ff(p.angleLegHorizontal)+' / '+ff(p.angleLegVertical)+' mm; Achsradius '+ff(p.angleRadius)+' mm. Tatsächliche Verbindergeometrie eingeben.');
  if(d.rows)notes.push('Verbinderachsen ab Vorderfläche: '+d.rows.map(ff).join(' / ')+' mm.');
  return notes;
 }
-function framePlan(m){return {title:'Rahmen · '+m.def?.name,summary:m.notes.join(' '),materials:m.purchased,cutlist:m.parts.map(p=>({part:p.name,qty:p.quantity,length_mm:p.length,width_mm:p.width,thickness_mm:p.thickness,material:p.material,direction_basis:p.id==='loose'?'unknown':'fiber',note:p.note})),steps:['Rahmenhölzer auf eingegebene Maße zuschneiden und Bezugsflächen kennzeichnen.',...m.notes,'Verbindungen zunächst trocken zusammenstecken und Rahmen auf Rechtwinkligkeit prüfen. Erst nach fachlicher Prüfung verleimen.'],open_points:[...m.errors,...m.pending]};}
+function framePlan(m){return {title:'Rahmen · '+m.def?.name,summary:m.notes.join(' '),materials:m.purchased,cutlist:m.parts.map(p=>({part:p.name,qty:p.quantity,length_mm:p.length,width_mm:p.width,thickness_mm:p.thickness,material:p.material,direction_basis:p.id==='mirror'?(m.d.filling?.fillingType==='panel'?'unknown':'neutral'):p.id==='loose'?'unknown':'fiber',note:p.note})),steps:['Rahmenhölzer auf eingegebene Maße zuschneiden und Bezugsflächen kennzeichnen.',...m.notes,'Verbindungen zunächst trocken zusammenstecken und Rahmen auf Rechtwinkligkeit prüfen. Erst nach fachlicher Prüfung verleimen.'],open_points:[...m.errors,...m.pending]};}
 // Approved compact A4 arrangement: overall views, linked cuts and dimension chains.
 function frameConstructionPages(m,{title='Rahmenkonstruktion',status='Konstruktionsentwurf'}={}){
  if(!m.ok)return [];
@@ -1821,7 +1879,7 @@ function frameConstructionPages(m,{title='Rahmenkonstruktion',status='Konstrukti
   return mode==='mitre'?(y/B<x/V?'horizontal':'vertical'):mode;
  }
  const {x,y}=L,w=W*s,h=H*s,t=D*s,v=V*s,b=B*s;
- let a=rect(x,y,w,h,'wood')+rect(x+v,y+b,w-2*v,h-2*b,'white');
+ let a=rect(x,y,w,h,'wood')+rect(x+v,y+b,w-2*v,h-2*b,d.filling?.ok?'mirror-face':'white');
  for(const [cx,cy,sx,sy]of [[x,y,1,1],[x+w,y,-1,1],[x,y+h,1,-1],[x+w,y+h,-1,-1]]){
   const front=owner(V/2,B/2,.00001),mitre=def.mitre&&!(p.joint==='lap_mitre'&&p.mitreFace==='back');
   if(!physicalEdges)a+=mitre?line(cx,cy,cx+sx*v,cy+sy*b):front==='vertical'?line(cx+sx*v,cy,cx+sx*v,cy+sy*b):line(cx,cy+sy*b,cx+sx*v,cy+sy*b);
@@ -1909,6 +1967,21 @@ function frameConstructionPages(m,{title='Rahmenkonstruktion',status='Konstrukti
    const A=project(edge.a),B=project(edge.b);a+=`<g data-edge-view="${view}" data-edge-visibility="${edge.visible?'visible':'hidden'}">`+line(...A,...B,edge.visible?'visible-edge':'hidden')+'</g>';
   }
  }
+ // Front: the bead ring is behind the front web, so its true outlines and
+ // four mitres are hidden. Side/top: only the rear overhang is exposed.
+ if(d.filling?.ok&&d.filling.enabled){
+  const f=d.filling,assembly=frameFillingAssembly(f);
+  a+='<g data-filling-view="front">';
+  for(const bead of assembly.beads)a+=`<path data-work-bead="${bead.id}" data-bead-joint="45" d="M${bead.points.map(([u,z])=>n(x+u*s)+','+n(y+z*s)).join(' L')} Z" class="hidden"/>`;
+  a+=text(x+w/2,y+h/2,f.fillingLabel+' '+ff(f.p.mirrorThickness)+' mm','small','middle')+text(x+w/2,y+h/2+5,'Halteleisten rückseitig · 45°','tiny','middle')+'</g>';
+  const mx=f.mirrorFront,mt=f.p.mirrorThickness,gy=B-f.mirrorEdge,gx=V-f.mirrorEdge,ry=B-f.p.rebateWidth,rx=V-f.p.rebateWidth;
+  a+='<g data-filling-view="side">'+rect(sideX+mx*s,y+gy*s,mt*s,(H-2*gy)*s,'hidden');
+  a+=rect(sideX+f.beadFront*s,y+ry*s,(Math.min(D,f.beadBack)-f.beadFront)*s,(H-2*ry)*s,'hidden');
+  if(f.rearProjection>0)a+=rect(sideX+D*s,y+assembly.outerInset.y*s,f.rearProjection*s,assembly.outerHeight*s,'bead-projection');a+='</g>';
+  a+='<g data-filling-view="top">'+rect(x+gx*s,belowY+mx*s,(W-2*gx)*s,mt*s,'hidden');
+  a+=rect(x+rx*s,belowY+f.beadFront*s,(W-2*rx)*s,(Math.min(D,f.beadBack)-f.beadFront)*s,'hidden');
+  if(f.rearProjection>0)a+=rect(x+assembly.outerInset.x*s,belowY+D*s,assembly.outerWidth*s,f.rearProjection*s,'bead-projection');a+='</g>';
+ }
  a+=text(sideX-2,y+h+6,'Seite','tiny')+(L.id==='tall'?text(x+w+2,belowY+t/2+1,'Draufsicht','tiny'):text(x,belowY+t+5,'Draufsicht · M 1:'+f(1/s),'tiny'));
  // Schema 3: cuts in clear stock, looking toward the neighbouring corner.
  // Offsets position the plane only; they are deliberately not workpiece dimensions.
@@ -1923,7 +1996,7 @@ function frameConstructionPages(m,{title='Rahmenkonstruktion',status='Konstrukti
  a+=`<g data-cut-source="2-2" data-cut-y="${n(H-cutY)}" data-clear-stock="true">`+line(x+w-v-3,y+h-cutY*s,x+w+3,y+h-cutY*s,'section-axis')+arrow(x+w-v-2,y+h-cutY*s,0,1)+arrow(x+w+2,y+h-cutY*s,0,1)+text(L.id==='compact'?x+w+6:x+w-v-10,y+h-cutY*s+1,'2–2','bold')+'</g>';
  const data=frameSheetRows(p,def,d),box=L.data,wrapped=frameWrappedRows(data,box.w);
  let dataY=box.y;for(const row of wrapped){a+=text(box.x,dataY,row,'tiny');dataY+=box.step;}
- const [maxD,maxB,maxV]=L.detailLimits,q=[1,.5,.2,.1,.05,.02,.01].find(q=>D*q<=maxD&&V*q<=maxV&&B*q<=maxB)||.005;
+ const [limitD,maxB,maxV]=L.detailLimits,maxD=d.filling?.ok?Math.min(limitD,L.width-7-L.ax-6):limitD,q=[1,.5,.2,.1,.05,.02,.01].find(q=>Math.max(D,d.filling?.beadBack||0)*q<=maxD&&V*q<=maxV&&B*q<=maxB)||.005;
  const {ax,ay,bx,by,ext}=L,Z=D*q,Y=B*q,X=V*q;
  const ellipse=(cx,cy,rx,ry,cls='hidden')=>`<ellipse cx="${n(cx)}" cy="${n(cy)}" rx="${n(rx)}" ry="${n(ry)}" class="${cls}"/>`;
  const poly=(pts,cls)=>`<path d="M${pts.map(pt=>pt.map(n).join(',')).join(' L')} Z" class="${cls}"/>`;
@@ -1979,7 +2052,7 @@ function frameConstructionPages(m,{title='Rahmenkonstruktion',status='Konstrukti
    for(const row of rows)a+=which===1?rect(ax+(row-thick/2)*q,ay+lo*q,thick*q,(hi-lo)*q,'hidden'):rect(bx+(V-hi)*q,by+(row-thick/2)*q,(hi-lo)*q,thick*q,'hidden');
    a+='</g>';
   }
-  a+='</g>'+(which===1?waveH(ax,ay+Y+ext,Z):waveV(bx-ext,by,Z));
+  a+='</g>'+frameFillingSectionDrawing(m,which,{ax,ay,bx,by,q,ext})+(which===1?waveH(ax,ay+Y+ext,Z):waveV(bx-ext,by,Z));
   a+=frameSectionConnectorDimensions(m,which,{ax,ay,bx,by,q,ext,layout:L});
   a+='</g>';
  }
@@ -1995,12 +2068,22 @@ function frameConstructionPages(m,{title='Rahmenkonstruktion',status='Konstrukti
  if(d.profile){const [z0,z1]=interval,dd=d.profile.depth;
   a+=dh(bx,bx+dd*q,by+Z+11,by+Z,'a = '+f(dd))+dv(by+z0*q,by+z1*q,L.id==='compact'?289:bx+X+16,bx+X,(def.groove?'Nut ':'b = ')+f(z1-z0));
  }
+ if(d.filling?.ok&&d.filling.enabled){
+  const g=d.filling,out=g.beadOuter,dimensionBottom=L.id==='wide'?L.by-12:L.footer-5;
+  a+='<g data-filling-dimensions="true">';
+  a+=dv(ay+(B-out)*q,ay+(B-g.beadStart)*q,ax+g.beadBack*q+6,ax+g.beadBack*q,ff(g.p.beadWidth));
+  if(ay+Y+ext+23<=dimensionBottom)a+=dh(ax+g.beadFront*q,ax+g.beadBack*q,ay+Y+ext+23,ay+(B-g.beadStart)*q,ff(g.p.beadInnerThickness));
+  if(ay+Y+ext+31<=dimensionBottom)a+=dh(ax+g.mirrorFront*q,ax+g.mirrorBack*q,ay+Y+ext+31,ay+Y+ext,'Füllung '+ff(g.p.mirrorThickness));
+  if(g.rearProjection>0&&ay+Y+ext+39<=dimensionBottom)a+=dh(ax+D*q,ax+g.beadBack*q,ay+Y+ext+39,ay+(B-out)*q,ff(g.rearProjection));
+  a+='</g>';
+ }
  const lx=L.legend.x,ly=L.legend.y,short=L.id!=='compact';
  if(!isInsert)a+=rect(lx,ly,4,3,'hatched')+text(lx+7,ly+2.5,short?'Schnittfläche':'Tatsächlich geschnittenes Holz','tiny')+line(lx,ly+8,lx+4,ly+8)+text(lx+7,ly+9,short?'Sichtbare Kante':'Sichtbare Kante hinter dem Schnitt','tiny')+line(lx,ly+16,lx+4,ly+16,'hidden')+text(lx+7,ly+17,short?'Verdeckte Kante':'Verdeckte Verbindungskante','tiny');
  if(!short&&!isInsert)a+=text(lx,ly+23,'Rückliegende Hölzer: ohne Schraffur, gewellter Abbruch.','tiny');
+ if(d.filling?.ok)a+=rect(lx,ly+25,4,3,'filling-bead')+text(lx+7,ly+27.5,'Halteleiste','tiny');
 
  const profileNote=d.profile?' · Nut/Falz: Brüstungen fachlich prüfen':'';
- const main=`<svg xmlns="http://www.w3.org/2000/svg" width="${L.width}mm" height="${L.height}mm" viewBox="0 0 ${L.width} ${L.height}" role="img" data-frame-schema="3" data-frame-layout="${L.id}" aria-label="Rahmenzeichnung mit Schnitten im freien Rahmenholz"><defs><pattern id="frame-hatch" width="2" height="2" patternUnits="userSpaceOnUse"><path d="M-1,1 L1,-1 M0,2 L2,0 M1,3 L3,1" class="hatchline"/></pattern>${detailDefs}</defs><style>text{font-family:Arial,sans-serif;fill:#25372e}text.small{font-size:2.65px}.tiny{font-size:2.3px}.bold{font-size:3.15px;font-weight:bold}.title{font-size:4px;font-weight:bold}path,rect,circle,ellipse{stroke:#25372e;stroke-width:.22;fill:none}.wood{fill:#f3eee3}.white{fill:white}.hatched{fill:url(#frame-hatch)}.hatchline{stroke:#5e6b63;stroke-width:.12}.dim{stroke:#5e6b63;stroke-width:.13}.connector-note{font-size:2.25px;paint-order:stroke;stroke:white;stroke-width:.7px}.measure{font-size:2.5px;paint-order:stroke;stroke:white;stroke-width:.5px}.plan-edges .hidden{stroke-width:${n(.12/s)};stroke-dasharray:${n(1.3/s)} ${n(1/s)}}.plan-edges .axis{stroke-width:${n(.1/s)};stroke-dasharray:${n(3/s)} ${n(1/s)}}.axis{stroke-dasharray:4 1 .5 1;stroke-width:.12}.visible-edge{stroke-width:.22}.hidden{stroke-dasharray:1.3 1;stroke-width:.12}.section-axis{stroke-dasharray:3 1 .5 1}.cutmark{stroke-width:.35}.arrow{fill:#25372e;stroke:none}.break{stroke-width:.2}.connector{fill:#eef0e9;stroke-width:.18}</style><rect width="${L.width}" height="${L.height}" style="fill:white;stroke:none"/>${rect(7,6,L.width-14,L.height-12)}${text(12,14,'look, talk ’n build · '+title,'title')}${text(12,21,'Nr. '+def.number+' · '+def.name)}${line(7,26,L.width-7,26)}${a}${d.profile?text(L.id==='tall'?110:12,L.footer-2,'Nut/Falz: Brüstungen fachlich prüfen','tiny'):''}${line(7,L.footer,L.width-7,L.footer)}${text(12,L.footer+6,'mm · Druck 100 % · Gesamt 1:'+f(1/s)+' · Schnitte 1:'+f(1/q),'tiny')}${text(L.width-9,L.footer+6,status+' · 1/1','tiny','end')}</svg>`;
+ const main=`<svg xmlns="http://www.w3.org/2000/svg" width="${L.width}mm" height="${L.height}mm" viewBox="0 0 ${L.width} ${L.height}" role="img" data-frame-schema="${frameGeometryVersion(p)}" data-frame-layout="${L.id}" aria-label="Rahmenzeichnung mit Schnitten im freien Rahmenholz"><defs><pattern id="frame-hatch" width="2" height="2" patternUnits="userSpaceOnUse"><path d="M-1,1 L1,-1 M0,2 L2,0 M1,3 L3,1" class="hatchline"/></pattern><pattern id="frame-bead-hatch" width="1.8" height="1.8" patternUnits="userSpaceOnUse"><path d="M-1,.8 L.8,2.6 M0,0 L1.8,1.8 M1,-.8 L2.6,.8" class="hatchline"/></pattern>${detailDefs}</defs><style>text{font-family:Arial,sans-serif;fill:#25372e}text.small{font-size:2.65px}.tiny{font-size:2.3px}.bold{font-size:3.15px;font-weight:bold}.title{font-size:4px;font-weight:bold}path,rect,circle,ellipse{stroke:#25372e;stroke-width:.22;fill:none}.wood{fill:#f3eee3}.white{fill:white}.hatched{fill:url(#frame-hatch)}.hatchline{stroke:#5e6b63;stroke-width:.12}.dim{stroke:#5e6b63;stroke-width:.13}.connector-note{font-size:2.25px;paint-order:stroke;stroke:white;stroke-width:.7px}.measure{font-size:2.5px;paint-order:stroke;stroke:white;stroke-width:.5px}.plan-edges .hidden{stroke-width:${n(.12/s)};stroke-dasharray:${n(1.3/s)} ${n(1/s)}}.plan-edges .axis{stroke-width:${n(.1/s)};stroke-dasharray:${n(3/s)} ${n(1/s)}}.axis{stroke-dasharray:4 1 .5 1;stroke-width:.12}.visible-edge{stroke-width:.22}.hidden{stroke-dasharray:1.3 1;stroke-width:.12}.section-axis{stroke-dasharray:3 1 .5 1}.cutmark{stroke-width:.35}.arrow{fill:#25372e;stroke:none}.break{stroke-width:.2}.connector{fill:#eef0e9;stroke-width:.18}.mirror-face{fill:#f9fcfd}.filling-glass{fill:#e1edf0;stroke-width:.25}.filling-panel{fill:#eadcc0;stroke-width:.25}.filling-padding{fill:#c5ccc7;stroke-width:.13}.filling-bead{fill:url(#frame-bead-hatch);stroke-width:.3}.bead-projection{fill:#f3eee3;stroke-width:.22}</style><rect width="${L.width}" height="${L.height}" style="fill:white;stroke:none"/>${rect(7,6,L.width-14,L.height-12)}${text(12,14,'look, talk ’n build · '+title,'title')}${text(12,21,'Nr. '+def.number+' · '+def.name)}${line(7,26,L.width-7,26)}${a}${d.profile?text(L.id==='tall'?110:12,L.footer-2,'Nut/Falz: Brüstungen fachlich prüfen','tiny'):''}${line(7,L.footer,L.width-7,L.footer)}${text(12,L.footer+6,'mm · Druck 100 % · Gesamt 1:'+f(1/s)+' · Schnitte 1:'+f(1/q),'tiny')}${text(L.width-9,L.footer+6,status+' · 1/1','tiny','end')}</svg>`;
  return p.hardwareMachining?.operations?.length?[main.replace(' · 1/1',' · 1/2'),hwMachiningSvg(hwFramePart(p),p.hardwareMachining.operations,{title,status,pageLabel:'2/2'})]:[main];
 }
 // Geometry in real millimetres, independent of drawing scale or UI.
@@ -5049,12 +5132,12 @@ function frameRender(p){
  const numeric=k=>field(k,FCON_FIELDS.find(f=>f[0]===k)[1]+(['connectorCount','connectorRows','biscuitRows'].includes(k)?' (Stück)':' (mm)'));
  box.innerHTML='<h3>Rahmenkonstruktion · Eckverbindungen</h3><p>Rechteckiger Rahmen, paarweise gleiche Hölzer und gemeinsame Dicke. Maße bleiben frei eingebbar; die gewählte Verbindung legt die Proportionen fest.</p><div class="wdFields">'+field('joint','Rahmeneckverbindung',Object.fromEntries(Object.entries(FRAME_JOINTS).map(([id,d])=>[id,'Nr. '+d.number+' · '+d.name])))+field('material','Holzart / Material')+['width','height','verticalWidth','horizontalWidth','thickness'].map(numeric).join('')+(frameNeedsThrough(p.joint)?field('through','Durchgehende / geschlitzte Rahmenhölzer',{vertical:'Aufrechte Rahmenhölzer',horizontal:'Waagerechte Rahmenhölzer'}):'')+(p.joint==='lap_mitre'?field('mitreFace','Gehrungsseite',{front:'Vorderseite',back:'Rückseite'}):'')+'</div>'+
  (def?.groove?'<h4>Innennut und Nutzapfen</h4><div class="wdFields">'+['grooveWidth','grooveDepth','grooveOffset'].map(numeric).join('')+field('profileFace','Nutabstand ab',{front:'Vorderfläche',back:'Rückfläche'})+'</div>':'')+
- (def?.rebate&&p.filling?'<h4>Spiegelfalz · Maße aus dem Spiegelquerschnitt</h4><p>Die Eingaben unter „Spiegel und Glasleisten“ bestimmen Falzbreite und Falztiefe. Schlitz und Zapfen bleiben als Rahmeneckverbindung erhalten.</p>':def?.rebate?'<h4>Falz · feste Proportionen</h4><p>a = 2D/3; b = '+(def.rebate===1/3?'D/3':'2D/3')+'.</p><div class="wdFields">'+field('profileFace','Falz offen zur',{front:'Vorderfläche',back:'Rückfläche'})+'</div>':'')+
+ (def?.rebate&&p.filling?'<h4>Falz · Maße aus dem Füllungsquerschnitt</h4><p>Die Eingaben unter „Füllung und Halteleisten“ bestimmen Falzbreite und Falztiefe. Schlitz und Zapfen bleiben als Rahmeneckverbindung erhalten.</p>':def?.rebate?'<h4>Falz · feste Proportionen</h4><p>a = 2D/3; b = '+(def.rebate===1/3?'D/3':'2D/3')+'.</p><div class="wdFields">'+field('profileFace','Falz offen zur',{front:'Vorderfläche',back:'Rückfläche'})+'</div>':'')+
  (def?.loose?'<h4>Falscher Zapfen</h4><p>Dreieckig, D/3 dick. Einstecktiefe ausdrücklich vorgeben; kein aus der Vorlage geschätztes Maß.</p><div class="wdFields">'+numeric('looseDepth')+'</div>':'')+
  (['dowel','angle'].includes(def?.connector)?'<h4>'+ (def.connector==='angle'?'Winkeldübel 90°':'Rundholzdübel')+'</h4><p>Achsen ab äußerem Fugenende entlang der Anschlussfläche. Gerade Dübel: Einstecklänge je Teil = halbe Dübellänge. Winkeldübel: Schenkel ab theoretischem Achsschnittpunkt und Biegeradius eingeben. Luft kommt je Bohrungsgrund hinzu.</p><div class="wdFields">'+field('connectorPlacement','Lage über die Rahmendicke',{centered:'Automatisch mittig (auch bei Dickenänderung)',manual:'Abstand ab Vorderfläche selbst festlegen'})+['connectorDiameter',...(def.connector==='angle'?['angleLegHorizontal','angleLegVertical','angleRadius']:['connectorLength']),'connectorCount','connectorFirst','connectorSpacing','connectorRows','connectorRowSpacing','glueAir'].map(numeric).join('')+(p.connectorPlacement==='manual'?numeric('connectorFaceMargin'):'<p class="hint" id="frameConnectorCenter"></p>')+'</div>':'')+
  (def?.connector==='biscuit'?'<h4>Flachdübel · Größe nach verfügbarem Platz in der Rahmenbreite</h4><p>Mehrere Lamellen werden über die Rahmendicke verteilt. Die Fräsmaße stammen von deinem Werkzeug und werden nicht aus D gewählt.</p><div class="wdFields">'+field('biscuitSize','Flachdübelgröße',{'':'Bitte wählen','0':'0','10':'10','20':'20'})+field('biscuitPlacement','Lage über die Rahmendicke',{centered:'Automatisch mittig (auch bei Dickenänderung)',manual:'Abstand ab Vorderfläche selbst festlegen'})+['biscuitDepth','biscuitSlotLength','biscuitCenter','biscuitRows','biscuitSpacing'].map(numeric).join('')+(p.biscuitPlacement==='manual'?numeric('biscuitFirst'):'<p class="hint" id="frameConnectorCenter"></p>')+'</div>':'')+
  (FRAME_REFERENCE_IMAGES[p.joint]?'<details><summary>Eigene Konstruktionsskizze dieser Verbindung</summary><img style="display:block;max-width:100%;height:auto;object-fit:contain;background:white" src="'+FRAME_REFERENCE_IMAGES[p.joint]+'" alt="Neu aus dem Rahmenmodell erzeugte technische Beispielzeichnung"></details>':'')+'<p id="frameDraftStatus" role="status">'+esc(current.frameSaveError||'Eingaben werden auf diesem Gerät gespeichert.')+'</p><button id="frameExample" class="ghost">Beispielmaße für diese Verbindung laden</button><button id="frameRetry" class="ghost">Eingaben erneut sichern</button><p class="hint">Beispielmaße sind ausdrücklich Muster, keine Vorgaben. A4-Zeichnung: automatische Blattaufteilung für möglichst große Gesamtansichten im passenden Normmaßstab. Hoch- oder Querformat je nach Platzbedarf; Schnittdetails daneben oder darunter. Verbindungsmittel werden direkt in den beiden vorhandenen Schnitten bemaßt; kein zusätzliches Blatt. Schnitte im freien Rahmenholz mit bemaßtem Querschnitt, dahinterliegenden Verbindungskanten und gewellten Abbruchlinien. Nut- und Falzbrüstungen anschließend am Ergebnis fachlich prüfen.</p><details><summary>Verbindungskatalog und offene Regeln</summary>'+Object.values(FRAME_JOINTS).map(j=>'<p><strong>Nr. '+j.number+' · '+esc(j.name)+'</strong> '+(j.division?'Dickenteilung D/'+j.division+'. ':'')+(j.pending?'Herstellergeometrie offen.':'')+'</p>').join('')+'<p>Gehrungen mit unterschiedlichen Rahmenholzbreiten bleiben vorerst offen. Winkeldübel verwenden die eingegebenen Schenkellängen und den Achsradius. Nut- und Falz-Brüstungen sind vor Fertigung anhand der Vorlagen zu prüfen.</p></details><div id="wdChecks" aria-live="polite"></div><label class="wdConfirm"><input id="wdConfirmed" type="checkbox"> Ich habe Maße und Verbindungsregeln fachlich geprüft.</label><div class="composerActions"><button id="wdSave">Rahmenstand übernehmen und speichern</button><button id="wdPrint" class="secondary">A4-PDF herunterladen</button><button id="frameTalk" class="ghost">Im Werkstatt-Talk besprechen</button></div><p id="wdSaveStatus" role="status"></p><label>Maßstab der Gesamtansicht<select id="frameScale">'+['auto','1','2','5','10','20','50','100'].map(s=>'<option value="'+s+'" '+(p.viewScale===s?'selected':'')+'>'+(s==='auto'?'Automatisch · größtmögliche Gesamtansichten':'1:'+s)+'</option>').join('')+'</select></label><div id="wdPreview" class="wdPreview"></div>';
- $('#wdConfirmed').checked=!!current.woodDrawing?.confirmed&&current.woodDrawing.geometryVersion===3&&drawingStatus(current)==='checked'&&frameSignature(p)===frameSignature(current.woodDrawing.params);
+ $('#wdConfirmed').checked=!!current.woodDrawing?.confirmed&&current.woodDrawing.geometryVersion===frameGeometryVersion(p)&&drawingStatus(current)==='checked'&&frameSignature(p)===frameSignature(current.woodDrawing.params);
  const change=(key,value)=>{current.woodDrawingDraft={...wdParams(),[key]:value};$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';framePersistDraft();if(['joint','through','mitreFace','profileFace','connectorPlacement','biscuitPlacement'].includes(key))frameRender(wdParams());else framePreview();};
  box.querySelectorAll('[data-frame]').forEach(el=>{el.onchange=()=>change(el.dataset.frame,el.value);});
  $('#frameScale').onchange=e=>change('viewScale',e.target.value);
@@ -5071,17 +5154,18 @@ function framePreview(){
  if(typeof frameFillingRefresh==='function')frameFillingRefresh();
  if($('#frameConnectorCenter'))$('#frameConnectorCenter').textContent='Automatische Achslage ab Vorderfläche: '+(m.d.rows||[]).map(v=>Number(v.toFixed(2)).toLocaleString('de-DE')+' mm').join(' / ');
  $('#wdConfirmed').disabled=!m.confirmable;if(!m.confirmable)$('#wdConfirmed').checked=false;
- const unsaved=!saved||saved.geometryVersion!==3||frameSignature(wdParams())!==frameSignature(saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed,stale=drawingStatus(current)==='stale';
- $('#wdChecks').innerHTML=[...m.errors.map(s=>'<p class="notice">Bitte korrigieren: '+esc(s)+'</p>'),...m.pending.map(s=>'<p class="notice">Offen: '+esc(s)+'</p>'),...m.warnings.map(s=>'<p class="hint">'+esc(s)+'</p>')].join('')+'<p>'+esc(saved&&saved.geometryVersion!==3?'Ansichtsgeometrie aktualisiert · bitte prüfen, übernehmen und neu bestätigen':unsaved?'Entwurf · noch nicht übernommen':wdStateText())+'</p>';
+ const unsaved=!saved||saved.geometryVersion!==frameGeometryVersion(wdParams())||frameSignature(wdParams())!==frameSignature(saved.params)||$('#wdConfirmed').checked!==!!saved.confirmed,stale=drawingStatus(current)==='stale';
+ $('#wdChecks').innerHTML=[...m.errors.map(s=>'<p class="notice">Bitte korrigieren: '+esc(s)+'</p>'),...m.pending.map(s=>'<p class="notice">Offen: '+esc(s)+'</p>'),...m.warnings.map(s=>'<p class="hint">'+esc(s)+'</p>')].join('')+'<p>'+esc(saved&&saved.geometryVersion!==frameGeometryVersion(wdParams())?'Zeichnung ergänzt · bitte den Rahmenstand erneut übernehmen und speichern':unsaved?'Entwurf · noch nicht übernommen':wdStateText())+'</p>';
  $('#wdSave').disabled=!m.ok||wdSaving;
- $('#wdPrint').disabled=!m.confirmable||unsaved||stale||!saved?.confirmed||!!current.frameSaveError;
+ $('#wdPrint').disabled=!m.ok||unsaved||stale||!saved||!!current.frameSaveError;
+ $('#wdPrint').textContent=m.confirmable&&saved?.confirmed?'A4-PDF herunterladen':'A4-Entwurf herunterladen';
  $('#wdPreview').innerHTML=m.ok?frameConstructionPages(m,{title:wdTitle(),status:'Konstruktionsentwurf · '+(unsaved?'nicht übernommen':saved?.confirmed?'fachlich bestätigt':'noch nicht bestätigt')}).map((svg,i)=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Rahmenkonstruktion Blatt '+(i+1)+'" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'<p>Die Vorschau erscheint nach vollständigen, widerspruchsfreien Grundmaßen.</p>';
  if(typeof hwShowIndependentDrawing==='function')hwShowIndependentDrawing(current,m);
 }
 async function frameSave(){
  if(wdSaving)return;const project=current,m=buildFrameConstruction(wdParams(project));if(!m.ok)return;
  const confirmed=!!$('#wdConfirmed').checked&&m.confirmable,previous=project.woodDrawing,previousPlan=project.reconstruction,previousParts=project.purchasedParts,previousDirty=project.projectDirty;
- wdSaving=true;project.woodDrawing={schemaVersion:1,geometryVersion:3,type:FRAME_KIND,params:m.p,revision:(previous?.revision||0)+1,confirmed,source:'',updatedAt:new Date().toISOString()};
+ wdSaving=true;project.woodDrawing={schemaVersion:1,geometryVersion:frameGeometryVersion(m.p),type:FRAME_KIND,params:m.p,revision:(previous?.revision||0)+1,confirmed,source:'',updatedAt:new Date().toISOString()};
  project.woodDrawingDraft={...m.p};
  project.reconstruction={...framePlan(m),planSchemaVersion:2,sourceRevision:project.analysis?.revision||0,main_dimensions:[m.p.width,m.p.height,m.p.thickness].map(v=>v+' mm')};project.projectDirty=false;
  const old=new Map((project.purchasedParts||[]).filter(p=>p.source==='frame-construction').map(p=>[p.item,p]));
@@ -5091,29 +5175,51 @@ async function frameSave(){
  finally{wdSaving=false;if(current===project)framePreview();}
 }
 async function framePdf(){
- const project=current,saved=project.woodDrawing,m=buildFrameConstruction(wdParams(project));if(!m.confirmable||!saved?.confirmed||saved.geometryVersion!==3||!$('#wdConfirmed').checked||drawingStatus(project)==='stale'||frameSignature(m.p)!==frameSignature(saved.params)||current.frameSaveError)return;
+ const project=current,saved=project.woodDrawing,m=buildFrameConstruction(wdParams(project));if(!m.ok||!saved||saved.geometryVersion!==frameGeometryVersion(m.p)||$('#wdConfirmed').checked!==!!saved.confirmed||drawingStatus(project)==='stale'||frameSignature(m.p)!==frameSignature(saved.params)||current.frameSaveError)return;
  const source=drawingSource(project),button=$('#wdPrint');button.disabled=true;$('#wdSaveStatus').textContent='A4-PDF wird erstellt …';
- try{const blob=await drawingPdfBlob(m,{title:wdTitle(),status:'Konstruktionsentwurf · fachlich bestätigt'});
-  if(current!==project||saved!==project.woodDrawing||drawingSource(project)!==source||frameSignature(wdParams(project))!==frameSignature(m.p)||!$('#wdConfirmed').checked)throw Error('Rahmenstand geändert. Bitte erneut übernehmen.');
+ try{const blob=await drawingPdfBlob(m,{title:wdTitle(),status:m.confirmable&&saved.confirmed?'Konstruktionsentwurf · fachlich bestätigt':m.pending.length?'Entwurf · Montagepunkte offen':'Konstruktionsentwurf · nicht bestätigt'});
+  if(current!==project||saved!==project.woodDrawing||drawingSource(project)!==source||frameSignature(wdParams(project))!==frameSignature(m.p)||$('#wdConfirmed').checked!==!!saved.confirmed)throw Error('Rahmenstand geändert. Bitte erneut übernehmen.');
   const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=safeProjectFilename(wdTitle()).replace(/\.ltnb$/, '')+'-Rahmen-A4.pdf';a.textContent='A4-PDF herunterladen';$('#wdSaveStatus').textContent='PDF bereit · Druck 100 %. ';$('#wdSaveStatus').appendChild(a);a.click();setTimeout(()=>URL.revokeObjectURL(url),300000);
  }catch(e){if(current===project)$('#wdSaveStatus').textContent='PDF fehlgeschlagen: '+e.message;}
  finally{if(current===project)framePreview();}
 }
 document.addEventListener('click',e=>{if(e.target.closest?.('[data-frame-new]'))frameStartNew();});
 
+
+
+
+
 function frameFillingMount(){
  const checks=$('#wdChecks');if(!checks)return;
+ const p=wdParams(),supported=['tenon','tenon_rebate1','tenon_rebate2','biscuit','loose_tenon','dowel_mitre','angle_dowel'].includes(p.joint);
+ if(!p.filling&&!supported)return;
  const section=document.createElement('section');section.id='frameFillingBox';section.className='notice';checks.before(section);
  frameFillingEditor();
 }
+function frameFillingEditorHtml(p){
+ const f=p.filling,option=(value,label,selected)=>'<option value="'+value+'" '+(value===selected?'selected':'')+'>'+label+'</option>';
+ let html='<h4>Füllung und Halteleisten im rückseitigen Falz</h4><p>Vier Halteleisten halten die Füllung von hinten. Wähle eine einfache Rechteckleiste oder eine überfälzte Leiste. Die Leistenenden werden auf 45° geschnitten.</p>';
+ if(f){
+  const type=frameFillingType(f),plain=frameBeadType(f)==='plain';
+  html+='<div class="wdFields"><label class="wdField"><span>Füllung</span><select id="frameFillingType">'+option('mirror','Spiegelglas',type)+option('glass','Glasscheibe',type)+option('panel','Platte / andere Füllung',type)+'</select></label><label class="wdField"><span>Ausführung der Halteleiste</span><select id="frameBeadType">'+option('plain','Einfach · rechteckig',frameBeadType(f))+option('rebated','Überfälzt',frameBeadType(f))+'</select></label>'+(type==='panel'?'<label class="wdField"><span>Material der Füllung</span><input id="frameFillingMaterial" value="'+esc(f.panelMaterial??'')+'" placeholder="Noch festzulegen"></label>':'')+'</div>';
+  html+='<div class="wdFields">'+frameFillingFields(f).map(([k,label])=>'<label class="wdField"><span>'+esc(label)+' (mm)</span><input data-filling="'+k+'" inputmode="decimal" value="'+esc(f[k]??'')+'"></label>').join('')+'</div>';
+  html+='<p class="hint">'+(plain?'Einfach: rechteckiger Querschnitt innerhalb der Falzbreite. Die Rückseite der Leiste kann zurückliegen, bündig sein oder überstehen.':'Überfälzt: die Leiste greift über die Rahmenrückseite. Die äußere Auflage benötigt eine positive Dicke.')+' Maße werden beim Wechsel der Ausführung beibehalten; bitte prüfen, ob die Breite zum gewählten Profil passt.</p><button id="frameFillingRemove" class="ghost">Füllung und Halteleisten entfernen</button>';
+ }else{
+  html+='<button id="frameFillingAdd" class="secondary">Füllung und Halteleisten festlegen</button><p class="hint">Die einfache Leiste ist vorausgewählt. Füllungsdicke sowie Breite und Dicke der Leisten gibst du selbst ein.</p>';
+ }
+ return html+'<div id="frameFillingPreview"></div>';
+}
 function frameFillingEditor(){
  const box=$('#frameFillingBox');if(!box)return;
- const p=wdParams(),f=p.filling;
- box.innerHTML='<h4>Spiegel und Glasleisten</h4><p>Der Spiegel liegt im rückseitigen Rahmenfalz. Vier abgesetzte Glasleisten halten ihn von hinten; beide Enden jeder Leiste werden auf 45° geschnitten. Die Rahmeneckverbindung bleibt wie oben gewählt.</p>'+(f?'<div class="wdFields">'+FRAME_FILLING_FIELDS.map(([k,label])=>'<label class="wdField"><span>'+esc(label)+' (mm)</span><input data-filling="'+k+'" inputmode="decimal" value="'+esc(f[k]??'')+'"></label>').join('')+'</div><button id="frameFillingRemove" class="ghost">Füllung entfernen</button>':'<button id="frameFillingSample" class="secondary">Musterquerschnitt 01 einsetzen</button>')+'<p class="hint">Das Muster setzt nur den Füllungsquerschnitt ein. Deine Rahmenmaße und Eckverbindung bleiben erhalten. Verklotzung bleibt ein offener Prüfpunkt.</p><div id="frameFillingPreview"></div>';
+ const p=wdParams(),f=p.filling;box.innerHTML=frameFillingEditorHtml(p);
  function update(value){current.woodDrawingDraft={...wdParams()};if(value)current.woodDrawingDraft.filling=value;else delete current.woodDrawingDraft.filling;$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';framePersistDraft();frameRender(wdParams());}
  box.querySelectorAll('[data-filling]').forEach(el=>el.onchange=()=>update({...wdParams().filling,[el.dataset.filling]:el.value}));
- if(f)$('#frameFillingRemove').onclick=()=>{update(null);frameFillingEditor();};
- else $('#frameFillingSample').onclick=()=>{update(frameFillingSample());frameFillingEditor();};
+ if(f){
+  $('#frameBeadType').onchange=e=>update(frameFillingSelect(wdParams().filling,'beadType',e.target.value));
+  $('#frameFillingType').onchange=e=>update(frameFillingSelect(wdParams().filling,'fillingType',e.target.value));
+  if($('#frameFillingMaterial'))$('#frameFillingMaterial').onchange=e=>update(frameFillingSelect(wdParams().filling,'panelMaterial',e.target.value));
+  $('#frameFillingRemove').onclick=()=>update(null);
+ }else $('#frameFillingAdd').onclick=()=>update(frameFillingNew(wdParams()));
  frameFillingRefresh();
 }
 function frameFillingRefresh(){
