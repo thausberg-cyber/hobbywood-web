@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.11</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.12</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev66.11';
+const APP_VERSION='0.9.21-dev66.12';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -2256,12 +2256,14 @@ function circularContourSvg(o,cuts,{X,Y,n,line}){
 
 function boardContourScale(c,o){const T=c.base.thickness;return drawingOverviewScale(c.viewScale,Math.min(170/(o.length+T+20),100/(o.width+T),90/o.width,20/T));}
 function boardContourPages(c,o,{title,status,paperLayout=null},tools){
- if(!o.ready||!(c.base.thickness>0))return [];const choice=paperLayout?{ok:true,denominator:paperLayout.denominator,scale:1/paperLayout.denominator}:boardContourScale(c,o);if(!choice.ok)return [];const {text,line,rect,n,f,dh,dv}=tools,s=choice.scale,T=c.base.thickness,X=x=>28+x*s,Y=y=>58+(o.width-y)*s,frontY=58+o.width*s+23,sideX=28+o.length*s+14;
+ if(!o.ready||!(c.base.thickness>0))return [];const choice=paperLayout?{ok:true,denominator:paperLayout.denominator,scale:1/paperLayout.denominator}:boardContourScale(c,o);if(!choice.ok)return [];const {text,line,rect,n,f,dh,dv}=tools,s=choice.scale,T=c.base.thickness,X=x=>28+x*s,Y=y=>58+(o.width-y)*s,frontY=paperLayout?.elevations?62:58+o.width*s+23;
+ const split=paperLayout?.elevations;
+ const sideX=split?.length===2?28:28+o.length*s+14;
  const finishText=op=>op.treatment==='chamfer'?'Fase '+f(op.value)+' × 45°':op.treatment==='round'?'R '+f(op.value):op.treatment==='break'?'Kanten brechen':'unbearbeitet';
  const groups=[];for(const edge of o.edges){const finish=boardEdgeFinish(c,edge.id);if(!['chamfer','round'].includes(finish.treatment)||!(finish.value>0))continue;const key=finish.treatment+'/'+finish.value;let group=groups.find(g=>g.key===key);if(!group){group={key,finish,edges:[],id:'F'+(groups.length+1)};groups.push(group);}group.edges.push(edge);}
  const circular=boardCircularCuts(c,o),cuts=circular.cuts;
  const profiles=groups.length&&T<=90&&(groups.length<=2||T<=40);
- const frame=(body,page,paper)=>'<svg xmlns="http://www.w3.org/2000/svg" width="'+(paper?.width||297)+'mm" height="'+(paper?.height||210)+'mm" viewBox="0 0 '+(paper?.width||297)+' '+(paper?.height||210)+'"><style>text{font:2.5px Arial;fill:#111;stroke:none}.bold{font-weight:bold;font-size:3px}text.small{font-size:2.15px}line,path,rect{stroke:#111;stroke-width:.22;fill:none}.axis{stroke-dasharray:4 1 1 1}.hidden{stroke-dasharray:1 .6}.body{stroke-width:.4}.measure{paint-order:stroke;stroke:white;stroke-width:.9;fill:#111}</style>'+rect(6,6,(paper?.width||297)-12,(paper?.height||210)-12)+text(12,15,"look, talk ’n build",'bold')+text(12,25,title+' · '+o.name,'bold')+text((paper?.width||297)-37,15,'Blatt '+page+'/'+(profiles||cuts.length?2:1),'small')+line(6,30,(paper?.width||297)-6,30)+text(12,37,status,'small')+body+line((paper?.width||297)-75,43,(paper?.width||297)-25,43)+text((paper?.width||297)-75,48,'Kontrolle: 50 mm auf Papier','small')+text(12,(paper?.height||210)-9,'Alle Maße mm · Druck 100 % / Originalgröße · DIN-919-Abgleich offen','small')+'</svg>';
+ const frame=(body,page,paper,subtitle=o.name)=>'<svg xmlns="http://www.w3.org/2000/svg" width="'+(paper?.width||297)+'mm" height="'+(paper?.height||210)+'mm" viewBox="0 0 '+(paper?.width||297)+' '+(paper?.height||210)+'"><style>text{font:2.5px Arial;fill:#111;stroke:none}.bold{font-weight:bold;font-size:3px}text.small{font-size:2.15px}line,path,rect{stroke:#111;stroke-width:.22;fill:none}.axis{stroke-dasharray:4 1 1 1}.hidden{stroke-dasharray:1 .6}.body{stroke-width:.4}.measure{paint-order:stroke;stroke:white;stroke-width:.9;fill:#111}</style>'+rect(6,6,(paper?.width||297)-12,(paper?.height||210)-12)+text(12,15,"look, talk ’n build",'bold')+text(12,25,title+' · '+subtitle,'bold')+text((paper?.width||297)-37,15,'Blatt '+page+'/'+(profiles||cuts.length?2:1),'small')+line(6,30,(paper?.width||297)-6,30)+text(12,37,status,'small')+body+(paper&&split?line(paper.width-124,14,paper.width-74,14)+text(paper.width-124,19,'Kontrolle: 50 mm auf Papier','small'):line((paper?.width||297)-75,43,(paper?.width||297)-25,43)+text((paper?.width||297)-75,48,'Kontrolle: 50 mm auf Papier','small'))+text(12,(paper?.height||210)-9,'Alle Maße mm · Druck 100 % / Originalgröße · DIN-919-Abgleich offen','small')+'</svg>';
  let body=text(28,46,'DRAUFSICHT · M 1:'+f(choice.denominator),'bold')+'<path data-board-outline="'+o.shape+'" class="body" d="'+o.points.map((p,i)=>(i?'L':'M')+n(X(p.x))+','+n(Y(p.y))).join(' ')+' Z"/>';
  if(cuts.length)body=text(28,46,'DRAUFSICHT · M 1:'+f(choice.denominator),'bold')+circularContourSvg(o,cuts,{X,Y,n,line});
  for(const e of o.edges){const x1=X(e.p.x),y1=Y(e.p.y),x2=X(e.q.x),y2=Y(e.q.y),dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),nx=-dy/L,ny=dx/L,d=7;
@@ -2269,31 +2271,43 @@ function boardContourPages(c,o,{title,status,paperLayout=null},tools){
   const op=boardEdgeFinish(c,e.id),offsets=Object.fromEntries(o.edges.map(edge=>{const f=boardEdgeFinish(c,edge.id);return [edge.id,['chamfer','round'].includes(f.treatment)?f.value||0:0];}));if(offsets[e.id]>0){const inset=boardInsetEdge(o,e,offsets);if(inset)body+='<g data-edge-finish="'+e.id+'" data-treatment="'+op.treatment+'">'+cutLinePieces(inset.p,inset.q,cuts).map(part=>line(X(part.p.x),Y(part.p.y),X(part.q.x),Y(part.q.y))).join('')+'</g>';}
  }
  for(const h of cuts){const r=h.r;body+='<g data-hole-center="'+h.label+'">'+line(X(h.x-r-2),Y(h.y),X(h.x+r+2),Y(h.y),'axis')+line(X(h.x),Y(h.y-r-2),X(h.x),Y(h.y+r+2),'axis')+text(X(h.x)+3,Y(h.y)-3,h.label+' · Ø '+f(h.diameter),'measure')+'</g>';}
- body+=text(28,frontY-4,'VORDERANSICHT · M 1:'+f(choice.denominator),'bold')+rect(X(0),frontY,o.length*s,T*s)+dh(X(0),X(o.length),frontY+T*s,frontY+T*s+7,f(o.length))+dv(frontY,frontY+T*s,X(o.length),X(o.length)+7,f(T));
+ let frontBody=text(28,frontY-4,'VORDERANSICHT · M 1:'+f(choice.denominator),'bold')+rect(X(0),frontY,o.length*s,T*s)+dh(X(0),X(o.length),frontY+T*s,frontY+T*s+7,f(o.length))+dv(frontY,frontY+T*s,X(o.length),X(o.length)+7,f(T));
  const envelope=(axis,value)=>{const values=[];for(const e of o.edges){const a=axis==='x'?e.p.x:e.p.y,b=axis==='x'?e.q.x:e.q.y,v=axis==='x'?e.p.y:e.p.x,w=axis==='x'?e.q.y:e.q.x;if(Math.abs(a-b)<1e-9){if(Math.abs(value-a)<1e-9)values.push(v,w);}else{const t=(value-a)/(b-a);if(t>=-1e-9&&t<=1+1e-9)values.push(v+t*(w-v));}}return Math.min(...values);};
- for(const x of [...new Set(o.points.map(p=>p.x))])if(x>1e-6&&x<o.length-1e-6){const front=envelope('x',x),visible=o.points.some(p=>Math.abs(p.x-x)<1e-6&&Math.abs(p.y-front)<1e-6);body+=line(X(x),frontY,X(x),frontY+T*s,visible?'':'hidden');}
- body+=text(sideX,51,'VON LINKS','small')+rect(sideX,Y(o.width),T*s,o.width*s);
- for(const y of [...new Set(o.points.map(p=>p.y))])if(y>1e-6&&y<o.width-1e-6)body+=line(sideX,Y(y),sideX+T*s,Y(y));
+ for(const x of [...new Set(o.points.map(p=>p.x))])if(x>1e-6&&x<o.length-1e-6){const front=envelope('x',x),visible=o.points.some(p=>Math.abs(p.x-x)<1e-6&&Math.abs(p.y-front)<1e-6);frontBody+=line(X(x),frontY,X(x),frontY+T*s,visible?'':'hidden');}
+ let sideBody=(split?text(sideX,48,'SEITENANSICHT · M 1:'+f(choice.denominator),'bold'):'')+text(sideX,52,'VON LINKS','small')+rect(sideX,Y(o.width),T*s,o.width*s);
+ for(const y of [...new Set(o.points.map(p=>p.y))])if(y>1e-6&&y<o.width-1e-6)sideBody+=line(sideX,Y(y),sideX+T*s,Y(y));
  for(const h of cuts){
-  body+=line(X(Math.max(0,h.x-h.r)),frontY,X(Math.max(0,h.x-h.r)),frontY+T*s,'hidden')+line(X(Math.min(o.length,h.x+h.r)),frontY,X(Math.min(o.length,h.x+h.r)),frontY+T*s,'hidden');
-  body+=line(sideX,Y(Math.max(0,h.y-h.r)),sideX+T*s,Y(Math.max(0,h.y-h.r)),'hidden')+line(sideX,Y(Math.min(o.width,h.y+h.r)),sideX+T*s,Y(Math.min(o.width,h.y+h.r)),'hidden');
+  frontBody+=line(X(Math.max(0,h.x-h.r)),frontY,X(Math.max(0,h.x-h.r)),frontY+T*s,'hidden')+line(X(Math.min(o.length,h.x+h.r)),frontY,X(Math.min(o.length,h.x+h.r)),frontY+T*s,'hidden');
+  sideBody+=line(sideX,Y(Math.max(0,h.y-h.r)),sideX+T*s,Y(Math.max(0,h.y-h.r)),'hidden')+line(sideX,Y(Math.min(o.width,h.y+h.r)),sideX+T*s,Y(Math.min(o.width,h.y+h.r)),'hidden');
  }
  const beneath=paperLayout?.below;
- const x1=beneath?13:222,y1=beneath?paperLayout.height-49:60;
+ const x1=beneath?13:222,y1=split&&!paperLayout.notesOnPlan?61:beneath?paperLayout.height-49:60;
  const x2=beneath?paperLayout.width/2:222,y2=beneath?y1:103;
  const x3=beneath?x2:222,y3=beneath?y1+29:141;
- body+=text(x1,y1,'KONTUR / KANTEN','bold');o.edges.forEach((e,i)=>body+=text(x1,y1+(beneath?5+i*4:7+i*7),e.id+': '+f(e.length)+' mm · '+finishText(boardEdgeFinish(c,e.id)),'small'));
- body+=text(x2,y2,'PUNKTE X / Y','bold');o.points.forEach((p,i)=>body+=text(x2,y2+(beneath?5+i*4:7+i*6),'P'+(i+1)+': '+f(p.x)+' / '+f(p.y),'small'));
- if(beneath)body+=text(x3,y3,'INNENWINKEL: '+o.edges.map(e=>f(e.angle)+'°').join(' / '),'small');
- else{body+=text(x3,y3,'INNENWINKEL','bold');o.edges.forEach((e,i)=>body+=text(x3,y3+7+i*5,'P'+(i+1)+': '+f(e.angle)+'°','small'));}
+ let legend=text(x1,y1,'KONTUR / KANTEN','bold');o.edges.forEach((e,i)=>legend+=text(x1,y1+(beneath?5+i*4:7+i*7),e.id+': '+f(e.length)+' mm · '+finishText(boardEdgeFinish(c,e.id)),'small'));
+ legend+=text(x2,y2,'PUNKTE X / Y','bold');o.points.forEach((p,i)=>legend+=text(x2,y2+(beneath?5+i*4:7+i*6),'P'+(i+1)+': '+f(p.x)+' / '+f(p.y),'small'));
+ if(beneath)legend+=text(x3,y3,'INNENWINKEL: '+o.edges.map(e=>f(e.angle)+'°').join(' / '),'small');
+ else{legend+=text(x3,y3,'INNENWINKEL','bold');o.edges.forEach((e,i)=>legend+=text(x3,y3+7+i*5,'P'+(i+1)+': '+f(e.angle)+'°','small'));}
  const grain=boardGrain(c,o),blank=boardGrainBlank(o,grain),seg=boardGrainSegment(o,grain);
  if(seg){const x1=X(seg.a.x),y1=Y(seg.a.y),x2=X(seg.b.x),y2=Y(seg.b.y),L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L;body+='<g data-grain-reference="'+grain.mode+'" data-grain-edge="'+(grain.edge||'')+'" data-grain-x="'+grain.vector.x+'" data-grain-y="'+grain.vector.y+'">'+line(x1,y1,x2,y2)+line(x2,y2,x2-ux*2-uy,y2-uy*2+ux)+line(x2,y2,x2-ux*2+uy,y2-uy*2-ux)+line(x1,y1,x1+ux*2-uy,y1+uy*2+ux)+line(x1,y1,x1+ux*2+uy,y1+uy*2-ux)+text((x1+x2)/2,(y1+y2)/2-3,'Faser','measure','middle')+'</g>';}
  const blankLabel=blank?f(blank.length)+' × '+f(blank.width)+' × '+f(T):'Faserrichtung noch offen';
- if(beneath)body+=text(x1,y1+24,'Faser: '+(grain.label||'offen'),'small')+text(x1,y1+30,'Zuschnitt: '+blankLabel,'small');
- else body+=text(222,174,'Faser: '+(grain.label||'offen'),'small')+text(222,182,'Zuschnitt in Faserrichtung:','small')+text(222,188,blankLabel,'small');
- groups.forEach(g=>{const e=g.edges[0],mx=(e.p.x+e.q.x)/2,my=(e.p.y+e.q.y)/2,angle=Math.atan2(-e.u.y,e.u.x)*180/Math.PI;body+='<g transform="translate('+n(X(mx))+','+n(Y(my))+') rotate('+n(angle)+')">'+drawingSectionMark(tools,{id:g.id,x1:0,y1:-4,x2:0,y2:4,direction:'right',captionX:0,captionY:-12})+'</g>';});
+ if(beneath)legend+=text(x1,y1+24,'Faser: '+(grain.label||'offen'),'small')+text(x1,y1+30,'Zuschnitt: '+blankLabel,'small');
+ else legend+=text(222,174,'Faser: '+(grain.label||'offen'),'small')+text(222,182,'Zuschnitt in Faserrichtung:','small')+text(222,188,blankLabel,'small');
+ const detailReference=profiles||cuts.length?'Blatt '+(2+(split?.length||0)+(split&&!paperLayout.notesOnPlan?1:0)):'';
+ groups.forEach(g=>{const e=g.edges[0],mx=(e.p.x+e.q.x)/2,my=(e.p.y+e.q.y)/2,angle=Math.atan2(-e.u.y,e.u.x)*180/Math.PI;body+='<g transform="translate('+n(X(mx))+','+n(Y(my))+') rotate('+n(angle)+')">'+drawingSectionMark(tools,{id:g.id,reference:detailReference,x1:0,y1:-4,x2:0,y2:4,direction:'right',captionX:0,captionY:-12})+'</g>';});
  const center={x:o.points.reduce((a,p)=>a+p.x,0)/o.points.length,y:o.points.reduce((a,p)=>a+p.y,0)/o.points.length};o.points.forEach((p,i)=>{const dx=center.x-p.x,dy=center.y-p.y,L=Math.hypot(dx,dy);body+=text(X(p.x)+dx/L*5,Y(p.y)-dy/L*5,'P'+(i+1),'small','middle');});
- const pages=[frame(body,1,paperLayout)];if(!profiles&&!cuts.length)return pages;
+ const pages=[];
+ if(split){
+  pages.push(frame(body+(paperLayout.notesOnPlan?legend:''),1,paperLayout,o.name+' · Draufsicht'));
+  for(const entry of split){
+   const detail=entry.views.map(view=>view==='front'?frontBody:sideBody).join('');
+   const subtitle=entry.views.length>1?'Vorder- und Seitenansicht':entry.views[0]==='front'?'Vorderansicht':'Seitenansicht';
+   pages.push(frame(detail,1,entry.paper,subtitle));
+  }
+  if(!paperLayout.notesOnPlan)pages.push(frame(legend,1,undefined,'Konturmaße und Kantenbearbeitung'));
+ }else pages.push(frame(body+frontBody+sideBody+legend,1,paperLayout));
+ const numberPages=()=>pages.map((page,index)=>page.replace(/Blatt \d+\/\d+/, 'Blatt '+(index+1)+'/'+pages.length));
+ if(!profiles&&!cuts.length)return numberPages();
  let detail=text(20,48,cuts.length?'BOHRUNGEN UND RANDAUSSCHNITTE · MASSANGABEN':'KANTENPROFILE · ÖRTLICHE SCHNITTE M 1:1','bold');
  if(cuts.length){
   detail+=text(20,56,'Bezugskanten und H-Kennungen: Blatt 1. Alle Bohrungen durchgehend.','small')+text(20,62,'Abstand: + ins Brett / − nach außen; 0 = Mittelpunkt auf der Kante.','small');
@@ -2302,7 +2316,7 @@ function boardContourPages(c,o,{title,status,paperLayout=null},tools){
  }
 groups.forEach((g,i)=>{const x=cuts.length?185:28+(i%2)*132,y=65+(cuts.length?i:Math.floor(i/2))*62,C=g.finish.value,W=Math.max(35,2*C+15),R=g.finish.treatment==='round',p=R?'M'+(x+C)+','+y+' H'+(x+W)+' V'+(y+T)+' H'+(x+C)+' A'+C+','+C+' 0 0 1 '+x+','+(y+T-C)+' V'+(y+C)+' A'+C+','+C+' 0 0 1 '+(x+C)+','+y+' Z':'M'+(x+C)+','+y+' H'+(x+W)+' V'+(y+T)+' H'+(x+C)+' L'+x+','+(y+T-C)+' V'+(y+C)+' Z';
   detail+='<g data-section-detail="'+g.id+'-'+g.id+'">'+text(x,y-5,g.id+'–'+g.id+' · Kante '+g.edges.map(e=>e.id).join(' / ')+' · '+finishText(g.finish),'bold')+'<path class="body" d="'+p+'"/>'+dv(y,y+T,x+W,x+W+9,f(T))+text(x,y+T+9,finishText(g.finish)+' · örtlich verkürzte Brettfläche','small')+'</g>';});
- detail+=text(20,192,'Schnittlagen und Blickrichtungen: Blatt 1. Profile gelten entlang der bezeichneten freien Kanten.','small');pages.push(frame(detail,2));return pages;
+ detail+=text(20,192,'Schnittlagen und Blickrichtungen: Blatt 1. Profile gelten entlang der bezeichneten freien Kanten.','small');pages.push(frame(detail,2));return numberPages();
 }
 
 // Authoritative, versioned construction data. No prose is interpreted as geometry here.
@@ -2821,18 +2835,19 @@ function constructionPages(input,{title=input.title||'Brettkonstruktion',paperLa
  if(paperLayout){o.renderModel.paperLayout=paperLayout;o.renderModel.overviewDenominator=paperLayout.denominator;}
  const pages=drawingPages(o.renderModel,{title,status});
  const {text,line,rect,n,f}=svgTools();
- // Standalone bore detail on a free second sheet; joint sections are reused for bores in battens.
+ // An ordinary bore can have its own sheet after the projected views.
  const extra=o.operations.filter(op=>op.type==='bore'&&op.g&&op.positions?.length&&op.target==='base'&&op.diameter>0&&op.depth>0);
  if(extra.length>1){} // Additional bore groups remain subject to the detail capability check.
- if(extra.length&&pages.length===1){const op=extra[0],t=input.base.thickness,w=Math.max(45,op.diameter+20),x=28,y=65,R=op.diameter/2,center=x+w/2;
+ if(extra.length&&(pages.length===1||paperLayout?.elevations)&&extra[0].diameter<=80&&input.base.thickness<=90){const op=extra[0],t=input.base.thickness,w=Math.max(45,op.diameter+20),x=28,y=65,R=op.diameter/2,center=x+w/2;
   const known=o.renderModel.components.filter(g=>!g.unresolved),minX=Math.min(...known.map(g=>g.x)),maxY=Math.max(...known.map(g=>g.y+g.width)),scale=1/(o.renderModel.overviewDenominator||5),point=op.positions[0],px=24+(op.g.x+point.u-minX)*scale,py=58+(maxY-op.g.y-point.v)*scale;
-  pages[0]=pages[0].replace('Blatt 1/1','Blatt 1/2').replace('</svg>',drawingSectionMark(svgTools(),{id:'B1',x1:px-8,y1:py,x2:px+8,y2:py,direction:'down',captionY:py-10})+'</svg>');
+  pages[0]=pages[0].replace('</svg>',drawingSectionMark(svgTools(),{id:'B1',reference:'Blatt '+(pages.length+1),x1:px-8,y1:py,x2:px+8,y2:py,direction:'down',captionY:py-10})+'</svg>');
   const path='<g data-section-detail="B1-B1"'+(op.face==='top'?' transform="translate(0 '+(2*y+t)+') scale(1 -1)"':'')+'><path d="M'+x+','+y+' L'+(x+w)+','+y+' L'+(x+w)+','+(y+t)+' L'+(center+R)+','+(y+t)+' L'+(center+R)+','+(y+t-op.depth)+' L'+(center-R)+','+(y+t-op.depth)+' L'+(center-R)+','+(y+t)+' L'+x+','+(y+t)+' Z" style="fill:white;stroke:#111;stroke-width:.35"/></g>';
   pages.push('<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><style>text{font:2.6px Arial;fill:#111}line,rect{stroke:#111;stroke-width:.2;fill:none}.bold{font-weight:bold}</style><rect width="297" height="210" style="fill:white;stroke:none"/>'+rect(7,7,283,196)+text(12,16,title,'bold')+text(12,25,status)+text(28,43,'B1–B1 · örtlicher Schnitt durch Bohrungsmitte · M 1:1','bold')+path+text(28,y+t+12,'Ø '+f(op.diameter)+' × '+f(op.depth)+' mm tief; '+op.positions.length+' Positionen nach U/V-Liste.')+text(145,43,'Bearbeitungen im gemeinsamen Stand','bold')+o.notes.slice(0,8).flatMap(s=>s.match(/.{1,68}(?:\s|$)/g)||[s]).slice(0,15).map((s,i)=>text(145,53+i*6,s.trim())).join('')+line(28,185,78,185)+text(28,192,'Kontrolle: 50 mm bei 100 % Druck')+text(260,198,'Blatt 2/2')+'</svg>');
  }
  const boreNotes=o.operations.filter(op=>op.type==='bore'&&op.positions?.length&&op.positions.every(pt=>pt.u!==null&&pt.v!==null)).map(op=>'Bauteil '+(o.renderModel.components.findIndex(g=>(g.id==='panel'?'base':g.id)===op.target)+1)+' · '+(op.face==='bottom'?'Unterseite':'Oberseite')+' · Ø '+f(op.diameter)+' × '+f(op.depth)+' tief · U/V: '+op.positions.map(pt=>f(pt.u)+'/'+f(pt.v)).join('; ')+' mm');
  if(boreNotes.length&&pages.length>1&&!(o.renderModel.connections?.length)){const legend=text(24,164,'BOHRMITTEN · U ab Bauteilanfang, V ab linker Querkante; Zuordnung nach Bauteilnummer','small')+boreNotes.slice(0,2).map((note,i)=>text(24,170+i*5,note,'small')).join('');pages[pages.length-1]=pages.at(-1).replace('</svg>',legend+'</svg>');}
- return boardGluePages(constructionBoardLabels(pages,input,o.renderModel,svgTools()),o.glue,input.base,svgTools(),{title,status});
+ const finalPages=boardGluePages(constructionBoardLabels(pages,input,o.renderModel,svgTools()),o.glue,input.base,svgTools(),{title,status});
+ return finalPages.map((page,index)=>page.replace(/Blatt \d+\/\d+/, 'Blatt '+(index+1)+'/'+finalPages.length));
 }
 
 function constructionBoardLabels(pages,input,m,tools){
@@ -3313,7 +3328,7 @@ function assemblyBattenSection(g,c,tools,P){
  const points=pts.map(([u,z])=>P.view==='front'?[P.X(c.center+u),P.Z(z)]:[P.SX(z),P.Y(c.center+u)]);
  return '<path data-grat-section="'+(c.lengthwise?'front':'side')+'" d="'+points.map(([x,y],i)=>(i?'L':'M')+n(x)+','+n(y)).join(' ')+' Z" stroke="#111" stroke-width=".3" fill="white"/>';
 }
-function assemblyBattenPlan(m,tools,{X,Y}){
+function assemblyBattenPlan(m,tools,{X,Y,reference}){
  const {n,line,dh,f}=tools;let out='';const seen={};
  for(const c of m.battenConnections||[]){const g=m.components.find(g=>g.id===c.child),N=c.neck/2,G=c.gratWidth/2;
   out+='<g data-grat-plan="'+m.components.indexOf(g)+'">';
@@ -3328,8 +3343,8 @@ function assemblyBattenPlan(m,tools,{X,Y}){
  for(const {c,sectionId} of assemblyBattenSectionGroups(m)){
   const g=m.components.find(v=>v.id===c.child),a=m.p.attachments.find(v=>v.id===c.child),low=['left','front'].includes(a.edge),G=c.gratWidth/2;
   const lo=c.center-(low?G+c.edgeDistance+5:G+15),hi=c.center+(low?G+15:G+c.edgeDistance+5);
-  if(c.lengthwise){const yy=c.canonicalSectionPoint?.y??(g.y+g.width*(a.endShape&&a.endShape!=='none'?.5:.35));out+=drawingSectionMark(tools,{id:sectionId,x1:X(lo),y1:Y(yy),x2:X(hi),y2:Y(yy),direction:low?'down':'up'});}
-  else{const xx=c.canonicalSectionPoint?.x??(g.x+g.length*(a.endShape&&a.endShape!=='none'?.5:.35));out+=drawingSectionMark(tools,{id:sectionId,x1:X(xx),y1:Y(lo),x2:X(xx),y2:Y(hi),direction:low?'right':'left'});}
+  if(c.lengthwise){const yy=c.canonicalSectionPoint?.y??(g.y+g.width*(a.endShape&&a.endShape!=='none'?.5:.35));out+=drawingSectionMark(tools,{id:sectionId,reference,x1:X(lo),y1:Y(yy),x2:X(hi),y2:Y(yy),direction:low?'down':'up'});}
+  else{const xx=c.canonicalSectionPoint?.x??(g.x+g.length*(a.endShape&&a.endShape!=='none'?.5:.35));out+=drawingSectionMark(tools,{id:sectionId,reference,x1:X(xx),y1:Y(lo),x2:X(xx),y2:Y(hi),direction:low?'right':'left'});}
  }
  return out;
 }
@@ -3636,7 +3651,7 @@ function assemblyOverviewScale(m){
 function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgTools}){
  if(!assemblyCanOutput(m))throw Error('Bauteile zuordnen, Maße und Verbindungen ergänzen und Aufbau mit Skizze abgleichen.');
  const {f,e,n,line,text,rect,dh,dv}=svgTools(),p=m.p;
- const frame=(body,subtitle,page,paper)=>'<svg xmlns="http://www.w3.org/2000/svg" width="'+(paper?.width||297)+'mm" height="'+(paper?.height||210)+'mm" viewBox="0 0 '+(paper?.width||297)+' '+(paper?.height||210)+'"><style>text{font-family:Arial,sans-serif;font-size:2.7px;fill:#111}.bold{font-weight:bold;font-size:3.2px}text.small{font-size:2.3px}line{stroke:#111;stroke-width:.17;fill:none}rect{stroke:#111;stroke-width:.3;fill:white}.open{stroke-dasharray:2 1;fill:#fff8e5}.hidden{stroke-dasharray:.7 .4}rect.hidden{fill:none}.body{stroke:#111;stroke-width:.35;fill:none}.break{fill:none;stroke:#111;stroke-width:.22}.detail-source{fill:none;stroke:#111;stroke-width:.18}.behind{fill:none;stroke:#111;stroke-width:.17}</style>'+rect(6,6,(paper?.width||297)-12,(paper?.height||210)-12)+text(12,15,"look, talk ’n build",'bold')+text((paper?.width||297)-37,15,'Blatt '+page,'small')+text(12,24,title+' · '+subtitle,'bold')+line(6,29,(paper?.width||297)-6,29)+text(12,36,status,'small')+body+(paper?.below?line(paper.width-73,39,paper.width-23,39)+text(paper.width-73,44,'Kontrolle: 50 mm auf Papier','small'):line(220,38,270,38)+line(220,37,220,39)+line(270,37,270,39)+text(220,43,'Kontrolle: 50 mm auf Papier','small'))+line(6,(paper?.height||210)-13,(paper?.width||297)-6,(paper?.height||210)-13)+text(12,(paper?.height||210)-8,'Alle Maße mm · Druck 100 % / Originalgröße · Entwurf','small')+text((paper?.width||297)-79,(paper?.height||210)-8,'DIN-919-Abgleich offen','small')+'</svg>';
+ const frame=(body,subtitle,page,paper)=>'<svg xmlns="http://www.w3.org/2000/svg" width="'+(paper?.width||297)+'mm" height="'+(paper?.height||210)+'mm" viewBox="0 0 '+(paper?.width||297)+' '+(paper?.height||210)+'"><style>text{font-family:Arial,sans-serif;font-size:2.7px;fill:#111}.bold{font-weight:bold;font-size:3.2px}text.small{font-size:2.3px}line{stroke:#111;stroke-width:.17;fill:none}rect{stroke:#111;stroke-width:.3;fill:white}.open{stroke-dasharray:2 1;fill:#fff8e5}.hidden{stroke-dasharray:.7 .4}rect.hidden{fill:none}.body{stroke:#111;stroke-width:.35;fill:none}.break{fill:none;stroke:#111;stroke-width:.22}.detail-source{fill:none;stroke:#111;stroke-width:.18}.behind{fill:none;stroke:#111;stroke-width:.17}</style>'+rect(6,6,(paper?.width||297)-12,(paper?.height||210)-12)+text(12,15,"look, talk ’n build",'bold')+text((paper?.width||297)-37,15,'Blatt '+page,'small')+text(12,24,title+' · '+subtitle,'bold')+line(6,29,(paper?.width||297)-6,29)+text(12,36,status,'small')+body+(paper&&m.paperLayout?.elevations?line(paper.width-124,14,paper.width-74,14)+text(paper.width-124,19,'Kontrolle: 50 mm auf Papier','small'):paper?.below?line(paper.width-73,39,paper.width-23,39)+text(paper.width-73,44,'Kontrolle: 50 mm auf Papier','small'):line(220,38,270,38)+line(220,37,220,39)+line(270,37,270,39)+text(220,43,'Kontrolle: 50 mm auf Papier','small'))+line(6,(paper?.height||210)-13,(paper?.width||297)-6,(paper?.height||210)-13)+text(12,(paper?.height||210)-8,'Alle Maße mm · Druck 100 % / Originalgröße · Entwurf','small')+text((paper?.width||297)-79,(paper?.height||210)-8,'DIN-919-Abgleich offen','small')+'</svg>';
  const b=m.geometryReady?m.body:{x:0,y:0,length:p.length,width:p.width},known=m.geometryReady?m.components.filter(c=>!c.unresolved):[{...b,z:0,thickness:p.thickness}];
  const minX=Math.min(...known.map(c=>c.x)),minY=Math.min(...known.map(c=>c.y)),maxX=Math.max(...known.map(c=>c.x+c.length)),maxY=Math.max(...known.map(c=>c.y+c.width));
  const z0=Math.min(0,...known.map(g=>g.z)),z1=Math.max(p.thickness,...known.map(g=>g.z+g.thickness));
@@ -3644,7 +3659,10 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
  // Fold the side projection about its depth axis; depth shares the plan Y coordinate.
  const denominator=m.overviewDenominator??assemblyOverviewScale(m).denominator;
  const scale=1/denominator,X=x=>24+(x-minX)*scale,Y=y=>58+(maxY-y)*scale;
- const sideX=24+W*scale+16,frontTop=58+T*scale+10;
+ const paper=m.paperLayout,split=paper?.elevations;
+ const frontTop=split?62:58+T*scale+10;
+ const sideX=split?.length===2?24:24+W*scale+16;
+ let frontBody='',sideBody='';
 
  let body='<g data-view="plan" data-scale="'+n(scale)+'" data-origin-x="24" data-origin-y="58">'+text(24,40,'DRAUFSICHT · '+(m.geometryReady?'M 1:'+f(1/scale):'Anordnung teilweise schematisch'),'bold');
  body+=rect(X(b.x),Y(b.y+b.width),b.length*scale,b.width*scale)+text(m.battenConnections.length?X(b.x+b.length/2):X(b.x)+3,Y(b.y+b.width)+Math.min(14,b.width*scale/2),'1 · Grundbrett','bold',m.battenConnections.length?'middle':'start');
@@ -3661,7 +3679,7 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
    // Unassigned edges are listed as components, without inventing a location.
   }
  });
- body+=constructionMachining(m,svgTools(),{view:'plan',X,Y})+assemblyFinishingSvg(m,svgTools(),{view:'plan',X,Y})+assemblyBattenPlan(m,svgTools(),{X,Y});
+ body+=constructionMachining(m,svgTools(),{view:'plan',X,Y})+assemblyFinishingSvg(m,svgTools(),{view:'plan',X,Y});
  for(const c of m.connections){
   const a=p.attachments.find(a=>a.id===c.child),horizontal=['front','back'].includes(a.edge),center=horizontal?b.x+b.length/2:b.y+b.width/2;
   const map=(u,v)=>a.edge==='left'?[b.x-u,center+v]:a.edge==='right'?[b.x+b.length+u,center+v]:a.edge==='front'?[center+v,b.y-u]:[center+v,b.y+b.width+u];
@@ -3681,18 +3699,35 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
  }
  body+='</g>';
  const rows=['BAUTEILE UND ANSCHLÜSSE',...(m.finishingNotes||[]),...m.components.map((g,i)=>(i+1)+' · '+g.name+(g.edge?' · '+ASSEMBLY_EDGES[g.edge]:i?' · Kante offen':'')),...m.battenConnections.flatMap(c=>c.notes),...m.connections.map(c=>'Anschluss '+c.child+': Feder / Zapfen D/3'),...m.railConnections.map(c=>c.name+': '+(c.type==='glue'?'stumpf verleimt':'3 '+(c.type==='round-6'?'Runddübel Ø6':'Flachdübel '+(c.size||'Größe offen'))+'; Achsen 50 / '+f(c.length/2)+' / '+f(c.length-50)+' mm; verleimt')),...p.attachments.filter(a=>a.kind==='stop_strip').map(a=>a.name+': '+ASSEMBLY_EDGES[a.edge]+', '+f(a.projection)+' mm '+(a.direction==='above'?'über Brett':'unter Brett')),...m.pending];
- const paper=m.paperLayout;
- const firstY=paper?.below?Math.max(frontTop+H*scale+19,paper.height-65):65;
- const columns=paper?.below?(paper.width===210?2:3):1;
- const columnWidth=paper?.below?(paper.width-24)/columns:0;
- const lastY=paper?.below?paper.height-19:171;
- let yy=firstY,column=0,truncated=false;
- const noteX=()=>paper?.below?12+column*columnWidth:228;
- for(const row of rows){const lines=[];let current='';for(const word of row.split(' ')){if((current+' '+word).length>37){lines.push(current);current=word;}else current+=(current?' ':'')+word;}if(current)lines.push(current);
-  for(const part of lines){if(yy>lastY){column++;yy=firstY;if(column>=columns){truncated=true;break;}}body+=text(noteX(),yy,part,'small');yy+=3.4;}
-  if(truncated)break;yy+=1.6;
+ const notesOnPlan=!split||paper.notesOnPlan;
+ const firstY=split?(notesOnPlan?Math.max(58+T*scale+16,paper.height-65):54):paper?.below?Math.max(frontTop+H*scale+19,paper.height-65):65;
+ const columns=notesOnPlan?(paper?.below?(paper.width===210?2:3):1):3;
+ const columnWidth=(notesOnPlan?(paper?.width||297):297)-24;
+ const lastY=notesOnPlan?(paper?.below?paper.height-19:171):183;
+ const maxCharacters=split?Math.floor(columnWidth/columns/1.5):37;
+ const wrapped=rows.flatMap(row=>{
+  const lines=[];let line='';
+  for(const word of row.split(' ')){
+   if(line&&(line+' '+word).length>maxCharacters){lines.push(line);line='';}
+   line+=(line?' ':'')+word;
+  }
+  if(line)lines.push(line);
+  return split?lines:[...lines,''];
+ });
+ const rowsPerColumn=Math.floor((lastY-firstY)/3.4)+1;
+ const noteStrip=(lines,y,count,spacing,offset)=>lines.map((line,i)=>line?
+  text(offset+Math.floor(i/count)*spacing,y+(i%count)*3.4,line,'small'):'').join('');
+ if(notesOnPlan){
+  body+=noteStrip(wrapped.slice(0,rowsPerColumn*columns),firstY,rowsPerColumn,columnWidth/columns,paper?.below?12:228);
+  if(!split&&wrapped.length>rowsPerColumn*columns)body+=text(paper?.below?paper.width-65:228,lastY+5,'Weitere Angaben in der App.','small');
  }
- if(truncated)body+=text(paper?.below?paper.width-65:228,lastY+5,'Weitere Angaben in der App.','small');
+ const followingNotes=split?(notesOnPlan?wrapped.slice(rowsPerColumn*columns):wrapped):[];
+ const notesPages=[];
+ const noteLinesPerColumn=39;
+ for(let start=0;start<followingNotes.length;start+=noteLinesPerColumn*3){
+  const lines=followingNotes.slice(start,start+noteLinesPerColumn*3);
+  if(lines.some(Boolean))notesPages.push(noteStrip(lines,54,noteLinesPerColumn,(297-24)/3,12));
+ }
 
  if(m.geometryReady){
   body+=dh(X(minX),X(maxX),Y(maxY),Y(maxY)-14,f(maxX-minX)+' gesamt');
@@ -3725,7 +3760,8 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
    if(c.type==='round-6'&&c.dowelLength){const low=above?plane-c.panelInsertion:plane-c.railInsertion;side+=rect(SX(low),Y(depth+3),c.dowelLength*es,6*es,'hidden');}
    else if(c.type==='biscuit'&&c.profile)side+='<ellipse class="hidden" cx="'+n(SX(plane))+'" cy="'+n(Y(depth))+'" rx="'+n(c.profile.width*es/2)+'" ry="'+n(c.profile.length*es/2)+'" fill="none" stroke="#111" stroke-width=".17"/>';
   }
-  body+=front+constructionMachining(m,svgTools(),{view:'front',X,Z})+'</g>'+side+constructionMachining(m,svgTools(),{view:'side',SX,Y})+'</g>';
+  frontBody=front+constructionMachining(m,svgTools(),{view:'front',X,Z})+'</g>';
+  sideBody=side+constructionMachining(m,svgTools(),{view:'side',SX,Y})+'</g>';
 
 
  }else{
@@ -3733,6 +3769,8 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
   free.forEach((g,i)=>{const x=24+(i%2)*86,y=172+Math.floor(i/2)*9;body+=rect(x,y,82,7,'open')+text(x+2,y+4,g.number+' · '+g.name.slice(0,30)+' (Kante offen)','small');});
   if(!free.length)body+=text(24,179,'Offene Leistenmaße werden nicht geschätzt.','small');
  }
+ const detailReference='Blatt '+(2+(split?.length||0)+notesPages.length);
+ body+=assemblyBattenPlan(m,svgTools(),{X,Y,reference:detailReference});
  // Cutting planes for the horizontal and longitudinal end-strip sections.
  const wedgeSections=m.connections.some(c=>c.wedge?.mode&&c.wedge.mode!=='plain');
  const endGroups=wedgeSections?assemblyDetailGroups(m):assemblyDetailGroups(m).slice(0,1);
@@ -3740,11 +3778,11 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
   const c=connections[0],a=p.attachments.find(a=>a.id===c.child),g=m.components.find(g=>g.id===c.child),horizontal=['front','back'].includes(a.edge),low=['left','front'].includes(a.edge),id='L'+(i+1);
   const lo=horizontal?(low?g.y-5:b.y+b.width-15):(low?g.x-5:b.x+b.length-15);
   const hi=horizontal?(low?b.y+15:g.y+g.width+5):(low?b.x+15:g.x+g.length+5);
-  if(horizontal){const xx=b.x+b.length/2;body+=drawingSectionMark(svgTools(),{id,x1:X(xx),y1:Y(lo),x2:X(xx),y2:Y(hi),direction:low?'right':'left'});}
-  else{const yy=b.y+b.width/2;body+=drawingSectionMark(svgTools(),{id,x1:X(lo),y1:Y(yy),x2:X(hi),y2:Y(yy),direction:low?'down':'up',captionY:Y(yy)+12});}
+  if(horizontal){const xx=b.x+b.length/2;body+=drawingSectionMark(svgTools(),{id,reference:detailReference,x1:X(xx),y1:Y(lo),x2:X(xx),y2:Y(hi),direction:low?'right':'left'});}
+  else{const yy=b.y+b.width/2;body+=drawingSectionMark(svgTools(),{id,reference:detailReference,x1:X(lo),y1:Y(yy),x2:X(hi),y2:Y(yy),direction:low?'down':'up',captionY:Y(yy)+12});}
   if(wedgeSections){const hid='H'+(i+1),level=p.thickness/2;
-   if(horizontal)body+=drawingSectionMark(svgTools(),{id:hid,x1:sideX+level*scale,y1:Y(lo),x2:sideX+level*scale,y2:Y(hi),direction:'left',endLabelSide:1,captionX:sideX+20});
-   else body+=drawingSectionMark(svgTools(),{id:hid,x1:X(lo),y1:frontTop+(z1-level)*scale,x2:X(hi),y2:frontTop+(z1-level)*scale,direction:'down',endLabelSide:1,captionY:frontTop+H*scale+12});
+   if(horizontal)sideBody+=drawingSectionMark(svgTools(),{id:hid,reference:detailReference,x1:sideX+level*scale,y1:Y(lo),x2:sideX+level*scale,y2:Y(hi),direction:'left',endLabelSide:1,captionX:sideX+20});
+   else frontBody+=drawingSectionMark(svgTools(),{id:hid,reference:detailReference,x1:X(lo),y1:frontTop+(z1-level)*scale,x2:X(hi),y2:frontTop+(z1-level)*scale,direction:'down',endLabelSide:1,captionY:frontTop+H*scale+12});
   }
  });
  // Each enlarged joint has a stable reference in the original plan.
@@ -3754,11 +3792,22 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
    const cx=horizontal?b.x+b.length/2:a.edge==='left'?b.x-a.cross/2:b.x+b.length+a.cross/2;
    const cy=horizontal?(a.edge==='front'?b.y-a.cross/2:b.y+b.width+a.cross/2):b.y+b.width/2;
    const radius=Math.hypot(a.cross,a.tenonWidth+6)*scale/2+1;
-   body+='<g data-detail-source="'+g.label+'"><circle class="detail-source" cx="'+n(X(cx))+'" cy="'+n(Y(cy))+'" r="'+n(radius)+'"/>'+text(a.edge==='right'?X(cx)-radius-23:X(cx)+radius+2,Y(cy)-radius,g.label+' · Blatt 2','small')+'</g>';
+   body+='<g data-detail-source="'+g.label+'"><circle class="detail-source" cx="'+n(X(cx))+'" cy="'+n(Y(cy))+'" r="'+n(radius)+'"/>'+text(a.edge==='right'?X(cx)-radius-23:X(cx)+radius+2,Y(cy)-radius,g.label+' · '+detailReference,'small')+'</g>';
   }));
  }
  const pages=[];
- pages.push(frame(body,'Gesamtaufbau aus '+m.components.length+' Bauteilen',(m.connections.length||m.battenConnections.length||p.edgeChamfer>0&&p.attachments.length>0||p.attachments.some(a=>a.endShape!=='none'))?'1/2':'1/1',paper));
+ if(split){
+  pages.push(frame(body,'Draufsicht · '+m.components.length+' Bauteile','1/1',paper));
+  for(const entry of split){
+   const views=entry.views;
+   const detailed=views.map(view=>view==='front'?frontBody:sideBody).join('');
+   const subtitle=views.length>1?'Vorder- und Seitenansicht':views[0]==='front'?'Vorderansicht':'Seitenansicht';
+   pages.push(frame(detailed,subtitle,'1/1',entry.paper));
+  }
+  for(const notes of notesPages)pages.push(frame(notes,'Bauteile und Anschlüsse','1/1'));
+ }else{
+  pages.push(frame(body+frontBody+sideBody,'Gesamtaufbau aus '+m.components.length+' Bauteilen','1/1',paper));
+ }
  if(m.connections.some(c=>c.wedge?.mode&&c.wedge.mode!=='plain')){
   pages.push(frame(assemblyWedgeDetail(m,svgTools,{compact:!!m.battenConnections.length})+assemblyBattenDetails(m,svgTools,{mixed:true})+assemblyFinishingDetail(m,svgTools,m.battenConnections.length?{compactY:165}:assemblyFinishSpace(m)),m.battenConnections.length?'Hirnleisten und Gratleisten':'Hirnleisten · Verkeilte Zapfen','2/2'));
  }else if(m.connections.length){
@@ -3773,7 +3822,7 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
  }
  if(!m.connections.length&&m.battenConnections.length)pages.push(frame(assemblyBattenDetails(m,svgTools)+assemblyFinishingDetail(m,svgTools,{compactY:165}),'Gratleisten und zugeordnete Details','2/2'));
  if(!m.connections.length&&!m.battenConnections.length&&(p.edgeChamfer>0&&p.attachments.length>0||p.attachments.some(a=>a.endShape!=='none')))pages.push(frame(text(24,48,'KANTENBEARBEITUNG','bold')+(m.finishingNotes||[]).map((v,i)=>text(24,65+i*8,v,'small')).join('')+assemblyFinishingDetail(m,svgTools),'Kanten und Leistenenden','2/2'));
- return pages;
+ return pages.map((page,index)=>page.replace(/Blatt \d+\/\d+/, 'Blatt '+(index+1)+'/'+pages.length));
 }
 
 // Shared grouping keeps source circles and enlarged views in agreement.
@@ -4701,7 +4750,7 @@ function drawingPdfBytes(images,maxPages=3){
  const result=new Uint8Array(length);let cursor=0;for(const chunk of chunks){result.set(chunk,cursor);cursor+=chunk.length;}return result;
 }
 async function drawingPdfBlob(model,options={}){
- return drawingSvgPagesPdfBlob(drawingPages(model,options));
+ return drawingSvgPagesPdfBlob(drawingPages(model,options),options.maxPages);
 }
 async function drawingSvgPagesPdfBlob(pages,maxPages=3){
  if(!Array.isArray(pages)||!pages.length||pages.length>maxPages)throw Error('Ungültige Anzahl Zeichnungsseiten.');
@@ -5271,8 +5320,8 @@ const options=Object.fromEntries([['base','Grundbrett'],...c.parts.map(p=>[p.id,
  (op.type==='bore'?'<label>Bohrungsmitten U / V in mm, je eine Position pro Zeile<textarea data-c-positions="'+op.id+'" placeholder="20 / 10\n190 / 10">'+esc((op.positions||[]).map(p=>(p.u??'')+' / '+(p.v??'')).join('\n'))+'</textarea></label><p class="hint">U entlang des Bauteils ab seinem Anfang, V quer dazu ab seiner Kante. Nur tatsächlich festgelegte Positionen eintragen.</p>':'')+'<button class="ghost" data-c-remove-operation="'+op.id+'">Bearbeitung entfernen</button></section>';
 }
 function cAccessoryHtml(a){const f=(k,l,opts={})=>cInput(k,l,a[k],{accessory:a.id,...opts});return '<section class="card"><h4>Zubehör · '+esc(a.name||'noch benennen')+'</h4><div class="wdFields">'+f('name','Bezeichnung')+f('length','Längere Abmessung (mm)')+f('width','Kürzere Abmessung (mm)')+f('height','Höhe (mm)')+f('longAxis','Längere Seite liegt entlang',{options:{x:'X · Brettlänge',y:'Y · Brettbreite'}})+f('insertionAxis','Bewegungsrichtung',{options:{x:'X · Brettlänge',y:'Y · Brettbreite'}})+f('leadingEdge','Vordere Kante beim Einschieben',{options:{short:'Kurze Kante vorn',long:'Lange Kante vorn'}})+f('fullyInside','Soll vollständig unter die Brettfläche passen?',{options:{true:'Ja',false:'Überstand ist vorgesehen'}})+f('centered','Position unter dem Brett',{options:{true:'Mittig',false:'Über Mittelpunktsmaße festlegen'}})+(a.centered===false?f('centerX','Mittelpunkt X (mm)')+f('centerY','Mittelpunkt Y (mm)'):'')+f('topBelow','Oberkante unter Brettunterseite (mm)')+'</div><p class="hint">Das Foto liefert bekannte Außenmaße. Richtung, Einbaulage und fehlende Maße werden ausdrücklich geklärt. Die Brettmaße ändern sich dadurch nicht automatisch.</p><button class="ghost" data-c-remove-accessory="'+a.id+'">Zubehör entfernen</button></section>';}
-async function cDownloadPdf(){const project=current,c=project.construction,revision=c.revision;const choice=project.boardDrawingScale;const {print,computed,paperLayout}=cBoardDrawingSettings(project);if(computed.errors.length)return;const pages=constructionPages(print,{paperLayout});if(!pages.length)return;
- try{const model={ok:true,canonicalPages:pages};const blob=await drawingPdfBlob(model,{title:c.title||'Brettkonstruktion',status:'Stand '+revision+' · '+(computed.ready&&c.confirmedRevision===revision?'Maße bestätigt':'Entwurf · offene Angaben / noch nicht bestätigt')});if(current!==project||project.construction.revision!==revision||project.boardDrawingScale!==choice)throw Error('Stand wurde geändert. PDF bitte neu erzeugen.');const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=safeProjectFilename(c.title||'Brettkonstruktion')+'-Stand-'+revision+'-A4.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(url),300000);}catch(e){$('#cStatus').textContent='PDF konnte nicht erstellt werden: '+e.message;}}
+async function cDownloadPdf(){const project=current,c=project.construction,revision=c.revision;const choice=project.boardDrawingScale;const {print,computed,paperLayout}=cBoardDrawingSettings(project);if(computed.errors.length)return;const pages=cBoardPrintPages(print,paperLayout);if(!pages.length)return;
+ try{const model={ok:true,canonicalPages:pages};const blob=await drawingPdfBlob(model,{maxPages:pages.length,title:c.title||'Brettkonstruktion',status:'Stand '+revision+' · '+(computed.ready&&c.confirmedRevision===revision?'Maße bestätigt':'Entwurf · offene Angaben / noch nicht bestätigt')});if(current!==project||project.construction.revision!==revision||project.boardDrawingScale!==choice)throw Error('Stand wurde geändert. PDF bitte neu erzeugen.');const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=safeProjectFilename(c.title||'Brettkonstruktion')+'-Stand-'+revision+'-A4.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(url),300000);}catch(e){$('#cStatus').textContent='PDF konnte nicht erstellt werden: '+e.message;}}
 function cAfterRecord(){
  const active=cHas();for(const key of ['addPurchasedPart']){const el=$('#'+key);if(el)el.hidden=false;}const form=document.querySelector('#purchased .purchaseForm');if(form)form.hidden=false;
  if($('#cAccessoryLink'))$('#cAccessoryLink').hidden=!active;
@@ -5359,7 +5408,7 @@ function cRender(){
  const edge=c.operations.find(op=>op.id==='free-edges')||c.operations.find(op=>op.type==='edge'&&op.target==='*'&&!op.edgeRef);
  const basic=['length','width','thickness'].every(k=>b[k]>0)&&!!b.material.trim(),rect=(b.shape||'rectangle')==='rectangle';
  const active=Object.hasOwn(C_BOARD_EDGE_MAP,current.boardFlowEdge)?current.boardFlowEdge:null;
- const pages=constructionPages(print,{paperLayout}),battens=c.parts.filter(p=>p.type==='sliding_batten'),unassigned=c.parts.filter(p=>p.type!=='sliding_batten'&&!Object.values(C_BOARD_EDGE_MAP).includes(p.edge));
+ const pages=cBoardPrintPages(print,paperLayout),battens=c.parts.filter(p=>p.type==='sliding_batten'),unassigned=c.parts.filter(p=>p.type!=='sliding_batten'&&!Object.values(C_BOARD_EDGE_MAP).includes(p.edge));
  const trayAccessories=c.accessories.filter(a=>a.targetIds?.some(id=>battens.some(p=>p.id===id)));
  const protruding=c.parts.some(p=>p.type==='stop_strip'&&(p.projection>0||p.mount==='surface'&&p.height>0));
  const qhtml=o.errors.map(t=>'<li class="notice">'+esc(t)+'</li>').join('')+o.questions.map(q=>'<li>'+esc(q.text)+'</li>').join('');
@@ -5368,7 +5417,7 @@ function cRender(){
  '<h4>3 · Kante wählen und Anbauteil zuordnen</h4>'+cOrientationSvg(c)+(basic&&rect?'<div class="composerActions" role="group" aria-label="Kante wählen">'+Object.entries(C_BOARD_EDGE_MAP).map(([id,native])=>'<button type="button" class="'+(active===id?'secondary':'ghost')+'" data-board-flow-edge="'+id+'" aria-pressed="'+(active===id)+'">Kante '+id+(c.parts.some(p=>p.type!=='sliding_batten'&&p.edge===native)?' · mit Anbauteil':'')+'</button>').join('')+'</div>'+(active?cBoardAttachmentEditor(c,active):'<p>Wähle A, B, C oder D. Direkt darunter legst du das Anbauteil fest.</p>'):'<p>'+(rect?'Gib zuerst Länge, Breite, Dicke und Holzart des Grundbretts ein.':'Anschlüsse an dieser besonderen Kontur benötigen eine eigene Zuordnung; die vorhandenen Anbauteile bleiben im Stand erhalten.')+'</p>')+(rect?unassigned:c.parts.filter(p=>p.type!=='sliding_batten')).map(cPartHtml).join('')+
  '<details '+(battens.length?'open':'')+'><summary>4 · Gratleisten auf der Fläche</summary><p>Eine Gratleiste läuft quer zur Holzfaser auf der Brettfläche. Die Hirnholzkante dient als Maßbezug. Von der Hirnholzkante bis zur nächstgelegenen Begrenzung der Gratnut bleiben mindestens 50 mm.</p>'+(protruding?'<p class="hint">Bei überstehenden Anleimern ist nach deiner üblichen Bauweise meist keine zusätzliche Gratleiste vorgesehen.</p>':'')+battens.map(cPartHtml).join('')+'<button class="ghost" data-c-add-part="sliding_batten">Gratleiste auf der Fläche ergänzen</button>'+trayAccessories.map(cBoardTrayHtml).join('')+(battens.length===2&&!trayAccessories.length?'<button class="secondary" data-board-tray>Schalenführung mit Auffangschale ergänzen</button>':'')+'</details>'+
  '<details '+(c.accessories.length||c.operations.some(op=>!['edge'].includes(op.type))?'open':'')+'><summary>Weitere Bearbeitungen und Zubehör</summary>'+c.operations.filter(op=>(op.type!=='edge'||op.target!=='*'&&!(rect&&op.target==='base'&&op.edgeRef))&&!(op.type==='groove'&&battens.some(p=>p.id===op.target))).map(op=>cOperationHtml(op,c)).join('')+'<div class="composerActions"><button class="ghost" data-c-add-operation="circular_cut">Durchgangsbohrung / Randausschnitt</button><button class="ghost" data-c-add-operation="bore">Sackloch</button><button class="ghost" data-c-add-operation="groove">Nut</button><button class="ghost" data-c-add-accessory>Zubehör</button></div>'+c.accessories.filter(a=>!trayAccessories.includes(a)).map(cAccessoryHtml).join('')+'</details>'+
- '<details '+(o.errors.length?'open':'')+'><summary>Noch zu ergänzen / prüfen</summary>'+(qhtml?'<ul>'+qhtml+'</ul>':'<p>Alle Angaben sind zugeordnet.</p>')+c.questions.map(q=>'<p>'+esc(q.text)+' <button class="ghost" data-c-resolve="'+q.id+'">Als abgeglichen markieren</button></p>').join('')+'</details><div class="composerActions"><button class="secondary" id="cConfirm" '+(!o.ready?'disabled':'')+'>Maße prüfen und bestätigen</button><button id="cPdf" '+(!pages.length||o.errors.length?'disabled':'')+'>'+(o.ready&&c.confirmedRevision===c.revision?'A4-PDF herunterladen':'A4-Entwurf herunterladen')+'</button><button class="ghost" data-c-go-talk>Im Werkstatt-Talk besprechen</button></div><label>Maßstab auf A4<select id="cScale">'+Object.entries(scales).sort(([a],[b])=>a==="auto"?-1:b==="auto"?1:Number(a)-Number(b)).map(([k,v])=>'<option value="'+k+'" '+(selected===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label>'+(paperLayout?'<p class="hint">A4 '+(paperLayout.width>paperLayout.height?'quer':'hoch')+' · 1:'+paperLayout.denominator+'</p>':'')+'<div class="wdPreview" id="cPreview"></div>';
+ '<details '+(o.errors.length?'open':'')+'><summary>Noch zu ergänzen / prüfen</summary>'+(qhtml?'<ul>'+qhtml+'</ul>':'<p>Alle Angaben sind zugeordnet.</p>')+c.questions.map(q=>'<p>'+esc(q.text)+' <button class="ghost" data-c-resolve="'+q.id+'">Als abgeglichen markieren</button></p>').join('')+'</details><div class="composerActions"><button class="secondary" id="cConfirm" '+(!o.ready?'disabled':'')+'>Maße prüfen und bestätigen</button><button id="cPdf" '+(!pages.length||o.errors.length?'disabled':'')+'>'+(o.ready&&c.confirmedRevision===c.revision?'A4-PDF herunterladen':'A4-Entwurf herunterladen')+'</button><button class="ghost" data-c-go-talk>Im Werkstatt-Talk besprechen</button></div><label>Maßstab auf A4<select id="cScale">'+Object.entries(scales).sort(([a],[b])=>a==="auto"?-1:b==="auto"?1:Number(a)-Number(b)).map(([k,v])=>'<option value="'+k+'" '+(selected===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label>'+(paperLayout?.tooManyTiles?'<p class="hint">Dieser Maßstab benötigt mehr als 100 A4-Blätter. Bitte einen kleineren Maßstab wählen.</p>':paperLayout?'<p class="hint">A4 '+(paperLayout.tiled?'Teilblätter':paperLayout.width>paperLayout.height?'quer':'hoch')+' · 1:'+paperLayout.denominator+(pages.length>1?' · '+pages.length+' Blätter':'')+'</p>':'')+'<div class="wdPreview" id="cPreview"></div>';
  box.querySelectorAll('[data-c-field]').forEach(el=>el.onchange=()=>{
   const key=el.dataset.cField;let value=el.value;if(['fullyInside','centered'].includes(key))value=value===''?null:value==='true';
   const action=el.dataset.cPart?'update_part':el.dataset.cOperation?'update_operation':el.dataset.cAccessory?'update_accessory':'set_base';
@@ -5457,18 +5506,107 @@ function cBoardDrawingSettings(project){
   {width:297,height:210,below:true,capacity:contour?[224,65]:[220,86]},
   {width:210,height:297,below:true,capacity:contour?[137,152]:[134,173]},
  ].map(({capacity:[x,y],...paper})=>({...paper,minimum:Math.max(1,(width+height)/x,(depth+height)/y)}));
- const fits=(paper,denominator)=>paper.minimum<=denominator+1e-9;
  const standardScales=Object.keys(DRAWING_SCALES).filter(key=>key!=='auto').map(Number).sort((a,b)=>a-b);
- const fittingStandards=standardScales.filter(denominator=>layouts.some(paper=>fits(paper,denominator)));
- const optimal=fittingStandards[0];
- if(!optimal)return {print,computed,paperLayout:null,scales,selected:'auto'};
-
- for(const value of fittingStandards)scales[String(value)]=DRAWING_SCALES[value];
+ const orientations=[{width:297,height:210},{width:210,height:297}];
+ const choices=new Map();
+ for(const denominator of standardScales){
+  const joined=layouts.find(paper=>paper.minimum<=denominator+1e-9);
+  const layout=joined||cBoardSplitA4(orientations,width/denominator,depth/denominator,height/denominator);
+  if(layout)choices.set(String(denominator),{...layout,denominator});
+ }
+ if(!choices.size)return {print,computed,paperLayout:null,scales,selected:'auto'};
+ const automatic=choices.values().next().value;
+ for(const denominator of standardScales){
+  const key=String(denominator);
+  scales[key]=DRAWING_SCALES[key]+(choices.has(key)?'':' · A4-Teilblätter');
+ }
  const requested=String(project.boardDrawingScale??project.construction.viewScale??'auto');
  const selected=Object.hasOwn(scales,requested)?requested:'auto';
- const denominator=selected==='auto'?optimal:Number(selected);
- const layout=layouts.find(paper=>fits(paper,denominator));
- return {print,computed,paperLayout:{...layout,denominator},scales,selected};
+ const denominator=Number(selected);
+ const paperLayout=selected==='auto'?automatic:choices.get(selected)||
+  cBoardTiledA4(orientations,width/denominator,depth/denominator,height/denominator,denominator);
+ return {print,computed,paperLayout,scales,selected};
+}
+function cBoardSplitA4(orientations,length,depth,height){
+ // Keep dimension lines, view titles, 50 mm check line and sheet margins clear.
+ const planFits=paper=>length<=paper.width-52&&depth<=paper.height-94;
+ const planWithNotes=orientations.find(paper=>planFits(paper)&&depth<=paper.height-122);
+ const plan=planWithNotes||orientations.find(planFits);
+ if(!plan)return null;
+ const frontFits=paper=>length<=paper.width-52&&height<=paper.height-100;
+ const sideFits=paper=>height<=paper.width-62&&depth<=paper.height-84;
+ const combined=orientations.find(paper=>frontFits(paper)&&sideFits(paper)&&length+height<=paper.width-82);
+ if(combined)return {...plan,below:true,notesOnPlan:!!planWithNotes,elevations:[{paper:combined,views:['front','side']}]};
+ const front=orientations.find(frontFits),side=orientations.find(sideFits);
+ if(!front||!side)return null;
+ return {...plan,below:true,notesOnPlan:!!planWithNotes,elevations:[{paper:front,views:['front']},{paper:side,views:['side']}]};
+}
+
+
+function cBoardTiledA4(orientations,length,depth,height,denominator){
+ const sheetFor=(requiredWidth,requiredHeight)=>orientations.find(paper=>requiredWidth<=paper.width&&requiredHeight<=paper.height)||
+  {width:Math.ceil(requiredWidth),height:Math.ceil(requiredHeight)};
+ const plan=sheetFor(length+52,depth+94);
+ const front=sheetFor(length+52,height+100);
+ const side=sheetFor(height+62,depth+84);
+ const count=[plan,front,side].reduce((sum,paper)=>sum+cBoardA4Tiles(paper.width,paper.height).count,0);
+ // The browser rasterizes every sheet before creating the PDF.
+ if(count>100)return {denominator,tooManyTiles:count};
+ return {...plan,below:true,denominator,notesOnPlan:false,tiled:true,
+  elevations:[{paper:front,views:['front']},{paper:side,views:['side']}]};
+}
+
+function cBoardA4Tiles(width,height){
+ const a4=(width===297&&height===210)||(width===210&&height===297);
+ if(a4)return {count:1,a4};
+ const overlap=12,margin=10,top=31,bottom=17;
+ const candidates=[{width:297,height:210},{width:210,height:297}].map(paper=>{
+  const w=paper.width-2*margin,h=paper.height-top-bottom;
+  const columns=Math.max(1,Math.ceil((width-overlap)/(w-overlap)));
+  const rows=Math.max(1,Math.ceil((height-overlap)/(h-overlap)));
+  return {...paper,w,h,columns,rows,overlap,margin,top,count:columns*rows};
+ });
+ return candidates.reduce((a,b)=>a.count<=b.count?a:b);
+}
+
+function cBoardPrintPages(input,paperLayout){
+ if(paperLayout?.tooManyTiles)return [];
+ const sheets=constructionPages(input,{paperLayout});
+ if(!paperLayout?.tiled)return sheets;
+ const pages=sheets.flatMap((sheet,index)=>{
+  const drawingSheet=index+1;
+  const dimensions=sheet.match(/^<svg[^>]* width="([\d.]+)mm" height="([\d.]+)mm"/);
+  if(!dimensions)return [sheet];
+  const [,width,height]=dimensions.map(Number);
+  const tile=cBoardA4Tiles(width,height);
+  const content=sheet.replace(/Blatt (\d+)(?:\/\d+)?/g,'Zeichnungsblatt $1');
+  if(tile.a4)return [content.replace('</svg>','<text x="12" y="'+(height-2)+'" font-family="Arial" font-size="2.3">PDF-Blatt @A4_PAGE@</text></svg>')];
+  const {w,h,rows,columns,overlap,margin,top}=tile;
+  const drawing=content.replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'');
+  return Array.from({length:tile.count},(_,part)=>{
+   const column=part%columns,row=Math.floor(part/columns);
+   const left=column*(w-overlap),upper=row*(h-overlap);
+   const right=margin+w,lower=top+h;
+   const marks=[];
+   for(const x of [column>0?margin+overlap/2:null,column+1<columns?right-overlap/2:null].filter(x=>x!==null)){
+    marks.push('<path d="M'+x+' '+(top-3)+'v3 M'+x+' '+lower+'v3"/>');
+   }
+   for(const y of [row>0?top+overlap/2:null,row+1<rows?lower-overlap/2:null].filter(y=>y!==null)){
+    marks.push('<path d="M'+(margin-3)+' '+y+'h3 M'+right+' '+y+'h3"/>');
+   }
+   return '<svg xmlns="http://www.w3.org/2000/svg" width="'+tile.width+'mm" height="'+tile.height+'mm" viewBox="0 0 '+tile.width+' '+tile.height+'">'+
+    '<rect width="'+tile.width+'" height="'+tile.height+'" style="fill:white;stroke:none"/>'+
+    '<defs><clipPath id="a4-print-tile"><rect x="'+margin+'" y="'+top+'" width="'+w+'" height="'+h+'"/></clipPath></defs>'+
+    '<g font-family="Arial,sans-serif" font-size="3" fill="#111">'+
+    '<text x="10" y="13">Zeichnungsblatt '+drawingSheet+' · Teil '+(part+1)+'/'+tile.count+' · Maßstab 1:'+paperLayout.denominator+'</text>'+
+    '<text x="10" y="21">Reihe '+(row+1)+' · Spalte '+(column+1)+' · 12 mm Überlappung</text>'+
+    '<text x="10" y="'+(tile.height-5)+'">PDF-Blatt @A4_PAGE@ · In Originalgröße drucken</text></g>'+
+    '<g clip-path="url(#a4-print-tile)"><svg x="'+margin+'" y="'+top+'" width="'+w+'" height="'+h+'" viewBox="'+left+' '+upper+' '+w+' '+h+'">'+drawing+'</svg></g>'+
+    '<text x="'+(tile.width-64)+'" y="21" font-family="Arial" font-size="2.5">50 mm auf Papier</text>'+
+    '<g stroke="#555" stroke-width=".22" fill="none"><path d="M'+(tile.width-64)+' 25h50"/><rect x="'+margin+'" y="'+top+'" width="'+w+'" height="'+h+'" style="fill:none;stroke:#555;stroke-width:.22"/>'+marks.join('')+'</g></svg>';
+  });
+ });
+ return pages.map((page,i)=>page.replace('@A4_PAGE@',(i+1)+'/'+pages.length));
 }
 
 
