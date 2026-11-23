@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev65.2</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.2</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -202,7 +202,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
       <div id="woodDrawingPane" class="pane"><div class="card" id="woodDrawingBox"></div></div><div id="material" class="pane"><div class="card" id="materialBox"></div><div class="card" id="cutPlanner"></div></div><div id="purchased" class="pane"><div class="card"><h3 style="margin-top:0">Zukaufteile</h3><p class="hint">Hier auch Dübel, Schrauben, Beschläge und Verbrauchsgüter wie Leim, Öl, Wachs oder Lack ergänzen. Vor dem Einkauf prüfen, was in ausreichender Menge vorhanden ist.</p><div id="inventoryBox"></div><div id="purchasedPartsList" class="purchaseGrid"></div><h3>Teil ergänzen</h3><div class="purchaseForm"><div><label class="field" for="purchaseItem">Bezeichnung</label><input id="purchaseItem" placeholder="z. B. Holzleim, Schrauben oder Metallschüssel"></div><div><label class="field" for="purchaseSupplier">Hersteller / Händler</label><input id="purchaseSupplier" placeholder="z. B. IKEA"></div><div><label class="field" for="purchaseProduct">Produkt / Artikel</label><input id="purchaseProduct" placeholder="optional"></div><div><label class="field" for="purchaseQty">Menge</label><input id="purchaseQty" placeholder="z. B. 1 Stück"></div><div><label class="field" for="purchaseDimensions">Wichtige Maße</label><input id="purchaseDimensions" placeholder="z. B. Ø 28 cm"></div><div><label class="field" for="purchaseUse">Verwendung</label><input id="purchaseUse" placeholder="z. B. Dach, umgedreht"></div><div class="wide"><label class="field" for="purchaseLink">Produktlink</label><input id="purchaseLink" type="url" placeholder="https://…"></div></div><button class="secondary" id="addPurchasedPart">Zukaufteil hinzufügen</button></div></div><div id="tools" class="pane"><div class="card" id="toolsBox"></div></div><div id="steps" class="pane"><div class="card" id="stepsBox"></div></div><div id="safety" class="pane"><div id="safetyBox"></div></div>
     </div>
   </div>
-  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev65.2 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
+  <button class="ghost" id="newProject">Neues Projekt</button><p class="footerline">Entwicklungsversion 0.9.21-dev66.2 · Eigene Projekte · Tester-Projekte · A4-Druck · Entwicklerlinie</p>
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev65.2';
+const APP_VERSION='0.9.21-dev66.2';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -1554,7 +1554,7 @@ function hwMachiningSvg(part,ops,{title='Beschlagbearbeitungen',status='Bestäti
 }
 
 // Local, deterministic geometry for a rear rebate and a stepped removable bead.
-const FRAME_FILLING_FIELDS=[['frontWeb','Vorderer Holzsteg'],['frontPadding','Einlage vor dem Spiegel'],['mirrorThickness','Spiegeldicke'],['backPadding','Einlage hinter dem Spiegel'],['rebateWidth','Falzbreite ab lichter Rahmenkante'],['sideClearance','Randspiel je Spiegelkante'],['beadInnerThickness','Glasleistendicke im inneren Bereich'],['beadWidth','Gesamte Glasleistenbreite'],['beadOuterWidth','Äußerer Schraubflansch: Breite']];
+const FRAME_FILLING_FIELDS=[['frontWeb','Vorderer Holzsteg'],['frontPadding','Einlage vor dem Spiegel'],['mirrorThickness','Spiegeldicke'],['backPadding','Einlage hinter dem Spiegel'],['rebateWidth','Falzbreite ab lichter Rahmenkante'],['sideClearance','Randspiel je Spiegelkante'],['beadInnerThickness','Glasleistendicke im inneren Bereich'],['beadWidth','Gesamte Glasleistenbreite'],['beadOuterWidth','Äußere Befestigungsauflage der Glasleiste: Breite']];
 const fnum=v=>typeof v==='number'?v:typeof v==='string'&&v.trim()?Number(v.replace(',','.')):NaN;
 function frameFillingSample(){return {kind:'mirror-stepped-v1',frontWeb:5,frontPadding:1,mirrorThickness:5,backPadding:1,rebateWidth:15,sideClearance:2,beadInnerThickness:14,beadWidth:24,beadOuterWidth:12};}
 function frameFillingSignature(input){if(!input)return null;return JSON.stringify([input.kind,...FRAME_FILLING_FIELDS.map(([k])=>Number.isFinite(fnum(input[k]))?fnum(input[k]):String(input[k]??''))]);}
@@ -1573,13 +1573,13 @@ function frameFillingModel(frame){
  const openingWidth=W-2*V,openingHeight=H-2*B,mirrorWidth=openingWidth+2*mirrorEdge,mirrorHeight=openingHeight+2*mirrorEdge;
  if(rebateDepth<=0)errors.push('Der Holzsteg muss kleiner als die Rahmendicke sein.');
  if(beadFront>=D)errors.push('Für diese abgesetzte Leiste muss der Spiegel mit Einlagen innerhalb des Rahmenfalzes liegen.');
- if(rearProjection<=0)errors.push('Für den äußeren Schraubflansch muss ein positiver hinterer Überstand bleiben.');
- if(p.rebateWidth>=Math.min(V,B)||p.rebateWidth+p.beadOuterWidth>=Math.min(V,B))errors.push('Falz oder äußerer Schraubflansch überschreitet die Rahmenholzbreite.');
+ if(rearProjection<=0)errors.push('Für die abgesetzte Glasleiste muss ein positiver hinterer Überstand bleiben.');
+ if(p.rebateWidth>=Math.min(V,B)||p.rebateWidth+p.beadOuterWidth>=Math.min(V,B))errors.push('Falz oder äußere Befestigungsauflage überschreitet die Rahmenholzbreite.');
  if(mirrorEdge<=0||overlap<=0)errors.push('Spiegelauflage und Glasleistenüberdeckung müssen positiv sein.');
  if(beadStart<0)errors.push('Die Glasleiste würde in die lichte Rahmenöffnung ragen.');
  if(overlap>mirrorEdge)errors.push('Die Glasleistenüberdeckung überschreitet den Spiegeleinstand.');
  if(openingWidth<=0||openingHeight<=0||mirrorWidth<=0||mirrorHeight<=0)errors.push('Die Füllung benötigt eine positive lichte Rahmenöffnung.');
- return {ok:!errors.length,enabled:true,errors,p,thickness:D,railWidth:V,rebateDepth,mirrorFront,mirrorBack,beadFront,beadBack,rearProjection,beadStart,mirrorEdge,overlap,openingWidth,openingHeight,mirrorWidth,mirrorHeight};
+ return {ok:!errors.length,enabled:true,errors,p,thickness:D,railWidth:V,frameWidth:W,frameHeight:H,verticalWidth:V,horizontalWidth:B,joint:frame.joint,through:frame.through,beadJoint:'mitre',rebateDepth,mirrorFront,mirrorBack,beadFront,beadBack,rearProjection,beadStart,mirrorEdge,overlap,openingWidth,openingHeight,mirrorWidth,mirrorHeight};
 }
 function frameFillingSvg(m){
  if(!m?.ok||!m.enabled)return '';
@@ -1597,7 +1597,30 @@ function frameFillingSvg(m){
  rows.forEach((r,i)=>svg+=text(355,60+i*22,r));
  svg+=text(25,220,'z = 0 vorn; Rahmenrückseite z = '+n(m.thickness)+'; Leistenrückseite z = '+n(m.beadBack));
  svg+=text(25,243,'Planungsansicht · Verklotzung und Befestigung noch offen · kein Bestellmaß');
- return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730 270" role="img" aria-label="Füllungsquerschnitt aus den Eingaben" style="width:100%;height:auto;background:white"><style>text{font:12px Arial;fill:#203c34}</style>'+svg+'</svg>';
+ svg+=frameFillingRearView(m);
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730 590" role="img" aria-label="Spiegel im Rahmen: Querschnitt und Rückansicht mit vier Glasleisten auf Gehrung" style="width:100%;height:auto;background:white"><style>text{font:12px Arial;fill:#203c34}</style>'+svg+'</svg>';
+}
+// The bead ring is independent of the frame corner joint. Both ends of each
+// bead are cut at 45 degrees, including frames with mortise-and-tenon corners.
+function frameFillingRearView(m){
+ if(!m?.ok||!m.enabled)return '';
+ const n=v=>Number(v.toFixed(3)),p=m.p,W=m.frameWidth,H=m.frameHeight,V=m.verticalWidth,B=m.horizontalWidth;
+ const s=Math.min(275/W,255/H),X=x=>n(45+x*s),Y=y=>n(305+y*s);
+ const rect=(x,y,w,h,fill)=>'<rect x="'+X(x)+'" y="'+Y(y)+'" width="'+n(w*s)+'" height="'+n(h*s)+'" fill="'+fill+'" stroke="#203c34" stroke-width="1"/>';
+ let a='<g data-bead-joint="mitre-45"><text x="25" y="282">Rückansicht · vier Glasleisten mit 45°-Gehrungen</text>';
+ const rx=V-p.rebateWidth,ry=B-p.rebateWidth;
+ a+=rect(0,0,W,H,'#e7d3af')+rect(rx,ry,W-2*rx,H-2*ry,'white')+rect(V-m.mirrorEdge,B-m.mirrorEdge,m.mirrorWidth,m.mirrorHeight,'#c4e2ef');
+ if(['tenon','tenon_rebate1','tenon_rebate2'].includes(m.joint)){
+  const seams=m.through==='horizontal'?[[0,ry,rx,ry],[W-rx,ry,W,ry],[0,H-ry,rx,H-ry],[W-rx,H-ry,W,H-ry]]:[[rx,0,rx,ry],[W-rx,0,W-rx,ry],[rx,H-ry,rx,H],[W-rx,H-ry,W-rx,H]];
+  for(const [x,y,u,v]of seams)a+='<path d="M'+X(x)+','+Y(y)+' L'+X(u)+','+Y(v)+'" stroke="#203c34" fill="none"/>';
+ }else if(['biscuit','loose_tenon','dowel_mitre','angle_dowel'].includes(m.joint)){
+  for(const [x,y,u,v]of [[0,0,V,B],[W,0,W-V,B],[0,H,V,H-B],[W,H,W-V,H-B]])a+='<path d="M'+X(x)+','+Y(y)+' L'+X(u)+','+Y(v)+'" stroke="#203c34" fill="none"/>';
+ }
+ const out=p.rebateWidth+p.beadOuterWidth,ox=V-out,oy=B-out,ix=ox+p.beadWidth,iy=oy+p.beadWidth;
+ const polys=[[[ox,oy],[W-ox,oy],[W-ix,iy],[ix,iy]],[[W-ox,oy],[W-ox,H-oy],[W-ix,H-iy],[W-ix,iy]],[[W-ox,H-oy],[ox,H-oy],[ix,H-iy],[W-ix,H-iy]],[[ox,H-oy],[ox,oy],[ix,iy],[ix,H-iy]]];
+ polys.forEach((points,i)=>{a+='<path data-bead="'+i+'" d="'+points.map(([x,y],j)=>(j?'L':'M')+X(x)+','+Y(y)).join(' ')+' Z" fill="#b7cdb6" stroke="#203c34" stroke-width="1"/>';});
+ a+='<text x="355" y="325">Rahmen: '+(['tenon','tenon_rebate1','tenon_rebate2'].includes(m.joint)?'Schlitz und Zapfen':'Gehrung')+'</text><text x="355" y="350">Glasleisten: alle vier Ecken auf Gehrung</text><text x="355" y="375">Grün: Glasleisten · Blau: Spiegel</text><text x="355" y="400">Befestigungspunkte noch nicht eingezeichnet</text>';
+ return a+'</g>';
 }
 
 const FRAME_KIND='frame-construction-v1';
@@ -1700,7 +1723,7 @@ function buildFrameConstruction(input){
  if(p.filling){
   const filling=frameFillingModel(p);d.filling=filling;
   errors.push(...filling.errors);
-  if(!['biscuit','loose_tenon','dowel_mitre','angle_dowel'].includes(p.joint))errors.push('Der freie Spiegelfalz ist bisher nur mit vollständigen Gehrungsecken verbunden.');
+  if(!['tenon','tenon_rebate1','tenon_rebate2','biscuit','loose_tenon','dowel_mitre','angle_dowel'].includes(p.joint))errors.push('Der Spiegelaufbau ist für diese Rahmeneckverbindung noch nicht ausgearbeitet. Schlitz und Zapfen sowie vollständige Gehrungsecken werden unterstützt. Die Glasleisten erhalten unabhängig davon 45°-Gehrungen.');
   if(filling.ok){p.filling=filling.p;p.profileFace='back';d.profile={type:'rebate',width:filling.rebateDepth,depth:p.filling.rebateWidth,offset:0};pending.push('Verklotzung sowie Befestigung, Beschläge und mögliche Überschneidungen von Falz und Eckverbindern prüfen.');}
  }
  if(d.profile&&d.profile.depth>=Math.min(V,B))errors.push('Falztiefe muss kleiner als beide Rahmenholzbreiten sein.');
@@ -1753,7 +1776,7 @@ function buildFrameConstruction(input){
  const layout=frameDrawingLayout(p,def,d),scale=layout?.scale;
  if(!layout)errors.push('Gesamtansicht passt mit diesem Maßstab und den Schnittdetails nicht auf A4.');
  const notes=frameRuleNotes(p,def,d);
- if(d.filling?.ok){const f=d.filling;notes.push('Spiegelfalz von hinten '+ff(f.rebateDepth)+' mm tief × '+ff(f.p.rebateWidth)+' mm breit. Spiegelrücksprung '+ff(f.mirrorFront)+' mm; abgesetzte Glasleiste mit '+ff(f.rearProjection)+' mm hinterem Überstand. Rechnerisches Spiegelmaß '+ff(f.mirrorWidth)+' × '+ff(f.mirrorHeight)+' mm; kein Bestellmaß. Verklotzung und Befestigung offen.');}
+ if(d.filling?.ok){const f=d.filling;notes.push('Spiegelfalz von hinten '+ff(f.rebateDepth)+' mm tief × '+ff(f.p.rebateWidth)+' mm breit. Spiegelrücksprung '+ff(f.mirrorFront)+' mm; abgesetzte Glasleiste mit '+ff(f.rearProjection)+' mm hinterem Überstand. Rechnerisches Spiegelmaß '+ff(f.mirrorWidth)+' × '+ff(f.mirrorHeight)+' mm; kein Bestellmaß. Vier Glasleisten, an beiden Enden 45° auf Gehrung; ihre Gehrungen sind unabhängig von der Rahmeneckverbindung. Verklotzung und Befestigung offen.');}
  return {kind:FRAME_KIND,p,def,d,scale,layout,parts,purchased,notes,errors:[...new Set(errors)],pending:[...new Set(pending)],warnings,ok:!errors.length,confirmable:!errors.length&&!pending.length};
 }
 function frameRuleNotes(p,def=FRAME_JOINTS[p.joint],d={}){
@@ -1765,7 +1788,8 @@ function frameRuleNotes(p,def=FRAME_JOINTS[p.joint],d={}){
  if(p.joint==='tenon_mitre')notes.push('Beide äußeren Drittel auf Gehrung; mittleres Drittel gerader Schlitz und Zapfen.');
  if(p.joint.startsWith('tenon'))notes.push('Durchgehendes / geschlitztes Teil: '+(p.through==='vertical'?'aufrechte':'waagerechte')+' Hölzer. Zapfenlänge bis äußere Rahmenkante.');
  if(def.groove)notes.push('Innennut '+ff(p.grooveWidth)+' breit × '+ff(p.grooveDepth)+' tief; Abstand '+ff(p.grooveOffset)+' ab '+(p.profileFace==='front'?'Vorder':'Rück')+'fläche. Nutzapfen passend zur Nut; am Rahmenholz angearbeitet.');
- if(def.rebate)notes.push('Falztiefe a = 2D/3 = '+ff(p.thickness*2/3)+'; Falzhöhe b = '+(def.rebate===1/3?'D/3':'2D/3')+' = '+ff(p.thickness*def.rebate)+' mm. Brüstungen folgen dem Falz.');
+ if(def.rebate&&!d.filling?.enabled)notes.push('Falztiefe a = 2D/3 = '+ff(p.thickness*2/3)+'; Falzhöhe b = '+(def.rebate===1/3?'D/3':'2D/3')+' = '+ff(p.thickness*def.rebate)+' mm. Brüstungen folgen dem Falz.');
+ if(d.filling?.ok&&p.joint.startsWith('tenon'))notes.push('Der Spiegelquerschnitt bestimmt den rückseitigen Falz statt der Standardproportionen. Die Brüstungen von Schlitz und Zapfen folgen diesem Falz; Dickenteilung D/3 bleibt erhalten.');
  if(def.loose)notes.push('Dreieckiger falscher Zapfen, D/3 dick; Einstecktiefe je Teil '+ff(p.looseDepth)+' mm, quer zur Gehrungsfuge gemessen.');
  if(def.connector==='dowel')notes.push('Gleiche Einstecktiefe je Teil '+ff(p.connectorLength/2)+' mm; Bohrtiefe '+ff(d.boreDepth)+' mm einschließlich '+ff(p.glueAir)+' mm Luft. Achsen ab äußerem Fugenende: '+(d.axes||[]).map(ff).join(' / ')+' mm.');
  if(def.connector==='angle')notes.push('Winkeldübel 90°: Schenkel ab theoretischem Achsschnittpunkt '+ff(p.angleLegHorizontal)+' / '+ff(p.angleLegVertical)+' mm; Achsradius '+ff(p.angleRadius)+' mm. Tatsächliche Verbindergeometrie eingeben.');
@@ -4338,7 +4362,9 @@ function drawingPdfBytes(images,maxPages=3){
  object(2,`<< /Type /Pages /Count ${images.length} /Kids [${images.map((_,i)=>`${4+i*3} 0 R`).join(' ')}] >>`);
  images.forEach((im,i)=>{
   if(!(im.bytes instanceof Uint8Array)||im.bytes.length<4||im.bytes[0]!==255||im.bytes[1]!==216||!Number.isSafeInteger(im.width)||!Number.isSafeInteger(im.height)||im.width<1||im.height<1)throw Error('Zeichnungsbild konnte nicht als JPEG erstellt werden.');
-  const portrait=im.height>im.width,width=(portrait?210:297)*72/25.4,height=(portrait?297:210)*72/25.4;
+  const portrait=im.height>im.width,pageW=im.pageWidthMm??(portrait?210:297),pageH=im.pageHeightMm??(portrait?297:210);
+  if(!Number.isFinite(pageW)||!Number.isFinite(pageH)||pageW<50||pageH<50||pageW>1000||pageH>1000)throw Error('Ungültiges PDF-Papierformat.');
+  const width=pageW*72/25.4,height=pageH*72/25.4;
   const image=3+i*3,page=image+1,content=image+2;
   stream(image,`/Type /XObject /Subtype /Image /Width ${im.width} /Height ${im.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode`,im.bytes);
   object(page,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${width.toFixed(6)} ${height.toFixed(6)}] /Resources << /XObject << /Drawing ${image} 0 R >> >> /Contents ${content} 0 R >>`);
@@ -4357,13 +4383,13 @@ async function drawingSvgPagesPdfBlob(pages,maxPages=3){
  for(const svg of pages){
   const img=new Image();
   await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Zeichnung konnte nicht rechtzeitig geladen werden.')),20000);img.onload=()=>{clearTimeout(timer);resolve()};img.onerror=()=>{clearTimeout(timer);reject(Error('Zeichnung konnte nicht geladen werden.'))};img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);});
-  const canvas=document.createElement('canvas');const box=svg.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/),portrait=box?Number(box[2])>Number(box[1]):img.naturalHeight>img.naturalWidth;canvas.width=portrait?2480:3508;canvas.height=portrait?3508:2480;
+  const canvas=document.createElement('canvas');const box=svg.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/),portrait=box?Number(box[2])>Number(box[1]):img.naturalHeight>img.naturalWidth;const root=svg.match(/<svg\b[^>]*>/)?.[0]||'',wm=root.match(/\bwidth="([\d.]+)mm"/),hm=root.match(/\bheight="([\d.]+)mm"/),pageWidthMm=wm?Number(wm[1]):portrait?210:297,pageHeightMm=hm?Number(hm[1]):portrait?297:210;canvas.width=Math.round(pageWidthMm*300/25.4);canvas.height=Math.round(pageHeightMm*300/25.4);
   try{
    const ctx=canvas.getContext('2d');if(!ctx)throw Error('PDF-Bild konnte nicht vorbereitet werden.');
    ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
    const uri=canvas.toDataURL('image/jpeg',.98);if(!uri.startsWith('data:image/jpeg'))throw Error('JPEG-Ausgabe für PDF nicht verfügbar.');
    const raw=atob(uri.slice(uri.indexOf(',')+1)),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
-   images.push({bytes,width:canvas.width,height:canvas.height});
+   images.push({bytes,width:canvas.width,height:canvas.height,pageWidthMm,pageHeightMm});
   }finally{canvas.width=0;canvas.height=0;img.src='';}
  }
  return new Blob([drawingPdfBytes(images,maxPages)],{type:'application/pdf'});
@@ -5023,7 +5049,7 @@ function frameRender(p){
  const numeric=k=>field(k,FCON_FIELDS.find(f=>f[0]===k)[1]+(['connectorCount','connectorRows','biscuitRows'].includes(k)?' (Stück)':' (mm)'));
  box.innerHTML='<h3>Rahmenkonstruktion · Eckverbindungen</h3><p>Rechteckiger Rahmen, paarweise gleiche Hölzer und gemeinsame Dicke. Maße bleiben frei eingebbar; die gewählte Verbindung legt die Proportionen fest.</p><div class="wdFields">'+field('joint','Rahmeneckverbindung',Object.fromEntries(Object.entries(FRAME_JOINTS).map(([id,d])=>[id,'Nr. '+d.number+' · '+d.name])))+field('material','Holzart / Material')+['width','height','verticalWidth','horizontalWidth','thickness'].map(numeric).join('')+(frameNeedsThrough(p.joint)?field('through','Durchgehende / geschlitzte Rahmenhölzer',{vertical:'Aufrechte Rahmenhölzer',horizontal:'Waagerechte Rahmenhölzer'}):'')+(p.joint==='lap_mitre'?field('mitreFace','Gehrungsseite',{front:'Vorderseite',back:'Rückseite'}):'')+'</div>'+
  (def?.groove?'<h4>Innennut und Nutzapfen</h4><div class="wdFields">'+['grooveWidth','grooveDepth','grooveOffset'].map(numeric).join('')+field('profileFace','Nutabstand ab',{front:'Vorderfläche',back:'Rückfläche'})+'</div>':'')+
- (def?.rebate?'<h4>Falz · feste Proportionen</h4><p>a = 2D/3; b = '+(def.rebate===1/3?'D/3':'2D/3')+'.</p><div class="wdFields">'+field('profileFace','Falz offen zur',{front:'Vorderfläche',back:'Rückfläche'})+'</div>':'')+
+ (def?.rebate&&p.filling?'<h4>Spiegelfalz · Maße aus dem Spiegelquerschnitt</h4><p>Die Eingaben unter „Spiegel und Glasleisten“ bestimmen Falzbreite und Falztiefe. Schlitz und Zapfen bleiben als Rahmeneckverbindung erhalten.</p>':def?.rebate?'<h4>Falz · feste Proportionen</h4><p>a = 2D/3; b = '+(def.rebate===1/3?'D/3':'2D/3')+'.</p><div class="wdFields">'+field('profileFace','Falz offen zur',{front:'Vorderfläche',back:'Rückfläche'})+'</div>':'')+
  (def?.loose?'<h4>Falscher Zapfen</h4><p>Dreieckig, D/3 dick. Einstecktiefe ausdrücklich vorgeben; kein aus der Vorlage geschätztes Maß.</p><div class="wdFields">'+numeric('looseDepth')+'</div>':'')+
  (['dowel','angle'].includes(def?.connector)?'<h4>'+ (def.connector==='angle'?'Winkeldübel 90°':'Rundholzdübel')+'</h4><p>Achsen ab äußerem Fugenende entlang der Anschlussfläche. Gerade Dübel: Einstecklänge je Teil = halbe Dübellänge. Winkeldübel: Schenkel ab theoretischem Achsschnittpunkt und Biegeradius eingeben. Luft kommt je Bohrungsgrund hinzu.</p><div class="wdFields">'+field('connectorPlacement','Lage über die Rahmendicke',{centered:'Automatisch mittig (auch bei Dickenänderung)',manual:'Abstand ab Vorderfläche selbst festlegen'})+['connectorDiameter',...(def.connector==='angle'?['angleLegHorizontal','angleLegVertical','angleRadius']:['connectorLength']),'connectorCount','connectorFirst','connectorSpacing','connectorRows','connectorRowSpacing','glueAir'].map(numeric).join('')+(p.connectorPlacement==='manual'?numeric('connectorFaceMargin'):'<p class="hint" id="frameConnectorCenter"></p>')+'</div>':'')+
  (def?.connector==='biscuit'?'<h4>Flachdübel · Größe nach verfügbarem Platz in der Rahmenbreite</h4><p>Mehrere Lamellen werden über die Rahmendicke verteilt. Die Fräsmaße stammen von deinem Werkzeug und werden nicht aus D gewählt.</p><div class="wdFields">'+field('biscuitSize','Flachdübelgröße',{'':'Bitte wählen','0':'0','10':'10','20':'20'})+field('biscuitPlacement','Lage über die Rahmendicke',{centered:'Automatisch mittig (auch bei Dickenänderung)',manual:'Abstand ab Vorderfläche selbst festlegen'})+['biscuitDepth','biscuitSlotLength','biscuitCenter','biscuitRows','biscuitSpacing'].map(numeric).join('')+(p.biscuitPlacement==='manual'?numeric('biscuitFirst'):'<p class="hint" id="frameConnectorCenter"></p>')+'</div>':'')+
@@ -5083,8 +5109,8 @@ function frameFillingMount(){
 function frameFillingEditor(){
  const box=$('#frameFillingBox');if(!box)return;
  const p=wdParams(),f=p.filling;
- box.innerHTML='<h4>Füllung und herausnehmbare Glasleiste</h4><p>Rückseitiger Spiegelfalz mit abgesetzter Glasleiste. Rahmenmaße und Querschnitt ergeben gemeinsam die Füllungsmaße.</p>'+(f?'<div class="wdFields">'+FRAME_FILLING_FIELDS.map(([k,label])=>'<label class="wdField"><span>'+esc(label)+' (mm)</span><input data-filling="'+k+'" inputmode="decimal" value="'+esc(f[k]??'')+'"></label>').join('')+'</div><button id="frameFillingRemove" class="ghost">Füllung entfernen</button>':'<button id="frameFillingSample" class="secondary">Musterquerschnitt 01 einsetzen</button>')+'<p class="hint">Das Muster setzt nur den Füllungsquerschnitt ein. Deine Rahmenmaße und Eckverbindung bleiben erhalten. Verklotzung bleibt ein offener Prüfpunkt.</p><div id="frameFillingPreview"></div>';
- function update(value){current.woodDrawingDraft={...wdParams()};if(value)current.woodDrawingDraft.filling=value;else delete current.woodDrawingDraft.filling;$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';framePersistDraft();framePreview();}
+ box.innerHTML='<h4>Spiegel und Glasleisten</h4><p>Der Spiegel liegt im rückseitigen Rahmenfalz. Vier abgesetzte Glasleisten halten ihn von hinten; beide Enden jeder Leiste werden auf 45° geschnitten. Die Rahmeneckverbindung bleibt wie oben gewählt.</p>'+(f?'<div class="wdFields">'+FRAME_FILLING_FIELDS.map(([k,label])=>'<label class="wdField"><span>'+esc(label)+' (mm)</span><input data-filling="'+k+'" inputmode="decimal" value="'+esc(f[k]??'')+'"></label>').join('')+'</div><button id="frameFillingRemove" class="ghost">Füllung entfernen</button>':'<button id="frameFillingSample" class="secondary">Musterquerschnitt 01 einsetzen</button>')+'<p class="hint">Das Muster setzt nur den Füllungsquerschnitt ein. Deine Rahmenmaße und Eckverbindung bleiben erhalten. Verklotzung bleibt ein offener Prüfpunkt.</p><div id="frameFillingPreview"></div>';
+ function update(value){current.woodDrawingDraft={...wdParams()};if(value)current.woodDrawingDraft.filling=value;else delete current.woodDrawingDraft.filling;$('#wdConfirmed').checked=false;$('#wdSaveStatus').textContent='';framePersistDraft();frameRender(wdParams());}
  box.querySelectorAll('[data-filling]').forEach(el=>el.onchange=()=>update({...wdParams().filling,[el.dataset.filling]:el.value}));
  if(f)$('#frameFillingRemove').onclick=()=>{update(null);frameFillingEditor();};
  else $('#frameFillingSample').onclick=()=>{update(frameFillingSample());frameFillingEditor();};
@@ -6123,7 +6149,7 @@ function enBindOverview(){
  $('#enVariables').onclick=()=>{const commands=[];for(const el of $$('[data-en-var]')){const v=el.value.trim()===''?null:Number(el.value.replace(',','.'));if(v!==ensembleResolve(current.ensemble).values['var.'+el.dataset.enVar])commands.push({action:'set_variable',id:el.dataset.enVar,value:v});}if($('#enVarName').value.trim())commands.push({action:'set_variable',id:$('#enVarName').value.trim(),value:$('#enVarValue').value.trim()===''?null:Number($('#enVarValue').value.replace(',','.'))});enProposal(commands);};
  $('#enLink').onclick=()=>{const [id,key]=$('#enLinkTarget').value.split('.');if(!id)return;const source=$('#enLinkSource').value,second=$('#enLinkSecond').value,op=$('#enLinkOp').value,raw=$('#enLinkNumber').value.trim(),offset=$('#enLinkOffset').value.trim(),a=source?{ref:source}:raw===''?null:Number(raw.replace(',','.')),b=second?{ref:second}:offset===''?null:Number(offset.replace(',','.'));const value=op==='same'?a:{op,args:[a,b]};enProposal([{action:'set_module',id,values:{[['width','height','depth'].includes(key)?'size':'position']:{[key]:value}}}]);};
 }
-function ensembleRenderDrawing(){const svg=ensembleSvg(current.ensemble);$('#woodDrawingBox').innerHTML='<h3>Gesamtansicht · Planungsstand '+current.ensemble.revision+'</h3><p>Außenkonturen und Lage der Baugruppen, keine Fertigungszeichnung. Unbekannte Tiefen verhindern die Vorderansicht nicht.</p>'+svg+'<ol>'+ensembleResolve(current.ensemble).modules.map(m=>'<li>'+esc(m.name)+' · '+[m.size.width,m.size.height,m.size.depth].map(v=>v??'offen').join(' × ')+' mm</li>').join('')+'</ol>'+(typeof drDrawingSection==='function'?drDrawingSection(current.ensemble):'')+'<button class="secondary" id="enSvgDownload">Gesamtansicht als SVG herunterladen</button><button class="ghost" id="enPrint">Gesamtansicht als PDF herunterladen</button>';if(typeof drBindDrawing==='function')drBindDrawing();$('#enSvgDownload').onclick=()=>{const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));const a=document.createElement('a');a.href=url;a.download='Gesamtansicht.svg';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};$('#enPrint').onclick=ensembleDownloadPdf;}
+function ensembleRenderDrawing(){classicRenderDrawing();}
 
 // Direct file export avoids the Safari popup print path. No project writes.
 function ensemblePdfPages(project){
@@ -6156,6 +6182,291 @@ async function ensembleDownloadPdf(){
  }catch(e){alert('PDF konnte nicht erstellt werden: '+e.message);}
  finally{button.disabled=false;button.textContent=label;}
 }
+
+// Classical orthographic sheets. All dimensions are resolved project input.
+// SVG typography uses presentation attributes and never changes HTML styles.
+// Classical orthographic sheets. All dimensions are resolved project input.
+// SVG typography uses presentation attributes and never changes HTML styles.
+// Classical orthographic sheets. All dimensions are resolved project input.
+// SVG typography uses presentation attributes and never changes HTML styles.
+// Classical orthographic sheets. All dimensions are resolved project input.
+// SVG typography uses presentation attributes and never changes HTML styles.
+// Classical orthographic sheets. All dimensions are resolved project input.
+// SVG typography uses presentation attributes and never changes HTML styles.
+// Classical orthographic sheets. All dimensions are resolved project input.
+// SVG typography uses presentation attributes and never changes HTML styles.
+function classicTools(){
+ const n=v=>Number(v.toFixed(3)),e=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const text=(x,y,s,size=2.6,anchor='start',weight='normal')=>`<text x="${n(x)}" y="${n(y)}" font-family="Arial,sans-serif" font-size="${size}" text-anchor="${anchor}" font-weight="${weight}" fill="#111" stroke="none">${e(s)}</text>`;
+ const line=(x1,y1,x2,y2,kind='visible')=>`<line x1="${n(x1)}" y1="${n(y1)}" x2="${n(x2)}" y2="${n(y2)}" stroke="#111" stroke-width="${kind==='cut'?.55:kind==='visible'?.35:.18}"${kind==='hidden'?' stroke-dasharray="2 1"':kind==='cut'?' stroke-dasharray="7 1.5 1 1.5"':''}/>`;
+ const rect=(x,y,w,h,fill='none',kind='visible')=>`<rect x="${n(x)}" y="${n(y)}" width="${n(w)}" height="${n(h)}" fill="${fill}" stroke="#111" stroke-width="${kind==='visible'?.35:.18}"${kind==='hidden'?' stroke-dasharray="2 1"':''}/>`;
+ const path=(d,fill='none',width=.35)=>`<path d="${d}" fill="${fill}" stroke="#111" stroke-width="${width}"/>`;
+ // Paper-space dimensions: 10 mm first chain, 8 mm subsequent chains.
+ const tick=(x,y)=>path(`M${n(x-1)} ${n(y+1)}L${n(x+1)} ${n(y-1)}`,'none',.35);
+ const dh=(x1,x2,y,reference,label,chain=0,half=false)=>{const sign=y>=reference?1:-1,yy=reference+sign*Math.max(10+8*chain,Math.abs(y-reference));return '<g data-cw-dimension="horizontal" data-true-measure="'+e(label)+'">'+line(x1,reference+sign*2,x1,yy+sign*2,'thin')+(half?'':line(x2,reference+sign*2,x2,yy+sign*2,'thin'))+line(x1,yy,x2+(half?Math.sign(x2-x1)*3:0),yy,'thin')+tick(x1,yy)+(half?'':tick(x2,yy))+text((x1+x2)/2,yy-1,label,2.5,'middle')+'</g>';};
+ const dv=(x,y1,y2,reference,label,chain=0,half=false)=>{const sign=x>=reference?1:-1,xx=reference+sign*Math.max(10+8*chain,Math.abs(x-reference));return '<g data-cw-dimension="vertical" data-true-measure="'+e(label)+'">'+line(reference+sign*2,y1,xx+sign*2,y1,'thin')+(half?'':line(reference+sign*2,y2,xx+sign*2,y2,'thin'))+line(xx,y1,xx,y2+(half?Math.sign(y2-y1)*3:0),'thin')+tick(xx,y1)+(half?'':tick(xx,y2))+`<text transform="translate(${n(xx-1.5)} ${n((y1+y2)/2)}) rotate(-90)" font-family="Arial" font-size="2.5" text-anchor="middle">${e(label)}</text></g>`;};
+ const cutH=(x1,x2,y,id)=>line(x1,y,x2,y,'cut')+path(`M${n(x1)} ${n(y-5)}v5l-1.3 -2.8m1.3 2.8l1.3 -2.8 M${n(x2)} ${n(y-5)}v5l-1.3 -2.8m1.3 2.8l1.3 -2.8`,'none',.45)+text(x1,y-6,id,3,'middle','bold')+text(x2,y-6,id,3,'middle','bold');
+ const cutV=(x,y1,y2,id)=>line(x,y1,x,y2,'cut')+path(`M${n(x-5)} ${n(y1)}h5l-2.8 -1.3m2.8 1.3l-2.8 1.3 M${n(x-5)} ${n(y2)}h5l-2.8 -1.3m2.8 1.3l-2.8 1.3`,'none',.45)+text(x-6,y1+1,id,3,'end','bold')+text(x-6,y2+1,id,3,'end','bold');
+ return{n,e,text,line,rect,path,dh,dv,cutH,cutV};
+}
+function classicFormat(value){return Number(value.toFixed(2)).toLocaleString('de-DE',{useGrouping:false});}
+function classicPaper(paper='A4',landscape=false){const dims=paper==='A3'?[297,420]:[210,297];return landscape?{w:dims[1],h:dims[0],name:paper}:{w:dims[0],h:dims[1],name:paper};}
+function classicScale(maximum,allowEnlargement=false){
+ const scales=allowEnlargement?[4,2,1,.5,.4,.2,.1,.08,1/15,.05,.04,.02,.01,.005]:[1,.5,.4,.2,.1,.08,1/15,.05,.04,.02,.01,.005];
+ return scales.find(s=>s<=maximum+1e-8)||maximum;
+}
+function classicScaleLabel(s){return s>=1?classicFormat(s)+':1':'1:'+classicFormat(1/s);}
+function classicFrame(project,paper,landscape,title,scale,body,notes=[]){
+ const P=classicPaper(paper,landscape),{e,text,line,rect}=classicTools();
+ const shorten=(value,size)=>{const v=String(value),limit=Math.floor((P.w-24)/(size*.56));return v.length>limit?v.slice(0,limit-1)+'…':v;};
+ let footer='';notes.slice(0,4).forEach((v,i)=>footer+=text(12,P.h-24+i*3.5,shorten(v,2.45),2.45));
+ return `<svg xmlns="http://www.w3.org/2000/svg" width="${P.w}mm" height="${P.h}mm" viewBox="0 0 ${P.w} ${P.h}" data-classic-drawing="true" role="img" aria-label="${e(title)}"><defs><pattern id="cw-hatch-a" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M-1 1L1 -1M0 3L3 0M2 4L4 2" stroke="#333" stroke-width=".13"/></pattern><pattern id="cw-hatch-b" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M-1 2L1 4M0 0L3 3M2 -1L4 1" stroke="#333" stroke-width=".13"/></pattern></defs><rect width="${P.w}" height="${P.h}" fill="white"/>${rect(6,6,P.w-12,P.h-12)}${text(12,13,"look, talk ’n build",3,'start','bold')}${text(P.w-12,13,paper+' · '+(scale===null?'Maßstab offen':classicScaleLabel(scale)),2.8,'end')}${text(12,20,shorten(title,3.5),3.5,'start','bold')}${text(12,26,shorten(project.title||'Gesamtprojekt',2.7),2.7)}${line(6,30,P.w-6,30,'thin')}${body}${line(6,P.h-29,P.w-6,P.h-29,'thin')}${footer}${line(6,P.h-10,P.w-6,P.h-10,'thin')}${text(12,P.h-7,'Maße in mm · Planungsstand '+project.ensemble.revision+' · keine Fertigungsfreigabe',2.2)}${text(P.w-12,P.h-7,'Druck 100 % / Originalgröße',2.2,'end')}</svg>`;
+}
+function classicCutList(e){
+ return ensembleResolve(e).drawers.map((d,i)=>{const m=drawerPlanModel(d);return{d,m,h:String.fromCharCode(65+i*2),v:String.fromCharCode(66+i*2),height:d.region.y===null?null:d.region.y+d.frontGap+d.boxLift+d.boxHeight/2,x:d.region.x===null||d.region.width===null?null:d.region.x+(m.offset!==null&&d.openingWidth!==null?m.offset+d.openingWidth/2:d.region.width/2),proposed:d.openingOffset===null||m.offset===null||d.openingWidth===null};});
+}
+// One shared representation supplies the shelves and side panels to every
+// view and to B-B. Defaults remain explicitly proposed drawing settings.
+function classicCabinetModels(project){
+ const r=ensembleResolve(project.ensemble),groups=new Map(),finite=v=>typeof v==='number'&&Number.isFinite(v);
+ for(const d of r.drawers){const parent=r.modules.find(m=>m.id===d.parentId);if(!parent||parent.family!=='cabinet'||!parent.outline||parent.outline.length<6||(!/rechts\s*3\b/i.test((parent.notes||[]).join(' '))&&!project.classicDrawingSettings?.shelves?.[parent.id]))continue;const list=groups.get(parent.id)||[];list.push(d);groups.set(parent.id,list);}
+ for(const parent of r.modules)if(parent.family==='cabinet'&&parent.outline?.length>=6&&/rechts\s*3\b/i.test((parent.notes||[]).join(' '))&&!groups.has(parent.id))groups.set(parent.id,[]);
+ const result=[];
+ for(const [id,drawers]of groups){const parent=r.modules.find(m=>m.id===id);let fallback=null;if(!drawers.length){const points=parent.outline,edge=points.map((a,i)=>[a,points[(i+1)%points.length]]).find(([a,b])=>a.y>0&&a.y===b.y&&b.x>a.x);if(!edge)continue;fallback=drawerPlanNew({parentId:id,region:{x:parent.position.x+edge[0].x,y:parent.position.y+edge[0].y,z:parent.position.z,width:edge[1].x-edge[0].x,depth:parent.size.depth},shelfThickness:parent.thickness});}
+ const d=drawers.length?[...drawers].sort((a,b)=>(drawerPlanModel(b).shelfY??0)-(drawerPlanModel(a).shelfY??0))[0]:fallback,m=drawerPlanModel(d),t=parent.thickness,config=project.classicDrawingSettings?.shelves?.[id]||{},top=parent.position.y+parent.size.height,base=drawers.length?Math.min(...drawers.map(q=>q.region.y)):d.region.y,region=d.region;
+  if(!finite(t)||t<=0||![top,base,region.x,region.width].every(finite)||m.shelfY===null)continue;
+  const explicit=d.openingWidth!==null&&m.offset!==null,left=explicit?region.x+m.offset:region.x,right=explicit?left+d.openingWidth:region.x+region.width-t;
+  if(!(right>left&&left-t>=parent.position.x-.001&&right+t<=parent.position.x+parent.size.width+.001))continue;
+  const count=Math.max(0,3-drawers.length),floorTop=drawers.length?m.shelfY+d.shelfThickness:base,ceiling=top-t,gap=(ceiling-floorTop-count*t)/(count+1);
+  if(!(gap>0))continue;
+  const defaults=Array.from({length:count},(_,i)=>floorTop+(i+1)*gap+i*t),hasHeights=Array.isArray(config.heights)&&config.heights.length===count,heights=hasHeights?config.heights:defaults;
+  let invalid=heights.some((v,i)=>!finite(v)||v<floorTop||v+t>ceiling||i>0&&v<heights[i-1]+t);
+  const proposed=config.confirmed!==true||!hasHeights,depth=finite(config.depth)&&config.depth>0?config.depth:d.usableDepth,
+   frontZ=region.depth!==null&&region.z!==null?region.z+region.depth:null,shelfFrontZ=frontZ===null?null:frontZ-(drawers.length?d.frontThickness:0);
+  if(depth!==null&&(!finite(depth)||depth<=0||depth>10000||shelfFrontZ!==null&&depth>shelfFrontZ-parent.position.z+.001))invalid=true;
+  const parts=[{id:'middle',kind:'side',x:left-t,y:base,w:t,h:top-base,depth:parent.size.depth,z:parent.position.z,proposed:!explicit||d.openingOffset===null},{id:'right',kind:'side',x:right,y:base,w:t,h:top-base,depth:parent.size.depth,z:parent.position.z,proposed:!explicit},{id:'top',kind:'top',x:left,y:ceiling,w:right-left,h:t,depth:parent.size.depth,z:parent.position.z,proposed:!explicit}];
+  if(!invalid)heights.forEach((height,i)=>parts.push({id:'shelf-'+i,kind:'shelf',x:left,y:height,w:right-left,h:t,depth,z:depth!==null&&shelfFrontZ!==null?shelfFrontZ-depth:null,proposed}));
+  for(const fixed of drawers){const fm=drawerPlanModel(fixed);if(fm.shelfY!==null)parts.push({id:'fixed-'+fixed.id,kind:'fixed',x:fixed.region.x+(fm.offset??0),y:fm.shelfY,w:fixed.openingWidth??right-left,h:fixed.shelfThickness,depth:fixed.usableDepth,z:fixed.region.depth!==null&&fixed.region.z!==null&&fixed.usableDepth!==null?fixed.region.z+fixed.region.depth-fixed.frontThickness-fixed.usableDepth:null,proposed:fixed.openingWidth===null});}
+  result.push({id,parent,d,drawers,m,t,left,right,top,base,floorTop,ceiling,heights,defaults,depth,frontZ,shelfFrontZ,proposed,invalid,parts});
+ }
+ return result;
+}
+function classicCabinetFront(model,{s,x,bottom}){
+ const{rect,text}=classicTools();let b='';
+ for(const part of model.parts){b+='<g data-cw-part="'+model.id+'-'+part.id+'" data-proposed="'+part.proposed+'" data-height-mm="'+part.y+'">'+rect(x+part.x*s,bottom-(part.y+part.h)*s,part.w*s,part.h*s,'white',part.proposed?'hidden':'visible')+'</g>';}
+ if(model.invalid)b+=text(x+model.left*s,bottom-model.ceiling*s+8,'Bodenhöhen prüfen',2.4);
+ return b;
+}
+function classicCabinetPlan(model,{s,x,planY}){
+ const{rect,line,text}=classicTools();let b='';
+ for(const part of model.parts){if(part.depth===null||part.z===null)continue;
+  const hidden=part.kind==='shelf'||part.kind==='fixed';b+='<g data-cw-plan-part="'+model.id+'-'+part.id+'">'+rect(x+part.x*s,planY+part.z*s,part.w*s,part.depth*s,'none',hidden||part.proposed?'hidden':'visible')+'</g>';
+ }
+ const d=model.d,r=d.region;
+ if(model.drawers.length&&model.frontZ!==null){b+='<g data-cw-plan-part="drawer-front" data-location="resolved">'+rect(x+(r.x+d.frontGap)*s,planY+(model.frontZ-d.frontThickness)*s,(r.width-2*d.frontGap)*s,d.frontThickness*s,'white','hidden')+'</g>';}
+ return b;
+}
+function classicVerticalRegalSheet(project,cut,paper='A4'){
+ const model=classicCabinetModels(project).find(a=>a.id===cut.d.parentId);if(!model)return null;
+ const {text,line,rect,path,dh,dv,n}=classicTools(),P=classicPaper(paper,false),{d,m}=cut,t=model.t;
+ const fullHeight=model.top-model.base,depth=model.depth??m.length??80,wholeDepth=depth+d.frontThickness;
+ // Preserve all shelf junctions and the full drawer in a shared vertical map.
+ const boxes=model.parts.filter(q=>q.kind!=='side').map(q=>[q.y,q.y+q.h]);
+ const bottom=d.region.y+d.frontGap;for(const drawer of model.drawers)boxes.push([drawer.region.y+drawer.frontGap,drawer.region.y+drawer.frontGap+drawer.frontHeight]);
+ const intervals=boxes.sort((a,b)=>a[0]-b[0]),merged=[];
+ for(const [a,b]of intervals){const prev=merged.at(-1);if(prev&&a<=prev[1]+12)prev[1]=Math.max(prev[1],b);else merged.push([a,b]);}
+ const pieces=[];let display=0,last=model.base;
+ for(const [a,b]of merged){if(a>last){const actual=a-last,shown=Math.min(actual,12);pieces.push({from:last,to:a,start:display,length:shown,cut:actual>shown});display+=shown;}pieces.push({from:a,to:b,start:display,length:b-a,cut:false});display+=b-a;last=b;}
+ if(last<model.top){pieces.push({from:last,to:model.top,start:display,length:model.top-last,cut:false});display+=model.top-last;}
+ const map=v=>{const p=pieces.find(q=>v>=q.from-.0001&&v<=q.to+.0001)||pieces.at(-1);return p.start+(v-p.from)/(p.to-p.from)*p.length;};
+ const s=classicScale((P.h-100)/display),x=27,y=44,Y=v=>y+(display-map(v))*s,axisEnd=Math.max(wholeDepth,model.parent.size.depth??0),depthBreak=classicBreakMap(axisEnd,(P.w-75)/s,65),X=v=>x+depthBreak.map(v)*s,frontX=X(d.frontThickness);
+ let b='',depthSpans=[];
+ for(const part of model.parts.filter(q=>q.kind!=='side')){
+  const known=part.depth!==null,partDepth=known?part.depth:Math.min(80,depth),start=part.kind==='top'?0:d.frontThickness,xx=X(start),end=X(start+partDepth),yy=Y(part.y+part.h);
+  b+='<g data-cw-section-part="'+model.id+'-'+part.id+'" data-height-mm="'+part.y+'" data-proposed="'+part.proposed+'">'+rect(xx,yy,end-xx,part.h*s,part.kind==='top'?'url(#cw-hatch-a)':'url(#cw-hatch-b)',part.proposed?'hidden':'visible')+'</g>';
+  if(depthBreak.broken&&start<depthBreak.gap[0]&&start+partDepth>axisEnd-depthBreak.gap[0])depthSpans.push([yy,yy+part.h*s]);
+  if(!known)b+=classicBreakMarks(end,end,yy,yy+part.h*s,false);
+  const label=part.kind==='shelf'?'UK '+classicFormat(part.y)+(part.proposed?' Vorschlag':''):part.kind==='fixed'?'fester Boden · UK '+classicFormat(part.y):'Oberboden';
+  b+=text(P.w-13,yy+part.h*s/2+1,label,2.45,'end');
+ }
+ // Local box/front geometry has the same absolute heights as the views.
+ const boxBottom=bottom+d.boxLift,boxTop=boxBottom+d.boxHeight,boxLen=m.length;
+ b+=rect(x,Y(bottom+d.frontHeight),d.frontThickness*s,d.frontHeight*s,'url(#cw-hatch-a)');
+ if(boxLen!==null){b+=rect(frontX,Y(boxTop),d.sideThickness*s,d.boxHeight*s,'url(#cw-hatch-b)')+rect(X(d.frontThickness+boxLen-d.sideThickness),Y(boxTop),d.sideThickness*s,d.boxHeight*s,'url(#cw-hatch-b)');const by=boxBottom+d.grooveBottom+d.grooveClearance/2;b+=rect(X(d.frontThickness+d.sideThickness),Y(by+d.bottomThickness),X(d.frontThickness+boxLen-d.sideThickness)-X(d.frontThickness+d.sideThickness),d.bottomThickness*s,'url(#cw-hatch-a)');if(depthBreak.broken)depthSpans.push([Y(by+d.bottomThickness),Y(by)]);}
+ // All unchanged vertical stretches are shortened together. The same break
+ // crosses the construction width and appears in the continuous height chain.
+ if(depthBreak.broken)for(const [a,bottom]of depthSpans)b+=classicBreakMarks(X(depthBreak.gap[0]),x+depthBreak.gap[1]*s,a,bottom,false);
+ for(const p of pieces.filter(q=>q.cut)){const yy=Y(p.from+p.to>0?(p.from+p.to)/2:p.from);b+=classicBreakMarks(x-2,X(axisEnd)+2,yy-2,yy+2,true);}
+ b+=dv(x-10,Y(model.top),Y(model.base),x,classicFormat(fullHeight));
+ if(model.depth!==null)b+=dh(frontX,X(d.frontThickness+model.depth),Y(model.base)+10,Y(model.base),'Bodentiefe '+classicFormat(model.depth));
+ b+='<rect x="'+n(x-2)+'" y="'+n(Y(bottom+d.frontHeight)-2)+'" width="'+n(X(d.frontThickness+(m.length??depth))-x+4)+'" height="'+n(d.frontHeight*s+4)+'" fill="none" stroke="#111" stroke-width=".18" stroke-dasharray="2 1"/>'+text(x,Y(bottom)-6,cut.v+'1',3,'start','bold');
+ return classicFrame(project,paper,false,'Schnitt '+cut.v+'–'+cut.v+' · offener Regalteil',s,b,['Böden in derselben Höhenlage wie in der Vorderansicht; UK = Unterkante ab Boden.',model.proposed?'Zusätzliche Bodenhöhen gleichmäßig verteilt: änderbarer Vorschlag.':'Bodenhöhen aus den bestätigten Zeichnungseinstellungen.',model.depth===null?'Bodentiefen offen: nur vordere Teilschnitte mit Bruchlinie dargestellt.':'Bodentiefen aus den Einbaumaßen; Rückwandanschluss separat prüfen.',cut.v+'1: zugeordneter Schubkastenausschnitt auf folgendem Blatt.']);
+}
+function classicShelfControls(project){
+ const{e}=classicTools();return classicCabinetModels(project).map(m=>'<fieldset style="margin:12px 0;padding:12px"><legend>Böden im offenen Regalteil</legend><p>'+m.heights.length+' Böden oberhalb des festen Bodens. Höhen = Unterkante ab Boden. '+(m.proposed?'Änderbarer Vorschlag.':'Bestätigte Höhen.')+'</p>'+m.heights.map((v,i)=>'<label>Boden '+(i+1)+' · Höhe (mm)<input data-cw-parent="'+e(m.id)+'" data-cw-shelf="'+i+'" value="'+(Number.isFinite(v)?classicFormat(v):'')+'" inputmode="decimal"></label>').join('')+'<label>Bodentiefe (mm, leer = offen / aus Einbaumaßen)<input data-cw-depth="'+e(m.id)+'" value="'+(m.depth===null?'':classicFormat(m.depth))+'" inputmode="decimal"></label><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" style="width:auto" data-cw-confirm="'+e(m.id)+'" '+(!m.proposed?'checked':'')+'> Bodenhöhen als bestätigt markieren</label><button type="button" class="secondary" data-cw-save="'+e(m.id)+'">Bodenhöhen für die Zeichnung speichern</button></fieldset>').join('');
+}
+
+function classicOverview(project,paper='A4'){
+ const e=project.ensemble,r=ensembleResolve(e),W=e.total.width,H=e.total.height,D=e.total.depth,{n,text,line,rect,path,dh,dv,cutH,cutV}=classicTools();
+ if(!(W>0&&H>0))throw Error('Gesamtbreite und Gesamthöhe fehlen.');
+ const cabinets=classicCabinetModels(project),unknownFronts=cabinets.filter(q=>q.drawers.length&&q.frontZ===null),knownD=D>0,depth=knownD?D:0;
+ const layout=[false,true].map(landscape=>{const P=classicPaper(paper,landscape),max=Math.min((P.w-62)/(W+depth),(P.h-100-unknownFronts.length*18)/(H+depth)),s=classicScale(max);return {P,landscape,s};}).sort((a,b)=>b.s-a.s||Number(a.landscape)-Number(b.landscape))[0];
+ const {P,s}=layout,x=27,y=41,sideX=x+W*s+27,planY=y+H*s+27,bottom=y+H*s;
+ let b=text(x,y-7,'Vorderansicht',3,'start','bold')+text(sideX,y-7,'Seitenansicht von links',3,'start','bold')+text(x,planY-7,'Draufsicht',3,'start','bold');
+ const front=[];
+ for(const m of r.modules){
+  const sz=m.size,p=m.position;if([sz.width,sz.height,p.x,p.y].some(v=>v===null))continue;
+  const xx=x+p.x*s,yy=bottom-(p.y+sz.height)*s;
+  const contour=m.outline&&m.outline.every(pt=>pt.x!==null&&pt.y!==null);
+  const d=contour?m.outline.map((pt,i)=>(i?'L':'M')+n(xx+pt.x*s)+' '+n(bottom-(p.y+pt.y)*s)).join(' ')+'Z':null;
+  front.push((d?path(d,'white'):rect(xx,yy,sz.width*s,sz.height*s,'white')));
+  for(const model of cabinets.filter(q=>q.id===m.id))front.push(classicCabinetFront(model,{s,x,bottom}));
+  if(m.family==='frame'&&!contour){const vw=m.settings?.verticalWidth,hw=m.settings?.horizontalWidth;if(vw>0&&hw>0&&2*vw<sz.width&&2*hw<sz.height){front.push(rect(xx+vw*s,yy+hw*s,(sz.width-2*vw)*s,(sz.height-2*hw)*s));if(['biscuit','loose_tenon','dowel_mitre','angle_dowel'].includes(m.settings.joint))for(const [cx,cy,ix,iy]of [[xx,yy,xx+vw*s,yy+hw*s],[xx+sz.width*s,yy,xx+(sz.width-vw)*s,yy+hw*s],[xx,yy+sz.height*s,xx+vw*s,yy+(sz.height-hw)*s],[xx+sz.width*s,yy+sz.height*s,xx+(sz.width-vw)*s,yy+(sz.height-hw)*s]])front.push(line(cx,cy,ix,iy,'thin'));}}
+ }
+ b+=front.join('');
+ // This overlay is geometric input only; its tentative shelf widths stay dashed.
+ for(const d of r.drawers){if([d.region.x,d.region.y,d.region.width].some(v=>v===null))continue;const m=drawerPlanModel(d),xx=x+(d.region.x+d.frontGap)*s,yy=bottom-(d.region.y+d.frontGap+d.frontHeight)*s;b+=rect(xx,yy,m.frontWidth*s,d.frontHeight*s,'white')+line(xx+m.frontWidth*s*.35,yy+d.frontHeight*s*.5,xx+m.frontWidth*s*.65,yy+d.frontHeight*s*.5,'thin');if(m.shelfY!==null&&!cabinets.some(q=>q.id===d.parentId))b+=rect(x+(d.region.x+(m.offset??0))*s,bottom-(m.shelfY+d.shelfThickness)*s,(d.openingWidth??d.region.width)*s,d.shelfThickness*s,'none',d.openingWidth===null?'hidden':'visible');}
+ let missing=[];
+ if(knownD){
+  // Far-to-near paint order; left-side view projects depth with the front at left.
+  for(const m of [...r.modules].sort((a,b)=>(b.position.x??0)-(a.position.x??0))){const q=m.size,p=m.position;if([q.depth,q.height,p.z,p.y].some(v=>v===null)){missing.push(m.name);continue;}b+=rect(sideX+(D-p.z-q.depth)*s,bottom-(p.y+q.height)*s,q.depth*s,q.height*s,'white');}
+  // Top view: rear at top; known nearer top faces occlude lower ones.
+  for(const m of [...r.modules].sort((a,b)=>(a.position.y+a.size.height)-(b.position.y+b.size.height))){const q=m.size,p=m.position;if([q.depth,q.width,p.z,p.x].some(v=>v===null)){missing.push(m.name);continue;}b+=rect(x+p.x*s,planY+p.z*s,q.width*s,q.depth*s,'white');}
+  for(const model of cabinets)b+=classicCabinetPlan(model,{s,x,planY});
+  b+=dh(sideX,sideX+D*s,bottom+10,bottom,classicFormat(D)+' max.')+dv(x-10,planY,planY+D*s,x,classicFormat(D)+' max.');
+ }else{b+=text(sideX,y+5,'Gesamttiefe offen',2.8)+text(x,planY+5,'Draufsicht: Tiefe offen',2.8);}
+ b+=dh(x,x+W*s,bottom+10,bottom,classicFormat(W))+dv(x-10,y,bottom,x,classicFormat(H));
+ const cuts=classicCutList(e);
+ for(const c of cuts){if(c.height!==null){const yy=bottom-c.height*s;b+=cutH(x-4,x+W*s+4,yy,c.h);if(knownD)b+=cutH(sideX-4,sideX+D*s+4,yy,c.h);}if(c.x!==null){const xx=x+c.x*s;b+=cutV(xx,y-2,bottom+2,c.v);if(knownD)b+=cutV(xx,planY-2,planY+D*s+2,c.v);}}
+ const wrap=s=>{let rows=[],line='';for(const word of s.split(' ')){if((line+' '+word).length>Math.floor((P.w-30)/1.4)){rows.push(line);line=word;}else line+=(line?' ':'')+word;}if(line)rows.push(line);return rows;};
+ // Detached, x-aligned part projection: the front is visible even while its
+ // global Z coordinate is unknown. Never place it at a guessed cabinet depth.
+ unknownFronts.forEach((model,i)=>{const d=model.d,yy=planY+depth*s+11+i*18;
+  b+=text(x,yy-3,'Doppel · Teildraufsicht in x-Lage; Tiefenlage offen',2.25);
+  b+='<g data-cw-plan-part="drawer-front" data-location="unresolved">'+rect(x+(d.region.x+d.frontGap)*s,yy,(d.region.width-2*d.frontGap)*s,d.frontThickness*s,'white')+'</g>';
+ });
+ const notes=[knownD?'Seitenansicht links neben dem Möbel betrachtet; Draufsicht darunter.':'Seiten- und Draufsicht erst nach Eingabe der Tiefe vollständig.',missing.length?'Tiefen offen: '+[...new Set(missing)].join('; '):'Alle dargestellten Außenmaße aus den Projekteingaben.',cabinets.some(q=>q.proposed)?'Bodenhöhen: gleichmäßig verteilter, änderbarer Vorschlag.':cuts.some(c=>c.proposed)?'Schnittlage / Öffnungsversatz teilweise vorgeschlagen.':'Schnittlagen beziehen sich auf die Schubkastenöffnungen.'];
+ // Long notes are split so no line can leave the sheet.
+ const noteRows=notes.flatMap(wrap).slice(0,4);
+ return classicFrame(project,paper,layout.landscape,'Gesamtprojekt · Ansichten und Schnittlagen',s,b,noteRows);
+}
+// A piecewise coordinate map removes only a nominated plain interval. Actual
+// dimensions are never shortened; the omitted physical span remains explicit.
+function classicBreakMap(length,available,keep=60){
+ if(length<=available)return{length,display:length,broken:false,map:v=>v,gap:null,omitted:0};
+ const edge=Math.min((available-10)/2,length/2-1),gap=10,end=length-edge;
+ if(!(edge>0))throw Error('Zu wenig Platz für den unterbrochenen Schnitt.');
+ return{length,display:edge*2+gap,broken:true,map:v=>v<=edge?v:v>=end?edge+gap+v-end:edge+(v-edge)/(end-edge)*gap,gap:[edge,edge+gap],omitted:end-edge};
+}
+// A continuous thin break boundary crosses the whole component and extends
+// 2.5 mm past both edges. White masking interrupts hatch at the same boundary.
+function classicBreakMarks(x1,x2,y1,y2,vertical=true){
+ const {n,path}=classicTools(),a=Math.min(x1,x2),b=Math.max(x1,x2),c=Math.min(y1,y2),d=Math.max(y1,y2);
+ const boundary=(v,horizontal)=>{const lo=horizontal?a:c,hi=horizontal?b:d,mid=(lo+hi)/2,z=Math.min(1.8,Math.max(.7,(hi-lo)/4)),amp=.75;
+  return [[lo-2.5,v],[mid-z,v],[mid-z/3,v-amp],[mid+z/3,v+amp],[mid+z,v],[hi+2.5,v]].map(([u,w])=>horizontal?[u,w]:[w,u]);};
+ const data=points=>points.map(([x,y],i)=>(i?'L':'M')+n(x)+' '+n(y)).join(' '),first=boundary(vertical?c:a,vertical),second=boundary(vertical?d:b,vertical),same=vertical?c===d:a===b;
+ let mask='';if(!same)mask='<path d="'+data([...first,...[...second].reverse()])+' Z" fill="white" stroke="none"/>';
+ else mask=path(data(first),'none',1.6).replace('stroke="#111"','stroke="white"');
+ return '<g data-cw-break="continuous" data-overhang-mm="2.5">'+mask+path(data(first),'none',.18)+(same?'':path(data(second),'none',.18))+'</g>';
+}
+
+function classicSectionSheet(project,cut,paper='A4',horizontal=true){
+ const{d,m}=cut,{n,text,line,rect,path,dh,dv}=classicTools(),verticalHeight=Math.max(d.frontHeight,d.frontGap+d.frontHeight+d.shelfThickness)+d.frontGap,landscape=horizontal||classicScale((classicPaper(paper,true).h-105)/verticalHeight)>=classicScale((classicPaper(paper,false).h-105)/verticalHeight),P=classicPaper(paper,landscape),id=horizontal?cut.h:cut.v,title=horizontal?'Schnitt '+id+'–'+id+' · horizontal · '+d.name:'Ausschnitt '+id+'1 aus Schnitt '+id+'–'+id+' · Schubkasten';
+ const missing=[];if(!m.ok)missing.push(...m.errors);if(horizontal&&m.width===null)missing.push('Lichte Fachbreite fehlt.');if(horizontal&&m.offset===null)missing.push('Lage der lichten Öffnung fehlt.');if(m.length===null)missing.push('Schubkastenführung auswählen.');
+ if(missing.length){const b=text(18,48,'Schnittlage in den Totalansichten eingezeichnet.',3.1)+text(18,59,'Für den maßstäblichen Schnitt fehlen:',3.1,'start','bold')+missing.map((s,i)=>text(18,70+i*5,s,2.9)).join('');return classicFrame(project,paper,landscape,title,null,b,['Keine Ersatzbreite aus der Bereichsbreite verwendet.','Einbaumaße unter Mein Projekt → Planung öffnen ergänzen.']);}
+ const t=d.sideThickness,L=m.length,F=d.frontThickness,frontH=d.frontHeight,bh=d.boxHeight,clear=m.runner?m.runner.sideSpace:0;
+ let s=1,b='',x=24,y=47,notes=[];
+ if(horizontal){
+  // Horizontal cut across the side walls. Empty centre in depth may be removed.
+  const outerWidth=m.width,span=d.openingWidth;
+  s=classicScale((P.w-44)/Math.max(span,m.frontWidth),false);
+  const avail=(P.h-100)/s-F,br=classicBreakMap(L,avail,55),frontY=y+(br.display+F)*s,boxFront=frontY-F*s;
+  const xx=x+clear*s,boxW=outerWidth*s,backY=y,dep=br.display*s;
+  const segments=[[0,br.display]];
+  for(const [a,z]of segments){b+=rect(xx,y+a*s,t*s,(z-a)*s,'url(#cw-hatch-a)')+rect(xx+boxW-t*s,y+a*s,t*s,(z-a)*s,'url(#cw-hatch-a)');}
+  b+=rect(xx+t*s,backY,(outerWidth-2*t)*s,t*s,'url(#cw-hatch-b)')+rect(xx+t*s,boxFront-t*s,(outerWidth-2*t)*s,t*s,'url(#cw-hatch-b)');
+  const frontX=x+((m.frontWidth-span)/-2)*s;
+  b+=rect(frontX,boxFront,m.frontWidth*s,F*s,'url(#cw-hatch-b)');
+  // Opening boundary is a known face, not a guessed Korpus thickness.
+  for(const dx of [0,span])for(const [a,z]of segments)b+=line(x+dx*s,y+a*s,x+dx*s,y+z*s,'visible');
+  if(br.broken){b+=classicBreakMarks(xx,xx+t*s,y+br.gap[0]*s,y+br.gap[1]*s,true)+classicBreakMarks(xx+boxW-t*s,xx+boxW,y+br.gap[0]*s,y+br.gap[1]*s,true);b+=text(x+span*s/2,y+br.gap[0]*s+6,'Unterbrechung: '+classicFormat(br.omitted)+' mm',2.4,'middle');}
+  b+=dh(x,x+span*s,y-7,y,'lichte Öffnung '+classicFormat(span))+dh(xx,xx+boxW,frontY+11,frontY,'Kasten '+classicFormat(outerWidth))+dv(P.w-21,y,boxFront,xx+boxW,'Kastenlänge '+classicFormat(L));
+  if(clear>0){const cy=boxFront-20*s,cx=x+clear*s/2;b+=`<circle cx="${n(cx)}" cy="${n(cy)}" r="5" fill="none" stroke="#111" stroke-width=".2"/>`+text(cx-7,cy,'Y',3,'end','bold');}
+  b+=text(x,frontY+20,'Front',2.8)+text(x,y-13,'Rückseite',2.8);
+  // A full long rail is never incorrectly drawn across a removed interval.
+  notes=['Kastenwände schraffiert; Schnitt durch Eckzinkung vereinfacht, ohne erfundene Stoßfugen.','Öffnungsflächen als Begrenzungslinien; äußere Korpuswanddicken hier nicht abgeleitet.',br.broken?'Nur gleichförmige Seitenstrecken unterbrochen; Bemaßung nennt volle Länge.':'Keine Schnittunterbrechung erforderlich.'];
+ }else{
+  // Local depth starts at the drawer front; its global rear-wall offset stays open.
+  const whole=F+L,drawH=Math.max(frontH,d.frontGap+frontH+d.shelfThickness)+d.frontGap;
+  s=classicScale((P.h-105)/drawH,false);
+  y+=(d.frontGap+d.shelfThickness)*s;
+  const br=classicBreakMap(L,(P.w-58)/s-F,65),boxX=x+F*s,boxY=y+(frontH-d.boxLift-bh)*s,bottomY=boxY+bh*s,shelfY=y-(d.frontGap+d.shelfThickness)*s;
+  const X=z=>boxX+br.map(z)*s,backX=X(L-t),gn=d.bottomThickness+d.grooveClearance,grooveTop=bottomY-(d.grooveBottom+gn)*s,grooveBottom=bottomY-d.grooveBottom*s;
+  b+=rect(x,y,F*s,frontH*s,'url(#cw-hatch-b)');
+  // Notched front and rear walls: bottom is captured in stopped grooves.
+  const wall=(xx,mirror)=>{const a=xx,bx=xx+t*s,g=d.grooveDepth*s,inner=mirror?a:bx,out=mirror?bx:a,z=mirror?a+g:bx-g;return path(`M${n(out)} ${n(boxY)}H${n(inner)}V${n(grooveTop)}H${n(z)}V${n(grooveBottom)}H${n(inner)}V${n(bottomY)}H${n(out)}Z`,'url(#cw-hatch-a)');};
+  b+=wall(boxX,false)+wall(backX,true);
+  const play=d.bottomPlay/2*s,b0=boxX+(t-d.grooveDepth)*s+play,b1=X(L-t+d.grooveDepth)-play,bTop=bottomY-(d.grooveBottom+d.bottomThickness+d.grooveClearance/2)*s;
+  b+=rect(b0,bTop,b1-b0,d.bottomThickness*s,'url(#cw-hatch-b)');
+  if(br.broken){const ga=X(br.gap[0]),gb=boxX+br.gap[1]*s;b+=classicBreakMarks(ga,gb,bTop,bTop+d.bottomThickness*s,false);}
+  // The shelf has a confirmed usable depth only after user entry.
+  if(d.usableDepth!==null){const shelfLen=d.usableDepth,tail=Math.max(0,shelfLen-L),end=X(L)+tail*s;if(br.broken){const ga=boxX+br.gap[0]*s,gb=boxX+br.gap[1]*s;b+=rect(boxX,shelfY,end-boxX,d.shelfThickness*s,'url(#cw-hatch-b)')+classicBreakMarks(ga,gb,shelfY,shelfY+d.shelfThickness*s,false);}else b+=rect(boxX,shelfY,shelfLen*s,d.shelfThickness*s,'url(#cw-hatch-b)');}
+  else b+=text(x,y-10,'Fachbodentiefe bis zur Rückwand offen',2.8);
+  if(br.broken){const ga=boxX+br.gap[0]*s,gb=boxX+br.gap[1]*s;b+=text((ga+gb)/2,bottomY+8,'Unterbrechung',2.4,'middle');notes.push('Gleichförmiger Boden/Fachboden um '+classicFormat(br.omitted)+' mm verkürzt dargestellt.');}
+  b+=dh(boxX,X(L),bottomY+17,bottomY,'volle Kastenlänge '+classicFormat(L))+dv(P.w-20,y,y+frontH*s,X(L),'Front '+classicFormat(frontH))+dv(x-8,boxY,bottomY,boxX,'Kasten '+classicFormat(bh));
+  b+=text(x,y+frontH*s+29,'vorn',2.8)+text(X(L),y+frontH*s+29,'hinten',2.8,'end');
+  // Detail reference circles are placed on the actual groove interface.
+  b+=`<circle cx="${n(boxX+t*s)}" cy="${n((grooveTop+grooveBottom)/2)}" r="6" fill="none" stroke="#111" stroke-width=".2"/>`+text(boxX+t*s+8,(grooveTop+grooveBottom)/2,'Z',3,'start','bold');
+  notes.push('Z: Bodennut als zugeordneter Schnittausschnitt auf Detailblatt 1:1.','Tiefe des Korpus und Rückwandanschluss nur bei vollständigen Einbaumaßen darstellbar.');
+ }
+ notes.push(m.ready?'Einbaumaße bestätigt; Anschlussbearbeitungen weiterhin offen.':'Konstruktionsvorschlag; Einbaumaße noch nicht vollständig bestätigt.');
+ return classicFrame(project,paper,landscape,title,s,b,notes);
+}
+function classicDetailSheet(project,cut,paper='A4'){
+ const{d,m}=cut,{n,text,line,rect,path,dh,dv}=classicTools(),P=classicPaper(paper,true),s=1,x=30,y=58,t=d.sideThickness,gh=d.bottomThickness+d.grooveClearance,base=y+68;
+ const gt=base-d.grooveBottom-gh,gb=base-d.grooveBottom,g=d.grooveDepth;
+ let b=text(x,43,'Detail Z · Bodennut im Vertikalschnitt '+cut.v+'–'+cut.v,3,'start','bold');
+ b+=path(`M${x} ${y}H${x+t}V${n(gt)}H${x+t-g}V${n(gb)}H${x+t}V${base}H${x}Z`,'url(#cw-hatch-a)');
+ b+=classicBreakMarks(x,x+t,y,y,true);
+ b+=rect(x+t-g+d.bottomPlay/2,gb-d.grooveClearance/2-d.bottomThickness,48,d.bottomThickness,'url(#cw-hatch-b)');
+ b+=dh(x,x+t,y-7,y,classicFormat(t))+dv(x-9,gb,base,x,classicFormat(d.grooveBottom));
+ b+=text(x+48,gt-13,'Nut '+classicFormat(gh)+' × '+classicFormat(g),2.8)+line(x+t-g/2,gt,x+46,gt-15,'thin')+text(x+48,gt-7,'Boden '+classicFormat(d.bottomThickness)+' mm',2.8);
+ b+=text(x,y+85,'Bodenspiel insgesamt '+classicFormat(d.bottomPlay)+' mm je Richtung.',2.5)+text(x,y+90,'Nut an gezinkten Ecken stoppen.',2.5);
+ const hx=P.w/2+5,hy=62,clear=m.runner?.sideSpace;
+ b+=text(hx,43,'Detail Y · Einbauraum der seitlichen Führung',3,'start','bold');
+ if(clear!==undefined){
+  b+=line(hx,hy-5,hx,hy+56)+rect(hx+clear,hy-5,t,61,'url(#cw-hatch-a)')+rect(hx,hy,clear,m.runner.height,'none','hidden')+dh(hx,hx+clear,hy-10,hy,classicFormat(clear))+dv(hx+clear+t+13,hy,hy+m.runner.height,hx+clear,classicFormat(m.runner.height));
+  b+=text(hx,hy+66,'Hettich KA 4532 Silent System · 9114271',2.55)+text(hx,hy+72,'Gestrichelt: Einbauhülle, kein Profilquerschnitt.',2.55)+text(hx,hy+78,'Höhenlage / Bohrbild nach Montageunterlage offen.',2.55);
+ }else b+=text(hx,hy,'Führung noch nicht ausgewählt.',2.8);
+ b+=line(20,P.h-39,70,P.h-39,'thin')+line(20,P.h-41,20,P.h-37,'thin')+line(70,P.h-41,70,P.h-37,'thin')+text(75,P.h-38,'Kontrollmaß: 50 mm bei 100 %',2.5);
+ return classicFrame(project,paper,true,'Zugeordnete Schnittdetails · '+d.name,1,b,['Details ohne geometrische Vergrößerung oder Verkleinerung.','Einbauhülle aus Herstellermaßen; exakte Beschlagkontur noch nicht hinterlegt.','Bohrungen, Schrauben und Fachbodendübel erst nach Festlegung ihrer Maße zeichnen.']);
+}
+function classicDrawingPages(project,{paper='A4',details=true}={}){
+ if(!['A4','A3'].includes(paper))throw Error('Bitte A4 oder A3 wählen.');
+ const pages=[classicOverview(project,paper)];
+ for(const c of classicCutList(project.ensemble)){pages.push(classicSectionSheet(project,c,paper,true));const regal=classicVerticalRegalSheet(project,c,paper);if(regal)pages.push(regal);pages.push(classicSectionSheet(project,c,paper,false));if(details)pages.push(classicDetailSheet(project,c,paper));}
+ return pages;
+}
+function classicDrawingOptions(){return{paper:$('#enPaper')?.value==='A3'?'A3':'A4',details:$('#enDetailSheets')?.checked!==false};}
+function classicRenderDrawing(){
+ const box=$('#woodDrawingBox');
+ box.innerHTML='<h3>Werkzeichnung · Ansichten und Schnitte</h3><div class="notice"><label>Papierformat<select id="enPaper"><option value="A4">DIN A4 · Standarddrucker</option><option value="A3">DIN A3 · größere Blätter</option></select></label><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="enDetailSheets" checked style="width:auto"> Zugeordnete Details 1:1 mit ausgeben</label><p>Vorderansicht, Seitenansicht von links rechts daneben, Draufsicht darunter. Schnittlagen beziehen sich auf die dargestellten Schubkästen.</p><div id="enShelfControls"></div></div><div id="enClassicPages"></div><button class="secondary" id="enSvgDownload">Ansichtenblatt als SVG herunterladen</button><button class="primary" id="enPrint">Werkzeichnung als PDF herunterladen</button><details id="enJointExtras"><summary>Zinkenteilung · optionales Arbeitsblatt</summary></details>';
+ const update=()=>{try{const options=classicDrawingOptions(),project={title:current.title,ensemble:current.ensemble,classicDrawingSettings:current.classicDrawingSettings},pages=classicDrawingPages(project,options);$('#enClassicPages').innerHTML=pages.map((svg,i)=>'<section style="margin:14px 0;background:white;border:1px solid #ddd"><p style="padding:6px 12px">Blatt '+(i+1)+' / '+pages.length+'</p>'+svg.replace('<svg ','<svg style="display:block;width:100%;height:auto" ')+'</section>').join('');$('#enJointExtras').innerHTML='<summary>Zinkenteilung · optionales Arbeitsblatt</summary>'+ensembleResolve(current.ensemble).drawers.map(drJointDrawing).join('');}catch(e){$('#enClassicPages').textContent=e.message;}};
+ $('#enShelfControls').innerHTML=classicShelfControls(current);
+ $$('[data-cw-save]').forEach(button=>button.onclick=async()=>{
+  const project=current,id=button.dataset.cwSave,old=project.classicDrawingSettings,settings=JSON.parse(JSON.stringify(old||{shelves:{}}));settings.shelves??={};
+  try{const fields=$$('[data-cw-parent]').filter(el=>el.dataset.cwParent===id),heights=fields.map(el=>Number(el.dataset.cwShelf)).sort((a,b)=>a-b).map(i=>{const el=fields.find(el=>Number(el.dataset.cwShelf)===i),v=Number(el.value.replace(',','.'));if(el.value.trim()===''||!Number.isFinite(v))throw Error('Bitte alle Bodenhöhen eingeben.');return v;});
+   const depthEl=$$('[data-cw-depth]').find(el=>el.dataset.cwDepth===id),raw=depthEl.value.trim(),depth=raw===''?null:Number(raw.replace(',','.'));if(depth!==null&&(!Number.isFinite(depth)||depth<=0))throw Error('Bitte eine positive Bodentiefe eingeben oder das Feld leer lassen.');
+   settings.shelves[id]={heights,depth,confirmed:$$('[data-cw-confirm]').find(el=>el.dataset.cwConfirm===id).checked};
+   const model=classicCabinetModels({...project,classicDrawingSettings:settings}).find(q=>q.id===id);if(!model||model.invalid)throw Error('Bodenhöhen oder Tiefe passen nicht: Böden oberhalb des festen Bodens, unterhalb des Oberbodens, ohne Überschneidung und innerhalb der Korpustiefe eintragen.');
+   project.classicDrawingSettings=settings;button.disabled=true;await dbPutProject(project);if(current===project){update();button.textContent=settings.shelves[id].confirmed?'Bodenhöhen bestätigt und gespeichert':'Bodenhöhen als Vorschlag gespeichert';}
+  }catch(e){if(old===undefined)delete project.classicDrawingSettings;else project.classicDrawingSettings=old;alert(e.message);}finally{button.disabled=false;}
+ });
+ $('#enPaper').onchange=update;$('#enDetailSheets').onchange=update;update();
+ $('#enPrint').onclick=async()=>{const button=$('#enPrint'),label=button.textContent;button.disabled=true;button.textContent='PDF wird erstellt …';try{const options=classicDrawingOptions(),snapshot={title:current.title,ensemble:JSON.parse(JSON.stringify(current.ensemble)),classicDrawingSettings:current.classicDrawingSettings?JSON.parse(JSON.stringify(current.classicDrawingSettings)):undefined},pages=classicDrawingPages(snapshot,options),blob=await drawingSvgPagesPdfBlob(pages,100),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Werkzeichnung_'+options.paper+'_dev66_1.pdf';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);}catch(e){alert('PDF konnte nicht erstellt werden: '+e.message);}finally{button.disabled=false;button.textContent=label;}};
+ $('#enSvgDownload').onclick=()=>{try{const svg=classicOverview({title:current.title,ensemble:current.ensemble,classicDrawingSettings:current.classicDrawingSettings},classicDrawingOptions().paper),url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'})),a=document.createElement('a');a.href=url;a.download='Ansichten_'+classicDrawingOptions().paper+'.svg';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);}catch(e){alert(e.message);}};
+}
+
 
 function ensembleAfterRecord(){
  const back=$('#ensembleReturn');if(back){const child=!!current.ensembleParent;back.classList.toggle('hidden',!child);if(child)$('#ensembleReturnTitle').textContent='Baugruppe im Gesamtprojekt · '+(ensembleContext?.root.title||'');}
