@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.10</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.11</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev66.10';
+const APP_VERSION='0.9.21-dev66.11';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -5368,7 +5368,7 @@ function cRender(){
  '<h4>3 · Kante wählen und Anbauteil zuordnen</h4>'+cOrientationSvg(c)+(basic&&rect?'<div class="composerActions" role="group" aria-label="Kante wählen">'+Object.entries(C_BOARD_EDGE_MAP).map(([id,native])=>'<button type="button" class="'+(active===id?'secondary':'ghost')+'" data-board-flow-edge="'+id+'" aria-pressed="'+(active===id)+'">Kante '+id+(c.parts.some(p=>p.type!=='sliding_batten'&&p.edge===native)?' · mit Anbauteil':'')+'</button>').join('')+'</div>'+(active?cBoardAttachmentEditor(c,active):'<p>Wähle A, B, C oder D. Direkt darunter legst du das Anbauteil fest.</p>'):'<p>'+(rect?'Gib zuerst Länge, Breite, Dicke und Holzart des Grundbretts ein.':'Anschlüsse an dieser besonderen Kontur benötigen eine eigene Zuordnung; die vorhandenen Anbauteile bleiben im Stand erhalten.')+'</p>')+(rect?unassigned:c.parts.filter(p=>p.type!=='sliding_batten')).map(cPartHtml).join('')+
  '<details '+(battens.length?'open':'')+'><summary>4 · Gratleisten auf der Fläche</summary><p>Eine Gratleiste läuft quer zur Holzfaser auf der Brettfläche. Die Hirnholzkante dient als Maßbezug. Von der Hirnholzkante bis zur nächstgelegenen Begrenzung der Gratnut bleiben mindestens 50 mm.</p>'+(protruding?'<p class="hint">Bei überstehenden Anleimern ist nach deiner üblichen Bauweise meist keine zusätzliche Gratleiste vorgesehen.</p>':'')+battens.map(cPartHtml).join('')+'<button class="ghost" data-c-add-part="sliding_batten">Gratleiste auf der Fläche ergänzen</button>'+trayAccessories.map(cBoardTrayHtml).join('')+(battens.length===2&&!trayAccessories.length?'<button class="secondary" data-board-tray>Schalenführung mit Auffangschale ergänzen</button>':'')+'</details>'+
  '<details '+(c.accessories.length||c.operations.some(op=>!['edge'].includes(op.type))?'open':'')+'><summary>Weitere Bearbeitungen und Zubehör</summary>'+c.operations.filter(op=>(op.type!=='edge'||op.target!=='*'&&!(rect&&op.target==='base'&&op.edgeRef))&&!(op.type==='groove'&&battens.some(p=>p.id===op.target))).map(op=>cOperationHtml(op,c)).join('')+'<div class="composerActions"><button class="ghost" data-c-add-operation="circular_cut">Durchgangsbohrung / Randausschnitt</button><button class="ghost" data-c-add-operation="bore">Sackloch</button><button class="ghost" data-c-add-operation="groove">Nut</button><button class="ghost" data-c-add-accessory>Zubehör</button></div>'+c.accessories.filter(a=>!trayAccessories.includes(a)).map(cAccessoryHtml).join('')+'</details>'+
- '<details '+(o.errors.length?'open':'')+'><summary>Noch zu ergänzen / prüfen</summary>'+(qhtml?'<ul>'+qhtml+'</ul>':'<p>Alle Angaben sind zugeordnet.</p>')+c.questions.map(q=>'<p>'+esc(q.text)+' <button class="ghost" data-c-resolve="'+q.id+'">Als abgeglichen markieren</button></p>').join('')+'</details><div class="composerActions"><button class="secondary" id="cConfirm" '+(!o.ready?'disabled':'')+'>Maße prüfen und bestätigen</button><button id="cPdf" '+(!pages.length||o.errors.length?'disabled':'')+'>'+(o.ready&&c.confirmedRevision===c.revision?'A4-PDF herunterladen':'A4-Entwurf herunterladen')+'</button><button class="ghost" data-c-go-talk>Im Werkstatt-Talk besprechen</button></div><label>Maßstab auf A4<select id="cScale">'+Object.entries(scales).sort(([a],[b])=>a==="auto"?-1:b==="auto"?1:Number(a)-Number(b)).map(([k,v])=>'<option value="'+k+'" '+(selected===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label>'+(paperLayout?'<p class="hint">A4 '+(paperLayout.width>paperLayout.height?'quer':'hoch')+' · 1:'+cBoardScaleLabel(paperLayout.denominator)+'</p>':'')+'<div class="wdPreview" id="cPreview"></div>';
+ '<details '+(o.errors.length?'open':'')+'><summary>Noch zu ergänzen / prüfen</summary>'+(qhtml?'<ul>'+qhtml+'</ul>':'<p>Alle Angaben sind zugeordnet.</p>')+c.questions.map(q=>'<p>'+esc(q.text)+' <button class="ghost" data-c-resolve="'+q.id+'">Als abgeglichen markieren</button></p>').join('')+'</details><div class="composerActions"><button class="secondary" id="cConfirm" '+(!o.ready?'disabled':'')+'>Maße prüfen und bestätigen</button><button id="cPdf" '+(!pages.length||o.errors.length?'disabled':'')+'>'+(o.ready&&c.confirmedRevision===c.revision?'A4-PDF herunterladen':'A4-Entwurf herunterladen')+'</button><button class="ghost" data-c-go-talk>Im Werkstatt-Talk besprechen</button></div><label>Maßstab auf A4<select id="cScale">'+Object.entries(scales).sort(([a],[b])=>a==="auto"?-1:b==="auto"?1:Number(a)-Number(b)).map(([k,v])=>'<option value="'+k+'" '+(selected===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label>'+(paperLayout?'<p class="hint">A4 '+(paperLayout.width>paperLayout.height?'quer':'hoch')+' · 1:'+paperLayout.denominator+'</p>':'')+'<div class="wdPreview" id="cPreview"></div>';
  box.querySelectorAll('[data-c-field]').forEach(el=>el.onchange=()=>{
   const key=el.dataset.cField;let value=el.value;if(['fullyInside','centered'].includes(key))value=value===''?null:value==='true';
   const action=el.dataset.cPart?'update_part':el.dataset.cOperation?'update_operation':el.dataset.cAccessory?'update_accessory':'set_base';
@@ -5432,7 +5432,6 @@ document.addEventListener('change',e=>{
  return cCommit([{action:'set_base',values:{[key]:rows.map(s=>Number(s.replace(',','.')))}}]);
 });
 
-function cBoardScaleLabel(denominator){return String(denominator).replace('.',',');}
 function cBoardDrawingSettings(project){
  // Paper layout is a presentation setting. It does not affect the saved
  // construction, component list or dimensions sent to the Talk server.
@@ -5458,16 +5457,17 @@ function cBoardDrawingSettings(project){
   {width:297,height:210,below:true,capacity:contour?[224,65]:[220,86]},
   {width:210,height:297,below:true,capacity:contour?[137,152]:[134,173]},
  ].map(({capacity:[x,y],...paper})=>({...paper,minimum:Math.max(1,(width+height)/x,(depth+height)/y)}));
- const best=layouts.reduce((a,b)=>a.minimum<=b.minimum?a:b);
- const optimal=Math.ceil(best.minimum*10-1e-8)/10;
- const offered=[1,1.5,2,2.5,3,3.5,4,4.5,5,6,7.5,8,10,15,20,25,50,100]
-  .filter(value=>value>=best.minimum-1e-9);
+ const fits=(paper,denominator)=>paper.minimum<=denominator+1e-9;
+ const standardScales=Object.keys(DRAWING_SCALES).filter(key=>key!=='auto').map(Number).sort((a,b)=>a-b);
+ const fittingStandards=standardScales.filter(denominator=>layouts.some(paper=>fits(paper,denominator)));
+ const optimal=fittingStandards[0];
+ if(!optimal)return {print,computed,paperLayout:null,scales,selected:'auto'};
+
+ for(const value of fittingStandards)scales[String(value)]=DRAWING_SCALES[value];
  const requested=String(project.boardDrawingScale??project.construction.viewScale??'auto');
- for(const value of offered)scales[String(value)]='1:'+cBoardScaleLabel(value);
  const selected=Object.hasOwn(scales,requested)?requested:'auto';
  const denominator=selected==='auto'?optimal:Number(selected);
- // Keep the familiar orientation when it already fits at the chosen scale.
- const layout=layouts.find(paper=>paper.minimum<=denominator+1e-9)||best;
+ const layout=layouts.find(paper=>fits(paper,denominator));
  return {print,computed,paperLayout:{...layout,denominator},scales,selected};
 }
 
