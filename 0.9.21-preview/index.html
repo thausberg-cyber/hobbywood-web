@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.13</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.14</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev66.13';
+const APP_VERSION='0.9.21-dev66.14';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -2261,11 +2261,12 @@ function boardContourPages(c,o,{title,status,paperLayout=null},tools){
  const viewRight=paperLayout?.below?paperLayout.width-12:212;
  const viewBottom=paperLayout?.below?paperLayout.height-54:197;
  const centerOnSheet=paperLayout&&!split;
- const planX=28+(centerOnSheet?Math.max(0,viewRight-55-(o.length+T)*s)/2:0);
- const planY=58+(centerOnSheet?Math.max(0,viewBottom-93-(o.width+T)*s)/2:0);
+ const spacing=paperLayout?.viewSpacing;
+ const planX=28+(centerOnSheet?Math.max(0,(spacing?.maxWidth??(viewRight-55))-(o.length+T)*s)/2:0);
+ const planY=(spacing?.top??58)+(centerOnSheet?Math.max(0,(spacing?.maxHeight??(viewBottom-93))-(o.width+T)*s)/2:0);
  const X=x=>planX+x*s,Y=y=>planY+(o.width-y)*s;
- const frontY=split?62:planY+o.width*s+23;
- const sideX=split?.length===2?28:planX+o.length*s+14;
+ const frontY=split?62:planY+o.width*s+(spacing?.frontGap??23);
+ const sideX=split?.length===2?28:planX+o.length*s+(spacing?.sideGap??14);
  const finishText=op=>op.treatment==='chamfer'?'Fase '+f(op.value)+' × 45°':op.treatment==='round'?'R '+f(op.value):op.treatment==='break'?'Kanten brechen':'unbearbeitet';
  const groups=[];for(const edge of o.edges){const finish=boardEdgeFinish(c,edge.id);if(!['chamfer','round'].includes(finish.treatment)||!(finish.value>0))continue;const key=finish.treatment+'/'+finish.value;let group=groups.find(g=>g.key===key);if(!group){group={key,finish,edges:[],id:'F'+(groups.length+1)};groups.push(group);}group.edges.push(edge);}
  const circular=boardCircularCuts(c,o),cuts=circular.cuts;
@@ -3678,11 +3679,12 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
  const viewRight=paper?.below?paper.width-12:216;
  const viewBottom=paper?.below?paper.height-54:192;
  const centerOnSheet=paper&&!split&&m.geometryReady;
- const planX=24+(centerOnSheet?Math.max(0,viewRight-54-(W+H)*scale)/2:0);
- const planY=58+(centerOnSheet?Math.max(0,viewBottom-82-(T+H)*scale)/2:0);
+ const spacing=paper?.viewSpacing;
+ const planX=24+(centerOnSheet?Math.max(0,(spacing?.maxWidth??(viewRight-54))-(W+H)*scale)/2:0);
+ const planY=(spacing?.top??58)+(centerOnSheet?Math.max(0,(spacing?.maxHeight??(viewBottom-82))-(T+H)*scale)/2:0);
  const X=x=>planX+(x-minX)*scale,Y=y=>planY+(maxY-y)*scale;
- const frontTop=split?62:planY+T*scale+10;
- const sideX=split?.length===2?24:planX+W*scale+16;
+ const frontTop=split?62:planY+T*scale+(spacing?.frontGap??10);
+ const sideX=split?.length===2?24:planX+W*scale+(spacing?.sideGap??16);
  let frontBody='',sideBody='';
 
  let body='<g data-view="plan" data-scale="'+n(scale)+'" data-origin-x="'+n(planX)+'" data-origin-y="'+n(planY)+'">'+text(planX,planY-18,'DRAUFSICHT · '+(m.geometryReady?'M 1:'+f(1/scale):'Anordnung teilweise schematisch'),'bold');
@@ -5521,12 +5523,17 @@ function cBoardDrawingSettings(project){
  const scales={auto:'Automatisch · Blattfläche ausnutzen'};
  if(!(width>0&&depth>0&&height>0))return {print,computed,paperLayout:null,scales,selected:'auto'};
 
- // Limits reserve space for dimension lines, cutting marks, notes and page footer.
+ // Paper millimetres. The limits reserve space for dimensions, section marks and notes.
+ const top=contour?56:58,frontGap=contour?18:9,sideGap=contour?20:12;
  const layouts=[
-  {width:297,height:210,below:false,capacity:contour?[168,99]:[176,112]},
-  {width:297,height:210,below:true,capacity:contour?[224,65]:[220,86]},
-  {width:210,height:297,below:true,capacity:contour?[137,152]:[134,173]},
- ].map(({capacity:[x,y],...paper})=>({...paper,minimum:Math.max(1,(width+height)/x,(depth+height)/y)}));
+  {width:297,height:210,below:false,capacity:contour?[162,110]:[176,115]},
+  {width:297,height:210,below:true,capacity:contour?[224,77]:[232,90]},
+  {width:210,height:297,below:true,capacity:contour?[142,164]:[149,177]},
+ ].map(({capacity:[maxWidth,maxHeight],...paper})=>({
+  ...paper,
+  viewSpacing:{top,frontGap,sideGap,maxWidth,maxHeight},
+  minimum:Math.max(1,(width+height)/maxWidth,(depth+height)/maxHeight)
+ }));
  const standardScales=Object.keys(DRAWING_SCALES).filter(key=>key!=='auto').map(Number).sort((a,b)=>a-b);
  const orientations=[{width:297,height:210},{width:210,height:297}];
  const choices=new Map();
