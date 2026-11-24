@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.14</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.15</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev66.14';
+const APP_VERSION='0.9.21-dev66.15';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -2262,7 +2262,7 @@ function boardContourPages(c,o,{title,status,paperLayout=null},tools){
  const viewBottom=paperLayout?.below?paperLayout.height-54:197;
  const centerOnSheet=paperLayout&&!split;
  const spacing=paperLayout?.viewSpacing;
- const planX=28+(centerOnSheet?Math.max(0,(spacing?.maxWidth??(viewRight-55))-(o.length+T)*s)/2:0);
+ const planX=(spacing?.left??28)+(centerOnSheet?Math.max(0,(spacing?.maxWidth??(viewRight-55))-(o.length+T)*s)/2:0);
  const planY=(spacing?.top??58)+(centerOnSheet?Math.max(0,(spacing?.maxHeight??(viewBottom-93))-(o.width+T)*s)/2:0);
  const X=x=>planX+x*s,Y=y=>planY+(o.width-y)*s;
  const frontY=split?62:planY+o.width*s+(spacing?.frontGap??23);
@@ -2289,9 +2289,11 @@ function boardContourPages(c,o,{title,status,paperLayout=null},tools){
   sideBody+=line(sideX,Y(Math.max(0,h.y-h.r)),sideX+T*s,Y(Math.max(0,h.y-h.r)),'hidden')+line(sideX,Y(Math.min(o.width,h.y+h.r)),sideX+T*s,Y(Math.min(o.width,h.y+h.r)),'hidden');
  }
  const beneath=paperLayout?.below;
- const x1=beneath?13:222,y1=split&&!paperLayout.notesOnPlan?61:beneath?paperLayout.height-49:60;
- const x2=beneath?paperLayout.width/2:222,y2=beneath?y1:103;
- const x3=beneath?x2:222,y3=beneath?y1+29:141;
+ const separateNotes=paperLayout?.notesPlacement==='separate';
+ const legendX=separateNotes?20:paperLayout?.notesX??222;
+ const x1=beneath?13:legendX,y1=split&&!paperLayout.notesOnPlan?61:beneath?paperLayout.height-49:60;
+ const x2=beneath?paperLayout.width/2:legendX,y2=beneath?y1:103;
+ const x3=beneath?x2:legendX,y3=beneath?y1+29:141;
  let legend=text(x1,y1,'KONTUR / KANTEN','bold');o.edges.forEach((e,i)=>legend+=text(x1,y1+(beneath?5+i*4:7+i*7),e.id+': '+f(e.length)+' mm · '+finishText(boardEdgeFinish(c,e.id)),'small'));
  legend+=text(x2,y2,'PUNKTE X / Y','bold');o.points.forEach((p,i)=>legend+=text(x2,y2+(beneath?5+i*4:7+i*6),'P'+(i+1)+': '+f(p.x)+' / '+f(p.y),'small'));
  if(beneath)legend+=text(x3,y3,'INNENWINKEL: '+o.edges.map(e=>f(e.angle)+'°').join(' / '),'small');
@@ -2300,8 +2302,8 @@ function boardContourPages(c,o,{title,status,paperLayout=null},tools){
  if(seg){const x1=X(seg.a.x),y1=Y(seg.a.y),x2=X(seg.b.x),y2=Y(seg.b.y),L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L;body+='<g data-grain-reference="'+grain.mode+'" data-grain-edge="'+(grain.edge||'')+'" data-grain-x="'+grain.vector.x+'" data-grain-y="'+grain.vector.y+'">'+line(x1,y1,x2,y2)+line(x2,y2,x2-ux*2-uy,y2-uy*2+ux)+line(x2,y2,x2-ux*2+uy,y2-uy*2-ux)+line(x1,y1,x1+ux*2-uy,y1+uy*2+ux)+line(x1,y1,x1+ux*2+uy,y1+uy*2-ux)+text((x1+x2)/2,(y1+y2)/2-3,'Faser','measure','middle')+'</g>';}
  const blankLabel=blank?f(blank.length)+' × '+f(blank.width)+' × '+f(T):'Faserrichtung noch offen';
  if(beneath)legend+=text(x1,y1+24,'Faser: '+(grain.label||'offen'),'small')+text(x1,y1+30,'Zuschnitt: '+blankLabel,'small');
- else legend+=text(222,174,'Faser: '+(grain.label||'offen'),'small')+text(222,182,'Zuschnitt in Faserrichtung:','small')+text(222,188,blankLabel,'small');
- const detailReference=profiles||cuts.length?'Blatt '+(2+(split?.length||0)+(split&&!paperLayout.notesOnPlan?1:0)):'';
+ else legend+=text(legendX,174,'Faser: '+(grain.label||'offen'),'small')+text(legendX,182,'Zuschnitt in Faserrichtung:','small')+text(legendX,188,blankLabel,'small');
+ const detailReference=profiles||cuts.length?'Blatt '+(2+(split?.length||0)+(split&&!paperLayout.notesOnPlan||separateNotes?1:0)):'';
  groups.forEach(g=>{const e=g.edges[0],mx=(e.p.x+e.q.x)/2,my=(e.p.y+e.q.y)/2,angle=Math.atan2(-e.u.y,e.u.x)*180/Math.PI;body+='<g transform="translate('+n(X(mx))+','+n(Y(my))+') rotate('+n(angle)+')">'+drawingSectionMark(tools,{id:g.id,reference:detailReference,x1:0,y1:-4,x2:0,y2:4,direction:'right',captionX:0,captionY:-12})+'</g>';});
  const center={x:o.points.reduce((a,p)=>a+p.x,0)/o.points.length,y:o.points.reduce((a,p)=>a+p.y,0)/o.points.length};o.points.forEach((p,i)=>{const dx=center.x-p.x,dy=center.y-p.y,L=Math.hypot(dx,dy);body+=text(X(p.x)+dx/L*5,Y(p.y)-dy/L*5,'P'+(i+1),'small','middle');});
  const pages=[];
@@ -2313,7 +2315,10 @@ function boardContourPages(c,o,{title,status,paperLayout=null},tools){
    pages.push(frame(detail,1,entry.paper,subtitle));
   }
   if(!paperLayout.notesOnPlan)pages.push(frame(legend,1,undefined,'Konturmaße und Kantenbearbeitung'));
- }else pages.push(frame(body+frontBody+sideBody+legend,1,paperLayout));
+ }else{
+  pages.push(frame(body+frontBody+sideBody+(separateNotes?'':legend),1,paperLayout));
+  if(separateNotes)pages.push(frame(legend,1,undefined,'Konturmaße und Kantenbearbeitung'));
+ }
  const numberPages=()=>pages.map((page,index)=>page.replace(/Blatt \d+\/\d+/, 'Blatt '+(index+1)+'/'+pages.length));
  if(!profiles&&!cuts.length)return numberPages();
  let detail=text(20,48,cuts.length?'BOHRUNGEN UND RANDAUSSCHNITTE · MASSANGABEN':'KANTENPROFILE · ÖRTLICHE SCHNITTE M 1:1','bold');
@@ -2846,7 +2851,7 @@ function constructionPages(input,{title=input.title||'Brettkonstruktion',paperLa
  // An ordinary bore can have its own sheet after the projected views.
  const extra=o.operations.filter(op=>op.type==='bore'&&op.g&&op.positions?.length&&op.target==='base'&&op.diameter>0&&op.depth>0);
  if(extra.length>1){} // Additional bore groups remain subject to the detail capability check.
- if(extra.length&&(pages.length===1||paperLayout?.elevations)&&extra[0].diameter<=80&&input.base.thickness<=90){const op=extra[0],t=input.base.thickness,w=Math.max(45,op.diameter+20),x=28,y=65,R=op.diameter/2,center=x+w/2;
+ if(extra.length&&(pages.length===1||paperLayout?.elevations||paperLayout?.notesPlacement)&&extra[0].diameter<=80&&input.base.thickness<=90){const op=extra[0],t=input.base.thickness,w=Math.max(45,op.diameter+20),x=28,y=65,R=op.diameter/2,center=x+w/2;
   const known=o.renderModel.components.filter(g=>!g.unresolved),minX=Math.min(...known.map(g=>g.x)),maxY=Math.max(...known.map(g=>g.y+g.width)),scale=1/(o.renderModel.overviewDenominator||5),point=op.positions[0];
   const [ox,oy]=constructionPlanOrigin(pages[0]);
   const px=ox+(op.g.x+point.u-minX)*scale,py=oy+(maxY-op.g.y-point.v)*scale;
@@ -2867,7 +2872,7 @@ function constructionPlanOrigin(svg){
 
 function constructionBoardLabels(pages,input,m,tools){
  if(!pages.length||!m?.body)return pages;
- const {text,line,f,n}=tools,tag=pages[0].match(/<g data-view="plan"[^>]*data-scale="([^"]+)"/);
+ const {text,line}=tools,tag=pages[0].match(/<g data-view="plan"[^>]*data-scale="([^"]+)"/);
  if(!tag)return pages;
  const scale=m.paperLayout?1/m.paperLayout.denominator:Number(tag[1]),known=m.components.filter(g=>!g.unresolved),minX=Math.min(...known.map(g=>g.x)),maxY=Math.max(...known.map(g=>g.y+g.width)),b=m.body;
  const [ox,oy]=constructionPlanOrigin(pages[0]);
@@ -2881,11 +2886,6 @@ function constructionBoardLabels(pages,input,m,tools){
  }
  marks+='</g>';
  const out=[...pages];
- const glue=m.canonicalGlue;
- if(glue?.seams?.length&&glue.alongX){
-  const label=out[0].match(/<text[^>]*>1 · Grundbrett<\/text>/)?.[0];
-  if(label){const y=Y(b.y+b.width)+Math.max(3,Math.min(10,glue.widths.at(-1)*scale/2));out[0]=out[0].replace(label,label.replace(/ y="[^"]*"/,' y="'+n(y)+'"'));}
- }
  out[0]=out[0].replace('</svg>',marks+'</svg>');return out;
 }
 
@@ -3680,15 +3680,26 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
  const viewBottom=paper?.below?paper.height-54:192;
  const centerOnSheet=paper&&!split&&m.geometryReady;
  const spacing=paper?.viewSpacing;
- const planX=24+(centerOnSheet?Math.max(0,(spacing?.maxWidth??(viewRight-54))-(W+H)*scale)/2:0);
+ const planX=(spacing?.left??24)+(centerOnSheet?Math.max(0,(spacing?.maxWidth??(viewRight-54))-(W+H)*scale)/2:0);
  const planY=(spacing?.top??58)+(centerOnSheet?Math.max(0,(spacing?.maxHeight??(viewBottom-82))-(T+H)*scale)/2:0);
  const X=x=>planX+(x-minX)*scale,Y=y=>planY+(maxY-y)*scale;
  const frontTop=split?62:planY+T*scale+(spacing?.frontGap??10);
  const sideX=split?.length===2?24:planX+W*scale+(spacing?.sideGap??16);
  let frontBody='',sideBody='';
 
+ const centeredLabel=!!m.battenConnections.length,glue=m.canonicalGlue;
+ let labelX=centeredLabel?X(b.x+b.length/2):X(b.x)+3;
+ const labelY=Y(b.y+b.width)+(glue?.seams?.length&&glue.alongX?
+  Math.max(3,Math.min(10,glue.widths.at(-1)*scale/2)):Math.min(14,b.width*scale/2));
+ // Leave the horizontal edge-connector dimension clear of the part label.
+ if(!centeredLabel)for(const connection of m.railConnections.filter(c=>c.edge==='back'&&c.positions.length)){
+  const part=known.find(g=>g.id===connection.child);
+  if(part)labelX=Math.max(labelX,X(part.x+50)+4);
+ }
+ const label=centeredLabel||labelX+24<=X(b.x+b.length)?
+  text(labelX,labelY,'1 · Grundbrett','bold',centeredLabel?'middle':'start'):'';
  let body='<g data-view="plan" data-scale="'+n(scale)+'" data-origin-x="'+n(planX)+'" data-origin-y="'+n(planY)+'">'+text(planX,planY-18,'DRAUFSICHT · '+(m.geometryReady?'M 1:'+f(1/scale):'Anordnung teilweise schematisch'),'bold');
- body+=rect(X(b.x),Y(b.y+b.width),b.length*scale,b.width*scale)+text(m.battenConnections.length?X(b.x+b.length/2):X(b.x)+3,Y(b.y+b.width)+Math.min(14,b.width*scale/2),'1 · Grundbrett','bold',m.battenConnections.length?'middle':'start');
+ body+=rect(X(b.x),Y(b.y+b.width),b.length*scale,b.width*scale)+label;
  body+=dh(X(b.x),X(b.x+b.length),Y(b.y+b.width),Y(b.y+b.width)-6,f(m.geometryReady?b.length:p.length))+dv(Y(b.y+b.width),Y(b.y),X(b.x),X(b.x)-(m.connections.some(c=>c.wedge?.mode&&c.wedge.mode!=='plain')?16:8),f(m.geometryReady?b.width:p.width));
  m.components.slice(1).forEach((g,i)=>{
   if(m.geometryReady&&!g.unresolved){
@@ -3722,12 +3733,13 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
  }
  body+='</g>';
  const rows=['BAUTEILE UND ANSCHLÜSSE',...(m.finishingNotes||[]),...m.components.map((g,i)=>(i+1)+' · '+g.name+(g.edge?' · '+ASSEMBLY_EDGES[g.edge]:i?' · Kante offen':'')),...m.battenConnections.flatMap(c=>c.notes),...m.connections.map(c=>'Anschluss '+c.child+': Feder / Zapfen D/3'),...m.railConnections.map(c=>c.name+': '+(c.type==='glue'?'stumpf verleimt':'3 '+(c.type==='round-6'?'Runddübel Ø6':'Flachdübel '+(c.size||'Größe offen'))+'; Achsen 50 / '+f(c.length/2)+' / '+f(c.length-50)+' mm; verleimt')),...p.attachments.filter(a=>a.kind==='stop_strip').map(a=>a.name+': '+ASSEMBLY_EDGES[a.edge]+', '+f(a.projection)+' mm '+(a.direction==='above'?'über Brett':'unter Brett')),...m.pending];
- const notesOnPlan=!split||paper.notesOnPlan;
+ const joined=paper?.notesPlacement;
+ const notesOnPlan=joined?joined!=='separate':!split||paper.notesOnPlan;
  const firstY=split?(notesOnPlan?Math.max(58+T*scale+16,paper.height-65):54):paper?.below?Math.max(frontTop+H*scale+19,paper.height-65):65;
  const columns=notesOnPlan?(paper?.below?(paper.width===210?2:3):1):3;
- const columnWidth=(notesOnPlan?(paper?.width||297):297)-24;
- const lastY=notesOnPlan?(paper?.below?paper.height-19:171):183;
- const maxCharacters=split?Math.floor(columnWidth/columns/1.5):37;
+ const columnWidth=joined==='right'?paper.width-9-paper.notesX:(notesOnPlan?(paper?.width||297):297)-24;
+ const lastY=notesOnPlan?(joined||paper?.below?paper.height-19:171):183;
+ const maxCharacters=split||joined?Math.floor(columnWidth/columns/1.5):37;
  const wrapped=rows.flatMap(row=>{
   const lines=[];let line='';
   for(const word of row.split(' ')){
@@ -3735,16 +3747,16 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
    line+=(line?' ':'')+word;
   }
   if(line)lines.push(line);
-  return split?lines:[...lines,''];
+  return split||joined?lines:[...lines,''];
  });
  const rowsPerColumn=Math.floor((lastY-firstY)/3.4)+1;
  const noteStrip=(lines,y,count,spacing,offset)=>lines.map((line,i)=>line?
   text(offset+Math.floor(i/count)*spacing,y+(i%count)*3.4,line,'small'):'').join('');
  if(notesOnPlan){
-  body+=noteStrip(wrapped.slice(0,rowsPerColumn*columns),firstY,rowsPerColumn,columnWidth/columns,paper?.below?12:228);
-  if(!split&&wrapped.length>rowsPerColumn*columns)body+=text(paper?.below?paper.width-65:228,lastY+5,'Weitere Angaben in der App.','small');
+  body+=noteStrip(wrapped.slice(0,rowsPerColumn*columns),firstY,rowsPerColumn,columnWidth/columns,joined==='right'?paper.notesX:paper?.below?12:228);
+  if(!split&&!joined&&wrapped.length>rowsPerColumn*columns)body+=text(paper?.below?paper.width-65:228,lastY+5,'Weitere Angaben in der App.','small');
  }
- const followingNotes=split?(notesOnPlan?wrapped.slice(rowsPerColumn*columns):wrapped):[];
+ const followingNotes=split||joined?(notesOnPlan?wrapped.slice(rowsPerColumn*columns):wrapped):[];
  const notesPages=[];
  const noteLinesPerColumn=39;
  for(let start=0;start<followingNotes.length;start+=noteLinesPerColumn*3){
@@ -3830,6 +3842,7 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
   for(const notes of notesPages)pages.push(frame(notes,'Bauteile und Anschlüsse','1/1'));
  }else{
   pages.push(frame(body+frontBody+sideBody,'Gesamtaufbau aus '+m.components.length+' Bauteilen','1/1',paper));
+  for(const notes of notesPages)pages.push(frame(notes,'Bauteile und Anschlüsse','1/1'));
  }
  if(m.connections.some(c=>c.wedge?.mode&&c.wedge.mode!=='plain')){
   pages.push(frame(assemblyWedgeDetail(m,svgTools,{compact:!!m.battenConnections.length})+assemblyBattenDetails(m,svgTools,{mixed:true})+assemblyFinishingDetail(m,svgTools,m.battenConnections.length?{compactY:165}:assemblyFinishSpace(m)),m.battenConnections.length?'Hirnleisten und Gratleisten':'Hirnleisten · Verkeilte Zapfen','2/2'));
@@ -5523,23 +5536,13 @@ function cBoardDrawingSettings(project){
  const scales={auto:'Automatisch · Blattfläche ausnutzen'};
  if(!(width>0&&depth>0&&height>0))return {print,computed,paperLayout:null,scales,selected:'auto'};
 
- // Paper millimetres. The limits reserve space for dimensions, section marks and notes.
- const top=contour?56:58,frontGap=contour?18:9,sideGap=contour?20:12;
- const layouts=[
-  {width:297,height:210,below:false,capacity:contour?[162,110]:[176,115]},
-  {width:297,height:210,below:true,capacity:contour?[224,77]:[232,90]},
-  {width:210,height:297,below:true,capacity:contour?[142,164]:[149,177]},
- ].map(({capacity:[maxWidth,maxHeight],...paper})=>({
-  ...paper,
-  viewSpacing:{top,frontGap,sideGap,maxWidth,maxHeight},
-  minimum:Math.max(1,(width+height)/maxWidth,(depth+height)/maxHeight)
- }));
  const standardScales=Object.keys(DRAWING_SCALES).filter(key=>key!=='auto').map(Number).sort((a,b)=>a-b);
  const orientations=[{width:297,height:210},{width:210,height:297}];
  const choices=new Map();
  for(const denominator of standardScales){
-  const joined=layouts.find(paper=>paper.minimum<=denominator+1e-9);
-  const layout=joined||cBoardSplitA4(orientations,width/denominator,depth/denominator,height/denominator);
+  const length=width/denominator,planDepth=depth/denominator,elevation=height/denominator;
+  const joined=cBoardJoinedA4(orientations,length,planDepth,elevation,contour,computed.renderModel);
+  const layout=joined||cBoardSplitA4(orientations,length,planDepth,elevation);
   if(layout)choices.set(String(denominator),{...layout,denominator});
  }
  if(!choices.size)return {print,computed,paperLayout:null,scales,selected:'auto'};
@@ -5555,6 +5558,34 @@ function cBoardDrawingSettings(project){
  const paperLayout=selected==='auto'?automatic:choices.get(selected)||
   cBoardTiledA4(orientations,width/denominator,depth/denominator,height/denominator,denominator);
  return {print,computed,paperLayout,scales,selected};
+}
+// The same paper-space rule governs every board size and standard scale.
+// Calculate the envelope of the three aligned views including dimension and
+// annotation space. The note area is flexible; projection geometry never is.
+function cBoardJoinedA4(orientations,length,depth,height,contour,model){
+ const sections=!contour&&(model?.connections.length||model?.battenConnections.length);
+ const left=contour?28:24,top=contour?56:58;
+ const frontGap=contour?18:sections?16:9;
+ const sideGap=contour?20:sections?16:10;
+ const rightAllowance=contour?14:Math.max(sections?24:15,30-height);
+ const bottomAllowance=contour?12:sections?16:4;
+ const notesWidth=contour?66:48;
+ const arrangements=[
+  [orientations[0],'right'],[orientations[0],'below'],
+  [orientations[1],'below'],[orientations[1],'right'],
+  [orientations[0],'separate'],[orientations[1],'separate']
+ ];
+ for(const [paper,notesPlacement] of arrangements){
+  const notesX=notesPlacement==='right'?paper.width-9-notesWidth:null;
+  const right=notesX??paper.width-6;
+  const bottom=notesPlacement==='below'?paper.height-(contour?49:55)-6:paper.height-13;
+  const maxWidth=right-left-sideGap-rightAllowance;
+  const maxHeight=bottom-top-frontGap-bottomAllowance;
+  if(length+height<=maxWidth+1e-9&&depth+height<=maxHeight+1e-9)
+   return {...paper,below:notesPlacement==='below',notesPlacement,notesX,
+    viewSpacing:{left,top,frontGap,sideGap,maxWidth,maxHeight}};
+ }
+ return null;
 }
 function cBoardSplitA4(orientations,length,depth,height){
  // Keep dimension lines, view titles, 50 mm check line and sheet margins clear.
