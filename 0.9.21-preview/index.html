@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.17</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.18</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev66.17';
+const APP_VERSION='0.9.21-dev66.18';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -2533,6 +2533,137 @@ function boardGluePages(pages,a,b,tools,{title,status}){
  return out;
 }
 
+// Deterministic cross sections from the existing rail geometry and connector
+// stations. Compress only omitted wood, not the geometries of the joints.
+function boardRailSectionPages(pages,m,glue,tools,{title,status}){
+ if(!m.geometryReady||!m.railConnections?.length)return null;
+ const {n,text,line,rect,dh,dv,f}=tools,b=m.body,eps=1e-6;
+ const eligible=m.railConnections.flatMap(c=>{
+  const g=m.components.find(p=>p.id===c.child&&!p.unresolved),a=m.p.attachments.find(p=>p.id===c.child);
+  if(!g||!a||!['front','back','left','right'].includes(c.edge)||!(g.thickness>0)||c.type!=='glue'&&!c.positions.length||c.type==='biscuit'&&!c.profile||c.type==='round-6'&&!c.dowelLength)return [];
+  const horizontal=['front','back'].includes(c.edge),low=['front','left'].includes(c.edge);
+  return [{c,g,a,horizontal,low,lo:horizontal?g.y:g.x,hi:horizontal?g.y+g.width:g.x+g.length,along:horizontal?g.x:g.y,run:horizontal?g.length:g.width}];
+ });
+ if(!eligible.length)return null;
+ const planes=[];const stations=r=>r.c.positions.map(v=>r.along+v);
+ for(const horizontal of [true,false]){
+  const remain=eligible.filter(r=>r.horizontal===horizontal);
+  while(remain.length){
+   const first=remain.shift(),opposite=remain.findIndex(r=>r.low!==first.low);
+   const other=opposite>=0?remain[opposite]:null;
+   const lo=horizontal?b.y:b.x,hi=lo+(horizontal?b.width:b.length);
+   let selected=[first],common=stations(first);
+   if(other){
+    const second=stations(other);
+    const begin=Math.max(first.along,other.along),end=Math.min(first.along+first.run,other.along+other.run);
+    const candidate=(common.length?common:second.length?second:[(begin+end)/2]).filter(v=>v>=begin-eps&&v<=end+eps&&(!second.length||second.some(w=>Math.abs(v-w)<eps)));
+    if(end>=begin&&candidate.length){selected.push(other);remain.splice(opposite,1);common=candidate;}
+   }
+   const center=selected[0].along+selected[0].run/2;
+   const station=common.length?common.slice().sort((a,b)=>Math.abs(a-center)-Math.abs(b-center))[0]:center;
+   planes.push({rails:selected.sort((a,b)=>a.lo-b.lo),horizontal,lo,hi,station});
+  }
+ }
+ // A representative glue joint is optional and must actually be intersected
+ // by the same section plane. A schematic station remains marked as such.
+ function candidateGlue(p){
+  if(!glue?.connectors?.length||glue.alongX!==p.horizontal)return null;
+  const runStart=p.horizontal?b.x:b.y,acrossStart=p.horizontal?b.y:b.x;
+  const cs=glue.connectors.filter(c=>Math.abs(runStart+c.station-p.station)<eps).map(c=>({...c,u:acrossStart+c.at})).filter(c=>!p.rails.some(r=>c.u+c.embed/2>r.lo&&c.u-c.embed/2<r.hi));
+  const mid=(p.lo+p.hi)/2;
+  return cs.sort((a,b)=>Math.abs(a.u-mid)-Math.abs(b.u-mid))[0]||null;
+ }
+ function layout(p,includeGlue){
+  const g=includeGlue?candidateGlue(p):null,raw=p.rails.map(r=>r.low?[p.lo,Math.min(p.hi,r.hi+12)]:[Math.max(p.lo,r.lo-12),p.hi]);
+  if(g)raw.push([Math.max(p.lo,g.u-g.embed/2-9),Math.min(p.hi,g.u+g.embed/2+9)]);
+  const segments=[];
+  for(const q of raw.sort((a,b)=>a[0]-b[0])){const prev=segments.at(-1);if(prev&&q[0]<=prev[1]+eps)prev[1]=Math.max(prev[1],q[1]);else segments.push(q.slice());}
+  const width=segments.reduce((s,[a,b])=>s+b-a,0),zMin=Math.min(b.z,...p.rails.map(r=>r.g.z)),zMax=Math.max(b.z+b.thickness,...p.rails.map(r=>r.g.z+r.g.thickness));
+  return {...p,segments,glue:g,width,zMin,zMax,height:zMax-zMin};
+ }
+ const paper=[{w:297,h:210,maxW:163,maxH:128,notes:'right'},{w:210,h:297,maxW:177,maxH:170,notes:'below'}];
+ const gap=12;
+ function fits(v,k,s){return v.width*s+(v.segments.length-1)*gap<=k.maxW&&v.height*s<=k.maxH;}
+ const jobs=[];
+ for(const p of planes){
+  const mandatory=layout(p,false),optional=layout(p,true);
+  const k=paper.find(k=>fits(mandatory,k,1));
+  if(k){jobs.push({l:optional.glue&&fits(optional,k,1)?optional:mandatory,k,s:1});continue;}
+  if(p.rails.length>1){
+   for(const r of p.rails){
+    const q={...p,rails:[r]},v=layout(q,false),choice=paper.find(k=>fits(v,k,1));
+    if(choice)jobs.push({l:v,k:choice,s:1});
+    else{const d=[2,5,10,20,50,100].find(d=>paper.some(k=>fits(v,k,1/d)))||100;jobs.push({l:v,k:paper.find(k=>fits(v,k,1/d))||paper[0],s:1/d});}
+   }
+  }else{const d=[2,5,10,20,50,100].find(d=>paper.some(k=>fits(mandatory,k,1/d)))||100;jobs.push({l:mandatory,k:paper.find(k=>fits(mandatory,k,1/d))||paper[0],s:1/d});}
+ }
+ const out=pages.slice(),overviewIndex=out.findIndex(p=>p.includes('data-view="plan"'));
+ const notesFor=r=>{
+  const {c,g,a}=r,name=(a.name||g.name);
+  const conn=c.type==='biscuit'?'Flachdübel '+c.size+' · '+f(c.profile.width)+' × '+f(c.profile.thickness)+' mm (Schnitt)':c.type==='round-6'?'Runddübel Ø '+f(c.diameter)+' × '+f(c.dowelLength)+' mm':'Stumpf verleimt';
+  return [name+' · '+({front:'vorn',back:'hinten',left:'links',right:'rechts'}[c.edge]),'Querschnitt '+f(r.hi-r.lo)+' × '+f(g.thickness)+' mm · '+conn,c.type==='glue'?'Ohne zusätzlichen Verbinder.':'Achse '+f((r.hi-r.lo)/2)+' mm ab Leistenquerkante.'];
+ };
+ function render(job,i){
+  const {l,k,s}=job,id='S'+(i+1),x0=24,top=49+(k.maxH-l.height*s)/2,Z=z=>top+(l.zMax-z)*s;
+  let x=x0;const mapped=l.segments.map(([lo,hi])=>{const seg={lo,hi,x};x+=(hi-lo)*s+gap;return seg;});
+  const X=(v,seg)=>seg.x+(v-seg.lo)*s;
+  const poly=(pts,edges,kind)=>'<path class="'+kind+'" d="'+drawingCutOutline(pts,edges,n)+'"/>';
+  const cutRect=(x,y,w,h,edges,kind)=>poly([[x,y],[x+w,y],[x+w,y+h],[x,y+h]],edges,kind);
+  let body=text(12,16,title,'bold')+text(12,25,status,'small')+text(12,37,id+'–'+id+' · '+(l.rails.length>1?'Unterbrochener Gesamtquerschnitt':'Örtlicher Teilquerschnitt')+' · M 1:'+f(1/s),'bold');
+  for(const seg of mapped){
+   const u=X(seg.lo,seg),w=(seg.hi-seg.lo)*s,bottom=Z(b.z),upper=Z(b.z+b.thickness);
+   const edges=[...(seg.hi<l.hi-eps?[1]:[]),...(seg.lo>l.lo+eps?[3]:[])];
+   body+=cutRect(u,upper,w,b.thickness*s,edges,'wood-a');
+   for(const r of l.rails.filter(r=>r.lo<seg.hi-eps&&r.hi>seg.lo+eps)){
+    const {c,g,a}=r,lo=Math.max(r.lo,seg.lo),hi=Math.min(r.hi,seg.hi),xx=X(lo,seg),yt=Z(g.z+g.thickness),yb=Z(g.z);
+    body+=cutRect(xx,yt,(hi-lo)*s,g.thickness*s,[],'wood-b');
+    const plane=a.direction==='above'?b.z+b.thickness:b.z,cx=(r.lo+r.hi)/2;
+    if(c.type==='biscuit'||c.type==='round-6'){
+     const size=c.type==='biscuit'?c.profile.thickness:c.diameter,wide=c.type==='biscuit'?c.profile.width:c.dowelLength;
+     const low=c.type==='biscuit'?plane-wide/2:a.direction==='above'?plane-c.panelInsertion:plane-c.railInsertion;
+     body+=rect(X(cx-size/2,seg),Z(low+wide),size*s,wide*s,'connector')+line(X(cx,seg),Z(low+wide)-2,X(cx,seg),Z(low)+2,'axis');
+    }
+    // Rail cross dimension belongs to its free end, without cutting the hatch.
+    const below=a.direction==='below',labelY=below?yb+7:yt-5;
+    if((hi-lo)*s>=10)body+=dh(xx,X(hi,seg),below?yb:yt,labelY,f(r.hi-r.lo));
+    else body+=text(xx+2,below?yb+6:yt-4,f(r.hi-r.lo)+' mm','small');
+    body+=text(xx+(hi-lo)*s/2,below?yb+13:yt-10,({front:'vorn',back:'hinten',left:'links',right:'rechts'}[c.edge]),'small','middle');
+   }
+   const c=l.glue;
+   if(c&&c.u>seg.lo+eps&&c.u<seg.hi-eps){
+    const u2=X(c.u,seg),cy=Z(b.z+b.thickness/2);
+    if(!l.rails.some(r=>r.lo<seg.hi-eps&&r.hi>seg.lo+eps))body+=cutRect(u2,upper,X(seg.hi,seg)-u2,b.thickness*s,seg.hi<l.hi-eps?[1]:[],'wood-b');
+    body+=line(u2,upper,u2,bottom,'visible');
+    body+=rect(u2-c.embed*s/2,cy-c.section*s/2,c.embed*s,c.section*s,'connector')+line(u2-c.embed*s/2-2,cy,u2+c.embed*s/2+2,cy,'axis');
+    body+=dh(u2-c.embed*s/2,u2+c.embed*s/2,bottom,bottom+7,f(c.embed));
+   }
+  }
+  const notes=[...l.rails.flatMap(notesFor),'Grundbrett: '+f(b.thickness)+' mm dick.',l.horizontal?'Schnitt quer zur Brettlänge, Achse X = '+f(l.station-b.x)+' mm.':'Schnitt quer zur Brettbreite, Achse Y = '+f(l.station-b.y)+' mm.',...(l.glue?['Brettverleimung: '+(glue.schematic?'schematische Lage · ':'')+f(l.glue.embed)+' × '+f(l.glue.section)+' mm im Schnitt.']:[]),'Unterbrechung: nur die nicht dargestellten Brettabschnitte entfallen.'];
+  // Use separate text area; wrap against its actual physical width.
+  const chars=k.notes==='right'?58:93;
+  const wrapped=notes.flatMap(v=>{const ls=[];let row='';for(const word of v.split(' ')){if(row&&(row+' '+word).length>chars){ls.push(row);row='';}row+=(row?' ':'')+word;}if(row)ls.push(row);return ls;});
+  const nx=k.notes==='right'?199:12,ny=k.notes==='right'?52:244,step=k.notes==='right'?5:3.45;
+  body+=text(nx,ny-6,'BAUTEILE UND ANSCHLÜSSE','bold')+wrapped.map((v,j)=>text(nx,ny+j*step,v,'small')).join('');
+  body+=line(12,k.h-16,62,k.h-16)+text(12,k.h-10,'Kontrolle: 50 mm bei 100 % Druck','small')+text(k.w-39,k.h-10,'Blatt '+(pages.length+i+1)+'/'+(pages.length+jobs.length),'small');
+  const pattern='<defs><pattern id="rail-a" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height="3" style="fill:white;stroke:none"/><path d="M-1,1L1,-1 M0,3L3,0 M2,4L4,2" style="fill:none;stroke:#666;stroke-width:.15"/></pattern><pattern id="rail-b" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height="3" style="fill:white;stroke:none"/><path d="M-1,2L1,4 M0,0L3,3 M2,-1L4,1" style="fill:none;stroke:#666;stroke-width:.15"/></pattern></defs>';
+  const css='text{font:2.6px Arial;fill:#111}.bold{font-size:3.1px;font-weight:bold}.small{font-size:2.5px}.measure{font-size:2.6px}path,line,rect{fill:none;stroke:#111;stroke-width:.22}.wood-a{fill:url(#rail-a);stroke-width:.35}.wood-b{fill:url(#rail-b);stroke-width:.35}.connector{fill:#fff;stroke-width:.35}.axis{stroke-dasharray:4 1 1 1;stroke-width:.14}';
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="'+k.w+'mm" height="'+k.h+'mm" viewBox="0 0 '+k.w+' '+k.h+'" data-rail-section="'+id+'">'+pattern+'<style>'+css+'</style><rect width="'+k.w+'" height="'+k.h+'" style="fill:white;stroke:none"/>'+rect(7,7,k.w-14,k.h-14)+body+'</svg>';
+ }
+ for(const [i,job] of jobs.entries()){
+  const {l}=job,id='S'+(i+1);
+  if(overviewIndex>=0){
+   const svg=out[overviewIndex],origin=constructionPlanOrigin(svg),tag=svg.match(/<g data-view="plan"[^>]*data-scale="([^"]+)"/),s=Number(tag?.[1]);
+   if(s>0){
+    const known=m.components.filter(g=>!g.unresolved),xMin=Math.min(...known.map(g=>g.x)),yMax=Math.max(...known.map(g=>g.y+g.width)),X=v=>origin[0]+(v-xMin)*s,Y=v=>origin[1]+(yMax-v)*s;
+    const lo=l.segments[0][0],hi=l.segments.at(-1)[1],mark=l.horizontal?{x1:X(l.station),y1:Y(lo),x2:X(l.station),y2:Y(hi),direction:'right'}:{x1:X(lo),y1:Y(l.station),x2:X(hi),y2:Y(l.station),direction:'down'};
+    out[overviewIndex]=svg.replace('</svg>',drawingSectionMark(tools,{...mark,id,reference:'Blatt '+(pages.length+i+1),...(l.horizontal?{captionX:X(l.station)+15,captionY:Y(hi)+7}:{captionX:X(lo)+15,captionY:Y(l.station)-5})})+'</svg>');
+   }
+  }
+  out.push(render(job,i));
+ }
+ return out;
+}
+
 // Drawing primitives for shared operations. No product names or project-specific geometry.
 function constructionCornerMarks(tools,{x,y,w,h,size,treatment,corners=[true,true,true,true],hidden=false}){
  const {n,line}=tools,r=Math.min(size||0,w/2,h/2);if(!r||!['chamfer','round'].includes(treatment))return '';
@@ -2869,7 +3000,8 @@ function constructionPages(input,{title=input.title||'Brettkonstruktion',paperLa
  }
  const boreNotes=o.operations.filter(op=>op.type==='bore'&&op.positions?.length&&op.positions.every(pt=>pt.u!==null&&pt.v!==null)).map(op=>'Bauteil '+(o.renderModel.components.findIndex(g=>(g.id==='panel'?'base':g.id)===op.target)+1)+' · '+(op.face==='bottom'?'Unterseite':'Oberseite')+' · Ø '+f(op.diameter)+' × '+f(op.depth)+' tief · U/V: '+op.positions.map(pt=>f(pt.u)+'/'+f(pt.v)).join('; ')+' mm');
  if(boreNotes.length&&pages.length>1&&!(o.renderModel.connections?.length)){const legend=text(24,164,'BOHRMITTEN · U ab Bauteilanfang, V ab linker Querkante; Zuordnung nach Bauteilnummer','small')+boreNotes.slice(0,2).map((note,i)=>text(24,170+i*5,note,'small')).join('');pages[pages.length-1]=pages.at(-1).replace('</svg>',legend+'</svg>');}
- const finalPages=boardGluePages(constructionBoardLabels(pages,input,o.renderModel,svgTools()),o.glue,input.base,svgTools(),{title,status});
+ const labelled=constructionBoardLabels(pages,input,o.renderModel,svgTools());
+ const finalPages=boardRailSectionPages(labelled,o.renderModel,o.glue,svgTools(),{title,status})||boardGluePages(labelled,o.glue,input.base,svgTools(),{title,status});
  return finalPages.map((page,index)=>page.replace(/Blatt \d+\/\d+/, 'Blatt '+(index+1)+'/'+finalPages.length));
 }
 
@@ -3801,7 +3933,13 @@ function boardAssemblyPages(m,{title='Bauteilaufbau',status='Entwurf'}={}, {svgT
   for(const c of m.railConnections.filter(c=>['front','back'].includes(c.edge))){
    const g=known.find(g=>g.id===c.child),a=p.attachments.find(a=>a.id===c.child),above=a.direction==='above',plane=above?p.thickness:0,depth=g.y+g.width/2;
    if(c.type==='round-6'&&c.dowelLength){const low=above?plane-c.panelInsertion:plane-c.railInsertion;side+=rect(SX(low),Y(depth+3),c.dowelLength*es,6*es,'hidden');}
-   else if(c.type==='biscuit'&&c.profile)side+='<ellipse class="hidden" cx="'+n(SX(plane))+'" cy="'+n(Y(depth))+'" rx="'+n(c.profile.width*es/2)+'" ry="'+n(c.profile.length*es/2)+'" fill="none" stroke="#111" stroke-width=".17"/>';
+   else if(c.type==='biscuit'&&c.profile)side+=rect(SX(plane-c.profile.width/2),Y(depth+c.profile.thickness/2),c.profile.width*es,c.profile.thickness*es,'hidden');
+  }
+  // Rails along Y: front sees the narrow connector cross section; side sees its length.
+  for(const c of m.railConnections.filter(c=>['left','right'].includes(c.edge))){
+   const g=known.find(g=>g.id===c.child),a=p.attachments.find(a=>a.id===c.child),above=a.direction==='above',plane=above?p.thickness:0,depth=g.x+g.length/2;
+   if(c.type==='round-6'&&c.dowelLength){const low=above?plane-c.panelInsertion:plane-c.railInsertion;front+=rect(X(depth-3),Z(low+c.dowelLength),6*es,c.dowelLength*es,'hidden');for(const pos of c.positions)side+=rect(SX(low),Y(g.y+pos+3),c.dowelLength*es,6*es,'hidden');}
+   else if(c.type==='biscuit'&&c.profile){front+=rect(X(depth-c.profile.thickness/2),Z(plane+c.profile.width/2),c.profile.thickness*es,c.profile.width*es,'hidden');for(const pos of c.positions)side+='<ellipse class="hidden" cx="'+n(SX(plane))+'" cy="'+n(Y(g.y+pos))+'" rx="'+n(c.profile.width*es/2)+'" ry="'+n(c.profile.length*es/2)+'" fill="none" stroke="#111" stroke-width=".17"/>';}
   }
   frontBody=front+constructionMachining(m,svgTools(),{view:'front',X,Z})+'</g>';
   sideBody=side+constructionMachining(m,svgTools(),{view:'side',SX,Y})+'</g>';
