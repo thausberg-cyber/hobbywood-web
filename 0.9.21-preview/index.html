@@ -51,7 +51,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.15</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.16</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -234,7 +234,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev66.15';
+const APP_VERSION='0.9.21-dev66.16';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -6065,6 +6065,123 @@ function buildCabinet(input={}){
 }
 function cabinetPlan(m){return {cutlist:m.parts.map(v=>({part:v.name,qty:v.quantity,length_mm:v.length,width_mm:v.width,thickness_mm:v.thickness,material:v.material,direction_basis:'unknown',note:(v.note||'')+' Maße aus Korpusbaukasten; Faserrichtung prüfen.'})),steps:[{title:'Bauteile vorbereiten',text:'Zuschnitt und Faserrichtung anhand der bestätigten Zeichnung prüfen.'},{title:'Verbindungen herstellen',text:m.notes.join(' ')},{title:'Probeweise zusammenfügen',text:'Passung und Rechtwinkligkeit prüfen. Erst danach verleimen; durchgesteckte Keilzapfen Nr. 06 bleiben unverleimt.'}]};}
 
+// A4-Detailblatt: ausschließlich aus den bestätigten Korpus-Anschlussmaßen.
+// Keine Änderung an der Konstruktion, Stückliste oder Verbinderverteilung.
+function cabinetCornerDetailPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich prüfen'}={}){
+ const {p,c}=m,D=p.thickness,fmt=cabFmt;
+ if(!m.ok||m.pending.length||!c)return [];
+ const isZink=['finger','dovetail'].includes(c.type);
+ const jobs=[{span:m.topDepth,q:p.cornerData,axes:m.rows.cornerData,label:'Oberboden · beide Ecken'}];
+ if(p.bottomMode==='solid'){
+  const lower={span:m.bottomDepth,q:p.bottomCornerData,axes:m.rows.bottomCornerData,label:'Unterboden · beide Ecken'};
+  const upper=jobs[0];
+  if(Math.abs(upper.span-lower.span)<1e-6&&JSON.stringify(upper.axes)===JSON.stringify(lower.axes)&&JSON.stringify(upper.q)===JSON.stringify(lower.q))upper.label='Ober- und Unterboden · alle vier Ecken';
+  else jobs.push(lower);
+ }
+ if(!isZink&&!jobs.some(v=>v.axes?.length))return [];
+ const E=s=>String(s).replace(/[&<>"]/g,v=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[v]));
+ const n=v=>Number(v.toFixed(4));
+ const line=(a,b,x,y,cls='')=>'<path class="'+cls+'" d="M'+n(a)+' '+n(b)+'L'+n(x)+' '+n(y)+'"/>';
+ const text=(x,y,value,cls='',anchor='start')=>'<text x="'+n(x)+'" y="'+n(y)+'" class="'+cls+'" text-anchor="'+anchor+'">'+E(value)+'</text>';
+ const rect=(x,y,w,h,cls='')=>'<rect x="'+n(x)+'" y="'+n(y)+'" width="'+n(w)+'" height="'+n(h)+'" class="'+cls+'"/>';
+ const poly=points=>'<path class="wood" d="M'+points.map(a=>a.map(n).join(' ')).join('L')+'Z"/>';
+ const tick=(x,y)=>line(x-1,y+1,x+1,y-1,'fine');
+ const dim=(x1,x2,y,o1,o2,label)=>line(x1,o1,x1,y+1,'fine')+line(x2,o2,x2,y+1,'fine')+line(x1,y,x2,y,'fine')+tick(x1,y)+tick(x2,y)+text((x1+x2)/2,y-1.4,label,'measure','middle');
+ const vdim=(a,b,x,o,label)=>line(o,a,x-1,a,'fine')+line(o,b,x-1,b,'fine')+line(x,a,x,b,'fine')+tick(x,a)+tick(x,b)+'<text class="measure" text-anchor="middle" transform="translate('+n(x-1.7)+' '+n((a+b)/2)+') rotate(-90)">'+E(label)+'</text>';
+ const datum=m.profile?(p.referenceEdge==='vorne'?'Vorderkante':'Hinterkante'):'Vorderkante';
+ const scales=[50,20,10,5,2,1,.5,.2,.1,.05,.02,.01,.005,.002];
+ return jobs.filter(v=>isZink||v.axes?.length).map(({span,q,axes,label},idx)=>{
+  const extension=isZink?Math.min(D,12):0;
+  // Full width at the largest fitting preferred scale, also respecting vertical space.
+  const s=scales.find(v=>span*v<=253&&(D+extension)*v<=76)||.002;
+  const scaleLabel=s>=1?fmt(s)+':1':'1:'+fmt(1/s);
+  const x=24,y=67,w=span*s,h=D*s,X=v=>x+v*s,end=x+w;
+  let body=text(12,15,title.length>75?title.slice(0,72)+'…':title,'title')+text(12,22,'KORPUSECKE · '+c.number+' '+c.name,'bold')+text(12,29,label+' · '+status,'small')+text(285,15,'M '+scaleLabel,'bold','end')+line(10,34,287,34,'fine');
+  let notes=[];
+  body+=dim(x,end,46,y,y,fmt(span));
+  if(!isZink){
+   const cy=y+h/2,first=axes[0],last=axes.at(-1),tail=span-last,k=axes.length-1;
+   body+=text(12,39,'Verbinderreihe · Ansicht parallel zur Bauteilkante','bold')+rect(x,y,w,h,'wood')+line(x-2,cy,end+2,cy,'axis');
+   for(const a of axes){
+    const cx=X(a),r=(q.diameter||0)*s/2;
+    if(c.type==='biscuit')body+=rect(cx-q.slotLength*s/2,cy-q.formThickness*s/2,q.slotLength*s,q.formThickness*s,'hole');
+    else body+='<circle cx="'+n(cx)+'" cy="'+n(cy)+'" r="'+n(r)+'" class="hole"/>';
+    body+=line(cx,cy-Math.max(1.5,h/2+1),cx,cy+Math.max(1.5,h/2+1),'axis');
+   }
+   // Short segments use letters, with their exact numerical values in the legend.
+   const leftLabel=first*s>=8?fmt(first):'A',rightLabel=tail*s>=8?fmt(tail):'C';
+   body+=dim(x,X(first),55,y,cy,leftLabel);
+   if(k)body+=dim(X(first),X(last),55,cy,cy,(last-first)*s>=40?k+' × '+fmt(q.spacing)+' = '+fmt(last-first):'B');
+   body+=dim(X(last),end,55,cy,y,rightLabel);
+   body+=vdim(y,cy,x-8,x,h/2>=6?fmt(D/2):'a');
+   body+=vdim(y,y+h,end+8,end,fmt(D));
+   notes=[
+    axes.length+' Verbinder je Eckverbindung · '+(k?k+' gleiche Achsabstände à '+fmt(q.spacing)+' mm':'Einzelverbinder'),
+    'A: erster Achsabstand '+fmt(first)+' mm · '+(k?'B: '+k+' × '+fmt(q.spacing)+' = '+fmt(last-first)+' mm · ':'')+'C: letzter Achsabstand '+fmt(tail)+' mm',
+    'Bezug links: '+datum+' · Bezug oben: äußere Bauteilkante · a: Reihenachse '+fmt(D/2)+' mm ab Oberkante',
+    c.type==='biscuit'?'Fräsung in Projektion: '+fmt(q.slotLength)+' × '+fmt(q.formThickness)+' mm · Tiefe und Gehrung siehe A–A.':c.type==='nail'?'Nagel Ø '+fmt(q.diameter)+' mm · Neigung und Einschlagrichtung siehe Schnitt C–C.':'Verbinder Ø '+fmt(q.diameter)+' mm · Bohr-/Einstecktiefen siehe Schnitt A–A.'
+   ];
+  }else{
+   const root=y+h,base=root+extension*s,points=[[x,base],[x,root]];
+   let count;
+   body+=text(12,39,c.type==='finger'?'Fingerzinken · Gegenstück zur Draufsicht':'Schwalbenschwanzzinken · Schwalbenstück','bold');
+   if(c.type==='finger'){
+    count=Math.round(span/q.pitch);
+    for(let i=0;i<count;i++){
+     const a=i*q.pitch,b=(i+1)*q.pitch;
+     if(i%2===1)points.push([X(a),root],[X(a),y],[X(b),y],[X(b),root]);
+     else points.push([X(b),root]);
+    }
+    points.push([end,base]);body+=poly(points);
+    const label=q.pitch*s>=10?fmt(q.pitch):'e';
+    body+=dim(x,X(q.pitch),55,root,y,label);
+    body+=dim(X(q.pitch),X(2*q.pitch),55,y,y,label);
+    notes=[Math.floor(count/2)+' Finger und '+Math.ceil(count/2)+' Lücken · links beginnt die Teilung mit einer Lücke.',
+     'Teilung e = '+fmt(q.pitch)+' mm · '+count+' × '+fmt(q.pitch)+' = '+fmt(span)+' mm · Zinkentiefe '+fmt(D)+' mm',
+     'Komplementäres Gegenstück (Finger / Lücken vertauscht): '+Math.ceil(count/2)+' Finger und '+Math.floor(count/2)+' Lücken.',
+     'Gezeichnet ist die gesamte Brettbreite; angrenzende Brettfläche nur ausschnittsweise.'];
+   }else{
+    count=q.tails;const cell=span/count,shift=D/q.slope;
+    let intervals=[];
+    for(let i=0;i<count;i++){
+     const a=i*cell+q.pin/2,b=(i+1)*cell-q.pin/2,A=a+shift,B=b-shift;
+     intervals.push({a,b,A,B});
+     points.push([X(A),root],[X(a),y],[X(b),y],[X(B),root]);
+    }
+    points.push([end,root],[end,base]);body+=poly(points);
+    const first=intervals[0],last=intervals.at(-1),rootTail=first.B-first.A,rootGap=q.pin+2*shift,rim=first.A;
+    const dy=base+10,lab=(value,letter)=>value*s>=12?fmt(value):letter;
+    // All root dimensions are represented; for dense divisions use a grouped chain.
+    if(count<=8&&Math.min(rootTail,rootGap,rim)*s>=10){
+     let prior=0;
+     for(const {A,B} of intervals){
+      body+=dim(X(prior),X(A),dy,root,root,fmt(A-prior));
+      body+=dim(X(A),X(B),dy,root,root,fmt(B-A));prior=B;
+     }
+     body+=dim(X(prior),end,dy,root,root,fmt(span-prior));
+    }else{
+     body+=dim(x,X(first.A),dy,root,root,lab(rim,'R'));
+     body+=dim(X(first.A),X(first.B),dy,root,root,lab(rootTail,'S'));
+     if(count>1)body+=dim(X(first.B),X(intervals[1].A),dy,root,root,lab(rootGap,'Z'));
+     body+=dim(X(last.B),end,dy,root,root,lab(rim,'R'));
+    }
+    const leaderX=X(last.b-shift/2),leaderY=(y+root)/2;
+    body+=line(leaderX,leaderY,leaderX-5,y-7,'fine')+line(leaderX-5,y-7,leaderX-13,y-7,'fine')+text(leaderX-14,y-6,'1:'+fmt(q.slope),'small','end');
+    notes=[count+' Schwalben · Flankenneigung 1:'+fmt(q.slope)+' · Zinkentiefe '+fmt(D)+' mm',
+     'Am Zinkengrund: R (Rand) je '+fmt(rim)+' mm · S (Schwalbe) '+fmt(rootTail)+' mm · Z (Zwischenraum) '+fmt(rootGap)+' mm',
+     'Teilung: '+count+' Schwalben und '+(count-1)+' Zwischenräume, dazu beide Randstücke. Maße gelten jeweils am Zinkengrund.',
+     'Breites Ende: Schwalbe '+fmt(cell-q.pin)+' mm · Zwischenraum '+fmt(q.pin)+' mm · Rand je '+fmt(q.pin/2)+' mm.'];
+   }
+   body+=vdim(y,root,x-8,x,fmt(D));
+  }
+  body+=line(10,163,287,163,'fine');
+  notes.forEach((v,i)=>body+=text(12,170+i*5,v,i===0?'bold':'small'));
+  body+=line(10,195,287,195,'fine')+text(12,202,'Maße in mm · Originalgröße 100 % · Detail zur Korpusecke','small')+text(285,202,'Blatt '+(idx+2),'small','end');
+  const css='text{font:3px Arial,sans-serif;fill:#15191b;stroke:none}.title{font-size:4.5px;font-weight:bold}.bold{font-size:3.3px;font-weight:bold}.small{font-size:2.7px}.measure{font-size:2.7px}path,rect,circle{fill:none;stroke:#19232b;stroke-width:.35;stroke-linejoin:round}.wood{fill:#fff}.fine{stroke-width:.18}.axis{stroke-dasharray:4 1 1 1;stroke-width:.18}.hole{stroke-width:.27}.sheet{fill:white;stroke:none}';
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210" role="img" aria-label="'+E('Korpusecke · '+c.name+' · '+label)+'"><style>'+css+'</style><rect class="sheet" width="297" height="210"/>'+body+'</svg>';
+ });
+}
+
 // Millimeter-SVG. Schraffur nur in Materialquerschnitten; Verbinder ungeschraffiert.
 function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich prüfen'}={}){
  if(!m.baseOK)throw Error('Grundmaße fehlen.');
@@ -6120,7 +6237,7 @@ function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich 
  }
  if(m.panels.bottom){const q=m.panels.bottom;out+=rect(fx+(D-q.insertion+q.clearance)/s,fy+fh-(q.offset+q.thickness)/s,(W-2*D+2*q.insertion-2*q.clearance)/s,q.thickness/s,'outline');out+=rect(sx,fy+fh-(q.offset+q.thickness)/s,fz,q.thickness/s,'hidden');}
  // Finger/tail outlines along the depth on the top and side projections.
- if(['finger','dovetail'].includes(c.type)&&!m.pending.some(v=>v.startsWith('Korpusecke'))){const q=p.cornerData;let intervals=[];if(c.type==='finger'){const n=Math.round(Z/q.pitch);for(let i=0;i<n;i+=2)intervals.push([i*q.pitch,Math.min(Z,(i+1)*q.pitch)]);}else{const cell=Z/q.tails;for(let i=0;i<q.tails;i++){const a=i*cell+q.pin/2,b=(i+1)*cell-q.pin/2;intervals.push([a,b]);}}
+ if(['finger','dovetail'].includes(c.type)&&!m.pending.some(v=>v.startsWith('Korpusecke'))){const q=p.cornerData;let intervals=[];if(c.type==='finger'){const n=Math.round(m.topDepth/q.pitch);for(let i=0;i<n;i+=2)intervals.push([i*q.pitch,Math.min(m.topDepth,(i+1)*q.pitch)]);}else{const cell=m.topDepth/q.tails;for(let i=0;i<q.tails;i++){const a=i*cell+q.pin/2,b=(i+1)*cell-q.pin/2;intervals.push([a,b]);}}
   for(const [a,b]of intervals){const k=c.type==='dovetail'?D/q.slope:0;out+=poly([[fx,sy+a/s],[fx+t,sy+(a+k)/s],[fx+t,sy+(b-k)/s],[fx,sy+b/s]],'outline');out+=poly([[fx+fw,sy+a/s],[fx+fw-t,sy+(a+k)/s],[fx+fw-t,sy+(b-k)/s],[fx+fw,sy+b/s]],'outline');}
  }
  const projected=(def,key,y)=>{if(!def||!m.rows[key])return;const q=p[key],half=def.type==='biscuit'?q.slotLength/2:def.type==='tenon'?q.tenonWidth/2:q.diameter/2;
@@ -6153,21 +6270,21 @@ function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich 
   if(c.type==='angle'&&q.leg>0)a+=dim(D/2,D/2+q.leg,D/2+q.leg+6,D/2,cabFmt(q.leg));
   return a;
  }
- out+=text(174,30,'A–A · KORPUSECKE  M 1:1','bold');if(['finger','dovetail'].includes(c.type))out+=text(174,35,'Schnitt im Randzinken; Teilung siehe Draufsicht','small');
+ out+=text(174,30,'A–A · KORPUSECKE  M 1:1','bold');if(['finger','dovetail'].includes(c.type))out+=text(174,35,'Schnitt im Randzinken; Teilung siehe Detailblatt','small');
  out+=`<g transform="translate(${ox},${oy})">${cornerDetail()}</g>`;
- function spec(def,q,key){const f=cabFmt,lines=[];
+ function spec(def,q,key){const f=cabFmt,lines=[],span=key==='cornerData'?m.topDepth:Z;
   if(def.type==='dowel')lines.push(`Dübel Ø${f(q.diameter)} × ${f(q.length)}`,`Fläche ${f(q.faceDepth)}; Kante ${f(q.length-q.faceDepth+q.air)}`,`Einstecklänge Kante ${f(q.length-q.faceDepth)}; Luft ${f(q.air)}`);
   if(def.type==='nail')lines.push(`Nagel Ø${f(q.diameter)} × ${f(q.length)}`,`Wechselweise ±${f(q.nailAngle)}° zur Senkrechten`,`Endabstände ${f(q.first)} / ${f(Z-(m.rows[key]?.at(-1)||0))}`,`Nagelabstand ${f(q.spacing)} (Richtwert 60–80)`,...(def.rebate?[`Falz ${f(q.rebateDepth)} tief × ${f(D)} breit`]:[]),...(def.housed?[`Nut ${f(D/3)} tief × ${f(D)} breit`]:[]));
-  if(def.type==='finger')lines.push(`Teilung e = ${f(q.pitch)}; ${f(Z/q.pitch)} Teilungen`,`Zinkenlänge ${f(D)}; Tiefe ${f(Z)}`);
-  if(def.type==='dovetail')lines.push(`${f(q.tails)} Schwalben; Neigung 1:${f(q.slope)}`,`Zinkenbasis ${f(q.pin)}; Rand je ${f(q.pin/2)}`,`Schwalbenbasis ${f(Z/q.tails-q.pin)}; Länge ${f(D)}`);
+  if(def.type==='finger')lines.push(`Teilung e = ${f(q.pitch)}; ${f(span/q.pitch)} Teilungen`,`Zinkenlänge ${f(D)}; Tiefe ${f(span)}`);
+  if(def.type==='dovetail')lines.push(`${f(q.tails)} Schwalben; Neigung 1:${f(q.slope)}`,`Zwischenraum am breiten Ende ${f(q.pin)}`,`Schwalbe am breiten Ende ${f(span/q.tails-q.pin)}; Tiefe ${f(D)}`);
   if(def.type==='angle')lines.push(`Winkeldübel Ø${f(q.diameter)}; Schenkel ${f(q.leg)}`,`Achsradius ${f(q.radius)}; Luft ${f(q.air)}`);
   if(def.type==='spline')lines.push(`Feder ${f(q.federThickness)} dick × ${f(q.faceInsertion+q.edgeInsertion)} breit`,`Einstecklängen ${f(q.faceInsertion)} / ${f(q.edgeInsertion)}`,`Nuttiefen ${f(q.faceInsertion+q.air)} / ${f(q.edgeInsertion+q.air)}; Luft ${f(q.air)}`);
   if(def.type==='biscuit')lines.push(`Formfeder ${f(q.formLength)} × ${f(q.formWidth)} × ${f(q.formThickness)}`,`Fräsung L ${f(q.slotLength)} × T ${f(q.slotDepth)}`,`Nutbreite ${f(q.formThickness)}; Luft gesamt ${f(2*q.slotDepth-q.formWidth)}`);
   if(def.type==='angle_spline'&&p.corner==='angle_plastic')lines.push('Häfele 260.18.916 · 90°');
   if(def.type==='angle_spline')lines.push(`Winkelfeder ${f(q.federThickness)} dick; Schenkel ${f(q.leg)}`,`Nut ${f(q.leg+q.air)} tief; Luft ${f(q.air)}`);
   if(def.type==='tenon')lines.push(`Zapfen ${f(q.tenonWidth)} breit × ${f(q.tenonThickness)} dick`,`Durchstecklänge ${f(D)}${def.tusk?' + Überstand '+f(q.projection):'; außen bündig'}`,`Rand vorne ${f(q.first-q.tenonWidth/2)}; hinten ${f(Z-(m.rows[key]?.at(-1)||0)-q.tenonWidth/2)}`,...(def.wedged?[`Keilschlitz ${f(q.wedgeSlotWidth)} × ${f(q.wedgeSlotDepth)}`,`Keil ${f(q.wedgeWidth)} breit × ${f(q.wedgeLength)} lang`]:[]),...(def.tusk?[`Keilloch ab außen ${f(q.holeOffset)}; Breite ${f(q.wedgeWidth)}`,`Keil Länge ${f(q.wedgeLength)}; unverleimt / lösbar`]:[]));
-  if(key==='cornerData'&&!!m.profile)lines.push('Unterboden: '+(m.rows.bottomCornerData||[]).map(f).join(' / ')+' mm');
-  if('count'in q&&def.type!=='nail')lines.push(`${f(q.count)} Stück je ${key==='cornerData'&&!!m.profile?'oberem ':''}Anschluss; ab ${m.profile?(p.referenceEdge==='vorne'?'vorn':'hinten'):'vorn'}:`,(m.rows[key]||[]).map(f).join(' / ')+' mm');
+  if(key==='cornerData'&&!!m.profile&&m.rows.bottomCornerData?.length)lines.push('Unterboden: siehe Detailblatt');
+  if('count'in q&&def.type!=='nail')lines.push(`${f(q.count)} Stück je ${key==='cornerData'&&!!m.profile?'oberem ':''}Anschluss`,key==='cornerData'?'Reihenbemaßung: Detailblatt':(m.rows[key]||[]).map(f).join(' / ')+' mm');
   if(def.type==='nail')lines.push(`${f(q.count)} Nägel je Anschluss`);return lines;
  }
  const labelLines=(def,q,key,x,y)=>{let a='',i=0;for(const v of spec(def,q,key)){const words=v.split(' ');let row='';for(const word of words){if((row+' '+word).trim().length>35&&row){a+=text(x,y+i++*3.4,row,'small');row=word;}else row=(row+' '+word).trim();}a+=text(x,y+i++*3.4,row,'small');}return a;};
@@ -6230,7 +6347,7 @@ function cabinetPages(m,{title='Korpuskonstruktion',status='Entwurf · fachlich 
  }}
  out+=line(10,197,287,197,'fine')+text(10,201,'Maße in mm · Eckschnitte 1:1 · '+(p.through==='vertical'?'Seiten':'Böden')+' durchgehend · Rückwand: '+CABINET_PANEL_NAMES[p.backMode]+' · Boden: '+CABINET_PANEL_NAMES[p.bottomMode],'small')+text(10,205,m.geometry.back&&p.referenceEdge==='vorne'&&m.profile?'Rückwand '+cabFmt(m.geometry.back.angle)+'° geneigt · Dicke normal zur Fläche · Ober-/Unterkante schräg anschneiden · fachlich prüfen.':'Konstruktionsentwurf · Eingabemaße und Verbindungskonturen vor Fertigung fachlich prüfen.','small');
  const style=`text{font:3px Arial,sans-serif;fill:#15191b;stroke:none}.title{font-size:4.6px;font-weight:bold}.bold{font-weight:bold;font-size:3px}text.small{font-size:2.5px}.measure{font-size:2.7px;text-anchor:middle}path,rect,circle{fill:none;stroke:#19232b;stroke-width:.35;stroke-linejoin:round}.fine,.dimension{stroke-width:.18}.wood{fill:url(#hatch)}.wood2{fill:url(#hatch2)}.outline{fill:none}.hidden{stroke-dasharray:2,1;stroke-width:.2}.axis{stroke-dasharray:4,1,1,1;stroke-width:.18}.bore{fill:white;stroke-dasharray:1.5,.7;stroke-width:.2}.connector{fill:#f4ebd6;stroke:#59482f;stroke-width:.3}.angleConnector{fill:none;stroke:#8a7350;stroke-linejoin:round}.nail{stroke-width:.55}.nailInfoBox{fill:#f5f5f5;stroke:#aaa;stroke-width:.18}.break{stroke-width:.3;fill:none}`;
- return [`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><defs><pattern id="hatch" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M-1,1L1,-1M0,3L3,0M2,4L4,2" stroke="#888" stroke-width=".16"/></pattern><pattern id="hatch2" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0,0L3,3M-1,2L1,4M2,-1L4,1" stroke="#888" stroke-width=".16"/></pattern></defs><style>${style}</style><rect width="297" height="210" style="fill:white;stroke:none"/>${out}</svg>`];
+ return [`<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210"><defs><pattern id="hatch" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M-1,1L1,-1M0,3L3,0M2,4L4,2" stroke="#888" stroke-width=".16"/></pattern><pattern id="hatch2" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0,0L3,3M-1,2L1,4M2,-1L4,1" stroke="#888" stroke-width=".16"/></pattern></defs><style>${style}</style><rect width="297" height="210" style="fill:white;stroke:none"/>${out}</svg>`,...cabinetCornerDetailPages(m,{title,status})];
 }
 
 function cabinetStartNew(){resetProject('develop');current.title='Meine Korpuskonstruktion';current.customTitle=current.title;current.woodDrawingDraft=cabinetNew();renderRecord();show('record');switchTab('woodDrawingPane');framePersistDraft();}
@@ -6262,7 +6379,7 @@ function cabinetPreview(){const m=buildCabinet(wdParams()),saved=current.woodDra
  $('#wdChecks').innerHTML=[...m.errors.map(s=>'Bitte korrigieren: '+s),...m.pending.map(s=>'Offen: '+s),...m.warnings].map(s=>'<p class="notice">'+esc(s)+'</p>').join('')+'<p>'+esc(unsaved?'Entwurf · noch nicht übernommen':wdStateText())+'</p>';
  $('#wdSave').disabled=!m.baseOK||m.errors.length>0||wdSaving;$('#wdPrint').disabled=!cabinetReady()||!$('#wdConfirmed').checked||unsaved;
  $('#cabinetParts').innerHTML=m.parts.length?'<h4>Zuschnittmaße · L × B × D (mm)</h4>'+m.parts.map(v=>'<p>'+esc(v.quantity+' × '+v.name+': '+[v.length,v.width,v.thickness].map(cabFmt).join(' × '))+'</p>').join(''):'';
- $('#wdPreview').innerHTML=m.ok&&!m.pending.length?cabinetPages(m,{title:wdTitle(),status:unsaved?'Entwurf · noch nicht übernommen':wdStateText()}).map(svg=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Korpus mit Ansichten und bemaßten Schnitten auf einem A4-Blatt" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'<p>Nach vollständigen und widerspruchsfreien Maßen erscheint die Zeichnung.</p>';
+ $('#wdPreview').innerHTML=m.ok&&!m.pending.length?cabinetPages(m,{title:wdTitle(),status:unsaved?'Entwurf · noch nicht übernommen':wdStateText()}).map(svg=>'<div class="wdSheet"><img class="wdDrawingImage" alt="Korpus-Werkzeichnung mit Ansichten, Schnitten und Verbindungsdetails" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'"></div>').join(''):'<p>Nach vollständigen und widerspruchsfreien Maßen erscheint die Zeichnung.</p>';
 }
 async function cabinetSave(){
  if(wdSaving)return;const project=current,m=buildCabinet(wdParams(project));if(!m.ok)return;
