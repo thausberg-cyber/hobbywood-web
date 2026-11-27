@@ -49,10 +49,11 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 .cpFields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cpFields label{font-size:13px;font-weight:700}.cpFields input{margin-top:5px}.cpTable{overflow:auto}.cpTable table{min-width:610px}.cpTable input{min-width:65px;padding:8px}.cpTable td:first-child{min-width:150px}.cpActions{display:flex;gap:8px;flex-wrap:wrap}.cpActions button{width:auto;min-height:44px}.cpConfirm{display:flex;gap:10px;align-items:center;margin:16px 0}.cpConfirm input{width:24px;height:24px;flex:none}.cpDrawing svg{width:100%;height:auto;background:white;border:1px solid var(--line)}.cpRemove{min-height:44px;padding:8px!important}#cpMessage{font-weight:700}@media(max-width:460px){.cpFields{grid-template-columns:1fr}}
 .wdFields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.wdField{font-size:13px}.wdField span{display:block;margin-bottom:5px}.wdField input,.wdField select{width:100%;min-width:0}.wdConfirm{display:flex;align-items:flex-start;gap:10px;margin:16px 0}.wdConfirm input{width:20px;flex:none}.wdPreview{margin-top:18px}.wdSheet{background:#fff;border:1px solid #ccc;margin:15px 0}.wdSheet .wdDrawingImage{display:block;width:100%;height:auto}.wdSheet text{color:#111}details summary{cursor:pointer;padding:12px 0;font-weight:700}@media(max-width:480px){.wdFields{grid-template-columns:1fr}}
 .frameIssue{margin:10px 0}.frameIssueButton{display:flex;align-items:center;gap:12px;justify-content:space-between;width:100%;min-height:48px;text-align:left;padding:12px 14px;margin:0;border:1px solid #c08b7e;background:var(--danger);color:var(--ink);font-weight:650;line-height:1.4;white-space:normal;overflow-wrap:anywhere}.frameIssueButton.openIssue{background:var(--warn);border-color:#c6a65d}.frameIssueButton:hover{border-color:var(--accent)}.frameIssueButton:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.frameIssueButton small{display:block;color:#5a5149;font-size:12px;margin-top:5px}.frameIssueButton .jumpArrow{flex:none;font-size:20px}.frameIssueAlternatives{display:flex;flex-wrap:wrap;gap:4px 8px;margin-top:4px}.frameIssueAlternatives button{font-size:12px;margin:0;padding:8px 10px;min-height:40px}.frameErrorFocus{outline:3px solid #b44a32!important;outline-offset:3px;background:#fff4e8!important;scroll-margin-block:96px}
+.undoToast{position:fixed;left:18px;bottom:calc(144px + env(safe-area-inset-bottom));max-width:min(76vw,360px);z-index:41;border:1px solid var(--line);border-radius:12px;background:var(--ok);padding:10px 13px;font-size:13px;box-shadow:var(--shadow);pointer-events:none}.backFloat:disabled{opacity:.5;cursor:default}
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.22</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.23</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -207,7 +208,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </section>
 </main>
 <dialog id="photoDialog"><div class="dialogbar"><button id="closeDialog">Schließen</button></div><img id="dialogImg" alt="Projektfoto"></dialog>
-<button id="backFloatBtn" class="backFloat hiddenBack" type="button" title="Zur vorherigen Ansicht" aria-label="Zur vorherigen Ansicht">‹ Zurück</button>
+<div id="undoStatus" class="undoToast hidden" role="status" aria-live="polite"></div><button id="backFloatBtn" class="backFloat hiddenBack" type="button" title="Letzte Projektänderung rückgängig machen" aria-label="Letzte Projektänderung rückgängig machen" disabled>↶ Rückgängig</button>
 <button id="speechFloatBtn" class="secondary speechFloat hiddenSpeech" type="button" title="Sprache an Cursorposition einfügen" aria-label="Sprache an Cursorposition einfügen">🎙</button>
 <script>
 const API='https://look-n-build-dev-0921.onrender.com';
@@ -235,7 +236,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev66.22';
+const APP_VERSION='0.9.21-dev66.23';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -244,7 +245,95 @@ let pendingTalkPhotos=[];
 let pendingSketch=null, sketchReturnScreen='record';
 let pendingImport=null;
 let profile={skill:'Fortgeschritten',tools:{}};
-let viewHistory=[];
+// Undo is scoped to the open project and this browser session. It does not
+// rewind the browser or delete projects. A field edit is one action.
+let undoSession={id:null,stack:[],pending:null,field:null},undoRunning=false,undoToastTimer=null;
+const UNDO_LIMIT=20;
+function undoReset(id=null){undoSession={id,stack:[],pending:null,field:null};}
+function undoEnsure(project=current){if(undoSession.id!==project?.id)undoReset(project?.id||null);return undoSession;}
+function undoClone(project){
+ // Large image strings are immutable; keep their references rather than
+ // serializing the image payload for every keystroke group.
+ const {photos=[],sketches=[],...state}=project,clone=v=>typeof structuredClone==='function'?structuredClone(v):JSON.parse(JSON.stringify(v)),image=x=>{const {dataUrl,...meta}=x;return {...clone(meta),...(dataUrl!==undefined?{dataUrl}:{})};};
+ return {...clone(state),photos:photos.map(image),sketches:sketches.map(image)};
+}
+function undoFingerprint(project){
+ const {updatedAt,frameSaveError,constructionSaveError,...data}=project;
+ return JSON.stringify(Object.keys(data).sort().map(k=>[k,data[k]]),(k,v)=>k==='dataUrl'&&typeof v==='string'?v.length+':'+v.slice(0,60)+':'+v.slice(-60):v);
+}
+function undoSeal(project=current){
+ const u=undoEnsure(project),entry=u.pending;
+ if(entry&&entry.signature!==undoFingerprint(project)){u.stack.push(entry);if(u.stack.length>UNDO_LIMIT)u.stack.shift();}
+ u.pending=null;u.field=null;return u;
+}
+function undoCheckpoint(label,project=current){
+ if(!project?.id||undoRunning)return;
+ const u=undoSeal(project);
+ u.pending={label,snapshot:undoClone(project),signature:undoFingerprint(project)};
+}
+function undoCanUndo(project=current){
+ const u=undoEnsure(project);
+ return !!(u.stack.length||u.pending&&(u.pending.signature!==undoFingerprint(project)||u.field?.isConnected));
+}
+function undoLatestLabel(project=current){
+ const u=undoEnsure(project);
+ return u.pending&&(u.pending.signature!==undoFingerprint(project)||u.field?.isConnected)?u.pending.label:u.stack.at(-1)?.label;
+}
+function undoIsBusy(){return undoRunning||busy||reconstructionBusy||wdSaving;}
+function undoActionLabel(el){
+ const label=el.closest?.('label')?.querySelector('span')?.textContent?.trim()||el.closest?.('label')?.firstChild?.textContent?.trim();
+ return (label||el.getAttribute?.('aria-label')||el.textContent?.trim()||'Eingabe').slice(0,90);
+}
+function undoRecordScreen(){return $('.screen.active')?.id==='record'&&!!current?.id;}
+function undoAfterEvent(){queueMicrotask(updateBackFloatVisibility);}
+function undoFieldEvent(e){
+ const el=e.target;if(!undoRecordScreen()||undoRunning||busy||reconstructionBusy||!el?.matches?.('input,select,textarea')||!el.closest('#record'))return;
+ // Unsubmitted Talk text and project metadata have native text undo; they
+ // become project changes only when the corresponding command is executed.
+ if(el.id==='chatInput'||el.id==='projectTitleEdit'||el.id==='projectDescriptionEdit'||el.classList.contains('openAnswer')||el.type==='checkbox'&&el.id==='wdConfirmed')return;
+ // Confirmation, independent UI controls and search boxes are not actions.
+ if(!el.closest('#woodDrawingBox,#cutPlanner,#overview,#purchased')&&el.type!=='file')return;
+ const u=undoEnsure();
+ if(u.field!==el){undoCheckpoint(undoActionLabel(el));u.field=el;}
+ if(e.type==='change')u.field=null;
+ undoAfterEvent();
+}
+function undoClickEvent(e){
+ if(!undoRecordScreen()||undoIsBusy())return;
+ const b=e.target.closest?.('button');if(!b||!b.closest('#record')||b.disabled)return;
+ if(['wdSave','frameRetry','cabinetRetry','cConfirm','saveProject','exportCurrentProject'].includes(b.id)){undoSeal();undoAfterEvent();return;}
+ if(b.matches('.tab,[data-frame-error-target],[data-talk-drawing],[data-c-go-talk],[data-c-go-drawing],[data-c-discuss],[data-board-flow-edge]')||['newProject','ensembleBack','speechBtn'].includes(b.id))return;
+ if(/pdf|print|download|preview|retry/i.test(b.id))return;
+ undoCheckpoint(undoActionLabel(b));undoAfterEvent();
+}
+async function undoRestore(){
+ if(!undoRecordScreen()||undoIsBusy())return;
+ // Commit a focused field's change event before deciding which entry to undo.
+ if(document.activeElement?.matches?.('input,select,textarea'))document.activeElement.blur();
+ const project=current,u=undoSeal(project),entry=u.stack.at(-1);if(!entry){updateBackFloatVisibility();return;}
+ const pane=$('.tab.on')?.dataset.pane||'woodDrawingPane',chatText=$('#chatInput')?.value||'',record=$('#record'),header=document.querySelector('header'),priorHeaderInert=header?.inert;
+ undoRunning=true;record.inert=true;if(header)header.inert=true;updateBackFloatVisibility();
+ let saved=false;
+ try{
+  if(!await cpFlushDraft(project))throw Error('Noch offene Materialeingaben konnten nicht gesichert werden.');
+  await Promise.allSettled([cSaveQueues.get(project.id),frameSaveQueues.get(project.id)].filter(Boolean));
+  await projectWriteQueue.catch(()=>{});
+  if(current!==project)throw Error('Das Projekt wurde inzwischen gewechselt.');
+  const restored=undoClone(entry.snapshot);restored.updatedAt=new Date().toISOString();
+  await dbPutProject(restored);saved=true;
+  if(current!==project)throw Error('Projekt wurde gewechselt. Der frühere Stand wurde gespeichert.');
+  current=restored;u.stack.pop();u.pending=null;u.field=null;
+  renderRecord();switchTab(pane);
+  if($('#chatInput')){$('#chatInput').value=chatText;autoGrowChatInput();}
+  const status=$('#undoStatus');if(status){status.textContent='Rückgängig: '+entry.label;status.classList.remove('hidden');clearTimeout(undoToastTimer);undoToastTimer=setTimeout(()=>status.classList.add('hidden'),3500);}
+  await updateSaved();
+ }catch(e){alert(saved?'Der frühere Stand wurde gespeichert. Bitte Projekt neu öffnen: '+e.message:'Rückgängig nicht möglich: '+e.message+' Der bisherige Stand bleibt erhalten.');}
+ finally{record.inert=false;if(header)header.inert=priorHeaderInert;undoRunning=false;updateBackFloatVisibility();}
+}
+
+document.addEventListener('input',undoFieldEvent,true);
+document.addEventListener('change',undoFieldEvent,true);
+document.addEventListener('click',undoClickEvent,true);
 const transientScreens=new Set(['analyzing','reconstructing','sketchWorking','ideaConstructionReview']);
 const baseTools=['Handkreissäge','Tischkreissäge','Kappsäge','Stichsäge','Bandsäge','Oberfräse','Domino-Fräse','Flachdübelfräse','Standbohrmaschine','Drechselbank','Abricht-/Dickenhobel','Exzenterschleifer'];
 const newId=()=>crypto.randomUUID?crypto.randomUUID():'p-'+Date.now()+'-'+Math.random().toString(16).slice(2);
@@ -255,24 +344,12 @@ function updateMainNav(id){
   Object.entries(items).forEach(([key,on])=>{const el=$('#'+key);if(el)el.classList.toggle('on',on)});
   const talk=$('#navTalk');if(talk)talk.disabled=!current?.id;
 }
-function updateBackFloatVisibility(){const btn=$('#backFloatBtn'),active=$('.screen.active')?.id;if(!btn)return;btn.classList.toggle('hiddenBack',active==='start'||viewHistory.length===0)}
+function updateBackFloatVisibility(){const btn=$('#backFloatBtn');if(!btn)return;const visible=undoRecordScreen();btn.classList.toggle('hiddenBack',!visible);if(!visible)return;const available=undoCanUndo(),label=undoLatestLabel();btn.disabled=undoIsBusy()||!available;btn.title=label?'Rückgängig: '+label:'Noch keine Änderung zum Rückgängigmachen';btn.setAttribute('aria-label',btn.title);}
 function show(id,{fromBack=false}={}){
-  const currentId=$('.screen.active')?.id;
-  if(!fromBack&&currentId&&currentId!==id&&!transientScreens.has(currentId)){
-    if(viewHistory[viewHistory.length-1]!==currentId)viewHistory.push(currentId);
-    if(viewHistory.length>30)viewHistory.shift();
-  }
   $$('.screen').forEach(s=>s.classList.remove('active'));
   $('#'+id).classList.add('active');
   document.body.classList.toggle('record-open',id==='record');
   updateMainNav(id);updateSpeechFloatVisibility();updateBackFloatVisibility();window.scrollTo(0,0)
-}
-function goBackView(){
-  while(viewHistory.length){
-    const id=viewHistory.pop();
-    if(id&&$('#'+id)&&id!==$('.screen.active')?.id){show(id,{fromBack:true});return}
-  }
-  show('start',{fromBack:true});
 }
 
 // Shared pure planning rules. Browser copy is embedded verbatim by build.py.
@@ -430,7 +507,7 @@ function closingMessage(snapshot){
 
 
 function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function resetProject(mode='copy'){current={id:newId(),title:'',mode,photos:[],sketches:[],purchasedParts:[],knowledge:'',analysis:null,reconstruction:null,chat:[],round:0,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};pendingTalkPhotos=[];pendingSketch=null;updateMainNav(document.querySelector('.screen.active')?.id||'start')}
+function resetProject(mode='copy'){undoReset();current={id:newId(),title:'',mode,photos:[],sketches:[],purchasedParts:[],knowledge:'',analysis:null,reconstruction:null,chat:[],round:0,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};pendingTalkPhotos=[];pendingSketch=null;updateMainNav(document.querySelector('.screen.active')?.id||'start')}
 async function fileToDataUrl(file){const u=URL.createObjectURL(file);try{const img=new Image();await new Promise((ok,no)=>{img.onload=ok;img.onerror=()=>no(Error('Bild konnte nicht gelesen werden: '+file.name));img.src=u});const max=1800,s=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.naturalWidth*s));c.height=Math.max(1,Math.round(img.naturalHeight*s));c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.88)}finally{URL.revokeObjectURL(u)}}
 async function addFiles(files,target=current.photos){for(const f of [...files])target.push({id:newId(),name:f.name,dataUrl:await fileToDataUrl(f),addedAt:new Date().toISOString()})}
 function gallery(el,arr){if(!el)return;el.innerHTML=arr.map((p,i)=>`<img src="${p.dataUrl}" data-i="${i}" alt="Projektfoto ${i+1}">`).join('');el.querySelectorAll('img').forEach(img=>img.onclick=()=>openPhoto(arr[+img.dataset.i].dataUrl))}
@@ -473,7 +550,7 @@ async function projectForUi(project){
 }
 async function dbWriteProject(project){const db=await openDb(),stored=await projectForStorage(project);return new Promise((resolve,reject)=>{const tx=db.transaction(PROJECT_STORE,'readwrite');tx.objectStore(PROJECT_STORE).put(stored);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{const e=tx.error;db.close();reject(e)}})}
 let projectWriteQueue=Promise.resolve();
-function dbPutProject(project){if(retiredWardrobeProject(project))return Promise.reject(new Error('Das Garderoben-Testprojekt wurde verworfen. Bitte ein neues Projekt beginnen.'));if(project.ensembleParent)return ensembleSaveChild(project);const snapshot=typeof structuredClone==='function'?structuredClone(project):JSON.parse(JSON.stringify(project));const task=projectWriteQueue.catch(()=>{}).then(()=>dbWriteProject(snapshot));projectWriteQueue=task;return task}
+function dbPutProject(project){if(retiredWardrobeProject(project))return Promise.reject(new Error('Das Garderoben-Testprojekt wurde verworfen. Bitte ein neues Projekt beginnen.'));if(project.ensembleParent)return ensembleSaveChild(project);const snapshot=typeof structuredClone==='function'?structuredClone(project):JSON.parse(JSON.stringify(project));const task=projectWriteQueue.catch(()=>{}).then(()=>dbWriteProject(snapshot));projectWriteQueue=task;task.then(()=>setTimeout(updateBackFloatVisibility,0),()=>setTimeout(updateBackFloatVisibility,0));return task}
 async function dbGetProject(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(PROJECT_STORE,'readonly'),req=tx.objectStore(PROJECT_STORE).get(id);req.onsuccess=async()=>{db.close();try{resolve(req.result?await projectForUi(req.result):null)}catch(e){reject(e)}};req.onerror=()=>{const e=req.error;db.close();reject(e)}})}
 async function dbGetProjects(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(PROJECT_STORE,'readonly'),req=tx.objectStore(PROJECT_STORE).getAll();req.onsuccess=()=>{const arr=req.result||[];db.close();arr.sort((a,b)=>new Date(b.updatedAt||0)-new Date(a.updatedAt||0));resolve(arr)};req.onerror=()=>{const e=req.error;db.close();reject(e)}})}
 async function dbDeleteProject(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(PROJECT_STORE,'readwrite');tx.objectStore(PROJECT_STORE).delete(id);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{const e=tx.error;db.close();reject(e)}})}
@@ -604,7 +681,7 @@ async function renderProjects(){
     $('#projectList').innerHTML='<div class="danger notice">Projektablage konnte nicht geöffnet werden.</div>';
   }
 }
-async function loadProject(id){try{if(!await cpFlushDraft(current))return alert('Rohmaterial-Eingaben konnten noch nicht gespeichert werden. Bitte erst erneut speichern.');const p=await dbGetProject(id);if(!p)return;current=p;current.sketches=current.sketches||[];current.purchasedParts=current.purchasedParts||[];pendingTalkPhotos=[];renderRecord();show('record');switchTab('talkPane')}catch(e){alert('Projekt konnte nicht geöffnet werden: '+e.message)}}
+async function loadProject(id){try{if(!await cpFlushDraft(current))return alert('Rohmaterial-Eingaben konnten noch nicht gespeichert werden. Bitte erst erneut speichern.');const p=await dbGetProject(id);if(!p)return;undoReset(p.id);current=p;current.sketches=current.sketches||[];current.purchasedParts=current.purchasedParts||[];pendingTalkPhotos=[];renderRecord();show('record');switchTab('talkPane')}catch(e){alert('Projekt konnte nicht geöffnet werden: '+e.message)}}
 
 function getTesterId(){return ($('#testerId')?.value||localStorage.getItem(TESTER_ID)||'').trim()}
 function rememberTesterId(v){try{localStorage.setItem(TESTER_ID,String(v||'').trim())}catch{}}
@@ -757,7 +834,7 @@ async function goStart(){
 async function goProfile(){await loadProfile();show('profile')}
 async function goProjects(){const ti=$('#testerId');if(ti)ti.value=localStorage.getItem(TESTER_ID)||'';await renderProjects();await renderTesterProjects();show('projects')}
 function goTalk(){if(!current?.id)return;renderRecord();show('record');switchTab('talkPane')}
-$('#navStart').onclick=()=>{viewHistory=[];goStart()};
+$('#navStart').onclick=()=>goStart();
 $('#navProjects').onclick=goProjects;
 $('#navProfile').onclick=goProfile;
 $('#navTalk').onclick=goTalk;
@@ -1079,7 +1156,7 @@ async function reconstruct(){if(current.ensemble)return ensembleRefresh();if(cHa
     await updateSaved();
     if(current===project){$('#bar2').style.width='100%';renderRecord();show('record');}
   }catch(e){if(current===project){alert('Mein Projekt konnte nicht aktualisiert werden: '+e.message);renderRecord();show('record');}}
-  finally{reconstructionBusy=false;}
+  finally{reconstructionBusy=false;updateBackFloatVisibility();}
 }
 $('#reconstructBtn').onclick=reconstruct;$('#refreshProject').onclick=reconstruct;
 // Translate technical values only for display; saved data and API enums remain intact.
@@ -6011,7 +6088,7 @@ async function frameSave(){
  project.purchasedParts=[...(project.purchasedParts||[]).filter(p=>p.source!=='frame-construction'),...m.purchased.map(p=>({...old.get(p.item),id:old.get(p.item)?.id||newId(),item:p.item,quantity:p.quantity+' Stück',dimensions:p.spec,use:'4 Rahmenecken',source:'frame-construction'}))];
  project.woodDrawing.source=drawingSource(project);
  try{const ok=await framePersistDraft(project);if(!ok){project.woodDrawing=previous;project.reconstruction=previousPlan;project.purchasedParts=previousParts;project.projectDirty=previousDirty;}if(ok&&current===project){renderRecord({drawingSave:true});$('#wdSaveStatus').textContent='Rahmenstand und Stückliste gespeichert.';}}
- finally{wdSaving=false;if(current===project)framePreview();}
+ finally{wdSaving=false;updateBackFloatVisibility();if(current===project)framePreview();}
 }
 async function framePdf(){
  const project=current,saved=project.woodDrawing,m=buildFrameConstruction(wdParams(project));if(!m.ok||!saved||saved.geometryVersion!==frameGeometryVersion(m.p)||$('#wdConfirmed').checked!==!!saved.confirmed||drawingStatus(project)==='stale'||frameSignature(m.p)!==frameSignature(saved.params)||current.frameSaveError)return;
@@ -6713,7 +6790,7 @@ async function cabinetSave(){
  project.reconstruction={...cabinetPlan(m),planSchemaVersion:2,sourceRevision:project.analysis?.revision||0,main_dimensions:[m.p.width,m.p.height,m.p.depth].map(v=>v+' mm')};project.projectDirty=false;
  const old=new Map((project.purchasedParts||[]).filter(v=>v.source==='cabinet-construction').map(v=>[v.cabinetKey,v]));project.purchasedParts=[...(project.purchasedParts||[]).filter(v=>v.source!=='cabinet-construction'),...m.hardware.map((v,i)=>{const k=v.source+'-'+v.item;return {...old.get(k),id:old.get(k)?.id||newId(),cabinetKey:k,item:v.item,quantity:v.quantity+' Stück',dimensions:v.spec,use:v.source==='cornerData'?'4 Korpusecken':'2 Innenanschlüsse',source:'cabinet-construction'};})];project.woodDrawing.source=drawingSource(project);
  try{if(!await framePersistDraft(project))Object.assign(project,previous);else if(current===project){renderRecord({drawingSave:true});$('#wdSaveStatus').textContent='Korpusstand, Stückliste und Verbindungsmittel gespeichert.';}}
- finally{wdSaving=false;if(current===project)cabinetPreview();}
+ finally{wdSaving=false;updateBackFloatVisibility();if(current===project)cabinetPreview();}
 }
 async function cabinetPdf(){
  if(!cabinetReady()||!$('#wdConfirmed').checked)return;const project=current,saved=project.woodDrawing,p=wdParams(project),signature=cabinetSignature(p),source=drawingSource(project);$('#wdPrint').disabled=true;$('#wdSaveStatus').textContent='A4-PDF wird erstellt …';
@@ -8021,7 +8098,7 @@ if(refreshBtn){
   $('#toolsBox').innerHTML=(r.tools||[]).map(x=>`<p>• ${escGerman(x)}</p>`).join('')||'<p>Noch keine Angaben.</p>';
   $('#stepsBox').innerHTML=wdSheetGeometry(current)+wdSolidGlueNote(current)+((sheetState(current).current&&!sheetState(current).open.length?(r.steps||[]):[]).map((s,i)=>`<div class="step"><div class="stepnum">${i+1}</div><p>${escGerman(s)}</p></div>`).join('')||'<p>Vor der Bauanleitung bitte die offenen Punkte im Werkstatt-Talk klären und den Entwurf aktualisieren.</p>');
   $('#safetyBox').innerHTML=(r.safety_notes||[]).map(x=>`<div class="notice">${escGerman(x)}</div>`).join('')||'<div class="ok notice">Keine besonderen Hinweise ermittelt.</div>';
-  $('#projectStatus').textContent=`${current.photos.length} Foto${current.photos.length===1?'':'s'} · ${(current.sketches||[]).length} Skizze${(current.sketches||[]).length===1?'':'n'} · ${sheetState(current).open.length} offene Punkte · ${current.chat.length} Talk-Beiträge`;cAfterRecord();if(typeof ensembleAfterRecord==='function')ensembleAfterRecord();
+  $('#projectStatus').textContent=`${current.photos.length} Foto${current.photos.length===1?'':'s'} · ${(current.sketches||[]).length} Skizze${(current.sketches||[]).length===1?'':'n'} · ${sheetState(current).open.length} offene Punkte · ${current.chat.length} Talk-Beiträge`;cAfterRecord();if(typeof ensembleAfterRecord==='function')ensembleAfterRecord();updateBackFloatVisibility();
 }
 function switchTab(id){if(id==='talkPane'&&wdParams(current)?.kind===FRAME_KIND)renderTalk();if(id==='material'&&cutPlannerNeedsRefresh){renderCutPlanner();cutPlannerNeedsRefresh=false;}$$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.pane===id));$$('.pane').forEach(x=>x.classList.toggle('on',x.id===id));const ww=$('#workWindow');if(!ww)return;if(id==='talkPane'){requestAnimationFrame(()=>{ww.scrollTop=ww.scrollHeight})}else{ww.scrollTo({top:0,behavior:'smooth'})}}document.addEventListener('click',e=>{const t=e.target.closest?.('.tab[data-pane]');if(t) switchTab(t.dataset.pane)});
 function calcView(c){if(!c)return'';if(c.status&&c.status!=='ok')return `<div class="notice">${esc(c.message||'Rechnung bitte prüfen.')}</div>`;if(c.type==='linear_layout')return `<div class="calc"><strong>Werkstattrechnung</strong><br>${esc(c.count)} Plätze · Brettlänge ${esc(c.length_mm)} mm<br>Mitte zu Mitte: ${esc(c.spacing_mm)} mm · freier Zwischenraum: ${esc(c.edge_gap_mm)} mm<br>Freier Endrand: ${esc(c.end_margin_mm)} mm · Mittelpunkte ab links: ${esc(c.positions_mm?.join(' / '))} mm</div>`;if(c.type==='circle_pattern')return `<div class="calc"><strong>Werkstattrechnung</strong><br>Teilkreis Ø ${c.pitch_diameter_mm} mm · Umfang ${c.circumference_mm} mm<br><strong>${c.count} Bohrungen</strong> · tatsächliche Teilung ${c.actual_center_pitch_mm} mm · Winkel ${c.angle_deg}°${c.actual_edge_gap_mm!=null?` · freier Abstand ${c.actual_edge_gap_mm} mm`:''}</div>`;if(c.type==='equal_spacing')return `<div class="calc"><strong>Werkstattrechnung</strong><br>${esc(c.count)} Positionen · Abstand der äußeren Mittelpunkte ${esc(c.length_mm)} mm → ${esc(c.spacing_mm)} mm Mitte zu Mitte${c.mode!=='center_span'?' · Altrechnung: Bezug prüfen':''}</div>`;if(c.type==='rectangle')return `<div class="calc"><strong>Werkstattrechnung</strong><br>Fläche ${c.area_m2} m²${c.volume_l!=null?` · Volumen ${c.volume_l} l`:''}</div>`;return''}
@@ -8138,11 +8215,12 @@ $('#chatInput')?.addEventListener('input',autoGrowChatInput);
 // Wischbewegungen innerhalb des rechten Werkstattfensters bleiben dort, außerhalb scrollt die App-Seite.
 document.addEventListener('focusin',e=>{if(e.target?.matches?.('textarea,input')){rememberSpeechTarget(e.target);updateSpeechFloatVisibility()}});
 $('#speechFloatBtn')?.addEventListener('pointerdown',e=>{e.preventDefault();rememberSpeechTarget()});if($('#speechFloatBtn'))$('#speechFloatBtn').onclick=startSpeech;
-if($('#backFloatBtn'))$('#backFloatBtn').onclick=goBackView;
+if($('#backFloatBtn'))$('#backFloatBtn').onclick=undoRestore;
+
 let busy=false;
 document.addEventListener('click',e=>{if(e.target?.closest?.('[data-talk-drawing]'))switchTab('woodDrawingPane')});
-function setTalkBusy(on){busy=on;if(on&&speechRecording)stopSpeech();const w=$('#talkWorking'),send=$('#sendChat'),accept=$('#acceptOpenAnswers'),speech=$('#speechBtn'),speechFloat=$('#speechFloatBtn');if(w)w.classList.toggle('on',on);if(send){send.disabled=on;send.textContent=on?'Wird geprüft …':'Beitrag senden'}if(accept)accept.disabled=on;$$('.reopenDeferred,.deferOpen').forEach(el=>el.disabled=on);$$('.openAnswer').forEach(el=>el.readOnly=on);if(speech)speech.disabled=on;if(speechFloat)speechFloat.disabled=on;['talkCameraInput','talkLibraryInput'].forEach(id=>$('#'+id).disabled=on)}
-async function talk({openAnswers=[],message=null,reopenQuestion=null}={}){if(current.ensemble)return ensembleTalk({openAnswers,message});if(cHas(current))return cTalk({openAnswers,message,reopenQuestion});if(busy||reconstructionBusy)return;const project=current;const previousProjectDirty=project.projectDirty;frameTalkSync(project);const previousDrawingCurrent=project.woodDrawing?.source===drawingSource(project);const t=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];if(!t&&!pics.length&&!openAnswers.length)return alert('Bitte Text, Foto oder Antwort ergänzen.');const photoIds=pics.map(p=>p.id);if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];renderAllPhotos()}captureOpenAnswerDrafts(project);project.projectDirty=true;const answerText=openAnswers.map(x=>x.question+'\nDeine Antwort: '+x.answer).join('\n\n');const userText=[t,answerText].filter(Boolean).join('\n\n')||(pics.length?'Foto als Antwort hinzugefügt.':'Antworten zu offenen Punkten.');project.chat.push({role:'user',text:userText,photoIds});const drawingChange=wdApplyTalkDrawing(project,userText);if(message===null)$('#chatInput').value='';autoGrowChatInput();setTalkBusy(true);renderTalk();setTalkBusy(true);try{const knownAnswer=!pics.length&&!openAnswers.length&&frameTalkKnownAnswer(userText,wdParams(project));if(knownAnswer){project.projectDirty=previousProjectDirty;project.chat.push({role:'assistant',text:knownAnswer,calculation:null});frameTalkSync(project);if(previousDrawingCurrent&&project.woodDrawing&&frameSignature(wdParams(project))===frameSignature(project.woodDrawing.params))project.woodDrawing.source=drawingSource(project);return;}const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({images:project.photos.map(p=>p.dataUrl),knowledge:wdKnowledge(project)+'\n'+WORKSHOP_DIALOGUE_RULES,projectDescription:project.customDescription||'',projectTitle:project.customTitle||project.title||'',projectKnowledge:project.knowledge||'',drawingParams:project.woodDrawingDraft||project.woodDrawing?.params,analysis:project.analysis||{},chat:project.chat,openAnswers,reopenQuestion,profile:projectProfile(project),sketches:sketchContext(),purchasedParts:project.purchasedParts||[]})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.analysis?.stateVersion!==2||d.analysis?.deferralVersion!==1)throw Error('Entwickler-Server benötigt dev17; bisherige Projektdaten bleiben erhalten.');project.stateHistory=[...(project.stateHistory||[]),{analysis:project.analysis,at:new Date().toISOString()}].slice(-10);project.analysis=d.analysis;frameTalkSync(project);d.reply=frameTalkReply(d.reply,wdParams(project),project.analysis.unknown,frameTalkUsageContext(project),project.analysis);project.openAnswerDrafts=(project.openAnswerDrafts||[]).filter(draft=>!openAnswers.some(sent=>sent.question===draft.question&&sent.answer===draft.answer.trim()));if(Array.isArray(d.purchased_parts_updates))mergePurchasedParts(d.purchased_parts_updates,project);project.chat.push({role:'assistant',text:d.reply||'Projektstand aktualisiert.',calculation:d.calculation||null});if(project.reconstruction?.decision_support)project.reconstruction.decision_support=[];project.projectDirty=true;if(current===project)switchTab('talkPane')}catch(e){alert('Werkstatt-Talk fehlgeschlagen: '+e.message)}finally{wdFinalizeTalkDrawing(project,drawingChange);if(current===project)renderRecord();try{await dbPutProject(project);await updateSaved()}catch(e){alert('Gespräch konnte nicht gespeichert werden. Bitte erneut speichern.')}setTalkBusy(false)}}
+function setTalkBusy(on){busy=on;updateBackFloatVisibility();if(on&&speechRecording)stopSpeech();const w=$('#talkWorking'),send=$('#sendChat'),accept=$('#acceptOpenAnswers'),speech=$('#speechBtn'),speechFloat=$('#speechFloatBtn');if(w)w.classList.toggle('on',on);if(send){send.disabled=on;send.textContent=on?'Wird geprüft …':'Beitrag senden'}if(accept)accept.disabled=on;$$('.reopenDeferred,.deferOpen').forEach(el=>el.disabled=on);$$('.openAnswer').forEach(el=>el.readOnly=on);if(speech)speech.disabled=on;if(speechFloat)speechFloat.disabled=on;['talkCameraInput','talkLibraryInput'].forEach(id=>$('#'+id).disabled=on)}
+async function talk({openAnswers=[],message=null,reopenQuestion=null}={}){if(!undoIsBusy()&&undoRecordScreen())undoCheckpoint('Werkstatt-Talk');if(current.ensemble)return ensembleTalk({openAnswers,message});if(cHas(current))return cTalk({openAnswers,message,reopenQuestion});if(busy||reconstructionBusy)return;const project=current;const previousProjectDirty=project.projectDirty;frameTalkSync(project);const previousDrawingCurrent=project.woodDrawing?.source===drawingSource(project);const t=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];if(!t&&!pics.length&&!openAnswers.length)return alert('Bitte Text, Foto oder Antwort ergänzen.');const photoIds=pics.map(p=>p.id);if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];renderAllPhotos()}captureOpenAnswerDrafts(project);project.projectDirty=true;const answerText=openAnswers.map(x=>x.question+'\nDeine Antwort: '+x.answer).join('\n\n');const userText=[t,answerText].filter(Boolean).join('\n\n')||(pics.length?'Foto als Antwort hinzugefügt.':'Antworten zu offenen Punkten.');project.chat.push({role:'user',text:userText,photoIds});const drawingChange=wdApplyTalkDrawing(project,userText);if(message===null)$('#chatInput').value='';autoGrowChatInput();setTalkBusy(true);renderTalk();setTalkBusy(true);try{const knownAnswer=!pics.length&&!openAnswers.length&&frameTalkKnownAnswer(userText,wdParams(project));if(knownAnswer){project.projectDirty=previousProjectDirty;project.chat.push({role:'assistant',text:knownAnswer,calculation:null});frameTalkSync(project);if(previousDrawingCurrent&&project.woodDrawing&&frameSignature(wdParams(project))===frameSignature(project.woodDrawing.params))project.woodDrawing.source=drawingSource(project);return;}const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({images:project.photos.map(p=>p.dataUrl),knowledge:wdKnowledge(project)+'\n'+WORKSHOP_DIALOGUE_RULES,projectDescription:project.customDescription||'',projectTitle:project.customTitle||project.title||'',projectKnowledge:project.knowledge||'',drawingParams:project.woodDrawingDraft||project.woodDrawing?.params,analysis:project.analysis||{},chat:project.chat,openAnswers,reopenQuestion,profile:projectProfile(project),sketches:sketchContext(),purchasedParts:project.purchasedParts||[]})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.analysis?.stateVersion!==2||d.analysis?.deferralVersion!==1)throw Error('Entwickler-Server benötigt dev17; bisherige Projektdaten bleiben erhalten.');project.stateHistory=[...(project.stateHistory||[]),{analysis:project.analysis,at:new Date().toISOString()}].slice(-10);project.analysis=d.analysis;frameTalkSync(project);d.reply=frameTalkReply(d.reply,wdParams(project),project.analysis.unknown,frameTalkUsageContext(project),project.analysis);project.openAnswerDrafts=(project.openAnswerDrafts||[]).filter(draft=>!openAnswers.some(sent=>sent.question===draft.question&&sent.answer===draft.answer.trim()));if(Array.isArray(d.purchased_parts_updates))mergePurchasedParts(d.purchased_parts_updates,project);project.chat.push({role:'assistant',text:d.reply||'Projektstand aktualisiert.',calculation:d.calculation||null});if(project.reconstruction?.decision_support)project.reconstruction.decision_support=[];project.projectDirty=true;if(current===project)switchTab('talkPane')}catch(e){alert('Werkstatt-Talk fehlgeschlagen: '+e.message)}finally{wdFinalizeTalkDrawing(project,drawingChange);if(current===project)renderRecord();try{await dbPutProject(project);await updateSaved()}catch(e){alert('Gespräch konnte nicht gespeichert werden. Bitte erneut speichern.')}setTalkBusy(false)}}
 document.addEventListener('click',e=>{const button=e.target.closest?.('.deferOpen');if(!button||busy||reconstructionBusy)return;const question=current.analysis?.unknown?.[Number(button.dataset.open)];if(question)talk({openAnswers:[{question,answer:'Wird später geklärt.'}],message:''})});
 document.addEventListener('click',e=>{const button=e.target.closest?.('.reopenDeferred');if(!button||busy||reconstructionBusy)return;const item=deferredItems(current.analysis?.deferred)[Number(button.dataset.deferred)];if(item)talk({message:'Ich möchte diesen vorgemerkten Punkt erneut besprechen: '+item.question,reopenQuestion:item.question})});
 $('#sendChat').onclick=()=>talk();document.addEventListener('click',e=>{if(e.target?.id==='acceptOpenAnswers'){const u=(current.analysis?.unknown||[]).slice(0,3);const answers=$$('.openAnswer').map(el=>({question:u[+el.dataset.i],answer:el.value.trim()})).filter(x=>x.answer);talk({openAnswers:answers})}});
@@ -8220,6 +8298,7 @@ $('#applyProjectMeta').onclick=async()=>{
   renderRecord();if(await saveCurrent(true))alert('Titel und Beschreibung gespeichert.');
 };
 $('#saveProject').onclick=async()=>{
+  if(String($('#projectDescriptionEdit')?.value||'').trim()!==String(current.customDescription||'').trim()&&$('#projectDescriptionEdit')?.value!==current.analysis?.summary&&$('#projectDescriptionEdit')?.value!==current.reconstruction?.summary)undoCheckpoint('Projektbeschreibung');
   const visibleTitle=($('#projectTitleEdit')?.value||current.customTitle||current.title||'').trim();
   if(isGenericProjectTitle(visibleTitle)){
     const better=prompt('Der Projekttitel ist noch sehr allgemein. Möchtest du ihn jetzt genauer benennen?',visibleTitle);
