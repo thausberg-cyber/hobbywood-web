@@ -53,7 +53,7 @@ dialog{border:0;border-radius:16px;padding:0;max-width:min(92vw,900px);backgroun
 </style>
 </head>
 <body>
-<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.24</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
+<section id="secureGate" aria-label="Entwickler-Anmeldung"><div class="cardGate"><div class="eyebrow">Persönlicher Entwicklerbereich · 0.9.21-dev66.25</div><h1>look,<br>talk ’n<br>build</h1><p>Bitte deinen persönlichen Entwickler-Code eingeben. Er bleibt nur während dieser Sitzung im Arbeitsspeicher.</p><form id="secureLogin" autocomplete="off"><label for="secureCode">Entwickler-Zugangscode</label><input id="secureCode" type="password" minlength="24" maxlength="256" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Code eingeben oder einfügen"><button type="submit" class="primary" id="secureSubmit">Anmelden</button></form><p id="secureStatus" class="gateStatus" role="status" aria-live="polite"></p></div></section>
 
 <header><div class="headerRow"><div><div class="brand">look, talk ’n build</div><div class="claim">Sehen. Fachsimpeln. Bauen.</div><div class="claim by">Konzeption und Umsetzung:<br><strong>Thomas Hausberg, Meister im Tischlerhandwerk</strong></div></div><nav class="topNav" aria-label="Hauptnavigation"><button id="navStart" class="navBtn on" type="button">Start</button><button id="navProjects" class="navBtn" type="button">Meine Projekte</button><button id="navProfile" class="navBtn" type="button">Meine Werkstatt</button><button id="navTalk" class="navBtn" type="button" disabled>Werkstatt-Talk</button></nav></div></header>
 <main>
@@ -236,7 +236,7 @@ async function secureFetch(url,options={}){
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const APP_VERSION='0.9.21-dev66.24';
+const APP_VERSION='0.9.21-dev66.25';
 let projectFilter='all';
 const LEGACY_STORAGE='ltnb_developer_legacy', PROFILE='ltnb_developer_profile', TESTER_ID='ltnb_developer_id';
 const DB_NAME='ltnb_developer_db', DB_VERSION=3, PROJECT_STORE='projects', SETTINGS_STORE='settings', TESTER_STORE='testerProjects';
@@ -7193,6 +7193,173 @@ async function sockelTalk({message=null,openAnswers=[]}={}){
 }
 
  document.addEventListener('click',e=>{if(e.target.closest?.('[data-sockel-new]'))sockelBegin(true);});
+// dev66.25 Door groups linked to existing cabinet openings, not guessed manufacturing dimensions.
+const DOOR_TYPES={sliding:'Schiebetüren',hinged:'Drehtür'};
+const DOOR_MOUNTS={overlay:'Aufschlagend',inset:'Zwischenschlagend',rebated:'Überfälzt'};
+const DOOR_NUMBERS=['openingX','openingY','openingWidth','openingHeight','thickness','overlay','edgeLeft','edgeRight','edgeTop','edgeBottom','centerGap','sideGap','topGap','bottomGap','overlap','planeGap','setback','rebateWidth','rebateDepth','hinges','trackTopHeight','trackBottomHeight','trackWidth'];
+const DOOR_STRINGS=['material','hardwareName','hardwareArticle','hardwareSource','purchaseRef','handleName'];
+function doorCandidate(m){return m.family==='cabinet'||m.family==='custom'&&/schrank|korpus|schiebetür|drehtür/i.test(m.name+' '+(m.notes||[]).join(' '));}
+function doorDraft(parent,id='door_'+Date.now().toString(36)){
+ const desc=parent.name+' '+(parent.notes||[]).join(' '),sliding=/schiebetür/i.test(desc),hinged=/\btür\b|drehtür/i.test(desc);
+ return {id,parentId:parent.id,type:sliding?'sliding':hinged?'hinged':'',count:sliding?2:1,leaf:'panel',mount:'',hinge:'',grip:'',...Object.fromEntries(DOOR_NUMBERS.map(k=>[k,null])),...Object.fromEntries(DOOR_STRINGS.map(k=>[k,''])),hardwareChecked:false,confirmed:false,confirmationKey:null};
+}
+function doorValidate(input){
+ if(!input||typeof input!=='object'||Array.isArray(input))throw Error('Türplanung fehlt.');
+ eKeys(input,['id','parentId','type','count','leaf','mount','hinge','grip',...DOOR_NUMBERS,...DOOR_STRINGS,'hardwareChecked','confirmed','confirmationKey']);
+ const p={...input};
+ if(!eId(p.id)||!eId(p.parentId)||!['','sliding','hinged'].includes(p.type)||![1,2].includes(p.count)||p.type==='sliding'&&p.count!==2||!['panel','frame'].includes(p.leaf)||!['',...Object.keys(DOOR_MOUNTS)].includes(p.mount)||!['','left','right'].includes(p.hinge)||!['','handle','handleless'].includes(p.grip))throw Error('Ungültige Türart, Flügelzahl oder Ausführung.');
+ for(const k of DOOR_NUMBERS){p[k]??=null;if(p[k]!==null&&(!eNumber(p[k])||p[k]<0||k==='hinges'&&(!Number.isInteger(p[k])||p[k]>20)))throw Error('Ungültiges Türmaß: '+k);}
+ for(const k of DOOR_STRINGS){p[k]??='';if(!eText(p[k],k==='hardwareSource'?1200:300))throw Error('Ungültige Beschlag- oder Materialangabe.');}
+ if(typeof p.confirmed!=='boolean'||typeof p.hardwareChecked!=='boolean'||p.confirmationKey!==null&&!eText(p.confirmationKey,10000))throw Error('Ungültiger Bestätigungsstatus.');
+ return p;
+}
+function doorModel(input,parent,total){
+ const p=doorValidate(input),errors=[],pending=[],leaves=[],geometry=[],required=(k,label,positive=false)=>{const v=p[k];if(v===null){pending.push(label);return null;}if(positive&&v<=0){errors.push(label+' muss größer null sein.');return null;}return v;};
+ const W=parent.size.width,H=parent.size.height,D=parent.size.depth,X=parent.position.x,Y=parent.position.y,Z=parent.position.z;
+ const finite=v=>typeof v==='number'&&Number.isFinite(v),all=(...a)=>a.every(finite);
+ const ox=required('openingX','Lage der lichten Öffnung ab Korpus links'),oy=required('openingY','Lage der lichten Öffnung ab Korpus unten'),ow=required('openingWidth','Lichte Öffnungsbreite',true),oh=required('openingHeight','Lichte Öffnungshöhe',true),t=required('thickness','Türblattdicke',true);
+ if(!p.type)pending.push('Drehtür oder Schiebetüren?');
+ if(!p.material.trim())pending.push('Material der Türblätter');
+ if(!p.hardwareName.trim())pending.push('Welcher Beschlag soll verwendet werden?');
+ if(!p.hardwareSource.trim())pending.push('Technische Beschlagunterlage / Maßquelle');
+ if(!p.hardwareChecked)pending.push('Beschlagdaten mit Herstellerunterlage abgleichen');
+ if(!p.grip)pending.push('Griff oder grifflose Ausführung?');
+ if(p.grip==='handle'&&!p.handleName.trim())pending.push('Griff auswählen');
+ if(!all(W,H,D,X,Y,Z))pending.push('Korpusmaße und Lage im Gesamtprojekt');
+ if(all(W,H,ox,oy,ow,oh)&&(ox+ow>W+.001||oy+oh>H+.001))errors.push('Lichte Öffnung liegt außerhalb der Korpusfront.');
+ let specs={},quantity=0,unit='',leafW=null,leafH=null,left=null,bot=null,front=null;
+ if(p.type==='hinged'){
+  if(!p.mount)pending.push('Anschlagmethode: aufschlagend, zwischenschlagend oder überfälzt?');
+  if(p.count===1&&!p.hinge)pending.push('Türanschlag links oder rechts?');
+  quantity=required('hinges','Topfbänder / Bänder je Flügel',true);quantity=quantity===null?0:quantity*p.count;unit='Stück';
+  const v=required('overlay',p.mount==='inset'?'Randfuge laut Beschlag':'Beschlagbedingter Aufschlag',p.mount==='rebated'),g=p.count===2?required('centerGap','Mittelfuge der Doppeltür',true):0;
+  const l=p.edgeLeft??v,r=p.edgeRight??v,u=p.edgeTop??v,b=p.edgeBottom??v;
+  const setback=required('setback',p.mount==='inset'?'Türvorderfläche hinter Korpusvorderkante':'Abstand Tür-Rückseite zur Korpusfront');
+  if(v!==null&&p.mount==='overlay'&&v<=0)errors.push('Aufschlag muss größer null sein.');
+  if(p.mount==='rebated'){const rb=required('rebateWidth','Falzbreite',true),rd=required('rebateDepth','Falztiefe',true);if(all(rd,t)&&rd>=t)errors.push('Falztiefe muss kleiner als Türdicke sein.');if(all(rb,l,r,u,b)&&rb<Math.max(l,r,u,b))errors.push('Falzbreite kleiner als Überdeckung. Falzgeometrie prüfen.');}
+  if(p.mount&&all(l,r,u,b,g,ow,oh,ox,oy)){
+   const sign=p.mount==='inset'?-1:1;left=ox-sign*l;bot=oy-sign*b;leafW=(ow+sign*(l+r)-g)/p.count;leafH=oh+sign*(u+b);
+   if(leafW<=0||leafH<=0)errors.push('Fugen lassen keine Türblattfläche übrig.');if(p.mount==='rebated'&&p.rebateWidth!==null&&2*p.rebateWidth>=Math.min(leafW,leafH))errors.push('Falzbreite lässt keine ausreichende Türblattfläche übrig.');
+   if(all(W,H)&&(left<-.001||bot<-.001||left+leafW*p.count+g>W+.001||bot+leafH>H+.001))errors.push('Tür überragt die Korpusfront; Aufschlag / Öffnung prüfen.');
+   if(leafW>0&&leafH>0)for(let i=0;i<p.count;i++)geometry.push({x:left+i*(leafW+g),y:bot,w:leafW,h:leafH,hinge:p.count===2?(i===0?'left':'right'):p.hinge});
+  }
+  if(all(D,Z,t,setback)&&p.mount){front=p.mount==='overlay'?Z+D+setback+t:p.mount==='inset'?Z+D-setback:Z+D+setback+t-p.rebateDepth;if(front-t<Z-.001)errors.push('Türblatt liegt hinter dem Korpus.');for(const q of geometry)q.front=front;}
+  specs={AufschlagOderRandfuge:v,links:l,rechts:r,oben:u,unten:b,mittelfuge:g,Tiefenbezug:setback};
+ }else if(p.type==='sliding'){
+  const side=required('sideGap','Randspiel links/rechts laut Beschlag'),top=required('topGap','Oberes Einbaumaß laut Beschlag'),bottom=required('bottomGap','Unteres Einbaumaß laut Beschlag'),o=required('overlap','Türblattüberlappung laut Beschlag',true),gap=required('planeGap','Lichter Abstand zwischen den Türblättern'),setback=required('setback','Vorderes Türblatt: Rücksprung ab Korpusvorderkante');
+  required('trackTopHeight','Höhe obere Führungsschiene',true);required('trackBottomHeight','Höhe untere Laufschiene',true);required('trackWidth','Gesamtbreite des Schienenprofils',true);
+  if(all(side,top,bottom,o,ow,oh,ox,oy)){
+   const cover=ow-2*side;leafW=(cover+o)/2;leafH=oh-top-bottom;left=ox+side;bot=oy+bottom;
+   if(cover<=0||leafH<=0||o>=cover)errors.push('Überlappung oder Einbauspiel passt nicht in die Öffnung.');
+   else{geometry.push({x:left,y:bot,w:leafW,h:leafH,track:'rear'},{x:left+leafW-o,y:bot,w:leafW,h:leafH,track:'front'});}
+  }
+  if(all(D,Z,t,setback,gap)){front=Z+D-setback;for(const q of geometry)q.front=front-(q.track==='rear'?t+gap:0);if(setback+2*t+gap>D+.001)errors.push('Zwei Türblätter passen nicht in die Korpustiefe.');}
+  if(all(p.trackWidth,D,setback)&&p.trackWidth>D+.001)errors.push('Schienenprofil breiter als die Korpustiefe.');
+  specs={Randspiel:side,oben:top,unten:bottom,Überlappung:o,Zwischenraum:gap,Rücksprung:setback};quantity=1;unit='Set';
+ }
+ if(geometry.some(q=>finite(q.front)&&finite(total?.depth)&&q.front>total.depth+.001))errors.push('Tür überragt die maximale Gesamttiefe. Gesamtmaß einschließlich Front berücksichtigen.');
+ const key=JSON.stringify({p:{...p,confirmed:false,confirmationKey:null},parent:{size:parent.size,position:parent.position,thickness:parent.thickness},total});
+ const complete=errors.length===0&&pending.length===0&&geometry.length===p.count&&geometry.every(q=>all(q.x,q.y,q.w,q.h,q.front,t));
+ const ready=complete&&p.confirmed&&p.confirmationKey===key;
+ if(p.confirmed&&!ready)pending.push('Türplanung nach Maß- oder Beschlagänderung erneut bestätigen');
+ const priority=q=>/Drehtür oder|Anschlagmethode|Türanschlag/.test(q)?0:/Welcher Beschlag/.test(q)?1:/Material|Türblattdicke|Griff/.test(q)?2:/Technische Beschlagunterlage/.test(q)?3:/Beschlagdaten mit/.test(q)?6:/Lichte|lichten Öffnung|Korpusmaße/.test(q)?4:5;
+ pending.sort((a,b)=>priority(a)-priority(b));
+ const cutlist=ready&&p.leaf==='panel'?geometry.map((g,i)=>({part:'Türblatt '+(i+1),qty:1,length_mm:g.h,width_mm:g.w,thickness_mm:t,material:p.material,direction_basis:'unknown',note:p.mount==='rebated'?'Fertigmaß außen; Falz '+p.rebateWidth+' × '+p.rebateDepth+' mm; Bearbeitung separat prüfen.':'Fertigmaß aus bestätigter Türplanung; Griff-/Beschlagbearbeitung erst nach Herstellerangabe.'})):[];
+ return {p,parent,errors,pending,geometry:errors.length?[]:geometry,ready,complete,key,cutlist,quantity,unit,specs,leafW,leafH,thickness:t,front,framePending:p.leaf==='frame',mountLabel:p.type==='sliding'?'Schiebetüren':DOOR_MOUNTS[p.mount]||'Anschlag offen'};
+}
+function doorModels(e,modules){return (e.doors||[]).map(p=>doorModel(p,modules.find(m=>m.id===p.parentId),e.total));}
+function doorSuggestions(e,modules){return modules.filter(m=>doorCandidate(m)&&!(e.doors||[]).some(d=>d.parentId===m.id)&&/schiebetür|drehtür|\btür(?:en)?\b/i.test(m.name+' '+(m.notes||[]).join(' '))).map(parent=>({parent,p:doorDraft(parent,'door_hint_'+parent.id)}));}
+function doorQuestions(e,modules){
+ const q=[];for(const h of doorSuggestions(e,modules))q.push(h.parent.name+': Türplanung öffnen – '+(h.p.type==='sliding'?'Schiebetürbeschlag, lichte Öffnung und Einbaumaße klären.':'Türart, Anschlagmethode und Beschlag klären.'));
+ for(const m of doorModels(e,modules)){const label=m.parent.name+' · Türen';if(m.errors.length)q.push(...m.errors.map(v=>label+': '+v));if(m.pending.length)q.push(...m.pending.map(v=>label+': '+v));if(!m.ready&&!m.pending.length)q.push(label+': Maße bestätigen.');if(m.framePending)q.push(label+': Türrahmen über vorhandenen Rahmenbaukasten ausarbeiten; Rahmen-Stückliste separat zuordnen.');if(m.ready)q.push(label+': Montagebohrungen / Schienenbefestigung nach Herstellerunterlage prüfen.');}
+ return q;
+}
+function doorFrontMarkup(r,{s,x,bottom}){
+ const {rect,line,text}=classicTools(),out=[];
+ for(const hint of [...r.doors,...doorSuggestions(r.ensemble,r.modules).map(q=>({...q,geometry:[],ready:false,thickness:null}))]){
+  const {p,parent}=hint,sz=parent.size,pos=parent.position;if(![sz.width,sz.height,pos.x,pos.y].every(Number.isFinite))continue;
+  const px=x+pos.x*s,py=bottom-(pos.y+sz.height)*s;let shapes=hint.geometry;
+  if(!shapes.length){
+   // Explicitly schematic symbols, not inferred measurements. No material output.
+   const w=sz.width*s,h=sz.height*s,margin=Math.min(2,w/12,h/12);
+   const count=p.type==='sliding'?2:p.count||1;for(let i=0;i<count;i++){const ww=(w-2*margin)/count;out.push('<g data-door-preview="schematic">'+rect(px+margin+i*ww,py+margin,ww,h-2*margin,'none','hidden')+'</g>');}
+   out.push(text(px+w/2,py+h/2,'Tür'+(count===2?'en':'')+' · schematisch',2.4,'middle'));continue;
+  }
+  // Rear sliding leaf is drawn first: front leaf obscures the overlapping strip.
+  for(const g of shapes){const xx=px+g.x*s,yy=bottom-(pos.y+g.y+g.h)*s,w=g.w*s,h=g.h*s;out.push('<g data-door-leaf="'+esc(p.id)+'">'+rect(xx,yy,w,h,'white',hint.ready?'visible':'hidden'));
+   if(p.type==='hinged'&&g.hinge){const toward=g.hinge==='left'?xx:xx+w;out.push(line(toward,yy, g.hinge==='left'?xx+w:xx,yy+h/2,'hidden')+line(g.hinge==='left'?xx+w:xx,yy+h/2,toward,yy+h,'hidden'));}
+   if(p.type==='sliding'){const a=xx+w*.35,b=xx+w*.65,c=yy+h*.5,dir=g.track==='front'?-1:1,tip=dir===1?b:a;out.push(line(a,c,b,c,'thin')+line(tip,c,tip-dir*2,c-1,'thin')+line(tip,c,tip-dir*2,c+1,'thin'));}
+   if(p.leaf==='frame')out.push(text(xx+w/2,yy+h*.2,'Rahmen',2.4,'middle'));
+   if(p.grip==='handle'){const gx=p.type==='hinged'&&g.hinge==='right'?xx+w*.12:p.type==='sliding'&&g.track==='rear'?xx+w*.12:xx+w*.88;out.push(line(gx,yy+h*.45,gx,yy+h*.55,'thin'));}
+   out.push('</g>');
+  }
+  if(!hint.ready)out.push(text(px+sz.width*s/2,py+Math.min(sz.height*s/2,5),'Türmaße unbestätigt',2.4,'middle'));
+ }
+ return out.join('');
+}
+function doorDetails(project,paper){
+ const r=ensembleResolve(project.ensemble),out=[];
+ for(const m of r.doors){if(!m.geometry.length||!m.geometry.every(g=>Number.isFinite(g.front))||!m.thickness)continue;
+  const landscape=true,P=classicPaper(paper,landscape),{rect,line,text,dh,dv}=classicTools(),p=m.p,parent=m.parent;
+  const W=parent.size.width,H=parent.size.height,D=parent.size.depth,front=parent.position.z+D,minZ=Math.min(...m.geometry.map(g=>g.front-m.thickness)),maxZ=Math.max(front,...m.geometry.map(g=>g.front)),depth=maxZ-minZ;
+  const s=classicScale(Math.min((P.w-(p.type==='sliding'?135:90))/W,(P.h-120)/(H+depth))),x=32,y=40,bottom=y+H*s,sectionY=bottom+34;
+  let body=text(x,y-5,m.parent.name+' · Türblattansicht',3,'start','bold')+rect(x,y,W*s,H*s,'none','hidden');
+  for(const [i,g] of m.geometry.entries()){const xx=x+g.x*s,yy=bottom-(g.y+g.h)*s;
+   body+=rect(xx,yy,g.w*s,g.h*s,'white',m.ready?'visible':'hidden')+text(xx+g.w*s/2,yy+g.h*s/2,'T'+(i+1),3,'middle');if(i===0)body+=dh(xx,xx+g.w*s,yy+g.h*s+10,yy+g.h*s,classicFormat(g.w))+dv(xx-10,yy,yy+g.h*s,xx,classicFormat(g.h));
+  }
+  body+=text(x,sectionY-6,'Horizontalschnitt durch die Türblätter · Bezug Korpusvorderkante',3,'start','bold')+line(x,sectionY+(front-minZ)*s,x+W*s,sectionY+(front-minZ)*s,'hidden');
+  for(const [i,g] of m.geometry.entries()){const xx=x+g.x*s,yy=sectionY+(g.front-m.thickness-minZ)*s;body+=rect(xx,yy,g.w*s,m.thickness*s,p.mount==='rebated'||p.leaf==='frame'?'none':'url(#cw-hatch-a)',m.ready&&p.mount!=='rebated'&&p.leaf!=='frame'?'visible':'hidden')+text(xx+g.w*s/2,yy-1,'T'+(i+1),2.5,'middle');}
+  const rx=P.w-48;body+=text(rx,y,'Türblattmaße',3,'start','bold')+text(rx,y+6,classicFormat(m.leafW)+' × '+classicFormat(m.leafH),2.6)+text(rx,y+11,'Dicke '+classicFormat(m.thickness),2.6);
+  if(p.type==='sliding'){
+   const insX=P.w-91,insY=P.h-90,ow=p.overlap,t=m.thickness,gap=p.planeGap,show=Math.min(18,m.leafW-ow);
+   if(ow>0&&t>0&&gap>=0&&show>0){const sc=classicScale(Math.min(1,65/(ow+2*show),45/(2*t+gap))),b0=insX,b1=b0+(show+ow)*sc,ty=insY+10;
+    body+=text(insX,insY-3,'Überlappung · Teilschnitt  '+classicScaleLabel(sc),2.8,'start','bold')+rect(b0,ty,(show+ow)*sc,t*sc,'url(#cw-hatch-a)')+rect(b0+show*sc,ty+(t+gap)*sc,(show+ow)*sc,t*sc,'url(#cw-hatch-b)')+line(b0,ty,b0,ty+t*sc,'hidden')+line(b0+(ow+2*show)*sc,ty+(t+gap)*sc,b0+(ow+2*show)*sc,ty+(2*t+gap)*sc,'hidden')+dh(b0+show*sc,b1,ty-10,ty,classicFormat(ow))+text(insX,ty+(2*t+gap)*sc+5,'Blattdicke '+classicFormat(t)+' · Spiel '+classicFormat(gap),2.6);
+   }
+  }
+  if(p.type==='sliding')body+=text(rx,y+18,'Überlappung '+classicFormat(p.overlap),2.6)+text(rx,y+23,'Zwischenraum '+classicFormat(p.planeGap),2.6)+text(rx,y+28,'Schienenprofil B '+(p.trackWidth??'offen'),2.6)+text(rx,y+33,'oben H '+(p.trackTopHeight??'offen'),2.6)+text(rx,y+38,'unten H '+(p.trackBottomHeight??'offen'),2.6);
+  else{body+=text(rx,y+18,m.mountLabel,2.6);if(p.mount==='rebated')body+=text(rx,y+23,'Falz '+p.rebateWidth+' × '+p.rebateDepth,2.6);}
+  out.push(classicFrame(project,paper,landscape,'Türen · '+m.parent.name,s,body,[m.ready?'Türblattmaße bestätigt; Anschlussdetails separat prüfen.':'Planungsentwurf – Maße noch nicht bestätigt.',p.hardwareName?'Beschlag: '+p.hardwareName:'Beschlag noch offen.',p.type==='sliding'?'Schienenposition und Befestigung gemäß Hersteller; keine erfundene Profilgeometrie.':'Bandbohrbild und Befestigung gemäß Hersteller; Falz nicht als Fertigungsdetail gezeichnet.',p.leaf==='frame'?'Rahmenbaukasten separat ausarbeiten.':'Plattenmaterial; Griffzeichen in der Gesamtansicht nur schematisch.']));
+ }
+ return out;
+}
+let doorEditor=null;
+function doorSection(e){
+ const r=ensembleResolve(e),existing=e.doors||[],candidates=r.modules.filter(doorCandidate);
+ if(!candidates.length)return '';
+ return '<section class="notice"><strong>Türen · Beschlag und Einbau</strong><p>Erst Türart und Beschlag wählen. Die App übernimmt den Aufschlag auf die übrigen Kanten; nur abweichende Maße ergänzen.</p>'+candidates.map(m=>{const d=existing.find(d=>d.parentId===m.id),model=r.doors.find(q=>q.p.id===d?.id);return '<p><b>'+esc(m.name)+'</b> · '+(model?(model.ready?'Türmaße bestätigt':esc(model.pending[0]||model.errors[0]||'Entwurf')):'Türplanung bei Bedarf')+' <button class="secondary small" data-door-parent="'+esc(m.id)+'">'+(d?'Türplanung öffnen':'Tür ergänzen / planen')+'</button></p>';}).join('')+'</section>';
+}
+function doorBind(){ $$('[data-door-parent]').forEach(b=>b.onclick=()=>{switchTab('overview');doorOpen(b.dataset.doorParent);});}
+function doorOpen(parentId){
+ const r=ensembleResolve(current.ensemble),parent=r.modules.find(m=>m.id===parentId&&doorCandidate(m));if(!parent)return alert('Korpus auswählen.');
+ const saved=(current.ensemble.doors||[]).find(p=>p.parentId===parentId),p=saved?structuredClone(saved):doorDraft(parent);
+ if(!saved){p.material=parent.material||'';p.thickness=parent.thickness??null;}
+ doorEditor={project:current,revision:current.ensemble.revision,parent,p,saved:!!saved};doorRender();
+}
+function doorRender(){
+ const st=doorEditor,p=st.p,parent=st.parent,box=$('#enModuleEditor'),e=st.project.ensemble;
+ const select=(k,label,opts)=>'<label class="wdField"><span>'+esc(label)+'</span><select data-door-field="'+k+'">'+Object.entries(opts).map(([v,l])=>'<option value="'+esc(v)+'" '+(String(p[k])===v?'selected':'')+'>'+esc(l)+'</option>').join('')+'</select></label>';
+ const field=(k,label,num=true)=>'<label class="wdField"><span>'+esc(label)+(num&&k!=='hinges'?' (mm)':'')+'</span><input data-door-field="'+k+'" '+(num?'inputmode="decimal"':'')+' value="'+esc(p[k]??'')+'" placeholder="offen"></label>';
+ const hardware=e.purchases.filter(a=>a.scope===parent.id||a.scope==='all'),profiles=(e.doors||[]).filter(d=>d.parentId!==parent.id&&d.hardwareChecked&&d.hardwareName&&d.hardwareSource&&d.type===p.type&&(p.type!=='hinged'||d.mount===p.mount)),model=doorModel(p,parent,e.total);
+ box.innerHTML='<section class="notice"><h3>'+esc(parent.name)+' · Türen</h3><div class="wdFields">'+select('type','Türart',{'':'Bitte wählen',hinged:'Drehtür',sliding:'Zwei parallel laufende Schiebetüren'})+
+ (p.type==='hinged'?select('count','Anzahl Flügel',{'1':'Einflügelig','2':'Zweiflügelig'})+select('mount','Anschlagmethode',{'':'Bitte wählen',...DOOR_MOUNTS})+(p.count===1?select('hinge','Türanschlag',{'':'Bitte wählen',left:'Links',right:'Rechts'}):''):'')+
+ select('leaf','Türblatt',{panel:'Plattenmaterial',frame:'Rahmenkonstruktion (separat ausarbeiten)'})+field('material','Material',false)+field('thickness','Türblattdicke')+select('grip','Griff',{'':'Bitte wählen',handle:'Griff',handleless:'Grifflos'})+(p.grip==='handle'?field('handleName','Griff / Artikel',false):'')+'</div>'+
+ '<h4>Beschlag</h4>'+(profiles.length?'<label>Geprüfte Beschlagdaten aus anderer Türplanung übernehmen<select id="doorReuse"><option value="">Bitte wählen</option>'+profiles.map(d=>'<option value="'+esc(d.id)+'">'+esc(d.hardwareName+' · '+d.hardwareArticle)+'</option>').join('')+'</select></label>':'')+'<label>Vorhandenen Einkaufsvorschlag zuweisen<select id="doorPurchase"><option value="">Eigenen Beschlag eingeben</option>'+hardware.map(a=>'<option value="'+esc(a.id)+'" '+(p.purchaseRef===a.id?'selected':'')+'>'+esc(a.item)+'</option>').join('')+'</select></label><div class="wdFields">'+field('hardwareName','Beschlag / System',false)+field('hardwareArticle','Artikelnummer',false)+field('hardwareSource','Herstellerunterlage / Maßquelle',false)+'</div><p class="hint">Beschlagmaße aus der technischen Unterlage übernehmen. Ein Einkaufsvorschlag allein ist kein geprüfter Beschlag.</p>'+
+ (p.type==='hinged'?'<div class="wdFields">'+field('hinges','Bänder je Flügel')+field('overlay',p.mount==='inset'?'Beschlagbedingte umlaufende Randfuge':'Beschlagbedingter Aufschlag')+(p.count===2?field('centerGap','Mittelfuge'):'')+field('setback',p.mount==='inset'?'Vorderflächen-Rücksprung':'Abstand Türrückseite zur Korpusfront')+(p.mount==='rebated'?field('rebateWidth','Falzbreite')+field('rebateDepth','Falztiefe'):'')+'</div><details><summary>Abweichende Aufschläge / Fugen je Kante (optional)</summary><p>Leer = Beschlagmaß übernehmen.</p><div class="wdFields">'+['Left','Right','Top','Bottom'].map((k,i)=>field('edge'+k,['Links','Rechts','Oben','Unten'][i])).join('')+'</div></details>':'')+
+ (p.type==='sliding'?'<div class="wdFields">'+field('overlap','Überlappung')+field('planeGap','Lichter Abstand zwischen Türblättern')+field('sideGap','Randspiel links/rechts')+field('topGap','Oberes Einbaumaß')+field('bottomGap','Unteres Einbaumaß')+field('setback','Rücksprung Vorderfläche vordere Tür')+field('trackWidth','Gesamtbreite Schienenprofil')+field('trackTopHeight','Höhe obere Schiene')+field('trackBottomHeight','Höhe untere Schiene')+'</div>':'')+
+ '<h4>Lichte Öffnung</h4><p>Die Außenkontur des Korpus ist nicht die lichte Öffnung. Maße ab linker Korpuskante und Unterkante.</p><button class="secondary small" id="doorOpeningSuggest">Rechteckige Öffnung aus Korpus vorschlagen</button><div class="wdFields">'+field('openingX','Links')+field('openingY','Unten')+field('openingWidth','Lichte Breite')+field('openingHeight','Lichte Höhe')+'</div><label><input type="checkbox" id="doorHardwareCheck" '+(p.hardwareChecked?'checked':'')+'> Beschlag und Einbaumaße anhand der Herstellerunterlage geprüft</label><label><input type="checkbox" id="doorConfirm" '+(model.ready?'checked':'')+'> Türblattmaße bestätigen (keine Fertigungsfreigabe)</label><div id="doorCheck"></div><button class="primary" id="doorPreview">Türplanung prüfen / übernehmen</button> <button class="ghost" id="doorClose">Schließen</button>'+(st.saved?'<button class="ghost" id="doorRemove">Türplanung entfernen …</button>':'')+'</section>';
+ const read=()=>{for(const el of box.querySelectorAll('[data-door-field]')){const k=el.dataset.doorField,raw=el.value.trim();p[k]=DOOR_NUMBERS.includes(k)?(raw===''?null:Number(raw.replace(',','.'))):k==='count'?Number(raw):raw;}p.hardwareChecked=$('#doorHardwareCheck').checked;if(p.type==='sliding')p.count=2;};
+ const show=()=>{try{const m=doorModel({...p,confirmed:false,confirmationKey:null},parent,e.total);$('#doorCheck').innerHTML='<p>'+esc(m.leafW!==null&&m.leafH!==null?'Türblatt: '+classicFormat(m.leafW)+' × '+classicFormat(m.leafH)+' mm · '+p.count+' Stück':'Türblattmaße noch offen')+'</p>'+[...m.errors,...m.pending].map(q=>'<p class="hint">'+esc(q)+'</p>').join('');}catch(err){$('#doorCheck').textContent=err.message;}};
+ box.querySelectorAll('[data-door-field]').forEach(el=>{el.oninput=()=>{read();p.confirmed=false;p.confirmationKey=null;$('#doorConfirm').checked=false;if(el.dataset.doorField==='hardwareName'||el.dataset.doorField==='hardwareArticle'||el.dataset.doorField==='hardwareSource'||DOOR_NUMBERS.includes(el.dataset.doorField)){p.hardwareChecked=false;$('#doorHardwareCheck').checked=false;}show();};if(['type','count','mount','leaf','grip'].includes(el.dataset.doorField))el.onchange=()=>{read();doorRender();};});
+ $('#doorHardwareCheck').onchange=()=>{read();p.confirmed=false;$('#doorConfirm').checked=false;show();};
+ if($('#doorReuse'))$('#doorReuse').onchange=()=>{read();const source=profiles.find(d=>d.id===$('#doorReuse').value);if(!source)return;for(const k of ['hardwareName','hardwareArticle','hardwareSource','thickness','overlay','setback','overlap','planeGap','sideGap','topGap','bottomGap','trackWidth','trackTopHeight','trackBottomHeight','rebateWidth','rebateDepth','hinges'])p[k]=source[k];p.purchaseRef='';p.hardwareChecked=false;p.confirmed=false;p.confirmationKey=null;doorRender();};
+ $('#doorPurchase').onchange=()=>{read();const a=hardware.find(a=>a.id===$('#doorPurchase').value);p.purchaseRef=a?.id||'';if(a){p.hardwareName=a.item;p.hardwareArticle='';p.hardwareSource='';}p.hardwareChecked=false;p.confirmed=false;p.confirmationKey=null;doorRender();};
+ $('#doorOpeningSuggest').onclick=()=>{read();if(![parent.size.width,parent.size.height,parent.thickness].every(Number.isFinite)||parent.size.width<=2*parent.thickness||parent.size.height<=2*parent.thickness)return alert('Korpusmaße und Materialdicke fehlen.');p.openingX=p.openingY=parent.thickness;p.openingWidth=parent.size.width-2*parent.thickness;p.openingHeight=parent.size.height-2*parent.thickness;p.confirmed=false;p.confirmationKey=null;doorRender();};
+ $('#doorPreview').onclick=()=>{try{if(st.project!==current||st.revision!==current.ensemble.revision)throw Error('Projekt geändert; Türplanung neu öffnen.');read();p.confirmed=false;p.confirmationKey=null;const m=doorModel(p,parent,e.total);if(m.errors.length)throw Error(m.errors.join(' '));if($('#doorConfirm').checked){if(!m.complete)throw Error('Vor Bestätigung klären: '+m.pending.join('; '));p.confirmed=true;p.confirmationKey=m.key;}enProposal([{action:'set_door',door:structuredClone(p)}],parent.name+' · '+(p.type?DOOR_TYPES[p.type]:'Türplanung')+' · '+(p.confirmed?'Maße bestätigt':'Offene Angaben bleiben offen'));}catch(err){alert(err.message);}};
+ $('#doorClose').onclick=()=>{doorEditor=null;box.innerHTML='';};$('#doorRemove')?.addEventListener('click',()=>enProposal([{action:'remove_door',id:p.id}],'Türplanung entfernen'));show();box.scrollIntoView?.({behavior:'smooth',block:'start'});
+}
+function doorLegacyEnsemble(e){const old=structuredClone(e);delete old.doors;old.history=old.history.map(h=>({...h,commands:(h.commands||[]).filter(c=>!['set_door','remove_door'].includes(c.action))})).filter(h=>h.commands.length);return old;}
+function doorTalkContext(e){const r=ensembleResolve(e),q=doorQuestions(e,r.modules);if(!q.length)return '';return '\nTürplanung (lokaler, verbindlicher Stand): '+JSON.stringify((e.doors||[]).map(({confirmationKey,...d})=>d))+'\nOffene Türfragen: '+q.join('; ')+'. Bei Drehtüren aufschlagend/zwischenschlagend/überfälzt unterscheiden. Bei Schiebetüren keine Drehtüranschläge abfragen. Nur fehlende Angaben gezielt klären; Herstellerdaten nicht erfinden. Türfelder ausschließlich in der lokalen Türplanung ändern. Keine Beschlagvorschläge als ausgewählt darstellen.';}
+
 const ENSEMBLE_FAMILIES={cabinet:'Korpus',frame:'Rahmen',board:'Brett',sockel:'Sockel aus Plattenmaterial',custom:'Eigene Baugruppe'};
 const E_AXES=['width','height','depth'],E_POS=['x','y','z'];
 const eCopy=x=>structuredClone(x),eOwn=(o,k)=>Object.hasOwn(o,k),eId=s=>typeof s==='string'&&/^[A-Za-z][A-Za-z0-9_-]{0,49}$/.test(s);
@@ -7228,7 +7395,7 @@ function ensembleExpression(value,depth=0){
 function eDimensionRecord(obj,keys){eKeys(obj,keys);return Object.fromEntries(keys.map(k=>[k,ensembleExpression(obj[k]??null)]));}
 function ensembleValidate(input){
  if(!input||input.schemaVersion!==1||!Number.isSafeInteger(input.revision)||input.revision<0)throw Error('Unbekanntes Gesamtprojekt.');
- const e=eCopy(input);eKeys(e,['schemaVersion','revision','total','shared','variables','modules','decisions','purchases','history','drawers']);
+ const e=eCopy(input);eKeys(e,['schemaVersion','revision','total','shared','variables','modules','decisions','purchases','history','drawers','doors']);
  e.total=eDimensionRecord(e.total,E_AXES);for(const v of Object.values(e.total))if(v!==null&&(!eNumber(v)||v<=0))throw Error('Gesamtmaße müssen Zahlen über 0 bis 10000 mm sein.');
  eKeys(e.shared,['material','thickness']);if(!eText(e.shared.material,300)||e.shared.thickness!==null&&(!eNumber(e.shared.thickness)||e.shared.thickness<=0))throw Error('Gemeinsames Material oder Dicke ungültig.');
  if(!e.variables||typeof e.variables!=='object'||Array.isArray(e.variables)||Object.keys(e.variables).length>40)throw Error('Zu viele gemeinsame Parameter.');for(const [k,v]of Object.entries(e.variables)){if(!eId(k))throw Error('Ungültiger Parametername.');e.variables[k]=ensembleExpression(v);}
@@ -7243,6 +7410,7 @@ function ensembleValidate(input){
   if(m.project!==undefined&&(!m.project||typeof m.project!=='object'||Array.isArray(m.project)||m.project.ensemble))throw Error('Ungültige Einzelkonstruktion.');
  }
  const drawerIds=new Set();if(e.drawers!==undefined){if(!Array.isArray(e.drawers)||e.drawers.length>20)throw Error('Höchstens 20 Schubkästen möglich.');e.drawers=e.drawers.map(p=>{const d=drawerPlanValidate(p,ensembleExpression);if(drawerIds.has(d.id)||!e.modules.some(m=>m.id===d.parentId&&m.family==='cabinet'))throw Error('Schubkasten benötigt einen eindeutigen Namen und einen vorhandenen Korpus.');drawerIds.add(d.id);return d;});}
+ if(e.doors!==undefined){if(!Array.isArray(e.doors)||e.doors.length>40)throw Error('Höchstens 40 Türgruppen sind möglich.');const doorIds=new Set(),parents=new Set();e.doors=e.doors.map(raw=>{const p=doorValidate(raw);if(doorIds.has(p.id)||parents.has(p.parentId)||!e.modules.some(m=>m.id===p.parentId&&doorCandidate(m)))throw Error('Türgruppe benötigt eine eindeutige Kennung und einen vorhandenen Korpus. Pro Korpus zunächst eine Türgruppe.');doorIds.add(p.id);parents.add(p.parentId);return p;});}
  for(const m of e.modules){if(m.parentId&&!ids.has(m.parentId))throw Error('Übergeordnete Baugruppe fehlt.');let seen=new Set([m.id]),parent=m.parentId;while(parent){if(seen.has(parent))throw Error('Zyklische Baugruppenhierarchie.');seen.add(parent);parent=e.modules.find(v=>v.id===parent)?.parentId;}}
  if(!Array.isArray(e.decisions)||e.decisions.length>200||e.decisions.some(d=>!d||!eId(d.id)||!eText(d.scope,100)||d.scope!=='all'&&!ids.has(d.scope)||!eText(d.label,150)||!eText(d.value,2000)))throw Error('Ungültige Projektentscheidung.');
  if(new Set(e.decisions.map(d=>d.id)).size!==e.decisions.length)throw Error('Doppelte Projektentscheidung.');
@@ -7277,7 +7445,7 @@ function ensembleResolve(input){
   return d;
  });
  for(let i=0;i<drawers.length;i++)for(let j=i+1;j<drawers.length;j++){const a=drawers[i],b=drawers[j];if(a.parentId===b.parentId&&[a.region.x,a.region.y,a.region.width,b.region.x,b.region.y,b.region.width].every(v=>v!==null)&&a.region.x<b.region.x+b.region.width-.001&&b.region.x<a.region.x+a.region.width-.001&&a.region.y<b.region.y+2*b.frontGap+b.frontHeight+b.shelfThickness-.001&&b.region.y<a.region.y+2*a.frontGap+a.frontHeight+a.shelfThickness-.001)throw Error('Schubkastenbereiche überschneiden sich. Lage der Erweiterung anpassen.');}
- return {ensemble:e,modules,drawers,unknown:[...unknown],warnings,values:Object.fromEntries(values)};
+ const doors=doorModels(e,modules);return {ensemble:e,modules,drawers,doors,unknown:[...unknown],warnings,values:Object.fromEntries(values)};
 }
 function ensembleExprText(v){if(v===null||v===undefined)return 'offen';if(typeof v==='number')return String(v);if(v.ref)return v.ref;const symbols={add:' + ',sub:' - ',min:', ',max:', '};return (['min','max'].includes(v.op)?v.op:'')+'('+v.args.map(ensembleExprText).join(symbols[v.op])+')';}
 function ensembleApply(input,commands,{expectedRevision=input.revision,source='manual'}={}){
@@ -7292,7 +7460,9 @@ function ensembleApply(input,commands,{expectedRevision=input.revision,source='m
   else if(cmd.action==='set_settings'){eKeys(cmd,['action','id','values']);const m=e.modules.find(m=>m.id===cmd.id);if(!m)throw Error('Baugruppe fehlt.');const patch=eSettings(m.family,cmd.values);m.settings={...m.settings,...patch};}
   else if(cmd.action==='set_drawer'){eKeys(cmd,['action','drawer']);const d=drawerPlanValidate(cmd.drawer,ensembleExpression);e.drawers??=[];const i=e.drawers.findIndex(p=>p.id===d.id);if(i<0)e.drawers.push(d);else e.drawers[i]=d;}
   else if(cmd.action==='remove_drawer'){eKeys(cmd,['action','id']);if(!(e.drawers||[]).some(d=>d.id===cmd.id))throw Error('Schubkasten fehlt.');e.drawers=e.drawers.filter(d=>d.id!==cmd.id);}
-  else if(cmd.action==='remove_module'){eKeys(cmd,['action','id']);if(!e.modules.some(m=>m.id===cmd.id))throw Error('Baugruppe fehlt.');e.modules=e.modules.filter(m=>m.id!==cmd.id);e.decisions=e.decisions.filter(d=>d.scope!==cmd.id);e.purchases=e.purchases.filter(d=>d.scope!==cmd.id);}
+  else if(cmd.action==='set_door'){eKeys(cmd,['action','door']);const p=doorValidate(cmd.door);e.doors??=[];const i=e.doors.findIndex(q=>q.id===p.id);if(i<0)e.doors.push(p);else e.doors[i]=p;}
+  else if(cmd.action==='remove_door'){eKeys(cmd,['action','id']);if(!(e.doors||[]).some(p=>p.id===cmd.id))throw Error('Türgruppe fehlt.');e.doors=e.doors.filter(p=>p.id!==cmd.id);}
+  else if(cmd.action==='remove_module'){eKeys(cmd,['action','id']);if(!e.modules.some(m=>m.id===cmd.id))throw Error('Baugruppe fehlt.');e.modules=e.modules.filter(m=>m.id!==cmd.id);if(e.doors)e.doors=e.doors.filter(d=>d.parentId!==cmd.id);e.decisions=e.decisions.filter(d=>d.scope!==cmd.id);e.purchases=e.purchases.filter(d=>d.scope!==cmd.id);}
   else if(cmd.action==='set_decision'){eKeys(cmd,['action','decision']);eKeys(cmd.decision,['id','scope','label','value']);const d=eCopy(cmd.decision),idx=e.decisions.findIndex(v=>v.id===d.id);if(idx<0)e.decisions.push(d);else e.decisions[idx]=d;}
   else if(cmd.action==='set_purchase'){eKeys(cmd,['action','purchase']);eKeys(cmd.purchase,['id','scope','item','quantity','unit','spec','inStock']);const p=eCopy(cmd.purchase),idx=e.purchases.findIndex(v=>v.id===p.id);if(idx<0)e.purchases.push(p);else e.purchases[idx]=p;}
   else throw Error('Unbekannter Änderungsauftrag.');
@@ -7310,15 +7480,21 @@ function ensembleDiff(before,after){
  for(const d of after.drawers||[])if(JSON.stringify(d)!==JSON.stringify((before.drawers||[]).find(v=>v.id===d.id)))out.push(d.name+': fester Fachboden, '+d.frontHeight+'-mm-Front, gezinkter Kasten, '+d.bottomThickness+'-mm-Sperrholzboden; Auszug '+({selected:'gewählt',suggested:'vorgeschlagen',none:'offen'}[d.runner])+'.');
  for(const d of after.drawers||[]){const old=(before.drawers||[]).find(v=>v.id===d.id);if(old)for(const [k,v]of Object.entries(d))if(!['confirmationKey'].includes(k)&&JSON.stringify(v)!==JSON.stringify(old[k]))out.push(d.name+' · '+({openingWidth:'Lichte Fachbreite',openingOffset:'Fachöffnung ab links',usableDepth:'Nutzbare Tiefe',frontHeight:'Fronthöhe',sideThickness:'Kastenwanddicke',boxHeight:'Kastenhöhe',material:'Kastenholz',frontMaterial:'Frontmaterial',region:'Planungsbereich',joinery:'Zinkung',runner:'Auszug',dimensionsConfirmed:'Einbaumaße bestätigt'}[k]||k)+': '+JSON.stringify(old[k])+' → '+JSON.stringify(v));}
  for(const d of before.drawers||[])if(!(after.drawers||[]).some(v=>v.id===d.id))out.push('Schubkasten entfernen: '+d.name);
+ for(const g of b.doors){const d=g.p;if(JSON.stringify(d)!==JSON.stringify((before.doors||[]).find(q=>q.id===d.id)))out.push(g.parent.name+' · '+(DOOR_TYPES[d.type]||'Türart offen')+' · '+(d.hardwareName||'Beschlag offen')+(g.geometry.length?' · Türblatt '+classicFormat(g.leafW)+' × '+classicFormat(g.leafH)+' mm':' · Maße offen')+(g.ready?' bestätigt':' (Entwurf)'));}
+ for(const d of before.doors||[])if(!(after.doors||[]).some(v=>v.id===d.id))out.push('Türgruppe entfernen: '+(a.modules.find(m=>m.id===d.parentId)?.name||d.id));
  if(!out.length)out.push('Verknüpfungen oder Konstruktionsangaben werden aktualisiert.');return out;
 }
 function ensembleKnowledge(input){const r=ensembleResolve(input);return 'GESAMTPROJEKT Stand '+input.revision+'\n'+JSON.stringify({total:input.total,shared:input.shared,variables:input.variables,modules:r.modules.map(({project,...m})=>({...m,hasConstruction:!!project})),decisions:input.decisions,purchases:input.purchases,drawers:r.drawers,open:r.unknown,warnings:r.warnings})+'\nEin Eintrag in drawers mit replacesLowestShelf:true ersetzt im gewählten Bereich die frühere verstellbare Fachbodenangabe; die übrigen Fachböden bleiben bestehen. Abgeleitete Maße kommen aus den hinterlegten Verknüpfungen. Vorschläge sind noch keine bestätigten Änderungen. Fehlende Grundkonstruktionen ausdrücklich benennen; keine erfundenen Werkzeichnungen oder Fertigungsfreigaben.';}
 function ensembleAggregate(input,cutlists={},childPurchases={}){
  const e=ensembleValidate(input),rows=[],groups=new Map(),purchases=new Map(),open=[],unquantifiedPurchases=[];
- const resolvedDrawers=ensembleResolve(e).drawers;
- for(const m of [...e.modules,...resolvedDrawers.map(d=>({id:'drawer_'+d.id,name:d.name,drawer:d}))]){const dm=m.drawer?drawerPlanModel(m.drawer):null,list=dm?(dm.ready?dm.cutlist:[]):cutlists[m.id];if(!Array.isArray(list)||!list.length){open.push(m.name+': noch keine bestätigte Stückliste.');continue;}for(const row of list){if(!row||![row.length_mm,row.width_mm,row.thickness_mm,row.qty].every(v=>typeof v==='number'&&Number.isFinite(v)&&v>0)){open.push(m.name+': unvollständige Stücklistenposition.');continue;}const r={...row,part:m.name+' · '+row.part,moduleId:m.id};rows.push(r);const key=JSON.stringify([row.material,row.thickness_mm]);const g=groups.get(key)||{material:row.material,thickness:row.thickness_mm,area:0,volume:0,parts:0};g.area+=row.length_mm*row.width_mm*row.qty/1e6;g.volume+=row.length_mm*row.width_mm*row.thickness_mm*row.qty/1e9;g.parts+=row.qty;groups.set(key,g);}}
+ const resolved=ensembleResolve(e),resolvedDrawers=resolved.drawers,resolvedDoors=resolved.doors;
+ for(const m of [...e.modules,...resolvedDrawers.map(d=>({id:'drawer_'+d.id,name:d.name,drawer:d})),...resolvedDoors.map(d=>({id:'door_'+d.p.id,name:d.parent.name+' · Türen',door:d}))]){const dm=m.drawer?drawerPlanModel(m.drawer):null,list=m.door?m.door.cutlist:dm?(dm.ready?dm.cutlist:[]):cutlists[m.id];if(!Array.isArray(list)||!list.length){open.push(m.name+': noch keine bestätigte Stückliste.');continue;}for(const row of list){if(!row||![row.length_mm,row.width_mm,row.thickness_mm,row.qty].every(v=>typeof v==='number'&&Number.isFinite(v)&&v>0)){open.push(m.name+': unvollständige Stücklistenposition.');continue;}const r={...row,part:m.name+' · '+row.part,moduleId:m.id};rows.push(r);const key=JSON.stringify([row.material,row.thickness_mm]);const g=groups.get(key)||{material:row.material,thickness:row.thickness_mm,area:0,volume:0,parts:0};g.area+=row.length_mm*row.width_mm*row.qty/1e6;g.volume+=row.length_mm*row.width_mm*row.thickness_mm*row.qty/1e9;g.parts+=row.qty;groups.set(key,g);}}
  const replaced=new Set(e.modules.flatMap(m=>(m.project?.hardware?.applied||[]).flatMap(a=>(a.replaces||[]).filter(id=>typeof id==='string'&&id.startsWith('e:')&&e.purchases.some(p=>p.id===id.slice(2)&&p.scope===m.id)).map(id=>id.slice(2)))));
+ for(const d of resolvedDoors){const p=d.p;if(p.hardwareChecked&&p.hardwareName&&p.hardwareSource&&d.quantity>0&&p.purchaseRef&&e.purchases.some(a=>a.id===p.purchaseRef&&(a.scope===p.parentId||a.scope==='all')))replaced.add(p.purchaseRef);}
  const allPurchases=e.purchases.filter(p=>!replaced.has(p.id));
+ for(const d of resolvedDoors){const p=d.p;if(p.hardwareChecked&&p.hardwareName&&p.hardwareSource&&d.quantity>0){allPurchases.push({id:'door_h_'+p.id,scope:p.parentId,item:p.hardwareName,quantity:d.quantity,unit:d.unit,spec:[p.hardwareArticle,p.hardwareSource,d.ready?'Maße bestätigt, Montage prüfen':'Einbau noch prüfen'].filter(Boolean).join(' · '),inStock:false});}
+ if(p.grip==='handle'&&p.handleName)allPurchases.push({id:'door_g_'+p.id,scope:p.parentId,item:p.handleName,quantity:p.count,unit:'Stück',spec:'Griff je Flügel · Montageposition prüfen',inStock:false});}
+ open.push(...doorQuestions(e,resolved.modules));
  for(const d of ensembleResolve(e).drawers){const m=drawerPlanModel(d);if(d.runner==='selected')allPurchases.push({id:'drawer_'+d.id,scope:d.parentId,item:DRAWER_RUNNER.label,quantity:1,unit:'Garnitur',spec:'Artikel '+DRAWER_RUNNER.article+' · links / rechts · '+(m.ready?'Einbaumaße bestätigt':'Einbau noch prüfen'),inStock:false});if(m.pending.length)open.push(d.name+': Einbaumaße / Auswahl noch offen. Details in der Schubkastenplanung.');open.push(d.name+': Montagebearbeitungen noch prüfen (Führung, Dübel und Frontbefestigung).');}
  for(const m of e.modules)for(const [i,p]of (childPurchases[m.id]||[]).entries()){
   const match=String(p.quantity||'').trim().match(/^(\d+(?:[.,]\d+)?)\s+([^\d].{0,24})$/u);
@@ -7350,7 +7526,7 @@ function ensembleSvg(input){
   body+='</g>';
   labels.push({id:m.id,n:index+1,ax:px+w,ay:py+h/2});
  }
- for(const d of r.drawers)body+=drawerPlanOverlay(d,{s,x,bottom});
+ for(const d of r.drawers)body+=drawerPlanOverlay(d,{s,x,bottom});body+=doorFrontMarkup(r,{s,x,bottom});
  // Draw every identifier after all shapes, outside their overlapping footprints.
  labels.sort((a,b)=>a.ay-b.ay||a.n-b.n);
  let last=y-22;
@@ -7395,7 +7571,7 @@ function enPurchaseLists(root){const out={};for(const m of root.ensemble.modules
 function ensembleSync(root){
  root.ensemble=ensembleValidate(root.ensemble);for(const m of root.ensemble.modules)enSyncChild(root,m);
  const r=ensembleResolve(root.ensemble),a=ensembleAggregate(root.ensemble,enCutlists(root),enPurchaseLists(root));
- const open=[...r.unknown.map(k=>enLabel(k,root.ensemble)+' noch offen.'),...r.warnings,...a.open];
+ const open=[...new Set([...doorQuestions(root.ensemble,r.modules),...r.unknown.map(k=>enLabel(k,root.ensemble)+' noch offen.'),...r.warnings,...a.open])];
  root.analysis={stateVersion:2,deferralVersion:1,revision:root.ensemble.revision,object:root.customTitle||root.title,summary:root.knowledge||'Mehrere Baugruppen mit gemeinsamen Maßbezügen.',recognized:['Gesamtprojekt mit '+r.modules.length+' Baugruppen.'],assumptions:[],unknown:open,safety_notes:[],enough_information:!open.length};
  root.reconstruction={title:root.title,summary:root.knowledge||'',construction:'Gesamtprojekt · '+r.modules.length+' Baugruppen · Stand '+root.ensemble.revision,cutlist:a.rows,materials:a.materials.map(g=>({item:g.material+' · '+g.thickness+' mm',quantity:g.area.toLocaleString('de-DE',{maximumFractionDigits:3})+' m² netto',spec:'Summe der bestätigten Teile, ohne Verschnitt; noch keine Anzahl von Einkaufsplatten.'})),steps:[],open_points:open};root.projectDirty=true;
  const manual=(root.purchasedParts||[]).filter(p=>p.source!=='ensemble');root.purchasedParts=[...manual,...a.purchases.map(p=>({id:'en-'+p.id,item:p.item,quantity:p.quantity+' '+p.unit,dimensions:p.spec,use:p.scopes.map(s=>s==='all'?'Gesamtprojekt':root.ensemble.modules.find(m=>m.id===s)?.name||s).join(', '),source:'ensemble',ensembleStock:p.inStock})),...a.unquantifiedPurchases.map(p=>({...p,id:'en-'+p.id,quantity:p.quantity||'Menge offen',use:root.ensemble.modules.find(m=>m.id===p.scope)?.name||p.scope,source:'ensemble',ensembleStock:p.inStock}))];
@@ -7427,13 +7603,14 @@ function enOverview(){
  const moduleRows=r.modules.map(m=>'<section class="notice"><strong>'+esc(m.name)+'</strong><p>'+esc(ENSEMBLE_FAMILIES[m.family])+' · '+[m.size.width,m.size.height,m.size.depth].map(v=>v??'offen').join(' × ')+' mm<br>Lage: '+[m.position.x,m.position.y,m.position.z].map(v=>v??'offen').join(' / ')+' mm'+(m.parentId?'<br>Unterbaugruppe von '+esc(e.modules.find(v=>v.id===m.parentId)?.name):'')+'</p><button class="secondary small" data-en-edit-module="'+m.id+'">Maße und Angaben</button> '+(!m.planningOnly&&m.family!=='custom'?'<button class="primary small" data-en-open="'+m.id+'">Einzelkonstruktion öffnen</button>':'<span class="hint">Konstruktion noch nicht vollständig im Baukasten abgebildet</span>')+'<details><summary>Konstruktionsentscheidungen</summary>'+((e.drawers||[]).some(d=>d.parentId===m.id&&d.replacesLowestShelf)?'<p>Aktuelle Erweiterung: Der unterste Fachboden im gewählten Bereich wird fest verdübelt; der Schubkasten sitzt darunter. Diese Festlegung ersetzt dort die frühere Einlegebodenangabe.</p>':'')+m.notes.map(n=>'<p>'+esc(n)+'</p>').join('')+'</details></section>').join('');
  return '<h3>Gesamtprojekt · Stand '+e.revision+'</h3><button id="enAsk" class="secondary">Aufteilung im Werkstatt-Talk besprechen</button><p>Gemeinsame Maße, getrennte Einzelkonstruktionen. Alle Maße in mm; Lage ab links / Boden / Rückseite.</p>'+
  (p?'<section class="notice"><strong>Vorschlag zur Übernahme</strong><p>'+esc(p.reply||'')+'</p><ul>'+p.changes.map(v=>'<li>'+esc(v)+'</li>').join('')+'</ul><button class="primary" id="enAdopt">Änderungen übernehmen</button><button class="ghost" id="enDiscard">Vorschlag verwerfen</button></section>':'')+
- '<div class="wdFields">'+dim('width','Gesamtbreite',e.total.width)+dim('height','Gesamthöhe',e.total.height)+dim('depth','Maximale Gesamttiefe',e.total.depth)+'<label class="wdField"><span>Gemeinsames Material</span><input id="enMaterial" value="'+esc(e.shared.material)+'"></label>'+dim('thickness','Gemeinsame Materialdicke',e.shared.thickness)+'</div><button id="enTotals" class="secondary">Auswirkungen der Maßänderung prüfen</button>'+(typeof drSection==='function'?drSection(e):'')+moduleRows+
+ '<div class="wdFields">'+dim('width','Gesamtbreite',e.total.width)+dim('height','Gesamthöhe',e.total.height)+dim('depth','Maximale Gesamttiefe',e.total.depth)+'<label class="wdField"><span>Gemeinsames Material</span><input id="enMaterial" value="'+esc(e.shared.material)+'"></label>'+dim('thickness','Gemeinsame Materialdicke',e.shared.thickness)+'</div><button id="enTotals" class="secondary">Auswirkungen der Maßänderung prüfen</button>'+doorSection(e)+(typeof drSection==='function'?drSection(e):'')+moduleRows+
  '<div id="enModuleEditor"></div><details><summary>Baugruppe hinzufügen</summary><label>Name<input id="enNewName" placeholder="z. B. offenes Fach, Tischplatte oder Schublade"></label><label>Grundkonstruktion<select id="enNewFamily">'+Object.entries(ENSEMBLE_FAMILIES).map(([id,name])=>'<option value="'+id+'">'+name+'</option>').join('')+'</select></label><p class="hint">Noch nicht unterstützte Konstruktionen als eigene Baugruppe mit offenen Details anlegen.</p><button id="enAddModule" class="secondary">Baugruppe vorschlagen</button></details>'+
  '<details><summary>Gemeinsame Parameter</summary>'+Object.entries(e.variables).map(([k,v])=>'<label>'+esc(enLabel('var.'+k))+' (mm)<input data-en-var="'+k+'" inputmode="decimal" value="'+(r.values['var.'+k]??'')+'"><small>'+esc(enExprLabel(v))+'</small></label>').join('')+'<label>Neuer Parametername<input id="enVarName" placeholder="z. B. Sitzhoehe"></label><label>Wert in mm<input id="enVarValue" inputmode="decimal"></label><button id="enVariables" class="secondary">Parameteränderungen prüfen</button></details>'+
  '<details><summary>Maße miteinander verknüpfen</summary><label>Zielmaß<select id="enLinkTarget">'+e.modules.flatMap(m=>['width','height','depth','x','y','z'].map(k=>'<option value="'+m.id+'.'+k+'">'+esc(m.name+' · '+enRefLabels[k])+'</option>')).join('')+'</select></label><label>Ausgangsmaß<select id="enLinkSource">'+enSourceOptions()+'</select></label><label>Fester Ausgangswert (mm)<input id="enLinkNumber" inputmode="decimal"></label><label>Verknüpfung<select id="enLinkOp"><option value="same">Gleich übernehmen</option><option value="sub">Abzüglich</option><option value="add">Zuzüglich</option></select></label><label>Zweites Maß<select id="enLinkSecond">'+enSourceOptions()+'</select></label><label>Fester Zu- oder Abschlag (mm)<input id="enLinkOffset" inputmode="decimal" value="0"></label><button id="enLink" class="secondary">Verknüpfung prüfen</button></details>'+
  '<h3>Bestätigte gemeinsame Entscheidungen</h3>'+e.decisions.map(d=>'<p><strong>'+esc(d.label)+'</strong>: '+esc(d.value)+'</p>').join('')+'<p class="notice">'+(a.complete?'Alle Baugruppen tragen bestätigte Stücklisten bei.':'Gemeinsamer Materialbedarf noch unvollständig: '+a.open.map(esc).join(' '))+'</p>';
 }
 function enBindOverview(){
+ doorBind();
  if(typeof drBind==='function')drBind();
  $('#enAsk').onclick=()=>{switchTab('talkPane');if(current.knowledge)ensembleTalk({message:'Bitte schlage eine passende Aufteilung und nächste Frage für meine Idee vor: '+current.knowledge});};
  $('#enAdopt')?.addEventListener('click',enAdopt);$('#enDiscard')?.addEventListener('click',()=>{current.ensembleProposal=null;dbPutProject(current).catch(e=>alert(e.message));renderRecord();});
@@ -7468,7 +7645,7 @@ async function ensembleDownloadPdf(){
  const button=$('#enPrint'),label=button.textContent;
  button.disabled=true;button.textContent='PDF wird erstellt …';
  try{
-  const snapshot={title:current.title,ensemble:JSON.parse(JSON.stringify(current.ensemble))};
+  const snapshot={title:current.customTitle||current.title,ensemble:JSON.parse(JSON.stringify(current.ensemble))};
   const blob=await drawingSvgPagesPdfBlob(ensemblePdfPages(snapshot),100);
   const url=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=url;a.download='Gesamtansicht_dev65_1.pdf';document.body.appendChild(a);a.click();a.remove();
@@ -7620,6 +7797,7 @@ function classicOverview(project,paper='A4'){
  b+=front.join('');
  // This overlay is geometric input only; its tentative shelf widths stay dashed.
  for(const d of r.drawers){if([d.region.x,d.region.y,d.region.width].some(v=>v===null))continue;const m=drawerPlanModel(d),xx=x+(d.region.x+d.frontGap)*s,yy=bottom-(d.region.y+d.frontGap+d.frontHeight)*s;b+=rect(xx,yy,m.frontWidth*s,d.frontHeight*s,'white')+line(xx+m.frontWidth*s*.35,yy+d.frontHeight*s*.5,xx+m.frontWidth*s*.65,yy+d.frontHeight*s*.5,'thin');if(m.shelfY!==null&&!cabinets.some(q=>q.id===d.parentId))b+=rect(x+(d.region.x+(m.offset??0))*s,bottom-(m.shelfY+d.shelfThickness)*s,(d.openingWidth??d.region.width)*s,d.shelfThickness*s,'none',d.openingWidth===null?'hidden':'visible');}
+ b+=doorFrontMarkup(r,{s,x,bottom});
  let missing=[];
  if(knownD){
   // Far-to-near paint order; left-side view projects depth with the front at left.
@@ -7627,6 +7805,8 @@ function classicOverview(project,paper='A4'){
   // Top view: rear at top; known nearer top faces occlude lower ones.
   for(const m of [...r.modules].sort((a,b)=>(a.position.y+a.size.height)-(b.position.y+b.size.height))){const q=m.size,p=m.position;if([q.depth,q.width,p.z,p.x].some(v=>v===null)){missing.push(m.name);continue;}b+=rect(x+p.x*s,planY+p.z*s,q.width*s,q.depth*s,'white');}
   for(const model of cabinets)b+=classicCabinetPlan(model,{s,x,planY});
+  for(const m of r.doors){for(const g of m.geometry){if(!Number.isFinite(g.front)||!m.thickness)continue;const pos=m.parent.position;const external=m.p.mount==='overlay'||m.p.mount==='rebated';if(external){b+=rect(sideX+(D-g.front)*s,bottom-(pos.y+g.y+g.h)*s,m.thickness*s,g.h*s,'white',m.ready?'visible':'hidden');b+=rect(x+(pos.x+g.x)*s,planY+(g.front-m.thickness)*s,g.w*s,m.thickness*s,'white',m.ready?'visible':'hidden');}}}
+
   b+=dh(sideX,sideX+D*s,bottom+10,bottom,classicFormat(D)+' max.')+dv(x-10,planY,planY+D*s,x,classicFormat(D)+' max.');
  }else{b+=text(sideX,y+5,'Gesamttiefe offen',2.8)+text(x,planY+5,'Draufsicht: Tiefe offen',2.8);}
  b+=dh(x,x+W*s,bottom+10,bottom,classicFormat(W))+dv(x-10,y,bottom,x,classicFormat(H));
@@ -7641,7 +7821,7 @@ function classicOverview(project,paper='A4'){
  });
  const notes=[knownD?'Seitenansicht links neben dem Möbel betrachtet; Draufsicht darunter.':'Seiten- und Draufsicht erst nach Eingabe der Tiefe vollständig.',missing.length?'Tiefen offen: '+[...new Set(missing)].join('; '):'Alle dargestellten Außenmaße aus den Projekteingaben.',cabinets.some(q=>q.proposed)?'Bodenhöhen: gleichmäßig verteilter, änderbarer Vorschlag.':cuts.some(c=>c.proposed)?'Schnittlage / Öffnungsversatz teilweise vorgeschlagen.':'Schnittlagen beziehen sich auf die Schubkastenöffnungen.'];
  // Long notes are split so no line can leave the sheet.
- const noteRows=notes.flatMap(wrap).slice(0,4);
+ if(r.doors.length||doorSuggestions(r.ensemble,r.modules).length)notes.unshift('Türkonturen gestrichelt = Entwurf / schematisch; Türmaße siehe zugeordnetes Blatt.');const noteRows=notes.flatMap(wrap).slice(0,4);
  return classicFrame(project,paper,layout.landscape,'Gesamtprojekt · Ansichten und Schnittlagen',s,b,noteRows);
 }
 // A piecewise coordinate map removes only a nominated plain interval. Actual
@@ -7739,13 +7919,14 @@ function classicDrawingPages(project,{paper='A4',details=true}={}){
  if(!['A4','A3'].includes(paper))throw Error('Bitte A4 oder A3 wählen.');
  const pages=[classicOverview(project,paper)];
  for(const c of classicCutList(project.ensemble)){pages.push(classicSectionSheet(project,c,paper,true));const regal=classicVerticalRegalSheet(project,c,paper);if(regal)pages.push(regal);pages.push(classicSectionSheet(project,c,paper,false));if(details)pages.push(classicDetailSheet(project,c,paper));}
+ if(details)pages.push(...doorDetails(project,paper));
  return pages;
 }
 function classicDrawingOptions(){return{paper:$('#enPaper')?.value==='A3'?'A3':'A4',details:$('#enDetailSheets')?.checked!==false};}
 function classicRenderDrawing(){
  const box=$('#woodDrawingBox');
  box.innerHTML='<h3>Werkzeichnung · Ansichten und Schnitte</h3><div class="notice"><label>Papierformat<select id="enPaper"><option value="A4">DIN A4 · Standarddrucker</option><option value="A3">DIN A3 · größere Blätter</option></select></label><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="enDetailSheets" checked style="width:auto"> Zugeordnete Details 1:1 mit ausgeben</label><p>Vorderansicht, Seitenansicht von links rechts daneben, Draufsicht darunter. Schnittlagen beziehen sich auf die dargestellten Schubkästen.</p><div id="enShelfControls"></div></div><div id="enClassicPages"></div><button class="secondary" id="enSvgDownload">Ansichtenblatt als SVG herunterladen</button><button class="primary" id="enPrint">Werkzeichnung als PDF herunterladen</button><details id="enJointExtras"><summary>Zinkenteilung · optionales Arbeitsblatt</summary></details>';
- const update=()=>{try{const options=classicDrawingOptions(),project={title:current.title,ensemble:current.ensemble,classicDrawingSettings:current.classicDrawingSettings},pages=classicDrawingPages(project,options);$('#enClassicPages').innerHTML=pages.map((svg,i)=>'<section style="margin:14px 0;background:white;border:1px solid #ddd"><p style="padding:6px 12px">Blatt '+(i+1)+' / '+pages.length+'</p>'+svg.replace('<svg ','<svg style="display:block;width:100%;height:auto" ')+'</section>').join('');$('#enJointExtras').innerHTML='<summary>Zinkenteilung · optionales Arbeitsblatt</summary>'+ensembleResolve(current.ensemble).drawers.map(drJointDrawing).join('');}catch(e){$('#enClassicPages').textContent=e.message;}};
+ const update=()=>{try{const options=classicDrawingOptions(),project={title:current.customTitle||current.title,ensemble:current.ensemble,classicDrawingSettings:current.classicDrawingSettings},pages=classicDrawingPages(project,options);$('#enClassicPages').innerHTML=pages.map((svg,i)=>'<section style="margin:14px 0;background:white;border:1px solid #ddd"><p style="padding:6px 12px">Blatt '+(i+1)+' / '+pages.length+'</p>'+svg.replace('<svg ','<svg style="display:block;width:100%;height:auto" ')+'</section>').join('');$('#enJointExtras').innerHTML='<summary>Zinkenteilung · optionales Arbeitsblatt</summary>'+ensembleResolve(current.ensemble).drawers.map(drJointDrawing).join('');}catch(e){$('#enClassicPages').textContent=e.message;}};
  $('#enShelfControls').innerHTML=classicShelfControls(current);
  $$('[data-cw-save]').forEach(button=>button.onclick=async()=>{
   const project=current,id=button.dataset.cwSave,old=project.classicDrawingSettings,settings=JSON.parse(JSON.stringify(old||{shelves:{}}));settings.shelves??={};
@@ -7794,7 +7975,7 @@ async function ensembleTalk({openAnswers=[],message=null}={}){
  if(busy||reconstructionBusy)return;const project=current,text=message===null?$('#chatInput').value.trim():String(message).trim(),pics=message===null?[...pendingTalkPhotos]:[];
  const full=[text,...openAnswers.map(a=>a.question+'\n'+a.answer)].filter(Boolean).join('\n');if(!full&&!pics.length)return;
  if(pics.length){project.photos.push(...pics);pendingTalkPhotos=[];}project.chat.push({role:'user',text:full||'Bitte das Bild in Baugruppen aufteilen.',photoIds:pics.map(p=>p.id)});if(message===null)$('#chatInput').value='';const revision=project.ensemble.revision;setTalkBusy(true);renderTalk();
- try{if(!ensembleServerReady||(project.ensemble.drawers?.length&&!ensembleDrawerReady)){const health=await secureFetch(API+'/health');if(!health.ok)throw Error('Der Entwickler-Server ist noch nicht bereit.');const status=await health.json();if(status.ensembleProtocol!==1)throw Error('Der Entwickler-Server benötigt das Backend aus dev60 für den Gesamtprojekt-Talk. Die lokale Planung bleibt verfügbar.');if(project.ensemble.drawers?.length&&status.drawerProtocol!==1)throw Error('Für den Werkstatt-Talk mit Schubkästen bitte das Backend aus dev65 einspielen. Die lokale Planung bleibt verfügbar.');ensembleDrawerReady=status.drawerProtocol===1;ensembleServerReady=true;}const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ensemble:project.ensemble,chat:project.chat,knowledge:project.knowledge,images:project.photos.map(p=>p.dataUrl),profile:projectProfile(project)})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.ensembleProtocol!==1)throw Error('Der Entwickler-Server benötigt das Backend aus dev60 für den Gesamtprojekt-Talk. Die lokale Planung bleibt verfügbar.');if(project.ensemble.revision!==revision||d.baseRevision!==revision)throw Error('Projektstand wurde inzwischen geändert. Bitte die Frage erneut senden.');project.chat.push({role:'assistant',text:d.reply});if(d.proposal){ensembleApply(project.ensemble,d.proposal.commands,{expectedRevision:d.proposal.baseRevision});project.ensembleProposal={...d.proposal,reply:d.reply};}await dbPutProject(project);if(current===project){renderRecord();if(d.proposal)switchTab('overview');}}
+ try{if(!ensembleServerReady||(project.ensemble.drawers?.length&&!ensembleDrawerReady)){const health=await secureFetch(API+'/health');if(!health.ok)throw Error('Der Entwickler-Server ist noch nicht bereit.');const status=await health.json();if(status.ensembleProtocol!==1)throw Error('Der Entwickler-Server benötigt das Backend aus dev60 für den Gesamtprojekt-Talk. Die lokale Planung bleibt verfügbar.');if(project.ensemble.drawers?.length&&status.drawerProtocol!==1)throw Error('Für den Werkstatt-Talk mit Schubkästen bitte das Backend aus dev65 einspielen. Die lokale Planung bleibt verfügbar.');ensembleDrawerReady=status.drawerProtocol===1;ensembleServerReady=true;}const r=await secureFetch(API+'/talk',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ensemble:doorLegacyEnsemble(project.ensemble),chat:project.chat,knowledge:(project.knowledge||'')+doorTalkContext(project.ensemble),images:project.photos.map(p=>p.dataUrl),profile:projectProfile(project)})});if(!r.ok)throw Error(await r.text());const d=await r.json();if(d.ensembleProtocol!==1)throw Error('Der Entwickler-Server benötigt das Backend aus dev60 für den Gesamtprojekt-Talk. Die lokale Planung bleibt verfügbar.');if(project.ensemble.revision!==revision||d.baseRevision!==revision)throw Error('Projektstand wurde inzwischen geändert. Bitte die Frage erneut senden.');project.chat.push({role:'assistant',text:d.reply});if(d.proposal){ensembleApply(project.ensemble,d.proposal.commands,{expectedRevision:d.proposal.baseRevision});project.ensembleProposal={...d.proposal,reply:d.reply};}await dbPutProject(project);if(current===project){renderRecord();if(d.proposal)switchTab('overview');}}
  catch(e){project.chat.push({role:'assistant',text:'Das Gespräch konnte nicht abgeschlossen werden: '+e.message});try{await dbPutProject(project);}catch{}alert(e.message);}finally{setTalkBusy(false);if(current===project)renderTalk();}
 }
 function ensembleInit(){
@@ -8241,7 +8422,7 @@ function captureOpenAnswerDrafts(project=current){
  $$('.openAnswer').forEach(el=>{const question=questions[Number(el.dataset.i)];if(!question)return;const index=drafts.findIndex(x=>x.question===question),value={question,answer:el.value};if(index<0)drafts.push(value);else drafts[index]=value});
  project.openAnswerDrafts=drafts.filter(x=>x.answer.trim());
 }
-function renderTalk(){frameTalkSync(current);const log=$('#chatLog');log.innerHTML=current.chat.length?current.chat.map(m=>`<div class="chatmsg ${m.role==='assistant'?'ai':''}"><div class="chatname">${m.role==='assistant'?"look, talk ’n build":"Du"}</div><div>${(m.role==='assistant'?escGerman(m.text):esc(m.text)).replace(/\n/g,'<br>')}</div>${m.photoIds?.length?`<div class="photoStrip">${m.photoIds.map(id=>{const p=current.photos.find(x=>x.id===id);return p?`<img src="${p.dataUrl}" alt="Talk-Foto">`:''}).join('')}</div>`:''}${calcView(m.calculation)}${m.drawingChange?'<button class="ghost" data-talk-drawing>Werkzeichnung ansehen</button>':''}</div>`).join(''):'<p>Noch kein Werkstattgespräch. Stell eine Frage – oder antworte mit Text, Foto oder beidem.</p>';const u=(current.analysis?.unknown||[]).slice(0,3),box=$('#editableOpen');box.innerHTML=u.length?u.map((q,i)=>`<div class="status"><span class="dot unknown"></span><div style="width:100%"><strong>${escGerman(q)}</strong><input class="openAnswer" data-i="${i}" value="${esc((current.openAnswerDrafts||[]).find(x=>x.question===q)?.answer||'')}" ${busy?'readonly aria-busy="true"':''} style="margin-top:7px" placeholder="Antwort optional …"><button type="button" class="ghost deferOpen" data-open="${i}" ${busy?'disabled':''}>Später klären</button></div></div>`).join('')+'<button class="secondary" id="acceptOpenAnswers">Ausgefüllte Antworten übernehmen</button>':`<div class="ok notice">${current.analysis?.deferred?.length?'Planung vorerst abgeschlossen. Die vorgemerkten Punkte klärst Du später.':'Keine offenen Punkte.'}</div>`;box.innerHTML=frameTalkSummaryHtml(current)+(frameTalkOpenItemsHtml(current,u,busy)??box.innerHTML)+deferredPanel();$$('.openAnswer').forEach(el=>el.oninput=()=>captureOpenAnswerDrafts());gallery($('#pendingTalkPhotos'),pendingTalkPhotos)}
+function renderTalk(){frameTalkSync(current);const log=$('#chatLog');log.innerHTML=current.chat.length?current.chat.map(m=>`<div class="chatmsg ${m.role==='assistant'?'ai':''}"><div class="chatname">${m.role==='assistant'?"look, talk ’n build":"Du"}</div><div>${(m.role==='assistant'?escGerman(m.text):esc(m.text)).replace(/\n/g,'<br>')}</div>${m.photoIds?.length?`<div class="photoStrip">${m.photoIds.map(id=>{const p=current.photos.find(x=>x.id===id);return p?`<img src="${p.dataUrl}" alt="Talk-Foto">`:''}).join('')}</div>`:''}${calcView(m.calculation)}${m.drawingChange?'<button class="ghost" data-talk-drawing>Werkzeichnung ansehen</button>':''}</div>`).join(''):'<p>Noch kein Werkstattgespräch. Stell eine Frage – oder antworte mit Text, Foto oder beidem.</p>';const u=(current.analysis?.unknown||[]).slice(0,3),box=$('#editableOpen');box.innerHTML=u.length?u.map((q,i)=>`<div class="status"><span class="dot unknown"></span><div style="width:100%"><strong>${escGerman(q)}</strong><input class="openAnswer" data-i="${i}" value="${esc((current.openAnswerDrafts||[]).find(x=>x.question===q)?.answer||'')}" ${busy?'readonly aria-busy="true"':''} style="margin-top:7px" placeholder="Antwort optional …"><button type="button" class="ghost deferOpen" data-open="${i}" ${busy?'disabled':''}>Später klären</button></div></div>`).join('')+'<button class="secondary" id="acceptOpenAnswers">Ausgefüllte Antworten übernehmen</button>':`<div class="ok notice">${current.analysis?.deferred?.length?'Planung vorerst abgeschlossen. Die vorgemerkten Punkte klärst Du später.':'Keine offenen Punkte.'}</div>`;box.innerHTML=(current.ensemble?doorSection(current.ensemble):'')+frameTalkSummaryHtml(current)+(frameTalkOpenItemsHtml(current,u,busy)??box.innerHTML)+deferredPanel();if(current.ensemble)doorBind();$$('.openAnswer').forEach(el=>el.oninput=()=>captureOpenAnswerDrafts());gallery($('#pendingTalkPhotos'),pendingTalkPhotos)}
 
 let mediaRecorder=null,speechRecording=false,speechChunks=[],speechStream=null,speechTimer=null,speechStartedAt=0;
 let speechTarget=null,speechSelStart=null,speechSelEnd=null,lastEditableTarget=null;
